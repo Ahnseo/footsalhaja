@@ -17,7 +17,7 @@
 </head>
 <body>
 	<my:navbar active="listMyQnA"></my:navbar>
-	<h3>나의 문의 내역을 테이블 형태로 나타내기 </h3>
+	<h3> ${myQnAList.userId}나의 문의 내역을 테이블 형태로 나타내기 </h3>
 	<table class="table">
 		<thead>
 			<th>번호</th>
@@ -26,18 +26,14 @@
 			<th>문의상태</th>
 		</thead>
 		 <tbody>
-			<tr>
-			 	<td>1</td>
-			 	<td>문의1</td>
-			 	<td>안서정</td>
-			 	<td>처리완료</td>
-		 	</tr>
-		 	<tr>
-			 	<td>2</td>
-			 	<td>문의2</td>
-			 	<td>안서정</td>
-			 	<td>처리중</td>
-			</tr>
+			 <c:forEach items="${myQnAList}" var="myQnAList" varStatus="st" >
+				<tr>
+				 	<td>${myQnAList.qnaId}</td>
+				 	<td>${myQnAList.title}</td>
+				 	<td>${myQnAList.content}</td>
+				 	<td>${myQnAList.status}</td>
+			 	</tr>
+		 	</c:forEach>
 		 </tbody>
 	</table>
 

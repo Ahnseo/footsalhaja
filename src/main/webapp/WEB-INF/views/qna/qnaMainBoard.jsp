@@ -30,8 +30,8 @@
 	<form action="/qna/insert" method="get">
 		<button type="submit" id="insertBtn"> 문의하기 : qnaController insert -> insert.jsp </button>	
 	</form>
-	<form action="/qna/getMyQnA" method="get">
-		<button type="submit" id="getBtn">  내 문의내역 : qnaController get -> get.jsp </button>
+	<form action="/qna/myQnAList" method="get">
+		<button type="submit" id="myQnAListBtn">  내 문의내역 : qnaController myQnA보기 -> myQnAList.jsp </button>
 	</form>
 	<hr>
 	

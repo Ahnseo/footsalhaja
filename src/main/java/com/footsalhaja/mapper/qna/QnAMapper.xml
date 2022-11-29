@@ -5,4 +5,38 @@
   
  <mapper namespace="com.footsalhaja.mapper.qna.QnAMapper">
  
+<<<<<<< Updated upstream
+=======
+	<!-- Create QnABoard -->	 
+	 <insert id="insertQnABoard" >
+		 INSERT INTO QnABoard 
+		 		(  category,   title,    content , member_userId, member_nickName )
+		 VALUES 
+		 		(#{category}, #{title}, #{content}, #{userId}, #{nickName}  );
+	 </insert>
+	 
+	 <select id="selectQnABoardAll" resultType="com.footsalhaja.domain.qna.QnADto">
+	 	SELECT 
+	 		qnaId, category, title, content, status, member_userId, member_nickName
+	 	FROM 
+	 	 	QnABoard
+	 	ORDER BY 
+	 		qnaId DESC 	 
+	 
+	 </select>
+	 
+	 
+	 <select id="selectMyQnAListByUserId" resultType="com.footsalhaja.domain.qna.QnADto">
+	 	SELECT 
+	 		qnaId, category, title, content, status, member_userId, member_nickName
+	 	FROM 
+	 	 	QnABoard
+	 	WHERE 
+	 		member_userId = #{userId} 
+	 	ORDER BY 
+	 		qnaId DESC 
+	 </select>
+	
+	 
+>>>>>>> Stashed changes
  </mapper>
