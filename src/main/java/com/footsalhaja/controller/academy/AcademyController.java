@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.footsalhaja.domain.academy.BoardDto;
-import com.footsalhaja.service.academy.AcademyService;
 import com.footsalhaja.service.academy.AcademyServiceImpl;
 
 @Controller

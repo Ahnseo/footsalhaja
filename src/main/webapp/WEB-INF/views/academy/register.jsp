@@ -17,7 +17,7 @@
 	<form action="" method="post">
 	제목 <input type="text" name="ab_title"> <br>
 	  
-	말머리 <select name="ab_category" form="myForm">
+	말머리 <select name="ab_category">
         <option value="lesson">레슨</option>
         <option value="tip">꿀팁</option>
         <option value="recruitment">팀원모집</option>

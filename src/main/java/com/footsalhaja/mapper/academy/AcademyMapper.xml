@@ -4,9 +4,9 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="com.footsalhaja.mapper.academy.AcademyMapper">
  
- 	<insert id="insert" useGeneratedKeys="true" keyProperty="ab_number">
-	INSERT INTO academyBoard (ab_category, ab_title, ab_content, member_userId)
-	VALUES (#{ab_category}, #{ab_title}, #{ab_content}, #{member_userId})
+ 	<insert id="insert">
+	INSERT INTO academyBoard (ab_title, ab_category, ab_content, member_userId)
+	VALUES ( #{ab_title}, #{ab_category},  #{ab_content}, #{member_userId})
 	
 	</insert>
 	

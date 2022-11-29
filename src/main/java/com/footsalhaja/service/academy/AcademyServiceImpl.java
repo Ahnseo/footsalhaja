@@ -23,6 +23,12 @@ public class AcademyServiceImpl implements AcademyService{
 		
 		mapper.insert(board);
 	}
+	
+	@Override
+	public List<BoardDto> listBord() {
+		// TODO Auto-generated method stub
+		return mapper.list();
+	}
 //--------------------이 밑으로 아직 메소드 제대로 작성하지 않음(테스트도 X)--------------------------------
 	@Override
 	public BoardDto get(int ab_number) {
@@ -42,10 +48,5 @@ public class AcademyServiceImpl implements AcademyService{
 		return 0;
 	}
 	
-	@Override
-	public List<BoardDto> listBord() {
-		// TODO Auto-generated method stub
-		return mapper.list();
-	}
 	
 }

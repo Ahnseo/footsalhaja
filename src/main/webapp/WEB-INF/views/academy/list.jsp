@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
 <!DOCTYPE html>
 <html>
@@ -41,7 +42,7 @@
 								<td>${board.ab_number }</td>
 								<td>${board.ab_category }</td>
 								<td>
-									<c:url value="/board/get" var="getLink">
+ 									<c:url value="/board/get" var="getLink">
 										<c:param name="ab_number" value="${board.ab_number}"></c:param>
 									</c:url>
 									<a href="${getLink }">
@@ -65,7 +66,7 @@
 									</c:if> --%>
 								</td>
 								<td>${board.member_userId }</td>
-								<td>${board.ab_insertDateTime }</td>
+								<td>${board.ab_insertDatetime }</td>
 							</tr>
 						</c:forEach> 
 					</tbody>
