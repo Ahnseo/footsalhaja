@@ -8,4 +8,7 @@ public interface MainService {
 
 	public int insert(MainDto mainBoard);
 
+	// public void register()
+	
+	public void getById(int id);
 }

@@ -3,5 +3,22 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
- <mapper namespace="com.footsalhaja.mapper.main.MainMapper"></mapper>
+ <mapper namespace="com.footsalhaja.mapper.main.MainMapper">
+ 	<select id="getById" resultType="">
+ 	SELECT 
+ 		m.userId,
+ 		b.stadiumTitle,
+ 		b.content, 
+ 		b.matchType,
+ 		b.level,
+ 		b.status,
+ 		b.bookDatetime,
+ 		b.insertDatetime,
+ 		b.teamGender,
+ 		
+ 		
+ 		   
+ 	</select>
+ 
+ </mapper>
  

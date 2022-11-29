@@ -22,7 +22,7 @@ public class MainController {
 	@GetMapping("get")
 	public void get(@RequestParam(name="id") int id,
 			Model model) {
-		service.get(id);
+		service.getById(id);
 		
 	}
 	

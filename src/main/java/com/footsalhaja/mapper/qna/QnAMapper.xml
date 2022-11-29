@@ -5,4 +5,10 @@
   
  <mapper namespace="com.footsalhaja.mapper.qna.QnAMapper">
  
+<!-- Create QnABoard -->	 
+ <insert id="insertQnABoard" >
+ INSERT INTO QnABoard (  category,   title,    content,    userId,    insertDatetime,    status )
+ 				VALUES(#{category}, #{title}, #{content}, #{userId}, #{insertDatetime}, #{status} );
+ 
+ </insert>
  </mapper>

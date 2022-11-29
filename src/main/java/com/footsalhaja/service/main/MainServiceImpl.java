@@ -25,4 +25,13 @@ public class MainServiceImpl implements MainService {
 		
 		return mapper.insert(mainBoard);
 	}
+
+	// mapper override
+
+	@Override
+	public void getById(int id) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
