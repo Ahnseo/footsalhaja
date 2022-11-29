@@ -29,12 +29,15 @@ public class AcademyServiceImpl implements AcademyService{
 		// TODO Auto-generated method stub
 		return mapper.list();
 	}
-//--------------------이 밑으로 아직 메소드 제대로 작성하지 않음(테스트도 X)--------------------------------
+	
 	@Override
 	public BoardDto get(int ab_number) {
 		// TODO Auto-generated method stub
-		return null;
+		return mapper.select(ab_number);
 	}
+	
+	
+//--------------------이 밑으로 아직 메소드 제대로 작성하지 않음(테스트도 X)--------------------------------
 	
 	@Override
 	public int modify(BoardDto board) {

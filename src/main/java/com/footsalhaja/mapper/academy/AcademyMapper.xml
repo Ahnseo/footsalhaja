@@ -4,12 +4,15 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="com.footsalhaja.mapper.academy.AcademyMapper">
  
+ 
+	<!-- register 등록 -->
  	<insert id="insert">
 	INSERT INTO academyBoard (ab_title, ab_category, ab_content, member_userId)
 	VALUES ( #{ab_title}, #{ab_category},  #{ab_content}, #{member_userId})
 	
 	</insert>
 	
+	<!-- list 목록 -->
 	<select id="list" resultType="com.footsalhaja.domain.academy.BoardDto">
 	SELECT 
 		ab_number,
@@ -21,6 +24,23 @@
 		
 	FROM academyBoard
 	ORDER BY ab_number DESC
+	</select>
+	
+	<!-- get 게시물페이지  -->
+	
+	<select id="select" resultType="com.footsalhaja.domain.academy.BoardDto">
+	SELECT 
+		ab_number,
+		ab_category,
+		ab_title,
+		ab_content,
+		member_userId,
+		ab_insertDatetime
+		
+	FROM academyBoard
+	WHERE
+		ab_number = #{ab_number}
+		
 	</select>
  
  </mapper>

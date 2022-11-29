@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.footsalhaja.domain.academy.BoardDto;
 import com.footsalhaja.service.academy.AcademyServiceImpl;
@@ -19,6 +20,8 @@ public class AcademyController {
 	@Autowired
 	private AcademyServiceImpl service;
 
+	
+	//list 목록
 	@GetMapping("list")
 	public void list(Model model) {
 		// request param
@@ -30,6 +33,7 @@ public class AcademyController {
 		// forward
 	}
 	
+	//register 등록
 	@GetMapping("register")
 	public void register() {
 		
@@ -40,6 +44,16 @@ public class AcademyController {
 		service.insert(board);
 		
 		return "redirect:/academy/list";
+	}
+	
+	//get 게시글
+	@GetMapping("get")
+	public void get (int ab_number, Model model) {
+		BoardDto board = service.get(ab_number);
+		
+		System.out.println(board);
+		
+		model.addAttribute("board",board);
 	}
 	
 }
