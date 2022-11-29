@@ -1,15 +1,8 @@
 package com.footsalhaja.service.qna;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.footsalhaja.domain.qna.QnADto;
 
-import com.footsalhaja.mapper.qna.QnAMapper;
+public interface QnAService {
 
-@Service
-public class QnAService {
-
-	@Autowired
-	private QnAMapper qnaMapper;
-	
-	
+	public void insertQnADto(QnADto qnaBoard);
 }
