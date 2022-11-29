@@ -6,12 +6,14 @@ import lombok.Data;
 
 @Data
 public class QnADto {
-
+	// id, category ,content, userId, status, qnaReply(x replyDto만들), insertDatetime  
 	private int qnaId;
+	private String category;
+	private String title;
+	private String content;
 	private String userId;
-	private String nickname;
-	private String qnaContent;
-	private String qnaReply;
+	private String status;
+	//private String qnaReply;
 	
 	private LocalDateTime insertDatetime;
 	private LocalDateTime deleteDatetime;
