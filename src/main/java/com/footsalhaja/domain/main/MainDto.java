@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import lombok.Data;
 
 @Data
-public class MainDto {
+public class MainDto {//book
 	private int id;
 	private String stadiumTitle;
 	private String content;
