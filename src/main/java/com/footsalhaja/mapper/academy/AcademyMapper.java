@@ -1,8 +1,8 @@
-package com.footsalhaja.mapper.community.academy;
+package com.footsalhaja.mapper.academy;
 
 import java.util.List;
 
-import com.footsalhaja.domain.community.academy.BoardDto;
+import com.footsalhaja.domain.academy.BoardDto;
 
 
 public interface AcademyMapper {
@@ -16,5 +16,7 @@ public interface AcademyMapper {
 	int delete(int ab_number);
 	
 	//페이지 네이션(미정)
+
 	List<BoardDto> list();
+	
 }

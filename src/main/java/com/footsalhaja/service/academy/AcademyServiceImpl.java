@@ -1,12 +1,12 @@
-package com.footsalhaja.service.community.academy;
+package com.footsalhaja.service.academy;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.footsalhaja.domain.community.academy.BoardDto;
-import com.footsalhaja.mapper.community.academy.AcademyMapper;
+import com.footsalhaja.domain.academy.BoardDto;
+import com.footsalhaja.mapper.academy.AcademyMapper;
 
 @Service
 public class AcademyServiceImpl implements AcademyService{
@@ -43,9 +43,9 @@ public class AcademyServiceImpl implements AcademyService{
 	}
 	
 	@Override
-	public List<BoardDto> listBaord() {
+	public List<BoardDto> listBord() {
 		// TODO Auto-generated method stub
-		return null;
+		return mapper.list();
 	}
 	
 }

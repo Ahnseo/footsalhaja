@@ -1,8 +1,8 @@
-package com.footsalhaja.service.community.academy;
+package com.footsalhaja.service.academy;
 
 import java.util.List;
 
-import com.footsalhaja.domain.community.academy.BoardDto;
+import com.footsalhaja.domain.academy.BoardDto;
 
 public interface AcademyService {
 
@@ -15,6 +15,6 @@ public interface AcademyService {
 	
 	public int remove (int ab_number);
 	
-	//페이지네이션
-	public List<BoardDto> listBaord();
+	//페이지네이션 미정
+	public List<BoardDto> listBord();
 }
