@@ -12,6 +12,7 @@ public class FreeController {
 	public void register() {
 		
 	}
+
 	
 	@GetMapping("get")
 	public void get() {
@@ -27,4 +28,5 @@ public class FreeController {
 	public void modify() {
 		
 	}
+
 }
