@@ -10,8 +10,10 @@ public class MainServiceImpl implements MainService {
 
 	@Autowired
 	private MainMapper mapper;
+	
+	@Override
 	public int get(int id) {
-		mapper.insert(id);
+		return mapper.selectById(id);
 		
 	}
 	// mapper override
