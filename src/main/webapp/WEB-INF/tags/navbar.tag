@@ -40,6 +40,11 @@
           <a class="dropdown-item" href="#">중고장터</a>
         </div>
         
+        <c:url value="/qna/qnaMainBoard" var="qnaLink"></c:url>
+        <li class="nav-item active">
+        	<a class="nav-link ${active eq 'qnaMainBoard' ? 'active' : '' }" href="${qnaLink}">고객문의</a>
+      	</li>
+        
         <li class="nav-item active">
         	<a class="nav-link" href="#">회원가입<span class="sr-only">(current)</span></a>
       	</li>
