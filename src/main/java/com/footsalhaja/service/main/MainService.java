@@ -1,8 +1,13 @@
 package com.footsalhaja.service.main;
 
-import org.springframework.stereotype.Service;
+import com.footsalhaja.domain.main.MainDto;
 
-@Service
-public class MainService {
+public interface MainService {
+	// public void register()
+	
+
+	public MainDto get(int bookId);
+
+	public void getById(int id);
 
 }

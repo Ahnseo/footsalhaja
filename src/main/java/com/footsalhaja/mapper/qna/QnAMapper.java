@@ -1,14 +1,11 @@
 package com.footsalhaja.mapper.qna;
 
 import java.util.List;
-
 import org.apache.ibatis.annotations.Mapper;
-
 import com.footsalhaja.domain.qna.QnADto;
 
 @Mapper
 public interface QnAMapper {
-	
 
 	//Create QnABoard
 	int insertQnABoard(QnADto qnaBoard);
@@ -18,5 +15,4 @@ public interface QnAMapper {
 
 	QnADto selectMyQnAListByUserId(String userId);
 	
-
 }

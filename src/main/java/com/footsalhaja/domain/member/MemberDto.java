@@ -18,8 +18,10 @@ public class MemberDto {
 	private String profileImage;   //프로필 이미지
 	private String permission;     //허가 
 
+
 	//private LocalDateTime insertDatetime; //필요하다면, 사용하세요 
 	//private LocalDateTime deleteDatetime;
 	//private List<String> auth;
 
 }
+

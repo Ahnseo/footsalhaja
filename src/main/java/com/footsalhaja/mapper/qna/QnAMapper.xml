@@ -4,7 +4,6 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
  <mapper namespace="com.footsalhaja.mapper.qna.QnAMapper">
- 
 
 	<!-- Create QnABoard -->	 
 	 <insert id="insertQnABoard" >
@@ -37,5 +36,6 @@
 	 </select>
 	
 	 
+
 
  </mapper>

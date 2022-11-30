@@ -16,26 +16,26 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<my:navbar active="insert"></my:navbar>
-	<h1> 문의 내용을 작성하는 페이지 </h1>
-	<form action="" method="post">
-
-		<select name="category" class="form-select" aria-label="Default select example">
-		  <option selected disabled >카테고리</option>
-		  <option value="시설문의">시설문의</option>
-		  <option value="신고/제재">신고/제재</option>
-		  <option value="결제문의">결제문의</option>
-		  <option value="기타문의">기타문의</option>
-		</select>
-		<br>
-		<input type="text" name="title" value="" placeholder="제목" >
-		<br>
-		<textarea name="content" placeholder="본문" ></textarea>
-		<br>
-		
-		<input type="submit" value="문의">
+	<my:navbar active="getMyQnA"></my:navbar>
+	<h3>나의 문의 내용 보기 / 수정/ 삭제 버튼 넣기  </h3>
+	<!-- 데이터 불러오기  -->
+	<form action="" method="">
+		<input type="text" name="xxx" value="선책한 질문 카테고리" disabled ><br>
+		<input type="text" name="xxx" value="" disabled ><br>
+		<textarea type="text" name="xxx" value="본문" disabled ></textarea><br>
+		<input type="text" name="xxx" value="작성자" disabled ><br>
+		<input type="text" name="xxx" value="작성일시 " disabled ><br>
 	</form>
 	
+	<!-- 수정 삭제 버튼 -->  
+	<form action="" method="">
+		<button type="sumbit" id="" >수정</button>
+	</form>
+	
+	<form action="" method="">
+		<button type="sumbit" id="" >삭제</button>
+	</form>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </body>
 </html>
