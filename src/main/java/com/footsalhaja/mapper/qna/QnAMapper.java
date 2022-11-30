@@ -4,18 +4,19 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.footsalhaja.domain.qna.QnADto;
+
 @Mapper
 public interface QnAMapper {
 	
-<<<<<<< Updated upstream
-=======
+
 	//Create QnABoard
 	int insertQnABoard(QnADto qnaBoard);
-
-	List <QnADto> selectQnABoardAll();
-
-	List <QnADto> selectMyQnAListByUserId(String userId);
 	
->>>>>>> Stashed changes
+	//select all QnA
+	List<QnADto> list();
+
+	QnADto selectMyQnAListByUserId(String userId);
 	
+
 }

@@ -16,8 +16,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<my:navbar active="listMyQnA"></my:navbar>
-	<h3> ${myQnAList.userId}나의 문의 내역을 테이블 형태로 나타내기 </h3>
+	<my:navbar active="myQnAList"></my:navbar>
+	<h3> 나의 문의 내역을 테이블 형태로 나타내기 </h3>
 	<table class="table">
 		<thead>
 			<th>번호</th>

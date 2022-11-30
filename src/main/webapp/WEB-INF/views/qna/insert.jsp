@@ -19,13 +19,7 @@
 	<my:navbar active="insert"></my:navbar>
 	<h1> 문의 내용을 작성하는 페이지 </h1>
 	<form action="" method="post">
-<<<<<<< Updated upstream
-		<input type="checkbox" name="" value=""> 질문 카테고리 여러 목록들을  선택 할수있게 <br>
-		<input type="text" name="" value="" placeholder="제목" ><br>
-		<textarea type="text" name="" placeholder="본문" ></textarea><br>
-		<input type="text" name="xxx" value="" placeholder="작성자 얻어오기" disabled ><br>
-		<input type="text" name="" value="" placeholder="작성일시" disabled ><br>
-=======
+
 		<select name="category" class="form-select" aria-label="Default select example">
 		  <option selected disabled >카테고리</option>
 		  <option value="시설문의">시설문의</option>
@@ -38,11 +32,8 @@
 		<br>
 		<textarea name="content" placeholder="본문" ></textarea>
 		<br>
-		<input type="text" name="userId" value="" placeholder="아이디"  >
-		<br> 
-		<input type="text" name="nickName" value="" placeholder="닉네임"  >
-		<br> 
->>>>>>> Stashed changes
+		
+
 		<input type="submit" value="문의">
 	</form>
 	

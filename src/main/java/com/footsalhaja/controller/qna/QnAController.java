@@ -4,32 +4,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PostAuthorize;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-<<<<<<< Updated upstream
-import com.footsalhaja.service.qna.QnAService;
-=======
 
+import com.footsalhaja.service.qna.QnAService;
 import com.footsalhaja.domain.qna.QnADto;
-import com.footsalhaja.service.qna.QnAServiceImpl;
->>>>>>> Stashed changes
+
 
 @Controller
 @RequestMapping("qna")
 public class QnAController {
 	
 	@Autowired	
-	private QnAService qnaService;
+	private QnAService qnAService;
 	
 	//main
 	@GetMapping("qnaMainBoard")
 	public void qnaMainBoard() {
-		qnAServiceImpl.selectQnABoardAll();
+		
 	}
 	
 	// insert
@@ -38,23 +35,21 @@ public class QnAController {
 		
 	}
 	@PostMapping("insert")
-<<<<<<< Updated upstream
-	public String insertQnA(){
-=======
 	public String insertQnA(QnADto qnaBoard){
 		
-		int cnt = qnAServiceImpl.insertQnABoard(qnaBoard, null); //null : ServiceImpl 에서만 model 사용중이기 때문    
->>>>>>> Stashed changes
-		
+		qnAService.insertQnABoard(qnaBoard); //null : ServiceImpl 에서만 model 사용중이기 때문    
+
 		return "redirect:/qna/myQnAList"; 
 	}
 	
 	// MyQnAList
 	@GetMapping("myQnAList")
-	public void myQnAList(String userId, Model model){
+	public void myQnAList(Model model){
 		
 		List<QnADto> myQnAList = new ArrayList<>();
-		myQnAList = qnAServiceImpl.selectMyQnAListByUserId(userId);
+		
+		myQnAList = qnAService.list();
+		
 		System.out.println(myQnAList);
 		model.addAttribute("myQnAList", myQnAList);
 		

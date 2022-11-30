@@ -4,8 +4,6 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
  <mapper namespace="com.footsalhaja.mapper.member.MemberMapper">
-	 <select id="" resultType="com.footsalhaja.domain.member.MemberDto">
-		 SELECT nickName FROM member;
-	 </select>
+	
  
  </mapper>

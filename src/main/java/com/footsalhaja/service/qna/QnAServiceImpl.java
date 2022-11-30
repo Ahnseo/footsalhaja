@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import com.footsalhaja.domain.qna.QnADto;
 
@@ -19,7 +18,7 @@ public class QnAServiceImpl implements QnAService {
 	
 	//Create QnABoard
 	@Override
-	public int insertQnABoard(QnADto qnaBoard, Model model) {
+	public int insertQnABoard(QnADto qnaBoard) {
 		
 		//String nickName = memberMapper.selectNickNameByMember();
 		//model.addAttribute("memberNickName", nickName); 나중에 로그인 만들어지면 사용할것. 
@@ -30,13 +29,12 @@ public class QnAServiceImpl implements QnAService {
 	}
 
 	@Override
-	public List<QnADto> selectQnABoardAll() {
-		
-		return qnaMapper.selectQnABoardAll();
+	public List<QnADto> list() {
+		return qnaMapper.list();
 	}
 	
 	@Override
-	public List<QnADto> selectMyQnAListByUserId(String userId) {
+	public QnADto selectMyQnAListByUserId(String userId) {
 		
 		return qnaMapper.selectMyQnAListByUserId(userId);
 	}
