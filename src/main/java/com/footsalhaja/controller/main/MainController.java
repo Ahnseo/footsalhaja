@@ -39,4 +39,10 @@ public class MainController {
 		
 	}
 	
+	@GetMapping("address") 
+	public void address() {
+		System.out.println("카카오 API 테스트");
+	
+	}
+	
 }

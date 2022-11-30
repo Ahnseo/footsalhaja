@@ -44,16 +44,25 @@
 <div class="container-md">
 	<div class="row">
 		<div class="col">
-			
+				<h1>no.${main.bookId }</h1> 
+				
+				<c:url value="/main/modify" var="modifyLink">
+					<c:param name="id" value="${main.bookId }"></c:param>
+				</c:url>
+				<a href="${modifyLink }">
+					<button id="modifyButton" class="btn">수정하기</button>				
+				</a>
+				
 				<div class="form-floating mb-3">
-					<input id="matchInfo" type="text" class="form-control" value=" ${main.locationId} ${main.stadiumTitle} ${main.bookDatetime } ${main.nickName } ${main.matchType } ${main.teamGender }" readonly>
+					<input id="matchInfo" type="text" class="form-control" value=" ${main.stadiumTitle} ${main.bookDatetime } ${main.nickName } ${main.matchType } ${main.teamGender }" readonly>
 					<label for="floatingInput">경기정보</label>
 				</div>
 			
-			<div class="form-floating mb-3">
-				<input type="text" class="form-control" value="${main.content} " readonly>
-				<label for="floatingInput"></label>
-			</div>
+				<div class="form-floating mb-3">
+					<textarea class="form-control" style="resize: none; height: 100px" readonly>${main.content}</textarea>
+					<label for="floatingInput">본문</label>
+				</div>
+				
 		</div>
 	</div>
 </div>
