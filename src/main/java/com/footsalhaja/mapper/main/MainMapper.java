@@ -1,7 +1,9 @@
 package com.footsalhaja.mapper.main;
 
+import com.footsalhaja.domain.main.MainDto;
+
 public interface MainMapper {
 
-	int getById(int id);
+	MainDto getById(int bookId);
 
 }

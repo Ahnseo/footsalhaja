@@ -39,13 +39,76 @@
         // 아래 코드는 지도 위의 마커를 제거하는 코드
         // marker.setMap(null);  
 		</script>
-<div class="container" style="margin:auto;">
-	<input type="text" name="matchInfo" value="시간 장소 (지역)" readonly>
-	<button class="btn1" >모집중</button> <br>
-	
-	<textarea name="content">본문 작성</textarea>
+<%-- ---------------------------------------------------------------- --%>	
+
+<div class="container-md">
+	<div class="row">
+		<div class="col">
+			<div class="d-flex">
+				<h1 class="me-auto">
+					No.${main.bookId }
+				</h1>
+			</div>
+			<div class="form-floating mb-3">
+				<input type="text" class="form-control" value="${main.stadiumTitle} " readonly>
+				<label for="floatingInput">경기정보</label>
+			</div>
+			<div class="form-floating mb-3">
+				<input type="text" class="form-control" value="${main.stadiumTitle} " readonly>
+				<label for="floatingInput">경기정보</label>
+			</div>
+		</div>
+	</div>
 </div>
+	
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

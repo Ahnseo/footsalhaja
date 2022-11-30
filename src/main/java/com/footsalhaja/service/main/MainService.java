@@ -1,7 +1,9 @@
 package com.footsalhaja.service.main;
 
+import com.footsalhaja.domain.main.MainDto;
+
 public interface MainService {
 	// public void register()
 	
-	public void getById(int id);
+	public MainDto get(int bookId);
 }
