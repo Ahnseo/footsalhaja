@@ -59,6 +59,19 @@
 	DELETE FROM academyBoard
 	WHERE ab_number = #{ab_number}
 	</delete>
+	
+	<!-- 페이지네이션 -->
+	<select id="getListWithPaging" resultType="com.footsalhaja.domain.academy.BoardDto">
+	<![CDATA[
+	SELECT *
+	FROM (
+		SELECT 
+			@rownum:=@rownum+1 rnum, A.* 
+		FROM academyBoard A, (SELECT @ROWNUM := 0) R
+		)list
+	WHERE  rnum >(#{pageNum} - 1) * #{amount} AND rnum <#{pageNum} * #{amount}
+		]]>
+	</select>
  
  </mapper>
   

@@ -3,20 +3,22 @@ package com.footsalhaja.mapper.academy;
 import java.util.List;
 
 import com.footsalhaja.domain.academy.BoardDto;
+import com.footsalhaja.domain.academy.Criteria;
 
 
 public interface AcademyMapper {
 	
-	int insert(BoardDto board);
+	public int insert(BoardDto board);
 
-	BoardDto select(int ab_number);
+	public BoardDto select(int ab_number);
 
-	int modify(BoardDto board);
+	public int modify(BoardDto board);
 
-	int remove(int ab_number);
+	public int remove(int ab_number);
 	
-	//페이지 네이션(미정)
-
-	List<BoardDto> list();
+	public List<BoardDto> list();
+	
+	//페이지 네이션
+	public List<BoardDto> getListWithPaging(Criteria cri);
 	
 }
