@@ -64,8 +64,13 @@ public class AcademyController {
 	public String modify(BoardDto board ) {
 		service.modify(board);
 		
-		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-		System.out.println(board);
+		return "redirect:/academy/list";
+	}
+	
+	//remove 게시글
+	@PostMapping("remove") 
+	public String remove(int ab_number) {
+		service.remove(ab_number);
 		
 		return "redirect:/academy/list";
 	}

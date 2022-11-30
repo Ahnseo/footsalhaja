@@ -53,6 +53,12 @@
 		ab_number = #{ab_number}
 	
 	</update>
+	
+	<!-- remove 삭제  -->
+	<delete id="remove">
+	DELETE FROM academyBoard
+	WHERE ab_number = #{ab_number}
+	</delete>
  
  </mapper>
   

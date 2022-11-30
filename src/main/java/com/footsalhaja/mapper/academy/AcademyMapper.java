@@ -13,7 +13,7 @@ public interface AcademyMapper {
 
 	int modify(BoardDto board);
 
-	int delete(int ab_number);
+	int remove(int ab_number);
 	
 	//페이지 네이션(미정)
 
