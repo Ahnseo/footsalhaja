@@ -4,6 +4,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
  <mapper namespace="com.footsalhaja.mapper.main.MainMapper">
+
  	<select id="getById" resultMap="getMap">
  	SELECT 
  		m.userId,
@@ -34,7 +35,9 @@
 		<result column="insertDatetime" property="insertDatetime"/>
 		<result column="teamGender" property="teamGender"></result>
  	</resultMap>	
+
  		   
- 
+ 	</select>
+
  </mapper>
  

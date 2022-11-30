@@ -15,8 +15,12 @@ public class MainServiceImpl implements MainService {
 	// mapper override
 
 	@Override
+
 	public MainDto get(int bookId) {
 		return mapper.getById(bookId);
+
+	public void getById(int id) {
+
 	}
 
 }
