@@ -36,7 +36,7 @@
  
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="#">자유게시판</a>
-          <a class="dropdown-item" href="#">아카데미</a>
+          <a class="dropdown-item" href="/academy/list">아카데미</a>
           <a class="dropdown-item" href="#">중고장터</a>
         </div>
         

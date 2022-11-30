@@ -72,6 +72,15 @@
 	WHERE  rnum >(#{pageNum} - 1) * #{amount} AND rnum <#{pageNum} * #{amount}
 		]]>
 	</select>
+	
+	
+	<!-- 전체 데이터 수 -->
+	
+	<select id="getTotalCount" resultType="int">
+		SELECT Count(*)
+		FROM academyBoard
+		WHERE ab_number >0
+	</select>
  
  </mapper>
   

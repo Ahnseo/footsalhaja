@@ -6,8 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.footsalhaja.domain.academy.BoardDto;
 import com.footsalhaja.domain.academy.Criteria;
 import com.footsalhaja.domain.academy.PageDto;
@@ -31,8 +34,9 @@ public class AcademyController {
 		// add attribute
 		model.addAttribute("boardList", list);
 		
-		//전체 데이터의 수로 임의로 123지정
-		model.addAttribute("pageMaker", new PageDto(cri, 123));
+		//전체 데이터의 수 구해서 페이지네이션
+		int total = service.getTotal(cri);
+		model.addAttribute("pageMaker", new PageDto(cri, total));
 		// forward
 	}
 	
@@ -50,8 +54,9 @@ public class AcademyController {
 	}
 	
 	//get 게시글
-	@GetMapping("get")
-	public void get (int ab_number, Model model) {
+	@GetMapping({"/get", "/modify"})
+	public void get (@RequestParam("ab_number") int ab_number, Model model,  @ModelAttribute("cri") Criteria cri) {
+		
 		BoardDto board = service.get(ab_number);
 		
 		model.addAttribute("board",board);

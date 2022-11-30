@@ -44,8 +44,11 @@
 								<td>
  									<c:url value="/academy/get" var="getLink">
 										<c:param name="ab_number" value="${board.ab_number}"></c:param>
+										<c:param name="pageNum" value="${pageMaker.cri.pageNum }"></c:param>
+										<c:param name="amount" value="${pageMaker.cri.amount }"></c:param>
+										
 									</c:url>
-									<a href="${getLink }">
+									<a class= 'move' href="${getLink }">
 										${board.ab_title}
 									</a>
 									
@@ -111,23 +114,12 @@
 <script type="text/javascript">
 
 /* 페이징 버튼처리 */
-/* $(document).ready(function() {
-var actionForm = $("#actionForm");
 
-$(".page-item a").on("click", function(e) {
-	e.preventDefault();
-	console.log('click');
-	actionForm.find("input[name='pageNum']").val($(this).attr("href"));
-	actionForm.submit();
-});
-
-}); */
 var actionForm = document.getElementById("actionForm");
 
 let pageButtons = document.querySelectorAll(".page-item a")
 
 for (const button of pageButtons){
-	console.log(button)
 	button.addEventListener("click", function(e) {
 		e.preventDefault();
 		console.log('click');
@@ -135,6 +127,27 @@ for (const button of pageButtons){
 		actionForm.submit();	
 	})
 }
+
+/* 책에 나온 방법
+ *$(".move").on("click", function(e){
+	e.preventDefault();
+	actionForm.append("<input type='hidden' name='bno' value='"+$(this).attr("href")+"'>");
+	actionForm.attr("action","/board/get");
+	actionForm.submit();
+}); */
+
+
+
+/* 
+document.querySelector(".move").addEventListener("click", function(e) {
+	e.preventDefault();
+	//actionForm에 추가로 ab_number값 전송
+	let appendCode = `<input type='hidden' name='ab_number' value='` +this.getAttribute("href") + `'>`
+	actionForm.insertAdjacentHTML('beforeend', appendCode);
+	//actionForm의 action을 "/academy/list" -> "/academy/get"으로 변경
+	actionForm.setAttribute("action","/academy/get");
+	actionForm.submit();
+}) */
 
 	
 

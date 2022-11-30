@@ -26,8 +26,19 @@
 		<c:param name="ab_number" value="${board.ab_number }"></c:param>
 	</c:url>
 	<a class="btn btn-warning" href="${modifyLink }">수정</a>
-	
-	
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+
+
+	<!-- 글 목록버튼 -->
+	<div class="d-flex flex-row-reverse">
+		<c:url value="/academy/list" var="listLink" >
+			<c:param name="pageNum" value='${cri.pageNum }'></c:param>
+			<c:param name="amount" value='${cri.amount }'></c:param>
+		</c:url>
+		<a class="btn btn-outline-primary" href="${listLink }"
+			role="button">목록</a>
+	</div>
+
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </body>
 </html>

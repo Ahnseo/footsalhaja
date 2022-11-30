@@ -48,5 +48,11 @@ public class AcademyServiceImpl implements AcademyService{
 		return mapper.remove(ab_number);
 	}
 	
+	@Override
+	public int getTotal(Criteria cri) {
+		
+		return mapper.getTotalCount(cri);
+	}
+	
 	
 }
