@@ -122,12 +122,21 @@ $(".page-item a").on("click", function(e) {
 });
 
 }); */
-var actionForm = document.getElementsById("actionForm");
+var actionForm = document.getElementById("actionForm");
 
-document.querySelector(".page-item").addEventListener("click", function() {
+let pageButtons = document.querySelectorAll(".page-item a")
+
+for (const button of pageButtons){
+	console.log(button)
+	button.addEventListener("click", function(e) {
+		e.preventDefault();
+		console.log('click');
+		actionForm.querySelector("input[name='pageNum']").value= this.getAttribute("href");
+		actionForm.submit();	
+	})
+}
+
 	
-});
-
 
 </script>
 
