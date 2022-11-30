@@ -44,18 +44,15 @@
 <div class="container-md">
 	<div class="row">
 		<div class="col">
-			<div class="d-flex">
-				<h1 class="me-auto">
-					No.${main.bookId }
-				</h1>
-			</div>
+			
+				<div class="form-floating mb-3">
+					<input id="matchInfo" type="text" class="form-control" value=" ${main.locationId} ${main.stadiumTitle} ${main.bookDatetime } ${main.nickName } ${main.matchType } ${main.teamGender }" readonly>
+					<label for="floatingInput">경기정보</label>
+				</div>
+			
 			<div class="form-floating mb-3">
-				<input type="text" class="form-control" value="${main.stadiumTitle} " readonly>
-				<label for="floatingInput">경기정보</label>
-			</div>
-			<div class="form-floating mb-3">
-				<input type="text" class="form-control" value="${main.stadiumTitle} " readonly>
-				<label for="floatingInput">경기정보</label>
+				<input type="text" class="form-control" value="${main.content} " readonly>
+				<label for="floatingInput"></label>
 			</div>
 		</div>
 	</div>
@@ -63,6 +60,8 @@
 	
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<script>
+</script>
 </body>
 </html>
 

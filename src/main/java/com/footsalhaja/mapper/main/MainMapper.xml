@@ -36,8 +36,6 @@
 		<result column="teamGender" property="teamGender"></result>
  	</resultMap>	
 
- 		   
- 	</select>
 
  </mapper>
  

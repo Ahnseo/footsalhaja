@@ -8,6 +8,4 @@ public interface MainService {
 
 	public MainDto get(int bookId);
 
-	public void getById(int id);
-
 }

@@ -25,7 +25,7 @@ public class MainController {
 		MainDto main = service.get(bookId);
 		
 		model.addAttribute("main", main);
-
+		System.out.println("장소" +  main.getLocationId() );
 		
 	}
 	
