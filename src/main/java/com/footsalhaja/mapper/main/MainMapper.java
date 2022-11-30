@@ -8,5 +8,4 @@ public interface MainMapper {
 	MainDto getById(int bookId);
 
 
-
 }
