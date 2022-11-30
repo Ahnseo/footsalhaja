@@ -5,5 +5,47 @@
   
  <mapper namespace="com.footsalhaja.mapper.member.MemberMapper">
 	
- 
+	<insert id="insertMember">
+		INSERT INTO member 
+			(  userId,   name,    password,    nickName,    email,    birthYY,    birthMM,    birthDD,    activityArea,    phone,     personalGender,    permission  )
+		VALUES
+			(#{userId}, #{name}, #{password}, #{nickName}, #{email}, #{birthYY}, #{birthMM}, #{birthDD}, #{activityArea}, #{phone},  #{personalGender}, #{permission} )
+	</insert>
+ 	
+ 	
+ 	<!-- auth  -->
+ 	<select id="selectMemberInfoByUserId" resultMap="memberMap">
+	SELECT 
+		userId,
+		name,
+		password,
+		nickName,
+		email,
+		birthYY, birthMM, birthDD,
+		activityArea,
+		phone,
+		personalGender,
+		permission,
+		a.auth
+	FROM
+		member m LEFT JOIN authority a ON m.userId = a.userId
+	WHERE
+		userId = #{username}
+	</select>
+	<resultMap type="com.footsalhaja.domain.member.MemberDto" id="memberMap">
+		<id column="userId" property="userId"></id>
+		<result column="name" property="name"/>
+		<result column="password" property="password"/>
+		<result column="nickName" property="nickName"/>
+		<result column="birthYY" property="birthYY"/>
+		<result column="birthMM" property="birthMM"/>
+		<result column="birthDD" property="birthDD"/>
+		<result column="activityArea" property="activityArea"/>
+		<result column="phone" property="phone"/>
+		<result column="personalGender" property="personalGender"/>
+		<result column="permission" property="permission"/>
+		<collection property="auth" ofType="string">
+			<result column="auth" property="auth"/>
+		</collection>
+	</resultMap>
  </mapper>

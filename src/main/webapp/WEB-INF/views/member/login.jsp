@@ -16,37 +16,24 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<my:navbar active="myQnAList"></my:navbar>
-	<h3> 나의 문의 내역을 테이블 형태로 나타내기 </h3>
-	<button id="" type="button" class="btn btn-primary btn-lg">Large button</button>
-	<button type="button" class="btn btn-primary btn-lg">Large button</button>
-	
-	<div class="container">
-		<div>
-			<div>
-				<table class="table">
-					<thead>
-						<th>번호</th>
-						<th>제목</th>
-						<th>작성자</th>
-						<th>문의상태</th>
-					</thead>
-					 <tbody>
-						 <c:forEach items="${myQnAList}" var="myQnAList" varStatus="st" >
-							<tr>
-							 	<td>${myQnAList.qnaId}</td>
-							 	<td>${myQnAList.title}</td>
-							 	<td>${myQnAList.content}</td>
-							 	<td>${myQnAList.status}</td>
-						 	</tr>
-					 	</c:forEach>
-					 </tbody>
-				</table>
-			</div>
+<my:navbar active="login"></my:navbar>
+
+<div class="container-md">
+	<div class="row justify-content-center">
+		<div class="col-5">
+			<h1>로그인</h1>
+			<form action="" method="post">
+				id <input type="text" name="username" id=""> <br>
+				pw <input type="password" name="password" id=""> <br>
+				<input type="checkBox" name="remember-me" id=""> Remember Me <br>
+				
+				<%--  <sec:csrfInput/> 모든 페이지에 넣어야한다.. 하지만 복잡해서 지금은 안쓰겟다.  --%>
+			
+				<input type="submit" value="로그인" >
+			</form>
 		</div>
 	</div>
-
-
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </body>
 </html>
