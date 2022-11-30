@@ -16,26 +16,28 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<my:navbar active="insert"></my:navbar>
-	<h1> 문의 내용을 작성하는 페이지 </h1>
-	<form action="" method="post">
+	<my:navbar active="myQnAList"></my:navbar>
+	<h3> 나의 문의 내역을 테이블 형태로 나타내기 </h3>
+	<table class="table">
+		<thead>
+			<th>번호</th>
+			<th>제목</th>
+			<th>작성자</th>
+			<th>문의상태</th>
+		</thead>
+		 <tbody>
+			 <c:forEach items="${myQnAList}" var="myQnAList" varStatus="st" >
+				<tr>
+				 	<td>${myQnAList.qnaId}</td>
+				 	<td>${myQnAList.title}</td>
+				 	<td>${myQnAList.content}</td>
+				 	<td>${myQnAList.status}</td>
+			 	</tr>
+		 	</c:forEach>
+		 </tbody>
+	</table>
 
-		<select name="category" class="form-select" aria-label="Default select example">
-		  <option selected disabled >카테고리</option>
-		  <option value="시설문의">시설문의</option>
-		  <option value="신고/제재">신고/제재</option>
-		  <option value="결제문의">결제문의</option>
-		  <option value="기타문의">기타문의</option>
-		</select>
-		<br>
-		<input type="text" name="title" value="" placeholder="제목" >
-		<br>
-		<textarea name="content" placeholder="본문" ></textarea>
-		<br>
-		
-		<input type="submit" value="문의">
-	</form>
-	
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </body>
 </html>

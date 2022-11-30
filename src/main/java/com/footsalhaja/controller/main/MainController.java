@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.footsalhaja.domain.main.MainDto;
 import com.footsalhaja.service.main.MainServiceImpl;
 
 @Controller
@@ -17,9 +18,14 @@ public class MainController {
 	private MainServiceImpl service;
 	
 	@GetMapping("get")
-	public void get(@RequestParam(name="id") int id,
+	public void get(@RequestParam(name="bookId") int bookId,
 			Model model) {
-		service.get(id);
+
+		//System.out.println(bookId);
+		MainDto main = service.get(bookId);
+		
+		model.addAttribute("main", main);
+
 		
 	}
 	
