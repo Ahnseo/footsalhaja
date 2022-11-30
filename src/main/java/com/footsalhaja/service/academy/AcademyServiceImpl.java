@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.footsalhaja.domain.academy.BoardDto;
+import com.footsalhaja.domain.academy.Criteria;
 import com.footsalhaja.mapper.academy.AcademyMapper;
 
 @Service
@@ -15,7 +16,6 @@ public class AcademyServiceImpl implements AcademyService{
 	private AcademyMapper mapper;
 
 	
-//테스트용으로 메소드 작성	
 	@Override
 	public void insert(BoardDto board) {
 		// TODO Auto-generated method stub
@@ -25,9 +25,9 @@ public class AcademyServiceImpl implements AcademyService{
 	}
 	
 	@Override
-	public List<BoardDto> listBord() {
-		// TODO Auto-generated method stub
-		return mapper.list();
+	public List<BoardDto> listBord(Criteria cri) {
+		System.out.println("get List with Criteria: " +cri);
+		return mapper.getListWithPaging(cri);
 	}
 	
 	@Override

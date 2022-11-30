@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.footsalhaja.domain.academy.BoardDto;
+import com.footsalhaja.domain.academy.Criteria;
+import com.footsalhaja.domain.academy.PageDto;
 import com.footsalhaja.service.academy.AcademyServiceImpl;
 
 @Controller
@@ -21,13 +23,16 @@ public class AcademyController {
 	
 	//list 목록
 	@GetMapping("list")
-	public void list(Model model) {
+	public void list(Criteria cri, Model model) {
 		// request param
 		// business logic
-		List<BoardDto> list = service.listBord();
+		List<BoardDto> list = service.listBord(cri);
 		
 		// add attribute
 		model.addAttribute("boardList", list);
+		
+		//전체 데이터의 수로 임의로 123지정
+		model.addAttribute("pageMaker", new PageDto(cri, 123));
 		// forward
 	}
 	

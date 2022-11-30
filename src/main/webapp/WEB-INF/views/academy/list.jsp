@@ -71,8 +71,65 @@
 						</c:forEach> 
 					</tbody>
 				</table>
+				
+				<!-- 페이징 -->
+				<div class="container-md">
+					<ul class="pagination">
+						<c:if test="${pageMaker.prev }">
+							<li class="page-item">
+								<a class="page-link" href="${pageMaker.startPage -1 }" aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a>
+							</li>
+						</c:if>
+						
+						<c:forEach var ="num" begin="${pageMaker.startPage }"
+						end="${pageMaker.endPage }">
+						<li class="page-item ${pageMaker.cri.pageNum == num ?"active" : "" }"><a class="page-link" href="${num }">${num }</a></li>
+						</c:forEach>
+						
+						<c:if test="${pageMaker.next }">
+							<li class="page-item"><a class="page-link" href="${pageMaker.endPage + 1 }" aria-label="Next"> <span aria-hidden="true">&raquo;</span></a>
+							</li>
+						</c:if>
+					</ul>
+				</div>
+
+				<form id="actionForm" action="/academy/list" method="get">
+					<input type="hidden" name="pageNum"
+						value="${pageMaker.cri.pageNum }"> <input type="hidden"
+						name="amount" value="${pageMaker.cri.amount }">
+				</form>
+
+				<!-- 글 작성버튼 -->
+				<div class="d-flex flex-row-reverse">
+					<c:url value="/academy/register" var="registerLink" />
+					<a class="btn btn-outline-primary" href="${registerLink }" role="button">글작성</a>
+				</div>
 			</div>
 		</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+
+/* 페이징 버튼처리 */
+/* $(document).ready(function() {
+var actionForm = $("#actionForm");
+
+$(".page-item a").on("click", function(e) {
+	e.preventDefault();
+	console.log('click');
+	actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+	actionForm.submit();
+});
+
+}); */
+var actionForm = document.getElementsById("actionForm");
+
+document.querySelector(".page-item").addEventListener("click", function() {
+	
+});
+
+
+</script>
+
 </body>
 </html>

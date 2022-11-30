@@ -3,6 +3,7 @@ package com.footsalhaja.service.academy;
 import java.util.List;
 
 import com.footsalhaja.domain.academy.BoardDto;
+import com.footsalhaja.domain.academy.Criteria;
 
 public interface AcademyService {
 
@@ -16,5 +17,5 @@ public interface AcademyService {
 	public int remove (int ab_number);
 	
 	//페이지네이션 미정
-	public List<BoardDto> listBord();
+	public List<BoardDto> listBord(Criteria cri);
 }
