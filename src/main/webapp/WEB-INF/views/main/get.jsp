@@ -44,6 +44,7 @@
 <div class="container-md">
 	<div class="row">
 		<div class="col">
+
 				<h1>no.${main.bookId }</h1> 
 				
 				<c:url value="/main/modify" var="modifyLink">
@@ -62,7 +63,7 @@
 					<textarea class="form-control" style="resize: none; height: 100px" readonly>${main.content}</textarea>
 					<label for="floatingInput">본문</label>
 				</div>
-				
+        
 		</div>
 	</div>
 </div>

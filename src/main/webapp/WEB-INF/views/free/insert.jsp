@@ -13,7 +13,21 @@
 <body>
 <my:navbar></my:navbar>
 
-	<h1>글작성 페이지</h1>
+	<h1>프리보드 글 작성</h1>
+	
+	<form action="" method="post">
+	카테고리 <select name="fb_category">
+				<option>매칭후기</option>
+				<option>구장후기</option>
+				<option>잡담</option>
+			</select>
+	<br>
+	제목 <input type="text" name="fb_title"/><br>
+	본문 <textarea name="fb_content"></textarea><br>
+	작성자 <input type="text" name="member_userId"/><br>
+	
+	<input type="submit" value="등록" />
+	</form>
 	
 	
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>

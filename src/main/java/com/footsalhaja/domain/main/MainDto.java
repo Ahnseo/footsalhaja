@@ -18,8 +18,8 @@ public class MainDto {//book
 	private LocalDateTime insertDatetime;
 	private String teamGender;
 
-	
-	private int locationId;
+
+	private String location;
 	private String userId;
 	private String nickName;
 

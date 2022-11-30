@@ -6,6 +6,7 @@ public interface MainService {
 	// public void register()
 	
 
-	public MainDto get(int bookId);
+public MainDto get(int bookId);
+
 
 }
