@@ -42,7 +42,7 @@
 								<td>${board.ab_number }</td>
 								<td>${board.ab_category }</td>
 								<td>
- 									<c:url value="/board/get" var="getLink">
+ 									<c:url value="/academy/get" var="getLink">
 										<c:param name="ab_number" value="${board.ab_number}"></c:param>
 									</c:url>
 									<a href="${getLink }">

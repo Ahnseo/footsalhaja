@@ -22,6 +22,11 @@
 	작성자 <input type ="text" value="${board.member_userId }" readonly> <br>
 	작성일시 <input type = "datetime-local" value = "${board.ab_insertDatetime }" readonly>
 	
+	<c:url value="/academy/modify" var="modifyLink">
+		<c:param name="ab_number" value="${board.ab_number }"></c:param>
+	</c:url>
+	<a class="btn btn-warning" href="${modifyLink }">수정</a>
+	
 	
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </body>

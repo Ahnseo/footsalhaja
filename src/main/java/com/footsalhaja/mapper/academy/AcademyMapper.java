@@ -11,7 +11,7 @@ public interface AcademyMapper {
 
 	BoardDto select(int ab_number);
 
-	int update(BoardDto board);
+	int modify(BoardDto board);
 
 	int delete(int ab_number);
 	

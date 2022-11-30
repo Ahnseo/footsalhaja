@@ -36,14 +36,14 @@ public class AcademyServiceImpl implements AcademyService{
 		return mapper.select(ab_number);
 	}
 	
-	
-//--------------------이 밑으로 아직 메소드 제대로 작성하지 않음(테스트도 X)--------------------------------
-	
 	@Override
 	public int modify(BoardDto board) {
 		// TODO Auto-generated method stub
-		return 0;
+		return mapper.modify(board);
 	}
+	
+//--------------------이 밑으로 아직 메소드 제대로 작성하지 않음(테스트도 X)--------------------------------
+	
 	
 	@Override
 	public int remove(int ab_number) {

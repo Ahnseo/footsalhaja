@@ -8,8 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import com.footsalhaja.domain.academy.BoardDto;
 import com.footsalhaja.service.academy.AcademyServiceImpl;
 
@@ -51,9 +49,26 @@ public class AcademyController {
 	public void get (int ab_number, Model model) {
 		BoardDto board = service.get(ab_number);
 		
-		System.out.println(board);
+		model.addAttribute("board",board);
 		
+	}
+	
+	//modify 게시글
+	@GetMapping("modify")
+	public void modify(int ab_number, Model model) {
+		BoardDto board = service.get(ab_number);
 		model.addAttribute("board",board);
 	}
+	
+	@PostMapping("modify")
+	public String modify(BoardDto board ) {
+		service.modify(board);
+		
+		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+		System.out.println(board);
+		
+		return "redirect:/academy/list";
+	}
+	
 	
 }
