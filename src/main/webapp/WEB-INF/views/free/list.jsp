@@ -13,6 +13,7 @@
 <body>
 <my:navbar></my:navbar>
 
+
 	<c:if test="${not empty message }">
 		<div class="alert alert-primary" role="alert">
 		  ${message }
@@ -49,7 +50,7 @@
 			</c:forEach>
 		</tbody>
 	</table>
-	
+
 	
 	
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>

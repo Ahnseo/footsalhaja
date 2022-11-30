@@ -93,4 +93,21 @@ public class FreeController {
 		
 		return "redirect:/free/list";
 	}
+
+	
+	@GetMapping("get")
+	public void get() {
+		
+	}
+	
+	@GetMapping("list")
+	public void list() {
+		
+	}
+	
+	@GetMapping("modify")
+	public void modify() {
+		
+	}
+
 }
