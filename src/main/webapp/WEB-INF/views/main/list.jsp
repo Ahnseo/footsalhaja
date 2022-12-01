@@ -9,7 +9,6 @@
 <title>Insert title here</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
 <style>
 body {margin:0;height:2000px;}
 
@@ -25,9 +24,9 @@ body {margin:0;height:2000px;}
   display: block;
   text-align: center;
   padding: 16px;
-  transition: all 0.3s ease;
+  transition: all 1s ease;
   color: white;
-  font-size: 20px;
+  font-size: 15px;
 }
 
 .icon-bar a:hover {
@@ -45,19 +44,22 @@ body {margin:0;height:2000px;}
 }
 
 .insert {
-  background: #dd4b39;
+  background: #162d5c;
   color: white;
 }
 
 .content {
   margin-left: 75px;
   font-size: 30px;
-}
+} 
+
 
 </style>
 </head>
 <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.js"></script> 
 <body>
+
+<c:url value="/main/insert" var="insertLink" />
 
 	<my:navbar></my:navbar>
 	
@@ -112,11 +114,12 @@ body {margin:0;height:2000px;}
         </div>
     </div>
     
- <div class="icon-bar">
+    
+<div class="icon-bar">
   <a href="#" class="location"><i class="fa-solid fa-location-dot"></i></a> 
   <a href="#" class="date"><i class="fa-solid fa-calendar-days"></i></a> 
-  <a href="#" class="insert"><i class="fa-solid fa-pen-to-square"></i></a> 
-</div>
+  <a href="${insertLink }" class="insert"><i class="fa-solid fa-pen-to-square"></i></a> 
+</div> 
 
 <div class="content">
   <h3>게시글 목록</h3>
