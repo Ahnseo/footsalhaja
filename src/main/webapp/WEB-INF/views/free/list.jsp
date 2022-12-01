@@ -13,7 +13,44 @@
 <body>
 <my:navbar></my:navbar>
 
-	<h1>글 리스트</h1>
+
+	<c:if test="${not empty message }">
+		<div class="alert alert-primary" role="alert">
+		  ${message }
+		</div>
+	</c:if>
+
+	<h1>프리보드 목록</h1>
+	<table class="table">
+		<thead>
+			<tr>
+				<td>#</td>
+				<td>카테고리</td>
+				<td>제목</td>
+				<td>작성자</td>
+				<td>작성일시</td>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach items="${boardList }" var="board">
+				<tr>
+					<td>${board.fb_number }</td>
+					<td>${board.fb_category }</td>
+					<td>
+						<c:url value="/free/get" var="getLink">
+							<c:param name="number" value="${board.fb_number }"></c:param>
+						</c:url>
+						<a href="${getLink}">
+							${board.fb_title }
+						</a>							
+					</td>
+					<td>${board.member_userId }</td>
+					<td>${board.fb_insertDatetime }</td>
+				</tr>
+			</c:forEach>
+		</tbody>
+	</table>
+
 	
 	
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>

@@ -8,5 +8,9 @@ public interface MainService {
 
 	public int insert(MainDto mainBoard);
 	
+
+	public MainDto get(int bookId);
+
 	public void getById(int id);
+
 }

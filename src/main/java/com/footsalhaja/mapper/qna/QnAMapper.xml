@@ -4,11 +4,38 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
  <mapper namespace="com.footsalhaja.mapper.qna.QnAMapper">
- 
-<!-- Create QnABoard -->	 
- <insert id="insertQnABoard" >
- INSERT INTO QnABoard (  category,   title,    content,    userId,    insertDatetime,    status )
- 				VALUES(#{category}, #{title}, #{content}, #{userId}, #{insertDatetime}, #{status} );
- 
- </insert>
+
+	<!-- Create QnABoard -->	 
+	 <insert id="insertQnABoard" >
+		 INSERT INTO QnABoard 
+		 		(  category,   title,    content , member_userId, member_nickName )
+		 VALUES 
+		 		(#{category}, #{title}, #{content}, #{userId}, #{nickName}  );
+	 </insert>
+	 
+	 <select id="list" resultType="com.footsalhaja.domain.qna.QnADto">
+	 	SELECT 
+	 		qnaId, category, title, content, status, member_userId, member_nickName
+	 	FROM 
+	 	 	QnABoard
+	 	ORDER BY 
+	 		qnaId DESC 	 
+	 
+	 </select>
+	 
+	 
+	 <select id="selectMyQnAListByUserId" resultType="com.footsalhaja.domain.qna.QnADto">
+	 	SELECT 
+	 		qnaId, category, title, content, status, member_userId, member_nickName
+	 	FROM 
+	 	 	QnABoard
+	 	WHERE 
+	 		member_userId = #{userId} 
+	 	ORDER BY 
+	 		qnaId DESC 
+	 </select>
+	
+	 
+
+
  </mapper>

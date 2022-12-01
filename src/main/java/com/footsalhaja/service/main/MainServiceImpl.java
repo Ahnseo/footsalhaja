@@ -38,9 +38,13 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
+
+	public MainDto get(int bookId) {
+		return mapper.getById(bookId);
+	}
+	
 	public void getById(int id) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 }
