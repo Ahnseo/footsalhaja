@@ -23,6 +23,7 @@ public class Criteria {
 	//검색 조건이 각 글자(T,W,C)로 구성되어 있으므로 
 	//검색 조건을 배열로 만들어 한번에 처리 (MyBatis의 동적 태그를 활용)
 		public String[] getTypeArr() {
+			
 			return type == null? new String[] {} : type.split("");
 		}
 }

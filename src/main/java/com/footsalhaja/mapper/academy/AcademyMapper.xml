@@ -76,29 +76,15 @@
 	
 	<!-- 페이지네이션 & 검색 -->
 	<select id="getListWithPaging" resultType="com.footsalhaja.domain.academy.BoardDto">
-<!-- 	<![CDATA[
-	SELECT *
-	FROM (
-		SELECT 
-			@rownum:=@rownum+1 rnum, A.* 
-		FROM academyBoard A, (SELECT @ROWNUM := 0) R
-		WHERE @rownum <#{pageNum} * #{amount}
-		)list
-	WHERE ]]> 
 	
-		검색 조건 호출
-	<include refid="criteria"></include>
-	
-	<![CDATA[
-	rnum >(#{pageNum} - 1) * #{amount}
-	ORDER BY ab_number DESC	
-		]]> -->
-	<![CDATA[	
 	SELECT *
 	FROM academyBoard
 	ORDER BY ab_number DESC
+
+<!-- <include refid="criteria"></include> -->
+
 	LIMIT #{offset}, #{records}
-	]]>	
+	
 	</select>
 	
 	

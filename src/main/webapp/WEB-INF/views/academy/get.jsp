@@ -41,6 +41,82 @@
 	</div>
 
 
+	<!-- 댓글 창 -->
+	
+	<div id="replyMessage1">
+	</div>
+	
+	<div class="container-md">
+		<div class="row">
+			<div class="col">
+				<!-- 참조키 (ab_number, member_userId) 값_ -->
+				<input type="hidden" id="ab_number" value="${board.ab_number }">
+				<input type="hidden" id="member_userId" value="${board.member_userId }">
+				<input type="text" id="replyInput">
+				<button id="replySendButton1">댓글쓰기</button>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col">
+				<div id="replyListContainer">
+				
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<script>
+
+/* 댓글 이벤트 처리 */
+	const ctx = "${pageContext.request.contextPath}";
+
+	listReply();
+	
+	function listReply() {
+		const ab_number = document.querySelector("#ab_number").value;
+		fetch(`\${ctx}/reply/list/\${ab_number}`)
+		.then(res => res.json())
+		.then(list => {
+			const replyListContainer = document.querySelector("#replyListContainer");
+			replyListContainer.innerHTML = "";
+			
+			for (const item of list) {
+				const replyDiv = `<div>\${item.ab_replyContent} : \${item.ab_replyInsertDatetime}</div>`;
+				replyListContainer.insertAdjacentHTML("beforeend", replyDiv);
+			}
+		});
+	}
+	
+	document.querySelector("#replySendButton1").addEventListener("click", function() {
+		const ab_number = document.querySelector("#ab_number").value;
+		const ab_replyContent = document.querySelector("#replyInput").value;
+		const member_userId = document.querySelector("#member_userId").value;
+		
+		const data = {
+			ab_number,
+			ab_replyContent,
+			member_userId
+		};
+		
+		fetch(`\${ctx}/reply/add`, {
+			method : "post",
+			headers : {
+				"Content-Type" : "application/json"
+			},
+			body : JSON.stringify(data)
+		})
+		.then(res => res.json())
+		.then(data => {
+			document.querySelector("#replyInput").value = "";
+			document.querySelector("#replyMessage1").innerText = data.message;
+		})
+		.then(() => listReply());
+	});
+</script>
+
+
+
 </body>
 </html>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.footsalhaja.mapper.academy.AcademyReplyMapper">
+ 
+ 	<select id="selectReplyByBoardId" resultType="com.footsalhaja.domain.academy.AcademyReplyDto">
+	SELECT *
+	FROM
+		academyBoardReply
+	WHERE
+		academyBoard_ab_number = #{ab_number}
+	ORDER BY
+		academyBoard_ab_number DESC
+	</select>
+
+	<insert id="insert">
+	INSERT INTO academyBoardReply (academyBoard_ab_number, ab_replyContent, member_userId)
+	VALUES (#{ab_number}, #{ab_replyContent}, #{member_userId})
+	</insert>
+</mapper>
