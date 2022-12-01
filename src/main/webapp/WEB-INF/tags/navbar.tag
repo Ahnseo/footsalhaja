@@ -60,14 +60,17 @@
         <li class="nav-item active">
         	<a class="nav-link ${active eq 'qnaMainBoard' ? 'active' : '' }" href="${qnaLink}">고객문의</a>
       	</li>
-        
+        <c:url value="/member/list" var="memberLink"></c:url>
+        <li class="nav-item active">
+        	<a class="nav-link  ${active eq 'memberList' ? 'active' : '' }" href="${memberLink}">회원목록</a>
+      	</li>
         <c:url value="/member/insert" var="insertMemberLink"></c:url>
         <li class="nav-item active">
-        	<a class="nav-link  ${active eq 'qnaMainBoard' ? 'active' : '' }" href="${insertMemberLink}">회원가입</a>
+        	<a class="nav-link  ${active eq 'insert' ? 'active' : '' }" href="${insertMemberLink}">회원가입</a>
       	</li>
      	<c:url value="/member/login" var="loginLink"></c:url>
       	<li class="nav-item active">
-       		<a class="nav-link ${active eq 'qnaMainBoard' ? 'active' : '' }" href="${loginLink }">로그인<span class="sr-only">(current)</span></a>
+       		<a class="nav-link ${active eq 'login' ? 'active' : '' }" href="${loginLink }">로그인<span class="sr-only">(current)</span></a>
      	</li>
       
       

@@ -16,10 +16,8 @@
 <title>회원가입</title>
 </head>
 <body>
+<!--현재 member테이블 의 컬럼들 ( userId, name, password, nickName, email, birthYY, birthMM, birthDD, activityArea, phone, personalGender, permission ) -->
 <my:navbar active="insert"></my:navbar>
-<!--현재 member테이블 의 컬럼들 
-( userId, name, password, nickName, email, birthYY, birthMM, birthDD, activityArea, phone, personalGender, permission ) 
--->
 <div class="container">
 	<div class="row">
 		<div class="col">

@@ -12,40 +12,43 @@
 			(#{userId}, #{name}, #{password}, #{nickName}, #{email}, #{birthYY}, #{birthMM}, #{birthDD}, #{activityArea}, #{phone},  #{personalGender}, #{permission} )
 	</insert>
  	
+ 	<select id="selectMemberList" resultType="com.footsalhaja.domain.member.MemberDto">
+ 	SELECT 
+ 		userId,
+ 		name,
+ 		password,
+ 		nickName,
+ 		email,
+ 		birthYY,
+ 		birthMM,
+ 		birthDD,
+ 		activityArea,
+ 		phone,
+ 		personalGender,
+ 		permission
+ 	FROM
+ 		member
+ 	ORDER BY name	
+ 	</select>
  	
- 	<!-- auth  -->
- 	<select id="selectMemberInfoByUserId" resultMap="memberMap">
+ 	<select id="selectMemberInfoByUserId" resultType="com.footsalhaja.domain.member.MemberDto">
 	SELECT 
 		userId,
 		name,
 		password,
 		nickName,
 		email,
-		birthYY, birthMM, birthDD,
+		birthYY,
+		birthMM,
+		birthDD,
 		activityArea,
 		phone,
 		personalGender,
-		permission,
-		a.auth
+		permission
 	FROM
-		member m LEFT JOIN authority a ON m.userId = a.userId
+		member
 	WHERE
-		userId = #{username}
+		userId = #{userId}
 	</select>
-	<resultMap type="com.footsalhaja.domain.member.MemberDto" id="memberMap">
-		<id column="userId" property="userId"></id>
-		<result column="name" property="name"/>
-		<result column="password" property="password"/>
-		<result column="nickName" property="nickName"/>
-		<result column="birthYY" property="birthYY"/>
-		<result column="birthMM" property="birthMM"/>
-		<result column="birthDD" property="birthDD"/>
-		<result column="activityArea" property="activityArea"/>
-		<result column="phone" property="phone"/>
-		<result column="personalGender" property="personalGender"/>
-		<result column="permission" property="permission"/>
-		<collection property="auth" ofType="string">
-			<result column="auth" property="auth"/>
-		</collection>
-	</resultMap>
+	
  </mapper>
