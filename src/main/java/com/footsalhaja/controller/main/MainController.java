@@ -56,4 +56,9 @@ public class MainController {
 		
 	}
 	
+	@GetMapping("address")
+	public void address() {
+		
+	}
+	
 }

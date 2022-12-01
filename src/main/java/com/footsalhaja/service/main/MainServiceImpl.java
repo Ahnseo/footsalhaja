@@ -1,9 +1,12 @@
 package com.footsalhaja.service.main;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.footsalhaja.domain.main.MainDto;
+import com.footsalhaja.domain.main.PageInfo;
 import com.footsalhaja.mapper.main.MainMapper;
 
 @Service
@@ -26,7 +29,13 @@ public class MainServiceImpl implements MainService {
 		return mapper.insert(mainBoard);
 	}
 
-	// mapper override
+	public List<MainDto> mainList(int page, String type, String keyword, PageInfo pageInfo) {
+		int records = 10;
+		int offset = (page - 1) * records;
+		
+		
+		return mapper.list(offset, records, type, "%" + keyword +"%");
+	}
 
 	@Override
 	public void getById(int id) {

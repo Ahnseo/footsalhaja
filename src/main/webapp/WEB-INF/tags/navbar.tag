@@ -5,6 +5,8 @@
 
 <%--  아랫줄 부터 작성하세요 . navbar 코드를 복붙해오기  --%>
 
+<c:url value="/main/list" var="listLink" />
+
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
   <!-- One of the primary actions on mobile is to call a business - This displays a phone button on mobile only -->
@@ -20,7 +22,7 @@
   <div class="collapse navbar-collapse flex-column " id="navbar">
     <ul class="navbar-nav  w-100 px-3 justify-content-center">
       <li class="nav-item active">
-        <a class="nav-link" href="#">풋살하자<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/main/list">풋살하자<span class="sr-only">(current)</span></a>
       </li> 
     </ul>
 

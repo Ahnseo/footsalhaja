@@ -6,13 +6,16 @@ import lombok.Data;
 
 @Data
 public class MainDto {//book
-	private int id;
+	private int bookId;
 	private String stadiumTitle;
 	private String content;
 	private int matchType;
 	private int level;
 	private int status;
-	private LocalDateTime bookDatetime;
+	private String bookDatetime;
 	private LocalDateTime insertDatetime;
 	private String teamGender;
+	
+	private String location_locationId;
+	private String member_userId;
 }

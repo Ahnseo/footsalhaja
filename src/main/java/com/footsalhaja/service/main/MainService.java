@@ -7,8 +7,6 @@ public interface MainService {
 	public MainDto get(int bookId);
 
 	public int insert(MainDto mainBoard);
-
-	// public void register()
 	
 	public void getById(int id);
 }
