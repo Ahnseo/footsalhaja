@@ -27,7 +27,11 @@ public class AcademyServiceImpl implements AcademyService{
 	@Override
 	public List<BoardDto> listBord(Criteria cri) {
 		System.out.println("get List with Criteria: " +cri);
-		return mapper.getListWithPaging(cri);
+		
+		int offset = (cri.getPageNum() -1) * cri.getAmount();
+		int records = cri.getAmount();
+		
+		return mapper.getListWithPaging(cri, offset,records);
 	}
 	
 	@Override

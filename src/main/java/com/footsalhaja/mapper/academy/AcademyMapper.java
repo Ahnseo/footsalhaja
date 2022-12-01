@@ -19,7 +19,7 @@ public interface AcademyMapper {
 	public List<BoardDto> list();
 	
 	//페이지 네이션
-	public List<BoardDto> getListWithPaging(Criteria cri);
+	public List<BoardDto> getListWithPaging(Criteria cri, int offset, int records);
 	
 	public int getTotalCount(Criteria cri);
 	
