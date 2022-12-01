@@ -15,12 +15,6 @@ public class MainServiceImpl implements MainService {
 	@Autowired
 	private MainMapper mapper;
 	
-	@Override
-	public MainDto get(int bookId) {
-		
-		return null;
-		
-	}
 	
 	@Override
 	public int insert(MainDto mainBoard) {
