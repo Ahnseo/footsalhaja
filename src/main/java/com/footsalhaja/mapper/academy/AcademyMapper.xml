@@ -14,14 +14,7 @@
 	
 	<!-- list 목록 -->
 	<select id="list" resultType="com.footsalhaja.domain.academy.BoardDto">
-	SELECT 
-		ab_number,
-		ab_category,
-		ab_title,
-		ab_content,
-		member_userId,
-		ab_insertDatetime
-		
+	SELECT *
 	FROM academyBoard
 	ORDER BY ab_number DESC
 	</select>
@@ -60,7 +53,28 @@
 	WHERE ab_number = #{ab_number}
 	</delete>
 	
-	<!-- 페이지네이션 -->
+	<!-- 검색 조건 -->
+	<sql id="criteria">
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach item='type' collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()"> 
+							ab_title like '%#{keyword}%'
+						</when>
+						<when test="type == 'C'.toString()">
+							ab_content like '%#{keyword}%'
+						</when>
+						<when test="type == 'W'.toString()">
+							member_userId like '%#{keyword}%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+	
+	<!-- 페이지네이션 & 검색 -->
 	<select id="getListWithPaging" resultType="com.footsalhaja.domain.academy.BoardDto">
 	<![CDATA[
 	SELECT *
@@ -68,9 +82,23 @@
 		SELECT 
 			@rownum:=@rownum+1 rnum, A.* 
 		FROM academyBoard A, (SELECT @ROWNUM := 0) R
+		WHERE @rownum <#{pageNum} * #{amount}
 		)list
-	WHERE  rnum >(#{pageNum} - 1) * #{amount} AND rnum <#{pageNum} * #{amount}
+	WHERE ]]> 
+	
+		<!-- 검색 조건 호출 -->
+	<include refid="criteria"></include>
+	
+	<![CDATA[
+	rnum >(#{pageNum} - 1) * #{amount}
+	ORDER BY ab_number DESC	
 		]]>
+<!-- 	<![CDATA[	
+	SELECT *
+	FROM academyBoard
+	ORDER BY ab_number DESC
+	LIMIT (#{pageNum} - 1) * #{amount}, #{pageNum} * #{amount}
+	]]>	 -->
 	</select>
 	
 	
@@ -79,7 +107,9 @@
 	<select id="getTotalCount" resultType="int">
 		SELECT Count(*)
 		FROM academyBoard
-		WHERE ab_number >0
+		WHERE <!-- 검색조건 호출  -->
+			<include refid="criteria"></include>
+		ab_number >0
 	</select>
  
  </mapper>

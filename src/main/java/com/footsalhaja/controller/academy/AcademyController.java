@@ -27,6 +27,7 @@ public class AcademyController {
 	//list 목록
 	@GetMapping("list")
 	public void list(Criteria cri, Model model) {
+		System.out.println(cri);
 		// request param
 		// business logic
 		List<BoardDto> list = service.listBord(cri);
@@ -54,8 +55,8 @@ public class AcademyController {
 	}
 	
 	//get 게시글
-	@GetMapping({"/get", "/modify"})
-	public void get (@RequestParam("ab_number") int ab_number, Model model,  @ModelAttribute("cri") Criteria cri) {
+	@GetMapping("get")
+	public void get (@RequestParam("ab_number") int ab_number, Model model, @ModelAttribute("cri") Criteria cri) {
 		
 		BoardDto board = service.get(ab_number);
 		
