@@ -27,4 +27,23 @@
 		WHERE ab_replyNumber = #{ab_replyNumber}
 	</delete>
 	
+<!-- 댓글 get-->
+	<select id="selectById" resultType="com.footsalhaja.domain.academy.AcademyReplyDto">
+	SELECT
+		*
+	FROM
+		academyBoardReply
+	WHERE
+		ab_replyNumber = #{ab_replyNumber}
+		
+	</select>
+	
+<!-- 댓글 수정 -->
+	<update id="modify">
+	UPDATE academyBoardReply
+	SET
+		ab_replyContent = #{ab_replyContent}
+	WHERE 
+		ab_replyNumber = #{ab_replyNumber}
+	</update>	
 </mapper>

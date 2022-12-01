@@ -11,4 +11,8 @@ public interface AcademyReplyService {
 	public List<AcademyReplyDto> listReplyByab_number(int ab_number);
 	
 	public int removeById(int ab_replyNumber);
+
+	public AcademyReplyDto getById(int ab_replyNumber);
+	
+	public int modify(AcademyReplyDto reply);
 }

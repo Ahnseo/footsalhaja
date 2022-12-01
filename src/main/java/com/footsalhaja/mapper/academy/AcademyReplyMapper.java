@@ -12,4 +12,8 @@ public interface AcademyReplyMapper {
 
 	int deleteById(int ab_replyNumber);
 
+	AcademyReplyDto selectById(int ab_replyNumber);
+
+	int modify(AcademyReplyDto reply);
+
 }

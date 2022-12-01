@@ -28,4 +28,14 @@ public class AcademyReplyServiceImpl implements AcademyReplyService{
 	public int removeById(int ab_replyNumber) {
 		return mapper.deleteById(ab_replyNumber);
 	}
+	
+	@Override
+	public AcademyReplyDto getById(int ab_replyNumber) {
+		return mapper.selectById(ab_replyNumber);
+	}
+	
+	@Override
+	public int modify(AcademyReplyDto reply) {
+		return mapper.modify(reply);
+	}
 }

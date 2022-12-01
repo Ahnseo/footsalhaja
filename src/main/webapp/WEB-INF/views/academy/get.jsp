@@ -85,6 +85,25 @@
 	  </div>
 	</div>
 	
+	<%-- 댓글 수정 모달 --%>
+	<div class="modal fade" id="modifyReplyFormModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h1 class="modal-title fs-5">댓글 수정 양식</h1>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        <input type="text" id="modifyReplyInput">
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+	        <button type="button" data-bs-dismiss="modal" id="modifyFormModalSubmitButton" class="btn btn-danger">수정</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script>
@@ -94,6 +113,35 @@
 
 	listReply();
 	
+	/* 수정모달에서 댓글 읽어오기 */
+	function readReplyAndSetModalForm(replyId) {
+		fetch(ctx + "/reply/get/" + replyId)
+		.then(res => res.json())
+		.then(reply => {
+			document.querySelector("#modifyReplyInput").value = reply.ab_replyContent;
+		});
+	} 
+	
+	/* 댓글 수정 */
+	document.querySelector("#modifyFormModalSubmitButton").addEventListener("click", function() {
+	const content = document.querySelector("#modifyReplyInput").value;
+	const id = this.dataset.replyId;
+	const data = {id, content};
+	
+	
+	fetch(`\${ctx}/reply/modify`, {
+		method : "put",
+		headers : {
+			"Content-Type" : "application/json"
+		},
+		body : JSON.stringify(data)
+	})
+	.then(res => res.json())
+	.then(data => document.querySelector("#replyMessage").innerText = data.message)
+	.then(() => listReply());
+}); 
+	
+	/* 댓글 삭제 */
 	document.querySelector("#removeConfirmModalSubmitButton").addEventListener("click", function() {
 		//댓글 삭제 버튼은 여러개고 모달창의 삭제버튼은 하나이므로
 		//삭제할 댓글의 삭제버튼의replyID를 가져올 수 있어(아래 setAttribute로 부여)
@@ -110,14 +158,26 @@
 			replyListContainer.innerHTML = "";
 			
 			for (const item of list) {
-				
+				const modifyReplyButtonId = `modifyReplyButton\${item.ab_replyNumber}`;
+
 				const removeReplyButtonId = `removeReplyButton\${item.ab_replyNumber}`;
 				
 				const replyDiv = `<div>\${item.ab_replyContent} : \${item.ab_replyInsertDatetime}
-								<button data-bs-toggle="modal" data-bs-target="#removeReplyConfirmModal" data-reply-id="\${item.ab_replyNumber}" id="\${removeReplyButtonId}">삭제</button>
+								<button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#modifyReplyFormModal" data-reply-id="\${item.ab_replyNumber}" id="\${modifyReplyButtonId}">
+									<i class="fa-solid fa-pen"></i>
+								</button>
+								<button data-bs-toggle="modal" data-bs-target="#removeReplyConfirmModal" data-reply-id="\${item.ab_replyNumber}" id="\${removeReplyButtonId}">
+									<i class="fa-solid fa-x"></i>
+								</button>
 								</div>`;
 				
 				replyListContainer.insertAdjacentHTML("beforeend", replyDiv);
+				
+				// 수정 폼 모달에 댓글 내용 넣기
+				document.querySelector("#" + modifyReplyButtonId).addEventListener("click", function() {
+						document.querySelector("#modifyFormModalSubmitButton").setAttribute("data-reply-id", this.dataset.replyId);
+						readReplyAndSetModalForm(this.dataset.replyId);
+					}); 
 				
 				document.querySelector("#" + removeReplyButtonId)
 				.addEventListener("click", function() {
