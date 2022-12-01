@@ -23,4 +23,9 @@ public class AcademyReplyServiceImpl implements AcademyReplyService{
 	public List<AcademyReplyDto> listReplyByab_number(int ab_number) {
 		return mapper.selectReplyByBoardId(ab_number);
 	}
+	
+	@Override
+	public int removeById(int ab_replyNumber) {
+		return mapper.deleteById(ab_replyNumber);
+	}
 }

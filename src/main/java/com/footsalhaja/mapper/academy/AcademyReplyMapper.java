@@ -10,4 +10,6 @@ public interface AcademyReplyMapper {
 
 	List<AcademyReplyDto> selectReplyByBoardId(int ab_number);
 
+	int deleteById(int ab_replyNumber);
+
 }

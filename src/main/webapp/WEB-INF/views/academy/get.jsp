@@ -43,7 +43,7 @@
 
 	<!-- 댓글 창 -->
 	
-	<div id="replyMessage1">
+	<div id="replyMessage">
 	</div>
 	
 	<div class="container-md">
@@ -53,7 +53,7 @@
 				<input type="hidden" id="ab_number" value="${board.ab_number }">
 				<input type="hidden" id="member_userId" value="${board.member_userId }">
 				<input type="text" id="replyInput">
-				<button id="replySendButton1">댓글쓰기</button>
+				<button id="replySendButton">댓글쓰기</button>
 			</div>
 		</div>
 		
@@ -65,6 +65,26 @@
 			</div>
 		</div>
 	</div>
+	
+	<%-- 댓글 삭제 확인 모달 --%>
+	<div class="modal fade" id="removeReplyConfirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h1 class="modal-title fs-5" id="exampleModalLabel">댓글 삭제 확인</h1>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        댓글을 삭제하시겠습니까?
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+	        <button type="button" data-bs-dismiss="modal" id="removeConfirmModalSubmitButton" class="btn btn-danger">삭제</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script>
@@ -73,6 +93,13 @@
 	const ctx = "${pageContext.request.contextPath}";
 
 	listReply();
+	
+	document.querySelector("#removeConfirmModalSubmitButton").addEventListener("click", function() {
+		//댓글 삭제 버튼은 여러개고 모달창의 삭제버튼은 하나이므로
+		//삭제할 댓글의 삭제버튼의replyID를 가져올 수 있어(아래 setAttribute로 부여)
+	 //모달 삭제버튼에 전달하고 해당 replyID의 댓글 삭제 진행
+	removeReply(this.dataset.replyId);
+	});
 	
 	function listReply() {
 		const ab_number = document.querySelector("#ab_number").value;
@@ -83,13 +110,39 @@
 			replyListContainer.innerHTML = "";
 			
 			for (const item of list) {
-				const replyDiv = `<div>\${item.ab_replyContent} : \${item.ab_replyInsertDatetime}</div>`;
+				
+				const removeReplyButtonId = `removeReplyButton\${item.ab_replyNumber}`;
+				
+				const replyDiv = `<div>\${item.ab_replyContent} : \${item.ab_replyInsertDatetime}
+								<button data-bs-toggle="modal" data-bs-target="#removeReplyConfirmModal" data-reply-id="\${item.ab_replyNumber}" id="\${removeReplyButtonId}">삭제</button>
+								</div>`;
+				
 				replyListContainer.insertAdjacentHTML("beforeend", replyDiv);
+				
+				document.querySelector("#" + removeReplyButtonId)
+				.addEventListener("click", function() {
+					//모달 삭제버튼에 전달 할 삭제할 댓글의 삭제버튼의replyID를 setAttribute를 이용해 부여
+					document.querySelector("#removeConfirmModalSubmitButton").setAttribute("data-reply-id", this.dataset.replyId);
+				});
 			}
 		});
 	}
 	
-	document.querySelector("#replySendButton1").addEventListener("click", function() {
+	
+	
+	/* 댓글 삭제 */
+	function removeReply(replyId) {
+
+	fetch(ctx + "/reply/remove/" + replyId, {
+		method: "delete"
+	})
+	.then(res => res.json())
+	.then(data => document.querySelector("#replyMessage").innerText = data.message)
+	.then(() => listReply());
+}
+	
+	
+	document.querySelector("#replySendButton").addEventListener("click", function() {
 		const ab_number = document.querySelector("#ab_number").value;
 		const ab_replyContent = document.querySelector("#replyInput").value;
 		const member_userId = document.querySelector("#member_userId").value;
@@ -110,7 +163,7 @@
 		.then(res => res.json())
 		.then(data => {
 			document.querySelector("#replyInput").value = "";
-			document.querySelector("#replyMessage1").innerText = data.message;
+			document.querySelector("#replyMessage").innerText = data.message;
 		})
 		.then(() => listReply());
 	});
