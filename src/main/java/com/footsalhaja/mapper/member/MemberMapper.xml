@@ -4,7 +4,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
  <mapper namespace="com.footsalhaja.mapper.member.MemberMapper">
-	
+	<!-- 회원정보 저장 -->
 	<insert id="insertMember">
 		INSERT INTO member 
 			(  userId,   name,    password,    nickName,    email,    birthYY,    birthMM,    birthDD,    activityArea,    phone,     personalGender,    permission  )
@@ -12,6 +12,24 @@
 			(#{userId}, #{name}, #{password}, #{nickName}, #{email}, #{birthYY}, #{birthMM}, #{birthDD}, #{activityArea}, #{phone},  #{personalGender}, #{permission} )
 	</insert>
  	
+ 	<!-- 회원정보 삭제 -->
+ 	<delete id="deleteMemberInfoByUserId">
+	 	DELETE FROM member
+	 	WHERE userId = #{userId}
+ 	</delete>
+ 	
+ 	<update id="updateMemberInfoByUserId">
+ 		UPDATE member
+ 		SET 	 		
+	 		password = #{password},
+	 		nickName = #{nickName},
+	 		email = #{email},
+	 		phone = #{phone}
+	 	WHERE
+	 		userId = #{userId}	 			 		
+ 	</update>
+ 	
+ 	<!-- 모든 회원정보 List로 가져오기 -->
  	<select id="selectMemberList" resultType="com.footsalhaja.domain.member.MemberDto">
  	SELECT 
  		userId,
@@ -31,6 +49,7 @@
  	ORDER BY name	
  	</select>
  	
+ 	<!-- userId 로 하나의 회원정보 가져오기 -->
  	<select id="selectMemberInfoByUserId" resultType="com.footsalhaja.domain.member.MemberDto">
 	SELECT 
 		userId,

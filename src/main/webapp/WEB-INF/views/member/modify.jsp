@@ -16,50 +16,49 @@
 <title>Insert title here</title>
 </head>
 <body>
-<!--현재 member테이블 의 컬럼들 ( userId, name, password, nickName, email, birthYY, birthMM, birthDD, activityArea, phone, personalGender, permission ) -->
 <my:navbar active=""></my:navbar>
 
 <div class="container">
 	<div class="row">
 		<div class="col">
-			<h3>${member.userId}님의 회원정보</h3>
-			<c:url value="/member/modify" var="modifyLink">
-				<c:param name="userId" value="${member.userId}"/>
-			</c:url>
-			<form action="${modifyLink}" method="get">	
+			<h3>${member.userId}님의 회원정보수정</h3>
+			<form action="/member/modify" method="post">
 				ID <input type="text" name="userId" value="${member.userId}" readonly >
 				<br>
-				비밀번호 <input type="text" name="password" value="${member.password}" readonly >
+				비밀번호 <input type="text" name="password" value="${member.password}"  >
 				<br>
 				이름 <input type="text" name="name" value="${member.name}" readonly >
 				<br>
 				성별 <input type="text" name="personalGender" value="${member.personalGender}" readonly >
 				<br>
-				닉네임 <input type="text" name="nickName" value="${member.nickName}" readonly >
+				닉네임 <input type="text" name="nickName" value="${member.nickName}"  >
 				<br>
 				개인ID/팀ID <input type="text" name="permission" value="${member.permission}" readonly >
-				<br>
-				Email <input type="email" name="email" value="${member.email}" readonly >
+					<br>
+				Email <input type="email" name="email" value="${member.email}"  >
 				<br>
 				생년월일<br>
-				<input type="text" name="birthYY" value="${member.birthYY}" readonly >년 
+				<input type="text" name="birthYY" value="${member.birthYY}" readonly >년
 				<input type="text" name="birthMM" value="${member.birthMM}" readonly >월
-				<input type="text" name="birthDD" value="${member.birthDD}" readonly >일
-
+				<input type="text" name="birthDD" value="${member.birthDD}" readonly >일 
 				<br>
+				
 				활동지역 <input type="text" name="activityArea" value="${member.activityArea}" readonly >
 				<br>
-				전화번호 <input type="text" name="phone" value="${member.phone}" readonly >
+				전화번호 <input type="text" name="phone" value="${member.phone}" >
 				<br>
-				<input type="submit" value="회원정보수정">
+				<input type="submit" value="수정하기">
+			</form>
+			<form action="/member/delete" method="post">
+				<%-- 히든 input userId 사용해서 post 방식으로 controller 에게 값 넘기기 !  --%>
+				<input type="hidden" name="userId" value="${member.userId}"> 
+				<input type="submit" value="탈퇴하기">
+				탈퇴하기 : Foreign Key 함께 삭제하는 코드를 작성해야하므로, 나중에 DB통합 할때 수정하겠습니다 .
 			</form>
 		</div>
 	</div>
 </div>	
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-
-
-
 </body>
 </html>
