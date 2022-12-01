@@ -50,8 +50,6 @@
 		<result column="teamGender" property="teamGender"></result>
  	</resultMap>	
 
- 		   
- 	
 
 
  </mapper>

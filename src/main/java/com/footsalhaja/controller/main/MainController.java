@@ -28,7 +28,6 @@ public class MainController {
 		
 		model.addAttribute("main", main);
 
-		
 	}
 	
 	@GetMapping("insert")
@@ -61,9 +60,12 @@ public class MainController {
 		
 	}
 	
-	@GetMapping("address")
+
+	@GetMapping("address") 
 	public void address() {
-		
+		System.out.println("카카오 API 테스트");
+	
+
 	}
 	
 }
