@@ -161,7 +161,11 @@
 			const replyListContainer = document.querySelector("#replyListContainer");
 			replyListContainer.innerHTML = "";
 			
-			for (const item of list) {
+			const replyCnt=list[0].replyCnt;
+			
+			console.log(replyCnt);
+			
+			for (const item of list[0].list) {
 				const modifyReplyButtonId = `modifyReplyButton\${item.ab_replyNumber}`;
 
 				const removeReplyButtonId = `removeReplyButton\${item.ab_replyNumber}`;
