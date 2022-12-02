@@ -44,6 +44,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 			}
 			User user = new User(member.getUserId(), encodedPw, List.of() ); //import org.springframework.security.core.userdetails.User;
 																	// 세번째 파라미터 : 권한 (authorization), 부장님인지 대리님인지 등등 
+			// 급하게 만들었습니다.. 
+			// authorityList 기능 추가해야하고.
+			// encodedPw 기능추가해야합니다.
 			System.out.println(user);
 			return user;
 			
