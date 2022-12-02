@@ -48,10 +48,10 @@
 				<h1>no.${main.bookId }</h1> 
 				
 				<c:url value="/main/modify" var="modifyLink">
-					<c:param name="id" value="${main.bookId }"></c:param>
+					<c:param name="bookId" value="${main.bookId }"></c:param>
 				</c:url>
 				<a href="${modifyLink }">
-					<button id="modifyButton" class="btn">수정하기</button>				
+					<button id="modifyButton" type="button">수정하기</button>				
 				</a>
 				
 				<div class="form-floating mb-3">

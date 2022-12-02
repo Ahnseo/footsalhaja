@@ -56,16 +56,23 @@ public class MainController {
 	}
 	
 	@GetMapping("modify")
-	public void modify() {
+	public void modify(int bookId, Model model) {
+		MainDto main = service.get(bookId);
 		
+		model.addAttribute("main", main);
+
+	}
+
+	
+	 @RequestMapping("modify") 
+	 public String modify(MainDto main) {
+		 service.update(main);
+	 
+	 	return "redirect:/main/list";
+	 
+	 
 	}
 	
 
-	@GetMapping("address") 
-	public void address() {
-		System.out.println("카카오 API 테스트");
-	
-
-	}
 	
 }

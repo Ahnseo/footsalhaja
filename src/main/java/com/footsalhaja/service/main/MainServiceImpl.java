@@ -32,11 +32,13 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
-
 	public MainDto get(int bookId) {
 		return mapper.getById(bookId);
 
 	}
-
+	
+	public int update(MainDto main) {
+		return mapper.update(main);
+	}
 
 }

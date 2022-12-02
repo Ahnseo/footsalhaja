@@ -12,13 +12,13 @@
  	<!-- 게시글 등록 -->
  	<insert id="insert">
  	INSERT INTO book
-		(bookId, stadiumTitle, content, matchType, level, status, bookDatetime, teamGender, location_locationId, member_userId)
+		(stadiumTitle, content, matchType, level, status, bookDate, datetime, teamGender, location_locationId, member_userId)
 	VALUES
-		(#{bookId}, #{stadiumTitle}, #{content}, #{matchType}, #{level}, #{status}, #{bookDatetime}, #{teamGender}, #{location_locationId}, #{member_userId})
+		(#{stadiumTitle}, #{content}, #{matchType}, #{level}, #{status}, #{bookDate}, #{datetime}, #{teamGender}, #{location_locationId}, 'kim')
  	</insert>
  
 
-
+	<!-- 게시물 얻어오기  -->
  	<select id="getById" resultMap="getMap">
  	SELECT 
  		m.userId,
@@ -37,6 +37,7 @@
  	WHERE 
  		b.bookId = #{bookId}
  	</select>
+ 	
  	<resultMap type="com.footsalhaja.domain.main.MainDto" id="getMap">
  		<id column="bookId" property="bookId"></id>
  		<result column="userId" property="userId"/>
@@ -50,6 +51,21 @@
 		<result column="teamGender" property="teamGender"></result>
  	</resultMap>	
 
+
+	<!--게시물 수정하기  -->
+	<update id="update">
+	UPDATE book
+	SET
+		stadiumTitle = #{stadiumTitle}, 
+		content = #{content},
+		matchType = #{matchType},
+		level = #{level},
+		status = #{status},
+		bookDatetime = #{bookDatetime}, 
+		teamGender = #{teamGender}
+	WHERE bookId = #{bookId}
+
+	</update>
 
 
  </mapper>

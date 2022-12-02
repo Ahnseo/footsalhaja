@@ -34,14 +34,21 @@
 		</div>
 		
 		<div class="mb-3">
-			<input type="datetime-local" name="bookDatetime"/>
+			<input type="Date" name="bookDate"/>
 		</div>
-		
-		<div class="mb-3">
-			<input type="text" placeholder="경기장 주소 검색">
-			<button onclick="location='address'">주소검색</button>		
+		<div>
+			<select name="datetime" >
+				<option value="8-10시">8-10시</option>
+				<option value="10-12시">10-12시</option>
+				<option value="12-2시">12-2시</option>
+			</select>
 		</div>
-		
+		<div>
+			<select name="location_locationId" id="">
+				<option value="7">경기</option>
+			</select>
+		</div>
+	
 
 		<div class="mb-3">
 			<input type="text" name="matchType" placeholder="matchType">

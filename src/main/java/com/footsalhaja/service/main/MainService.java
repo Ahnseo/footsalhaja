@@ -8,6 +8,6 @@ public interface MainService {
 
 	public int insert(MainDto mainBoard);
 	
-
+	public int update(MainDto main);
 
 }
