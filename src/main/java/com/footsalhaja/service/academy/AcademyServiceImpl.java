@@ -4,16 +4,21 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.footsalhaja.domain.academy.BoardDto;
 import com.footsalhaja.domain.academy.Criteria;
 import com.footsalhaja.mapper.academy.AcademyMapper;
+import com.footsalhaja.mapper.academy.AcademyReplyMapper;
 
 @Service
 public class AcademyServiceImpl implements AcademyService{
 	
 	@Autowired
 	private AcademyMapper mapper;
+	
+	@Autowired
+	private AcademyReplyMapper replyMapper;
 
 	
 	@Override
@@ -45,10 +50,11 @@ public class AcademyServiceImpl implements AcademyService{
 		// TODO Auto-generated method stub
 		return mapper.modify(board);
 	}
-
+	
+	@Transactional
 	@Override
 	public int remove(int ab_number) {
-		// TODO Auto-generated method stub
+		replyMapper.deleteByBoardId(ab_number);
 		return mapper.remove(ab_number);
 	}
 	
