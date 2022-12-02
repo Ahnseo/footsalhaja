@@ -20,7 +20,7 @@
   <div class="collapse navbar-collapse flex-column " id="navbar">
     <ul class="navbar-nav  w-100 px-3 justify-content-center">
       <li class="nav-item active">
-        <a class="nav-link" href="#">풋살하자<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="http://localhost:8080/main/list">풋살하자<span class="sr-only">(current)</span></a>
       </li> 
     </ul>
 
@@ -28,17 +28,18 @@
     <ul class="navbar-nav w-100 bg-secondary px-3 justify-content-end">
 	<li class="nav-item active">
         	<a class="nav-link" href="#">공지사항<span class="sr-only">(current)</span></a>
-      </li>
+    </li>
      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
           커뮤니티
         </a>
  
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="#">자유게시판</a>
-          <a class="dropdown-item" href="/academy/list">아카데미</a>
-          <a class="dropdown-item" href="#">중고장터</a>
-        </div>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#">자유게시판</a></li>
+          <li><a class="dropdown-item" href="http://localhost:8080/academy/list">아카데미</a></li>
+          <li><a class="dropdown-item" href="#">중고장터</a></li>
+        </ul>
+       </li>
         
         <c:url value="/qna/qnaMainBoard" var="qnaLink"></c:url>
         <li class="nav-item active">

@@ -35,9 +35,11 @@ public class AcademyReplyController {
 	public Map<String, Object> add(@RequestBody AcademyReplyDto reply) {
 
 		Map<String, Object> map = new HashMap<>();
-		System.out.println(reply);
 		
 		int cnt = service.addReply(reply);
+		
+		System.out.println(reply);
+		
 		if (cnt == 1) {
 			map.put("message", "새 댓글이 등록되었습니다.");
 		} else {
@@ -73,6 +75,7 @@ public class AcademyReplyController {
 		Map<String, Object> map = new HashMap<>();
 
 		int cnt = service.modify(reply);
+		
 		
 		if (cnt == 1) {
 			map.put("message", "댓글이 수정되었습니다.");

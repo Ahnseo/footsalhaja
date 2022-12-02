@@ -124,10 +124,9 @@
 	
 	/* 댓글 수정 */
 	document.querySelector("#modifyFormModalSubmitButton").addEventListener("click", function() {
-	const content = document.querySelector("#modifyReplyInput").value;
-	const id = this.dataset.replyId;
-	const data = {id, content};
-	
+	const ab_replyContent = document.querySelector("#modifyReplyInput").value;
+	const ab_replyNumber = this.dataset.replyId;
+	const data = {ab_replyNumber, ab_replyContent};
 	
 	fetch(`\${ctx}/reply/modify`, {
 		method : "put",
@@ -137,7 +136,8 @@
 		body : JSON.stringify(data)
 	})
 	.then(res => res.json())
-	.then(data => document.querySelector("#replyMessage").innerText = data.message)
+	.then(data => {
+		document.querySelector("#replyMessage").innerText = data.message;})
 	.then(() => listReply());
 }); 
 	
