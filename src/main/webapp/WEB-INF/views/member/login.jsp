@@ -38,6 +38,9 @@
 			
 				<input type="submit" value="로그인" >
 			</form>
+			<form action="/member/insert" >
+				<input type="submit" value="회원가입" >
+			</form>
 		</div>
 	</div>
 </div>
