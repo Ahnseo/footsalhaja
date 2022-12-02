@@ -21,7 +21,12 @@
 <div class="container">
 	<div class="row">
 		<div class="col">
-			<h3>버튼만들예정 (forward -> /admin/list.jsp 회원목록)</h3>
+			<h3>여러개의 버튼만들예정 </h3>
+			<p>회원목록 (=사용자목록 )) : /admin/list.jsp </p>
+			<p>운영진 설정 </p>
+			<p>메일발송 </p>
+			<p>문자(SMS )발송 </p>
+			<p></p>
 			<table class="table">
 				<thead>
 					<th>#status</th>
