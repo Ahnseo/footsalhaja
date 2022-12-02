@@ -56,13 +56,20 @@
           <a class="dropdown-item" href="#">중고장터</a>
         </div>
         
+        <c:url value="/mypage/list" var="mypageLink">
+        	<%-- security 를 사용하여, 로그인 된 userId를 c:param value="로그인된 ID값" 사용할 예정입니다. 현재 주소창에 접속방법 예시) mypage/list?userId=askc6361 --%>
+        	<c:param name="userId" value=""/>
+        </c:url>
+        <li class="nav-item active">
+        	<a class="nav-link ${active eq 'mypageLink' ? 'active' : '' }" href="${mypageLink}">마이페이지</a>
+      	</li>
         <c:url value="/qna/qnaMainBoard" var="qnaLink"></c:url>
         <li class="nav-item active">
         	<a class="nav-link ${active eq 'qnaMainBoard' ? 'active' : '' }" href="${qnaLink}">고객문의</a>
       	</li>
-        <c:url value="/member/list" var="memberLink"></c:url>
+        <c:url value="/admin/list" var="memberLink"></c:url>
         <li class="nav-item active">
-        	<a class="nav-link  ${active eq 'memberList' ? 'active' : '' }" href="${memberLink}">회원목록</a>
+        	<a class="nav-link  ${active eq 'memberList' ? 'active' : '' }" href="${memberLink}">관리자</a>
       	</li>
         <c:url value="/member/insert" var="insertMemberLink"></c:url>
         <li class="nav-item active">

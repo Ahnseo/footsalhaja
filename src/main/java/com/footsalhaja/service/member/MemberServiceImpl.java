@@ -41,6 +41,9 @@ public class MemberServiceImpl implements MemberService {
 	// userId로 회원정보 삭제하기 (modify.jsp 와 delete에 사용할 것 )
 	@Override
 	public int deleteMemberInfoByUserId(String userId) {
+		//회원탈퇴 FK Authority ByUserId
+		memberMapper.deleteAuthorityByUserId(userId);
+		//회원탈퇴 member ByUserId
 		int cnt = memberMapper.deleteMemberInfoByUserId(userId);
 		return cnt;
 	}

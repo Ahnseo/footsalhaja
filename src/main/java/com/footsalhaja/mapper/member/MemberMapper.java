@@ -18,10 +18,12 @@ public interface MemberMapper {
 	//RequestParam 으로 받아온 userId 로 db 요청
 	public MemberDto selectMemberInfoByUserId(String userId);
 	
-	//회원정보 삭제하기
-	public int deleteMemberInfoByUserId(String userId);
-
 	public int updateMemberInfoByUserId(MemberDto memberModifiedValues);
+		
+	//회원탈퇴 (member ByUserId)
+	public int deleteMemberInfoByUserId(String userId);
+	//회원탈퇴 (authority ByUserId) 
+	public void deleteAuthorityByUserId(String userId);
 	
 	
 }

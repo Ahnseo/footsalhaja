@@ -12,11 +12,6 @@
 			(#{userId}, #{name}, #{password}, #{nickName}, #{email}, #{birthYY}, #{birthMM}, #{birthDD}, #{activityArea}, #{phone},  #{personalGender}, #{permission} )
 	</insert>
  	
- 	<!-- 회원정보 삭제 -->
- 	<delete id="deleteMemberInfoByUserId">
-	 	DELETE FROM member
-	 	WHERE userId = #{userId}
- 	</delete>
  	
  	<update id="updateMemberInfoByUserId">
  		UPDATE member
@@ -70,4 +65,15 @@
 		userId = #{userId}
 	</select>
 	
+ 	<!-- 회원탈퇴 member ByUserId -->
+ 	<delete id="deleteMemberInfoByUserId">
+	 	DELETE FROM member
+	 	WHERE userId = #{userId}
+ 	</delete>
+ 	<!-- 회원탈퇴 FK Authority ByUserId -->
+ 	<delete id="deleteAuthorityByUserId">
+ 		DELETE FROM authority
+	 	WHERE userId = #{userId}
+ 	</delete>
+ 	
  </mapper>
