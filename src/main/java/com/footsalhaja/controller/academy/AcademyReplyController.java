@@ -1,5 +1,6 @@
 package com.footsalhaja.controller.academy;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.footsalhaja.domain.academy.AcademyReplyDto;
+import com.footsalhaja.domain.academy.Criteria;
+import com.footsalhaja.domain.academy.ReplyPageDto;
 import com.footsalhaja.service.academy.AcademyReplyService;
 
 @Controller
@@ -24,11 +27,45 @@ public class AcademyReplyController {
 	@Autowired
 	private AcademyReplyService service;
 	
+	/*
+	 * @GetMapping("list/{ab_number}")
+	 * 
+	 * @ResponseBody public Map<String, Object> list(@PathVariable("ab_number") int
+	 * ab_number, Criteria cri ) { System.out.println(ab_number);
+	 * 
+	 * //service의 replyWithPaging(), listReplyByab_number 두개 다 리턴 Map<String,
+	 * Object> map = new HashMap<>();
+	 * 
+	 * ReplyPageDto replyWithPaging = service.replyWithPaging(cri, ab_number);
+	 * 
+	 * List<AcademyReplyDto> listReplyByab_number=
+	 * service.listReplyByab_number(ab_number);
+	 * 
+	 * map.put("replyList", listReplyByab_number);
+	 * 
+	 * map.put("replyPage", replyWithPaging);
+	 * 
+	 * 
+	 * System.out.println(map);
+	 * 
+	 * return map; }
+	 */
 	@GetMapping("list/{ab_number}")
-	@ResponseBody
-	public List<AcademyReplyDto> list(@PathVariable int ab_number) {
-		return service.listReplyByab_number(ab_number);
+	@ResponseBody 
+	public List<Object> list(@PathVariable("ab_number") int ab_number, Criteria cri) {
+		System.out.println(ab_number);
+		
+		List<Object> replyList = new ArrayList<>();
+		
+		ReplyPageDto replyWithPaging = service.replyWithPaging(cri, ab_number);
+		
+		replyList.add(replyWithPaging);
+		System.out.println(replyList);
+		return replyList;
+		
 	}
+	 
+
 
 	@PostMapping("add")
 	@ResponseBody

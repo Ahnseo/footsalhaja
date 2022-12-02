@@ -23,9 +23,7 @@ public class AcademyServiceImpl implements AcademyService{
 	
 	@Override
 	public void insert(BoardDto board) {
-		// TODO Auto-generated method stub
-		System.out.println("테스트용 등록 확인 게시글 번호" + board);
-		
+
 		mapper.insert(board);
 	}
 	

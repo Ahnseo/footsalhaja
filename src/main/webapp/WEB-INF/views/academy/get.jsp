@@ -66,6 +66,9 @@
 		</div>
 	</div>
 	
+	
+	
+	
 	<%-- 댓글 삭제 확인 모달 --%>
 	<div class="modal fade" id="removeReplyConfirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog">
@@ -149,6 +152,7 @@
 	removeReply(this.dataset.replyId);
 	});
 	
+	//댓글 리스트
 	function listReply() {
 		const ab_number = document.querySelector("#ab_number").value;
 		fetch(`\${ctx}/reply/list/\${ab_number}`)

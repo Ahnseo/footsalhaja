@@ -7,7 +7,6 @@ import com.footsalhaja.domain.academy.Criteria;
 
 public interface AcademyService {
 
-	//BoardDto는 community.academy.BoardDto 이므로 각자 Dto 파일 먼저 만들고 작성하기
 	public void insert(BoardDto board);
 	
 	public BoardDto get(int ab_number);

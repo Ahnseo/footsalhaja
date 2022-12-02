@@ -27,7 +27,6 @@ public class AcademyController {
 	//list 목록
 	@GetMapping("list")
 	public void list(Criteria cri, Model model) {
-		System.out.println(cri);
 		// request param
 		// business logic
 		List<BoardDto> list = service.listBord(cri);
