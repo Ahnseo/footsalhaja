@@ -6,15 +6,12 @@
 
  <mapper namespace="com.footsalhaja.mapper.main.MainMapper">
 
- 	
-
- 
  	<!-- 게시글 등록 -->
  	<insert id="insert">
  	INSERT INTO book
-		(stadiumTitle, content, matchType, level, status, bookDate, datetime, teamGender, location_locationId, member_userId)
+		(stadiumTitle, content, matchType, level, status, bookDate, teamGender, location_locationId, member_userId)
 	VALUES
-		(#{stadiumTitle}, #{content}, #{matchType}, #{level}, #{status}, #{bookDate}, #{datetime}, #{teamGender}, #{location_locationId}, 'kim')
+		(#{stadiumTitle}, #{content}, #{matchType}, #{level}, #{status}, #{bookDate}, #{teamGender}, #{location_locationId}, #{member_userId})
  	</insert>
  
 

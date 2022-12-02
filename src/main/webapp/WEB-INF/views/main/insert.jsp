@@ -28,24 +28,26 @@
 			<input required="required" type="text" class="form-control" name="stadiumTitle">		
 		</div>
 		
-		<div class="mb-3">
-			<label for="" class="form-label">본문</label>
-			<textarea required="required" rows="10" class="form-control" name="content"></textarea>
-		</div>
 		
 		<div class="mb-3">
 			<input type="Date" name="bookDate"/>
 		</div>
+		
 		<div>
-			<select name="datetime" >
+			<select id="datetime" name="datetime" >
 				<option value="8-10시">8-10시</option>
 				<option value="10-12시">10-12시</option>
 				<option value="12-2시">12-2시</option>
 			</select>
 		</div>
+		
 		<div>
-			<select name="location_locationId" id="">
-				<option value="7">경기</option>
+			<select name="location_locationId" id="location_locationId">
+				<option value="천마 풋살파크">천마 풋살파크</option>
+				<option value="아디다스 더베이스">아디다스 더베이스</option>
+				<option value="도봉 루다 풋살장">도봉 루다 풋살장</option>
+				<option value="영등포 SKY 풋살파크 A구장">영등포 SKY 풋살파크 A구장</option>
+				<option value="은평 롯데몰 A구장">은평 롯데몰 A구장</option>
 			</select>
 		</div>
 	
@@ -66,6 +68,10 @@
 			<input type="text" name="status" placeholder="status">
 		</div>
 		
+		<div class="mb-3">
+			<label for="" class="form-label">본문</label>
+			<textarea required="required" rows="10" class="form-control" name="content"></textarea>
+		</div>
 		
 		
 		
