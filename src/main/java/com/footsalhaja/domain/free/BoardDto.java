@@ -16,4 +16,6 @@ public class BoardDto {
 	private int fb_likeCount;
 	private int fb_replyCount;
 	private int fb_viewCount;
+	
+	
 }
