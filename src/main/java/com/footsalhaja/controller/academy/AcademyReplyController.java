@@ -27,33 +27,15 @@ public class AcademyReplyController {
 	@Autowired
 	private AcademyReplyService service;
 	
-	/*
-	 * @GetMapping("list/{ab_number}")
-	 * 
-	 * @ResponseBody public Map<String, Object> list(@PathVariable("ab_number") int
-	 * ab_number, Criteria cri ) { System.out.println(ab_number);
-	 * 
-	 * //service의 replyWithPaging(), listReplyByab_number 두개 다 리턴 Map<String,
-	 * Object> map = new HashMap<>();
-	 * 
-	 * ReplyPageDto replyWithPaging = service.replyWithPaging(cri, ab_number);
-	 * 
-	 * List<AcademyReplyDto> listReplyByab_number=
-	 * service.listReplyByab_number(ab_number);
-	 * 
-	 * map.put("replyList", listReplyByab_number);
-	 * 
-	 * map.put("replyPage", replyWithPaging);
-	 * 
-	 * 
-	 * System.out.println(map);
-	 * 
-	 * return map; }
-	 */
-	@GetMapping("list/{ab_number}")
+
+	@GetMapping("list/{ab_number}/{page}")
 	@ResponseBody 
-	public List<Object> list(@PathVariable("ab_number") int ab_number, Criteria cri) {
+	public List<Object> list(@PathVariable("ab_number") int ab_number, @PathVariable("page")int page) {
 		System.out.println(ab_number);
+		
+		//@GetMapping(value = "/list/{ab_number}/{page}"의 'page'값은 Criteria를 생성해서 직접 처리해야 함
+		Criteria cri = new Criteria(page, 10);
+		System.out.println(page);
 		
 		List<Object> replyList = new ArrayList<>();
 		
@@ -64,8 +46,7 @@ public class AcademyReplyController {
 		return replyList;
 		
 	}
-	 
-
+	
 
 	@PostMapping("add")
 	@ResponseBody

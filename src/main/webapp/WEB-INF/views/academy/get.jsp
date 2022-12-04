@@ -62,6 +62,10 @@
 				<div id="replyListContainer">
 				
 				</div>
+				<!-- 댓글 페이지 출력란 -->
+			<div id="replyPageFooter">
+			</div>
+				
 			</div>
 		</div>
 	</div>
@@ -152,23 +156,100 @@
 	removeReply(this.dataset.replyId);
 	});
 	
+	/* 댓글 페이징 버튼 이동 */
+	
+	var replyPageFooter = document.getElementById("replyPageFooter");
+	
+	let pageButtons = document.querySelectorAll(".page-item a")
+	
+	for (const button of pageButtons){
+	
+		button.addEventListener("click", function(e) {
+			e.preventDefault();
+			console.log("page click");
+			var targetPageNum = this.getAttribute("href");
+			console.log("targetPageNum : " + targetPageNum);
+			//댓글 페이지 번호를 변경한 후 
+			pageNum = targetPageNum;
+			//해당 페이지의 댓글 가져오게 함
+			listReply(pageNum);
+		})
+	}
+	
+	
 	//댓글 리스트
-	function listReply() {
+	function listReply(page) {
 		const ab_number = document.querySelector("#ab_number").value;
-		fetch(`\${ctx}/reply/list/\${ab_number}`)
+		
+		const urlParams = new URL(location.href).searchParams;
+		
+		if (!urlParams.get('page')) {
+			urlParams.set('page',1);
+		};
+		
+		var page = urlParams.get('page');
+		
+		console.log(page);
+		
+		fetch(`\${ctx}/reply/list/\${ab_number}/\${page}`)
 		.then(res => res.json())
 		.then(list => {
 			const replyListContainer = document.querySelector("#replyListContainer");
 			replyListContainer.innerHTML = "";
 			
-			const replyCnt=list[0].replyCnt;
+ 			const replyCnt=list[0].replyCnt;
 			
 			console.log(replyCnt);
 			
+			/* 댓글 페이지 번호 출력하는 show ReplyPage()  */
+			var pageNum = 1;
+			const replyPageFooter = document.querySelector("#replyPageFooter");
+			replyPageFooter.innerHTML = "";
+			
+			function showReplyPage(replyCnt) {
+				var endNum = Math.ceil(pageNum / 10.0) * 10;
+				var startNum = endNum - 9;
+				
+				var prev = startNum != 1;
+				var next = false;
+				
+				if(endNum * 10 >= replyCnt) {
+					endNum = Math.ceil(replyCnt/10.0);
+				}
+				
+				if(endNum * 10 < replyCnt) {
+					next = true;
+				}
+				var str = "<ul class='pagination pull-right'>";
+				//academy/페이지 번호로만 나오길래 아래와 같이 url변수 선언해서 구분함
+				var url = `/reply/list/\${ab_number}`;
+				if(prev) {
+					str += "<li class='page-item'><a class='page-link' href='"+url+"/"+(startNum-1)+"'>Previous</a></li>";
+				}
+				
+				for(var i=startNum ; i<=endNum; i++){
+					var active = pageNum == i? "active":"";
+					str+="<li class='page-item "+active+" '><a class='page-link' href='"+url+"/"+i+"'>"+i+"</a></li>";
+				}
+				
+				if(next) {
+					str+= "<li class='page-item'><a class='page-link' href='"+url+"/"+(endNum+1) + "'>Next</a></li>";
+				}
+
+				str += "</ul></div>";
+				console.log(str);
+				
+				replyPageFooter.insertAdjacentHTML("beforeend", str);
+			} 
+
+			
+			/* 댓글 출력 */
 			for (const item of list[0].list) {
 				const modifyReplyButtonId = `modifyReplyButton\${item.ab_replyNumber}`;
 
 				const removeReplyButtonId = `removeReplyButton\${item.ab_replyNumber}`;
+				
+				const replyPage = showReplyPage(replyCnt);
 				
 				const replyDiv = `<div>\${item.ab_replyContent} : \${item.ab_replyInsertDatetime}
 								<button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#modifyReplyFormModal" data-reply-id="\${item.ab_replyNumber}" id="\${modifyReplyButtonId}">
@@ -193,9 +274,9 @@
 					document.querySelector("#removeConfirmModalSubmitButton").setAttribute("data-reply-id", this.dataset.replyId);
 				});
 			}
+			 showReplyPage(replyCnt); 
 		});
 	}
-	
 	
 	
 	/* 댓글 삭제 */
