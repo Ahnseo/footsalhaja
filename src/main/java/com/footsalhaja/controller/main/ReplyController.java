@@ -17,7 +17,7 @@ import com.footsalhaja.domain.main.ReplyDto;
 import com.footsalhaja.service.main.ReplyServiceImpl;
 
 @Controller
-@RequestMapping("reply")
+@RequestMapping("mainReply")
 public class ReplyController {
 	
 	@Autowired
