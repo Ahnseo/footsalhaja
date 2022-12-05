@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>      
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,30 +18,72 @@
 </head>
 <body>
 	<my:navbar active="qnaMainBoard"></my:navbar>
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<h3>FAQ 자주하는 질문</h3>
+				<c:forEach items="${FAQList}" var="FAQ">
+					<div class="accordion" id="accordionFAQ">
+					  <div class="accordion-item">
+					    <h2 class="accordion-header" id="${FAQ.faqId}">
+					      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${FAQ.faqId}" aria-expanded="true" aria-controls="collapse${FAQ.faqId}">
+					      ${FAQ.title}
+					      </button>
+					    </h2>
+					    <div id="collapse${FAQ.faqId}" class="accordion-collapse collapse" aria-labelledby="${FAQ.faqId}" data-bs-parent="#accordionFAQ">
+					      <div class="accordion-body">
+					       ${FAQ.content}
+					      </div>
+					    </div>
+					  </div>
+				</div>
+				</c:forEach>
 
-	<h1> QnA Main Board 입니다 무엇이 궁굼하신가요?</h1>
-
-	<form class="d-flex" role="search">
-		<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-		<button class="btn btn-outline-success" type="submit">Search</button>
-	</form>
-
-	<h3> search 로 인한 검색 결과 -> 게시판 테이블 만들기 </h3>
-	
-	<p> 전체 질문 게시/ 자주묻는질문 pagination : 5개씩 여러게 </p>
-	
-	<form action="/qna/insert" method="get">
-		<button type="submit" id="insertBtn"> 문의하기 : qnaController insert -> insert.jsp </button>	
-	</form>
-	<form action="/qna/myQnAList" method="get">
-		<button type="submit" id="myQnAListBtn">  내 문의내역 : qnaController myQnA보기 -> myQnAList.jsp </button>
-
-	</form>
-	<hr>
-	
-	<p>회사전화번호/찾아오시는길</p> 
-	
-	
+				<!-- 검색기능 추가 예정  -->
+				<h3> QnA 무엇이 궁굼하신가요? </h3>
+				<form class="d-flex" role="search">
+					<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+					<button class="btn btn-outline-success" type="submit">Search</button>
+				</form>
+				<table class="table">
+					<thead>
+						<th>번호</th>
+						<th>카테고리</th>
+						<th>제목</th>
+						<th>작성자</th>
+						<th>문의상태</th>
+					</thead>
+					 <tbody>
+						 <c:forEach items="${myQnAList}" var="myQnAList" varStatus="st" >
+							<tr>
+							 	<td>${myQnAList.qnaId}</td>
+							 	<td>${myQnAList.category}</td>
+							 	<td>${myQnAList.title}</td>
+							 	<td>${myQnAList.content}</td>
+							 	<td>${myQnAList.status}</td>
+						 	</tr>
+					 	</c:forEach>
+					 </tbody>
+				</table>
+				
+				<form action="/qna/insert" method="get">
+					<button type="submit" id="insertBtn"> 문의하기 : qnaController insert -> insert.jsp </button>	
+				</form>
+				
+				<%-- 시큐리티 로그인된 userId = userIdValue -> ${userIdValue } 으로 사용하겠습니다.--%>
+				<p>${userIdValue}</p>
+				<sec:authentication property="name" var="userIdValue"/>
+				<form action="/qna/myQnAList/${userIdValue}" method="get">
+					
+					<button type="submit" id="myQnAListBtn">  내 문의내역 : qnaController myQnA보기 -> myQnAList.jsp </button>
+			
+				</form>
+				<hr>
+				
+				<p>회사전화번호/찾아오시는길</p> 
+			</div>
+		</div>
+	</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script>

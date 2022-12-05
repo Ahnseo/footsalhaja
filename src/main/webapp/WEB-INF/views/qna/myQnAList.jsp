@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>      
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,26 +17,36 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<sec:authentication property="name" var="userIdValue"/>
 	<my:navbar active="myQnAList"></my:navbar>
-	<h3> 나의 문의 내역을 테이블 형태로 나타내기 </h3>
-	<table class="table">
-		<thead>
-			<th>번호</th>
-			<th>제목</th>
-			<th>작성자</th>
-			<th>문의상태</th>
-		</thead>
-		 <tbody>
-			 <c:forEach items="${myQnAList}" var="myQnAList" varStatus="st" >
-				<tr>
-				 	<td>${myQnAList.qnaId}</td>
-				 	<td>${myQnAList.title}</td>
-				 	<td>${myQnAList.content}</td>
-				 	<td>${myQnAList.status}</td>
-			 	</tr>
-		 	</c:forEach>
-		 </tbody>
-	</table>
+	<div class="container">
+		<div>
+			<div>
+				<table class="table">
+					<h3>${userIdValue} 님의 문의내역</h3>
+					
+					<thead>
+						<th>번호</th>
+						<th>카테고리</th>
+						<th>제목</th>
+						<th>내용</th>
+						<th>문의상태</th>
+					</thead>
+					 <tbody>
+						 <c:forEach items="${myQnAList}" var="myQnAList" varStatus="st" >
+							<tr>
+							 	<td>${myQnAListSize - st.count + 1 }</td>	
+							 	<td>${myQnAList.category}</td>
+							 	<td>${myQnAList.title}</td>
+							 	<td>${myQnAList.content}</td>
+							 	<td>${myQnAList.status}</td>
+						 	</tr>
+					 	</c:forEach>
+					 </tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>

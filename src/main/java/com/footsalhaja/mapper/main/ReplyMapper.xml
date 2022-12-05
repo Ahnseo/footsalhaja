@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+
+ <mapper namespace="com.footsalhaja.mapper.main.ReplyMapper">
+ 
+ 	<insert id="insert">
+ 	INSERT INTO bookReply (replyContent, book_bookId, member_userId)
+ 	VALUES (#{replyContent}, #{bookId}, 'asdf')
+ 	</insert>
+ 
+<select id="selectReplyByBookId" resultType="com.footsalhaja.domain.main.ReplyDto">
+ 	SELECT 
+ 		replyId,
+		replyContent,
+		writer,
+		insertDatetime
+	FROM 
+		bookReply
+	WHERE bookId = #{bookId}
+	ORDER BY 
+		replyId DESC
+ 	</select>
+
+ 
+ </mapper>
+ 
+ 

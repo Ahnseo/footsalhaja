@@ -6,6 +6,23 @@
 
  <mapper namespace="com.footsalhaja.mapper.main.MainMapper">
 
+ 	
+
+ 
+ 	<!-- 게시글 등록 -->
+ 	<insert id="insert">
+ 	INSERT INTO book
+		(stadiumTitle, content, matchType, level, status, bookDate, teamGender, location_locationId, member_userId, bookTime)
+	VALUES
+		(#{stadiumTitle}, #{content}, #{matchType}, #{level}, #{status}, #{bookDate}, #{teamGender}, #{location_locationId}, #{userId}, #{bookTime})
+ 	</insert>
+ 
+	<select id="selectNick" resultType="java.lang.String">
+		select nickName from member 
+		where userId = #{userId}
+	</select>
+	
+	<!-- 게시물 얻어오기  -->
  	<select id="getById" resultMap="getMap">
  	SELECT 
  		m.userId,
@@ -16,7 +33,8 @@
  		b.matchType,
  		b.level,
  		b.status,
- 		b.bookDatetime,
+ 		b.bookDate,
+ 		b.bookTime,
  		b.insertDatetime,
  		b.teamGender
  	FROM
@@ -24,6 +42,7 @@
  	WHERE 
  		b.bookId = #{bookId}
  	</select>
+ 	
  	<resultMap type="com.footsalhaja.domain.main.MainDto" id="getMap">
  		<id column="bookId" property="bookId"></id>
  		<result column="userId" property="userId"/>
@@ -32,14 +51,79 @@
 		<result column="matchType" property="matchType"></result>
 		<result column="level" property="level"/>
 		<result column="status" property="status"/>
-		<result column="bookDatetime" property="bookDatetime"></result>
+		<result column="bookDate" property="bookDate"></result>
+		<result column="bookTime" property="bookTime"></result>
 		<result column="insertDatetime" property="insertDatetime"/>
 		<result column="teamGender" property="teamGender"></result>
  	</resultMap>	
-
- 		   
  	
+ 	<!-- 게시글 리스트 -->
+  	<select id="listBook" resultMap="getBookList">
+ 	SELECT 
+ 		b.bookId,
+ 		b.stadiumTitle,
+ 		b.bookDate,
+ 		b.bookTime,
+ 		l.stadiumName,
+ 		m.nickName,
+ 		b.status,
+ 		b.matchType,
+ 		b.level,
+ 		l.region
+ 	FROM
+ 		book b LEFT JOIN location l ON b.location_locationId = l.locationId
+ 			   LEFT JOIN member m ON b.member_userId = m.userId
+ 	ORDER BY bookId DESC
+ 	</select>
+ 	<resultMap type="com.footsalhaja.domain.main.BookDto" id="getBookList">
+ 		<id column="bookId" property="bookId"></id>
+ 		<result column="stadiumTitle" property="stadiumTitle"/>
+		<result column="bookDate" property="bookDate"></result>
+		<result column="bookTime" property="bookTime"/>
+		<result column="stadiumName" property="stadiumName"></result>
+		<result column="nickName" property="nickName"/>
+		<result column="matchType" property="matchType"/>
+		<result column="level" property="level"></result>
+		<result column="region" property="region"></result>
+ 	</resultMap>
+ 
 
+	<!--게시물 수정하기  -->
+	<update id="update">
+	UPDATE book
+	SET
+		stadiumTitle = #{stadiumTitle}, 
+		content = #{content},
+		matchType = #{matchType},
+		level = #{level},
+		status = #{status},
+    bookDate = #{bookDate},
+		bookTime = #{bookTime}, 
+		teamGender = #{teamGender}
+	WHERE 
+		bookId = #{bookId}
+
+	</update>
+
+<!-- 예약날짜 가져오기 -->
+	<select id="list">
+		select * from book 
+		<if test = "bookDate != null" >
+			where bookDate = #{bookDate}
+		</if>
+	</select>
+
+	<!--게시물 지우기  -->
+	<delete id="delete">
+	DELETE FROM book
+	WHERE bookId = #{bookId}
+	</delete>
+	
+	
+	
+	
+	
+	
  </mapper>
 
  

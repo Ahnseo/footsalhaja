@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
 import com.footsalhaja.domain.academy.BoardDto;
 import com.footsalhaja.domain.academy.Criteria;
 import com.footsalhaja.mapper.academy.AcademyMapper;
@@ -16,13 +17,16 @@ public class AcademyServiceImpl implements AcademyService{
 	
 	@Autowired
 	private AcademyMapper mapper;
+
 	
 	@Autowired
 	private AcademyReplyMapper replyMapper;
 
+
 	
 	@Override
 	public void insert(BoardDto board) {
+
 
 		mapper.insert(board);
 	}
@@ -48,7 +52,9 @@ public class AcademyServiceImpl implements AcademyService{
 		// TODO Auto-generated method stub
 		return mapper.modify(board);
 	}
+
 	
+
 	@Transactional
 	@Override
 	public int remove(int ab_number) {

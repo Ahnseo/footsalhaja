@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import com.footsalhaja.domain.academy.AcademyReplyDto;
 import com.footsalhaja.domain.academy.Criteria;
 
+
 public interface AcademyReplyMapper {
 
 	int insert(AcademyReplyDto reply);
@@ -20,6 +21,7 @@ public interface AcademyReplyMapper {
 	AcademyReplyDto selectById(int ab_replyNumber);
 
 	int modify(AcademyReplyDto reply);
+
 	//페이지 네이션
 	public List<AcademyReplyDto> getReplyListWithPaging(Criteria cri, int ab_number, int offset, int records);
 	//댓글 수

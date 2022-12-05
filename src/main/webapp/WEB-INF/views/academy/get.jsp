@@ -62,17 +62,21 @@
 				<div id="replyListContainer">
 				
 				</div>
+
 				<!-- 댓글 페이지 출력란 -->
 			<div id="replyPageFooter">
 			</div>
 				
+
 			</div>
 		</div>
 	</div>
 	
+
 	
 	
 	
+
 	<%-- 댓글 삭제 확인 모달 --%>
 	<div class="modal fade" id="removeReplyConfirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog">
@@ -117,7 +121,9 @@
 
 /* 댓글 이벤트 처리 */
 	const ctx = "${pageContext.request.contextPath}";
+
 	
+
 	const ab_number = document.querySelector("#ab_number").value;
 	
 	const urlParams = new URL(location.href).searchParams;
@@ -135,12 +141,15 @@
 	function listReply(page) {
 		console.log("b");
 		
+
 		fetch(`\${ctx}/academy/reply/list/\${ab_number}/\${page}`)
+
 		.then(res => res.json())
 		.then(list => {
 			const replyListContainer = document.querySelector("#replyListContainer");
 			replyListContainer.innerHTML = "";
 			
+
  			const replyCnt=list[0].replyCnt;
 			
 			console.log(replyCnt);
@@ -152,11 +161,14 @@
 			
 			/* 댓글 출력 */
 			for (const item of list[0].list) {
+
 				const modifyReplyButtonId = `modifyReplyButton\${item.ab_replyNumber}`;
 
 				const removeReplyButtonId = `removeReplyButton\${item.ab_replyNumber}`;
 				
+
 				
+
 				const replyDiv = `<div>\${item.ab_replyContent} : \${item.ab_replyInsertDatetime}
 								<button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#modifyReplyFormModal" data-reply-id="\${item.ab_replyNumber}" id="\${modifyReplyButtonId}">
 									<i class="fa-solid fa-pen"></i>
@@ -179,6 +191,7 @@
 					//모달 삭제버튼에 전달 할 삭제할 댓글의 삭제버튼의replyID를 setAttribute를 이용해 부여
 					document.querySelector("#removeConfirmModalSubmitButton").setAttribute("data-reply-id", this.dataset.replyId);
 				});
+
 			} showReplyPage(replyCnt);
 			/* 댓글 페이징 버튼 이동 */
 			let pageButtons = document.querySelectorAll(".page-item span")
@@ -189,6 +202,8 @@
 					e.preventDefault();
 					console.log("page click");
 					var targetPageNum = this.getAttribute("href");
+
+
 
 					//댓글 페이지 번호를 변경한 후 
 					pageNum = targetPageNum;
@@ -240,7 +255,9 @@
 	
 	/* 수정모달에서 댓글 읽어오기 */
 	function readReplyAndSetModalForm(replyId) {
+
 		fetch(ctx + "/academy/reply/get/" + replyId)
+
 		.then(res => res.json())
 		.then(reply => {
 			document.querySelector("#modifyReplyInput").value = reply.ab_replyContent;
@@ -253,7 +270,9 @@
 	const ab_replyNumber = this.dataset.replyId;
 	const data = {ab_replyNumber, ab_replyContent};
 	
+
 	fetch(`\${ctx}/academy/reply/modify`, {
+
 		method : "put",
 		headers : {
 			"Content-Type" : "application/json"
@@ -263,7 +282,9 @@
 	.then(res => res.json())
 	.then(data => {
 		document.querySelector("#replyMessage").innerText = data.message;})
+
 	.then(() => listReply(page));
+
 }); 
 	
 	/* 댓글 삭제 */
@@ -273,18 +294,24 @@
 	 //모달 삭제버튼에 전달하고 해당 replyID의 댓글 삭제 진행
 	removeReply(this.dataset.replyId);
 	});
+
 	
+
 
 	
 	/* 댓글 삭제 */
 	function removeReply(replyId) {
 
+
 	fetch(ctx + "/academy/reply/remove/" + replyId, {
+
 		method: "delete"
 	})
 	.then(res => res.json())
 	.then(data => document.querySelector("#replyMessage").innerText = data.message)
+
 	.then(() => listReply(page));
+
 }
 	
 	
@@ -299,7 +326,9 @@
 			member_userId
 		};
 		
+
 		fetch(`\${ctx}/academy/reply/add`, {
+
 			method : "post",
 			headers : {
 				"Content-Type" : "application/json"
@@ -311,7 +340,9 @@
 			document.querySelector("#replyInput").value = "";
 			document.querySelector("#replyMessage").innerText = data.message;
 		})
+
 		.then(() => listReply(page));
+
 	});
 </script>
 
