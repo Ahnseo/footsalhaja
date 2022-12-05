@@ -9,75 +9,57 @@
 <title>Insert title here</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
 <style>
-	/* sticky bar */
-	body {
-  margin: 0;
-  font-size: 28px;
-  font-family: Arial, Helvetica, sans-serif;
+body {margin:0;height:2000px;}
+
+.icon-bar {
+  position: fixed;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 
-.header {
-  background-color: #f1f1f1;
-  padding: 30px;
-  text-align: center;
-}
-
-#navbar {
-  overflow: hidden;
-  background-color: #333;
-}
-
-#navbar a {
-  float: left;
+.icon-bar a {
   display: block;
-  color: #f2f2f2;
   text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
+  padding: 16px;
+  transition: all 1s ease;
+  color: white;
+  font-size: 15px;
 }
 
-#navbar a:hover {
-  background-color: #ddd;
-  color: black;
+.icon-bar a:hover {
+  background-color: #000;
 }
 
-#navbar a.active {
-  background-color: #04AA6D;
+.location {
+  background: #3B5998;
+  color: white;
+}
+
+.date {
+  background: #55ACEE;
+  color: white;
+}
+
+.insert {
+  background: #162d5c;
   color: white;
 }
 
 .content {
-  padding: 16px;
-}
+  margin-left: 75px;
+  font-size: 30px;
+} 
 
-.sticky {
-  position: fixed;
-  top: 0;
-  width: 100%;
-}
 
-.sticky + .content {
-  padding-top: 60px;
-}
-	
-	/* floating banner */
-	body { height: 2000px; }
-
-		.sideBanner {
-  			position: absolute;
-  			width: 150px;
- 			height: 200cpx;
-			top: 50px;
-			background-color: #999900;
-			color: #fffffff;
-		}
 </style>
 </head>
 <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.js"></script> 
 <body>
+
+<c:url value="/main/insert" var="insertLink" />
 
 	<my:navbar></my:navbar>
 	
@@ -132,60 +114,34 @@
         </div>
     </div>
     
-    <!-- sticky bar -->
-    <div id="navbar">
-  		<a href="#home">Home</a>
-  		<a href="#news">News</a>
-  		<a href="#contact">Contact</a>
-	</div>
-	
-
-	<h1>게시물 목록</h1>
-	 <div class="sideBanner">
-   		<span class="txt-label">
-      		Banner Data...    
-    	</span>
-    </div>
     
+<div class="icon-bar">
+  <a href="#" class="location"><i class="fa-solid fa-location-dot"></i></a> 
+  <a href="#" class="date"><i class="fa-solid fa-calendar-days"></i></a> 
+  <a href="${insertLink }" class="insert"><i class="fa-solid fa-pen-to-square"></i></a> 
+</div> 
 
-    <div class="content">
-		<h3>게시글</h3>
-	</div>
+<div class="content">
+  <h3>게시글 목록</h3>
+</div>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th></th>
+			<th>제목</th>
+			<th>작성자</th>
+		</tr>
+	</thead>
+	<tbody>
+
+
+	</tbody>
+</table>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script>
-//sticky bar
-window.onscroll = function() {myFunction()};
-
-var navbar = document.getElementById("navbar");
-
-var sticky = navbar.offsetTop;
-
-function myFunction() {
-  if (window.pageYOffset >= sticky) {
-    navbar.classList.add("sticky");
-  } else {
-    navbar.classList.remove("sticky");
-  }
-}
-
-//기본 위치(top)값
-var floatPosition = parseInt($(".sideBanner").css('bottom'))
-
-// scroll 인식
-$(window).scroll(function() {
-  
-    // 현재 스크롤 위치
-    var currentTop = $(window).scrollTop();
-    var bannerTop = currentTop + floatPosition + "px";
-
-    //이동 애니메이션
-    $(".sideBanner").stop().animate({
-      "top" : bannerTop
-    }, 500);
-
-}).scroll();
-
 
 </script>
 

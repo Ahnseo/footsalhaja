@@ -89,6 +89,7 @@
 	FROM academyBoard b LEFT JOIN academyBoardReply r ON b.ab_number = r.academyBoard_ab_number
 	GROUP BY b.ab_number
 	ORDER BY b.ab_number DESC
+
 <!-- <include refid="criteria"></include> -->
 
 	LIMIT #{offset}, #{records}
@@ -105,13 +106,7 @@
 			<include refid="criteria"></include>
 		ab_number >0
 	</select>
-	
-	<!-- 게시물 당 댓글 갯수 -->
-	<update id="updateReplyCnt">
-		UPDATE academyBoard
-		SET ab_replyCount = ab_replyCount + #{amount} 
-		WHERE ab_number = #{ab_number}
-	</update>
+
  
  </mapper>
   

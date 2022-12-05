@@ -1,6 +1,8 @@
 package com.footsalhaja.controller.academy;
 
+
 import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.footsalhaja.domain.academy.AcademyReplyDto;
+
 import com.footsalhaja.domain.academy.Criteria;
 import com.footsalhaja.domain.academy.ReplyPageDto;
+
 import com.footsalhaja.service.academy.AcademyReplyService;
 
 @Controller
@@ -46,13 +50,13 @@ public class AcademyReplyController {
 		return replyList;
 		
 	}
-	
 
 	@PostMapping("add")
 	@ResponseBody
 	public Map<String, Object> add(@RequestBody AcademyReplyDto reply) {
 
 		Map<String, Object> map = new HashMap<>();
+
 		
 		int cnt = service.addReply(reply);
 		
@@ -93,8 +97,7 @@ public class AcademyReplyController {
 		Map<String, Object> map = new HashMap<>();
 
 		int cnt = service.modify(reply);
-		
-		
+
 		if (cnt == 1) {
 			map.put("message", "댓글이 수정되었습니다.");
 		} else {

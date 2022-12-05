@@ -24,6 +24,5 @@ public interface AcademyMapper {
 	public List<BoardDto> getListWithPaging(Criteria cri, int offset, int records);
 	
 	public int getTotalCount(Criteria cri);
-	
-	
+
 }

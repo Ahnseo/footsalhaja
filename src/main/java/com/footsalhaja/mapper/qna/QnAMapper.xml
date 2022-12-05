@@ -13,11 +13,21 @@
 		 		(#{category}, #{title}, #{content}, #{userId}, #{nickName}  );
 	 </insert>
 	 
-	 <select id="list" resultType="com.footsalhaja.domain.qna.QnADto">
+	 <select id="myQnAList" resultType="com.footsalhaja.domain.qna.QnADto">
 	 	SELECT 
-	 		qnaId, category, title, content, status, member_userId, member_nickName
+	 		q.qnaId,
+	 		q.category,
+	 		q.title,
+	 		q.content,
+	 		q.status,
+	 		m.userId,
+	 		m.nickName
 	 	FROM 
-	 	 	QnABoard
+	 	 	QnABoard q
+	 	LEFT JOIN member m 
+	 	ON q.member_userId = m.userId 	
+	 	WHERE
+	 		m.userId = #{userId} 	
 	 	ORDER BY 
 	 		qnaId DESC 	 
 	 
@@ -35,6 +45,14 @@
 	 		qnaId DESC 
 	 </select>
 	
+	<select id="selectFAQList" resultType="com.footsalhaja.domain.qna.FAQDto">
+		SELECT 
+			faqId,
+			title,
+			content
+		FROM
+			FAQ	
+	</select>
 	 
 
 

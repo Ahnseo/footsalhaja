@@ -59,6 +59,7 @@
 										${board.ab_title}
 									</a>
 									
+
 									<!-- 댓글 수 출력 -->
 									<c:if test="${board.replyCnt > 0 }">
 										<span class="badge rounded-pill text-bg-light">
@@ -69,6 +70,7 @@
 									
 									<!-- 파일 수 출력 -->
 									<%-- <c:if test="${board.countFile > 0 }">
+
 										<span class="badge rounded-pill text-bg-light">
 											<i class="fa-regular fa-file"></i>
 											${board.countFile }
