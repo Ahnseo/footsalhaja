@@ -20,10 +20,17 @@ public class MainDto {
 	private LocalDateTime insertDatetime;
 	private String teamGender;
 
+
+	private String location;
+	
+	
+
 	private String location_locationId;
 	private String userId;
 	private String nickName;
 
 	private String bookDate;
-	private String bookTime;
+  private String bookTime;
+
+
 }

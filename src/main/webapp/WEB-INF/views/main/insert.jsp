@@ -95,6 +95,7 @@
 				</select>
 			</div>
 		
+
 	
 			<div class="mb-3">
 				<label for="" class="form-label">매칭</label>
@@ -134,6 +135,7 @@
 			<input type="submit" value="작성 완료">
 			<input type="button" value="작성 취소" onclick="location.href='/main/list'">
 			</div>
+	
 		</div>
 	</form>
 	</div>

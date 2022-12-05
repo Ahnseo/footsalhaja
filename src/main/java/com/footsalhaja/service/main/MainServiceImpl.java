@@ -48,10 +48,18 @@ public class MainServiceImpl implements MainService {
 	}
 
 
+
 	//@Override
 	// 메인리스트 불러오기
 	public List<BookDto> listBook() {
 		return mapper.listBook();
 	}
+
+	public int remove(int bookId) {
+		return mapper.delete(bookId);
+		
+	}
+
+
 
 }

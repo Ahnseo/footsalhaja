@@ -77,9 +77,18 @@
 	<!-- 페이지네이션 & 검색 -->
 	<select id="getListWithPaging" resultType="com.footsalhaja.domain.academy.BoardDto">
 	
-	SELECT *
-	FROM academyBoard
-	ORDER BY ab_number DESC
+	SELECT 		
+		b.ab_number,
+		b.ab_category,
+		b.ab_title,
+		b.ab_content,
+		b.member_userId,
+		b.ab_insertDatetime,
+		COUNT(r.academyBoard_ab_number) replyCnt
+		
+	FROM academyBoard b LEFT JOIN academyBoardReply r ON b.ab_number = r.academyBoard_ab_number
+	GROUP BY b.ab_number
+	ORDER BY b.ab_number DESC
 
 <!-- <include refid="criteria"></include> -->
 
@@ -97,6 +106,7 @@
 			<include refid="criteria"></include>
 		ab_number >0
 	</select>
+
  
  </mapper>
   

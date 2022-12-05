@@ -14,4 +14,6 @@ public class BoardDto {
 	private LocalDateTime ab_insertDatetime;
 	//나중에 member테이블과 조인해서 닉네임으로 수정해야함
 	private String member_userId;
+	private int replyCnt;
+
 }

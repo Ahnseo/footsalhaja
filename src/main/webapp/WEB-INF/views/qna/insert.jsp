@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>      
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,7 +20,6 @@
 	<my:navbar active="insert"></my:navbar>
 	<h1> 문의 내용을 작성하는 페이지 </h1>
 	<form action="" method="post">
-
 		<select name="category" class="form-select" aria-label="Default select example">
 		  <option selected disabled >카테고리</option>
 		  <option value="시설문의">시설문의</option>
@@ -32,7 +32,9 @@
 		<br>
 		<textarea name="content" placeholder="본문" ></textarea>
 		<br>
-		
+		<sec:authentication property="name" var="userIdValue"/>
+		<input name="userId" value="${userIdValue}" readonly >
+		<br>
 		<input type="submit" value="문의">
 	</form>
 	

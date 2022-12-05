@@ -97,8 +97,8 @@
 		matchType = #{matchType},
 		level = #{level},
 		status = #{status},
-		bookDate = #{bookDate},
-		bookTime = #{bookTime},
+    bookDate = #{bookDate},
+		bookTime = #{bookTime}, 
 		teamGender = #{teamGender}
 	WHERE 
 		bookId = #{bookId}
@@ -113,6 +113,17 @@
 		</if>
 	</select>
 
+	<!--게시물 지우기  -->
+	<delete id="delete">
+	DELETE FROM book
+	WHERE bookId = #{bookId}
+	</delete>
+	
+	
+	
+	
+	
+	
  </mapper>
 
  

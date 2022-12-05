@@ -8,13 +8,15 @@ public interface FreeMapper {
 
 	int insert(BoardDto board);
 
-	List<BoardDto> list();
-
 	BoardDto select(int fb_number);
 
 	int update(BoardDto board);
 
 	int delete(int fb_number);
+	
+	List<BoardDto> list(int offset, int records, String type, String keyword);
+
+	int countAll(String type, String keyword);
 
 	
 }

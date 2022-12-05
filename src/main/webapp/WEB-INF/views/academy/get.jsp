@@ -62,10 +62,16 @@
 				<div id="replyListContainer">
 				
 				</div>
+
+				<!-- 댓글 페이지 출력란 -->
+			<div id="replyPageFooter">
+			</div>
+
 			</div>
 		</div>
 	</div>
 	
+
 	<%-- 댓글 삭제 확인 모달 --%>
 	<div class="modal fade" id="removeReplyConfirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog">
@@ -111,57 +117,48 @@
 /* 댓글 이벤트 처리 */
 	const ctx = "${pageContext.request.contextPath}";
 
-	listReply();
+	const ab_number = document.querySelector("#ab_number").value;
 	
-	/* 수정모달에서 댓글 읽어오기 */
-	function readReplyAndSetModalForm(replyId) {
-		fetch(ctx + "/reply/get/" + replyId)
-		.then(res => res.json())
-		.then(reply => {
-			document.querySelector("#modifyReplyInput").value = reply.ab_replyContent;
-		});
-	} 
+	const urlParams = new URL(location.href).searchParams;
 	
-	/* 댓글 수정 */
-	document.querySelector("#modifyFormModalSubmitButton").addEventListener("click", function() {
-	const content = document.querySelector("#modifyReplyInput").value;
-	const id = this.dataset.replyId;
-	const data = {id, content};
+	if (!urlParams.get('page')) {
+		urlParams.set('page',1);
+	};
+	
+	var page = urlParams.get('page');
+	
+	listReply(page);
 	
 	
-	fetch(`\${ctx}/reply/modify`, {
-		method : "put",
-		headers : {
-			"Content-Type" : "application/json"
-		},
-		body : JSON.stringify(data)
-	})
-	.then(res => res.json())
-	.then(data => document.querySelector("#replyMessage").innerText = data.message)
-	.then(() => listReply());
-}); 
-	
-	/* 댓글 삭제 */
-	document.querySelector("#removeConfirmModalSubmitButton").addEventListener("click", function() {
-		//댓글 삭제 버튼은 여러개고 모달창의 삭제버튼은 하나이므로
-		//삭제할 댓글의 삭제버튼의replyID를 가져올 수 있어(아래 setAttribute로 부여)
-	 //모달 삭제버튼에 전달하고 해당 replyID의 댓글 삭제 진행
-	removeReply(this.dataset.replyId);
-	});
-	
-	function listReply() {
-		const ab_number = document.querySelector("#ab_number").value;
-		fetch(`\${ctx}/reply/list/\${ab_number}`)
+	//댓글 리스트
+	function listReply(page) {
+		console.log("b");
+		
+		fetch(`\${ctx}/reply/list/\${ab_number}/\${page}`)
+
 		.then(res => res.json())
 		.then(list => {
 			const replyListContainer = document.querySelector("#replyListContainer");
 			replyListContainer.innerHTML = "";
 			
-			for (const item of list) {
+
+ 			const replyCnt=list[0].replyCnt;
+			
+			console.log(replyCnt);
+			
+			/* 댓글 페이지 번호 출력하는 show ReplyPage()  */
+			var pageNum = 1;
+			const replyPageFooter = document.querySelector("#replyPageFooter");
+			replyPageFooter.innerHTML = "";
+			
+			/* 댓글 출력 */
+			for (const item of list[0].list) {
+
 				const modifyReplyButtonId = `modifyReplyButton\${item.ab_replyNumber}`;
 
 				const removeReplyButtonId = `removeReplyButton\${item.ab_replyNumber}`;
 				
+
 				const replyDiv = `<div>\${item.ab_replyContent} : \${item.ab_replyInsertDatetime}
 								<button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#modifyReplyFormModal" data-reply-id="\${item.ab_replyNumber}" id="\${modifyReplyButtonId}">
 									<i class="fa-solid fa-pen"></i>
@@ -184,11 +181,102 @@
 					//모달 삭제버튼에 전달 할 삭제할 댓글의 삭제버튼의replyID를 setAttribute를 이용해 부여
 					document.querySelector("#removeConfirmModalSubmitButton").setAttribute("data-reply-id", this.dataset.replyId);
 				});
+
+			} showReplyPage(replyCnt);
+			/* 댓글 페이징 버튼 이동 */
+			let pageButtons = document.querySelectorAll(".page-item span")
+			
+			for (const button of pageButtons){
+			
+				button.addEventListener("click", function(e) {
+					e.preventDefault();
+					console.log("page click");
+					var targetPageNum = this.getAttribute("href");
+					console.log("targetPageNum : " + targetPageNum);
+					//댓글 페이지 번호를 변경한 후 
+					pageNum = targetPageNum;
+					//해당 페이지의 댓글 가져오게 함
+					listReply(pageNum);
+				})
 			}
-		});
+			
+			function showReplyPage(replyCnt) {
+				console.log("1");
+				var endNum = Math.ceil(pageNum / 10.0) * 10;
+				var startNum = endNum - 9;
+				
+				var prev = startNum != 1;
+				var next = false;
+				
+				if(endNum * 10 >= replyCnt) {
+					endNum = Math.ceil(replyCnt/10.0);
+				}
+				
+				if(endNum * 10 < replyCnt) {
+					next = true;
+				}
+				var str = "<ul class='pagination pull-right'>";
+
+				if(prev) {
+					str += "<li class='page-item'><span class='page-link' href='"+(startNum-1)+"'>Previous</span></li>";
+				}
+				
+				for(var i=startNum ; i<=endNum; i++){
+					var active = pageNum == i? "active":"";
+					str+="<li class='page-item "+active+" '><span class='page-link' href='"+i+"'>"+i+"</span></li>";
+				}
+				
+				if(next) {
+					str+= "<li class='page-item'><span class='page-link' href='"+(endNum+1) + "'>Next</span></li>";
+				}
+
+				str += "</ul></div>";
+				console.log(str);
+				
+				replyPageFooter.insertAdjacentHTML("beforeend", str);
+			}
+		
+		})
 	}
 	
+
 	
+	/* 수정모달에서 댓글 읽어오기 */
+	function readReplyAndSetModalForm(replyId) {
+		fetch(ctx + "/reply/get/" + replyId)
+		.then(res => res.json())
+		.then(reply => {
+			document.querySelector("#modifyReplyInput").value = reply.ab_replyContent;
+		});
+	} 
+	
+	/* 댓글 수정 */
+	document.querySelector("#modifyFormModalSubmitButton").addEventListener("click", function() {
+	const ab_replyContent = document.querySelector("#modifyReplyInput").value;
+	const ab_replyNumber = this.dataset.replyId;
+	const data = {ab_replyNumber, ab_replyContent};
+	
+	fetch(`\${ctx}/reply/modify`, {
+		method : "put",
+		headers : {
+			"Content-Type" : "application/json"
+		},
+		body : JSON.stringify(data)
+	})
+	.then(res => res.json())
+	.then(data => {
+		document.querySelector("#replyMessage").innerText = data.message;})
+	.then(() => listReply());
+}); 
+	
+	/* 댓글 삭제 */
+	document.querySelector("#removeConfirmModalSubmitButton").addEventListener("click", function() {
+		//댓글 삭제 버튼은 여러개고 모달창의 삭제버튼은 하나이므로
+		//삭제할 댓글의 삭제버튼의replyID를 가져올 수 있어(아래 setAttribute로 부여)
+	 //모달 삭제버튼에 전달하고 해당 replyID의 댓글 삭제 진행
+	removeReply(this.dataset.replyId);
+	});
+
 	
 	/* 댓글 삭제 */
 	function removeReply(replyId) {

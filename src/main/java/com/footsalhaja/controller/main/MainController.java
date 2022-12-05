@@ -87,7 +87,16 @@ public class MainController {
 	 
 	 
 	}
+
+	 
+	 @PostMapping("remove")
+	 public String remove(int bookId) {
+		 service.remove(bookId);
+		 
+		 return "redirect:/main/list";
+	 }
 	
+
 
 	
 }

@@ -12,6 +12,10 @@ public interface MainMapper {
 	MainDto getById(int bookId);
 
 	int update(MainDto main);
+
+
+	int delete(int bookId);
+
 	
 	String selectNick(String userId) ;
 

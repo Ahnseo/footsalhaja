@@ -6,7 +6,13 @@
  
  <!-- 게시글 별 댓글리스트 -->
  	<select id="selectReplyByBoardId" resultType="com.footsalhaja.domain.academy.AcademyReplyDto">
-	SELECT *
+	SELECT 
+		ab_replyNumber,
+		ab_replyContent,
+		ab_replyInsertDatetime,
+		academyBoard_ab_number as ab_number,
+		member_userId
+
 	FROM
 		academyBoardReply
 	WHERE
@@ -26,6 +32,13 @@
 		DELETE FROM academyBoardReply
 		WHERE ab_replyNumber = #{ab_replyNumber}
 	</delete>
+
+<!-- 게시글 삭제에 따른 댓글 삭제 -->
+	<delete id = "deleteByBoardId">
+		DELETE FROM academyBoardReply
+		WHERE academyBoard_ab_number = #{ab_number}
+	</delete>
+
 	
 <!-- 댓글 get-->
 	<select id="selectById" resultType="com.footsalhaja.domain.academy.AcademyReplyDto">
@@ -45,5 +58,28 @@
 		ab_replyContent = #{ab_replyContent}
 	WHERE 
 		ab_replyNumber = #{ab_replyNumber}
-	</update>	
+	</update>
+	
+	<!-- 페이지네이션-->
+	<select id="getReplyListWithPaging" resultType="com.footsalhaja.domain.academy.AcademyReplyDto">
+	
+	SELECT ab_replyNumber,
+		ab_replyContent,
+		ab_replyInsertDatetime,
+		academyBoard_ab_number as ab_number,
+		member_userId
+	FROM academyBoardReply
+	WHERE academyBoard_ab_number = #{ab_number}
+	LIMIT #{offset}, #{records}
+	</select>
+	
+	
+	<!-- 댓글 수 -->
+	
+	<select id="getTotalReplyCount" resultType="int">
+		SELECT Count(ab_replyNumber)
+		FROM academyBoardReply
+		WHERE academyBoard_ab_number= #{ab_number}
+	</select>		
+
 </mapper>
