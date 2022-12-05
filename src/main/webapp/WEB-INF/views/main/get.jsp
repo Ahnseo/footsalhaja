@@ -99,7 +99,7 @@ listReply();
 
 function listReply(){
 	const bookId = document.querySelector("#bookId").value;
-	fetch(`\${ctx}/reply/list/\${bookId}`)
+	fetch(`\${ctx}/mainReply/list/\${bookId}`)
 	.then(res => res.json())
 	.then(list => {
 		for(const item of list){
@@ -118,7 +118,7 @@ document.querySelector("#replySendButton").addEventListener("click", function(){
 			replyContent
 	};
 	
-	fetch(`\${ctx}/reply/add`, {
+	fetch(`\${ctx}/mainReply/add`, {
 		method : "post",
 		headers : {
 			"Content-Type" : "application/json"
