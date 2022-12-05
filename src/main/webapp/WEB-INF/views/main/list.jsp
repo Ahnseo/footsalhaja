@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,62 +10,131 @@
 <title>Insert title here</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+<link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="collapzion.min.css">
 <style>
-body {margin:0;height:2000px;}
-
-.icon-bar {
-  position: fixed;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
+/* 플로팅 버튼 */
+.fab-container {
+	position: fixed;
+	bottom: 50px;
+	right: 50px;
+	z-index: 999;
+	cursor: pointer;
 }
 
-.icon-bar a {
-  display: block;
-  text-align: center;
-  padding: 16px;
-  transition: all 1s ease;
-  color: white;
-  font-size: 15px;
+.fab-icon-holder {
+	width: 50px;
+	height: 50px;
+	border-radius: 100%;
+	background: #016fb9;
+	
+	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
 }
 
-.icon-bar a:hover {
-  background-color: #000;
+.fab-icon-holder:hover {
+	opacity: 0.8;
 }
 
-.location {
-  background: #3B5998;
-  color: white;
+.fab-icon-holder i {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	
+	height: 100%;
+	font-style: 25px;
+	color: #ffffff;
 }
 
-.date {
-  background: #55ACEE;
-  color: white;
+.fab {
+	width: 60px;
+	height: 60px;
+	background: #193f80;
 }
 
-.insert {
-  background: #162d5c;
-  color: white;
+.fab-options {
+	list-style-type: none;
+	margin: 0;
+	
+	position: absolute;
+	bottom: 70px;
+	right: 0;
+	
+	opacity: 0;
+	
+	transition: all 0.3s ease;
+	transform: scale(0);
+	transform-origin: 85% bottom;
 }
 
-.content {
-  margin-left: 75px;
-  font-size: 30px;
-} 
+.fab:hover + .fab-options, .fab-options:hover {
+	opacity: 1;
+	transform: scale(1);
+}
 
+.fab-options li {
+	display: flex;
+	justify-content: flex-end;
+	padding: 5px;
+}
+
+.fab-label {
+	padding: 2px 5px;
+	align-self: center;
+	user-select: none;
+	white-space: nowrap;
+	border-radius: 3px;
+	font-size: 16px;
+	background: #666666;
+	color: #ffffff;
+	box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+	margin-right: 10px;
+}
+
+#body {
+	max-width: 928px;
+	margin: 0 auto;
+	background-color: #fff;
+}
+
+#wrapper {
+	display: block;
+	width: 100%;
+	background-color: #000000;
+}
+
+/* 게시글 body */
+.contents-box {
+	display: -webkit-box;
+	padding: 0 16px;
+	width: 100%;
+	height: 42px;
+	box-sizing: border-box;
+	background-color: #000;
+	
+}
+
+.matches {
+	display: block;
+	width: 100%;s
+}
 
 </style>
 </head>
 <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.js"></script> 
 <body>
+<%-- 시큐리티 로그인된 userId = userIdValue -> ${userIdValue } 으로 사용하겠습니다.--%>
+<sec:authentication property="name" var="userIdValue"/>
 
-<c:url value="/main/insert" var="insertLink" />
+<c:url value="/main/insert" var="insertLink" >
+	<c:param name="userId" value="${userIdValue }"></c:param>
+</c:url>
 
+<div id="wrapper">
 	<my:navbar></my:navbar>
 	
 	<!-- carousel slide -->
-	<div class="container">
+	<div id="body" class="container">
         <div class="row">
             <div class="col">
                 <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
@@ -113,36 +183,87 @@ body {margin:0;height:2000px;}
             </div>
         </div>
     </div>
-    
-    
-<div class="icon-bar">
-  <a href="#" class="location"><i class="fa-solid fa-location-dot"></i></a> 
-  <a href="#" class="date"><i class="fa-solid fa-calendar-days"></i></a> 
-  <a href="${insertLink }" class="insert"><i class="fa-solid fa-pen-to-square"></i></a> 
-</div> 
 
-<div class="content">
-  <h3>게시글 목록</h3>
+<!-- 플로팅 버튼 -->
+<div class="fab-container">
+	<div class="fab fab-icon-holder">
+		<i class="fa-solid fa-pen-nib"></i>
+	</div>
+	
+	<ul class="fab-options">
+		<li>
+			<span class="fab-label">작성하기</span>
+			<div onclick="location.href='${insertLink}'" class="fab-icon-holder">
+				<i class="fa-solid fa-pen-nib"></i>
+			</div>
+		</li>
+		<li>
+			<span class="fab-label">지역</span>
+			<div class="fab-icon-holder">
+				<i class="fa-solid fa-location-dot"></i>
+			</div>
+		</li>
+		<li>
+			<span class="fab-label">달력</span>
+			<div class="fab-icon-holder">
+				<i class="fa-solid fa-calendar-week"></i>
+			</div>
+		</li>
+		<li>
+			<span class="fab-label">마이페이지</span>
+			<div class="fab-icon-holder">
+				<i class="fa-solid fa-circle-user"></i>
+			</div>
+		</li>
+	</ul>
 </div>
 
-<table class="table">
-	<thead>
-		<tr>
-			<th>#</th>
-			<th></th>
-			<th>제목</th>
-			<th>작성자</th>
-		</tr>
-	</thead>
-	<tbody>
+<!-- 게시글 목록 -->
 
-
-	</tbody>
-</table>
-
+<div class="matches" id="body">
+	<table class="table">
+		<thead class="table-dark">
+			<tr>
+				<th>#</th>
+				<th>제목</th>
+				<th>예약날짜</th>
+				<th>예약시간</th>
+				<th>구장이름</th>
+				<th>작성자</th>
+				<th>모집상태</th>
+				<th>매치방식</th>
+				<th>실력</th>
+				<th>지역</th>
+			</tr>
+		</thead>
+		<tbody>
+			 <c:forEach items="${bookList }" var="main">
+				<tr>
+					<td>${main.bookId }</td>
+					<td>
+					<c:url value="/main/get" var="getLink">
+						<c:param name="bookId" value="${main.bookId }"></c:param>
+					</c:url>
+						<a href="${getLink }">
+							${main.stadiumTitle }
+						</a>
+					</td>
+					<td>${main.bookDate }</td>			
+					<td>${main.bookTime }</td>			
+					<td>${main.stadiumName }</td>			
+					<td>${main.nickName }</td>				
+					<td>${main.status }</td>			
+					<td>${main.matchType }</td>			
+					<td>${main.level }</td>			
+					<td>${main.region }</td>			
+				</tr>
+			</c:forEach>
+		</tbody>
+	</table>
+</div>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script>
-
 </script>
 
 </body>

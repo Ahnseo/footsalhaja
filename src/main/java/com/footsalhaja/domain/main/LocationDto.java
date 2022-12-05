@@ -9,4 +9,5 @@ public class LocationDto {
 	private int locationId;
 	private String address;
 	private String stadiumName;
+	private String region;
 }

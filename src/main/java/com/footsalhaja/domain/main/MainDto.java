@@ -6,9 +6,10 @@ import java.time.LocalDateTime;
 import lombok.Data;
 
 @Data
-public class MainDto {//book
+public class MainDto {
 
-
+//#{stadiumTitle}, #{content}, #{matchType}, #{level}, #{status}, 
+//#{bookDate}, #{teamGender}, #{location_locationId}, #{userId}, #{bookTime}
 	private int bookId;
 	private String stadiumTitle;
 	private String content;
@@ -24,5 +25,5 @@ public class MainDto {//book
 	private String nickName;
 
 	private String bookDate;
-	private String datetime;
+	private String bookTime;
 }

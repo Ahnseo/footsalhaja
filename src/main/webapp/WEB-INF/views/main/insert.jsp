@@ -12,6 +12,30 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style>
+#body {
+	max-width: 928px;
+	margin: 0 auto;
+	background-color: #fff;
+}
+
+#wrapper {
+	display: block;
+	width: 100%;
+	background-color: black;
+}
+
+.contents-box {
+	padding: 0 16px 32px;
+}
+
+.title {
+	color: #000;
+	font-size: 20px;
+	letter-spacing: -.01em;
+	font-weight: 500;
+	line-height: 1em;
+	padding: 25px 5px 25px 5px;
+}
 
 </style>
 </head>
@@ -20,63 +44,99 @@
 <my:navbar></my:navbar>
 	
 	
-	<h1>게시물 작성</h1>
+	<div id="wrapper">
+	<form id="insertForm1" action="/main/insert" method="post">
+		<input type="text" name="userId" value="${member.userId }" disabled="disabled">
+		
+		<div id="body">
+			<div class="contents-box">
+				<div class="title">매치 작성</div>
+				
+			<div class="mb-3">
+				<input required="required" type="text" class="form-control" name="stadiumTitle" placeholder="제목을 작성해주세요">		
+			</div>
+			
+			<div class="mb-3">
+				<label for="" class="form-label">예약날짜</label>
+				<input type="Date" name="bookDate"/>
+			</div>
+			
+			<div class="mb-3">
+				<label for="" class="form-label">예약시간</label>
+				<select id="bookTime" name="bookTime" >
+					<option value="16:00 ~ 18:00">16:00 ~ 18:00</option>
+					<option value="18:00 ~ 20:00">18:00 ~ 20:00</option>
+					<option value="20:00 ~ 22:00">20:00 ~ 22:00</option>
+				</select>
+			</div>
+			
+			<div class="mb-3">
+				<label for="">구장 지역</label>
+					<select id="region">
+						<option value="서울">서울</option>
+						<option value="경기">경기</option>
+					</select>
+			</div>
+			
+			<div class="mb-3">
+				<label for="" class="form-label">예약장소</label>
+				<select name="location_locationId" id="location_locationId">
+				<!-- items은  mainController에서 정해준 값 > 아래 위치 참조  
+					/prj1-20221115/src/main/java/com/study/controller/member/MemberController.java - @GetMapping("list")
+				-->
+			<%-- 	<c:forEach items="${memberList }" var="member">
+					<option value="${member.id }">${member.nickName }</option>
+				</c:forEach> --%>
+					<option value="15">천마 풋살파크</option>
+					<option value="16">아디다스 더베이스</option>
+					<option value="17">도봉 루다 풋살장</option>
+					<option value="18">영등포 SKY 풋살파크 A구장</option>
+					<option value="19">은평 롯데몰 A구장</option>
+				</select>
+			</div>
+		
 	
-	<form id="insertForm1" action="" method="post">
-		<div class="mb-3">
-			<label for="" class="form-label">제목</label>
-			<input required="required" type="text" class="form-control" name="stadiumTitle">		
-		</div>
-		
-		<div class="mb-3">
-			<label for="" class="form-label">본문</label>
-			<textarea required="required" rows="10" class="form-control" name="content"></textarea>
-		</div>
-		
-		<div class="mb-3">
-			<input type="Date" name="bookDate"/>
-		</div>
-		<div>
-			<select name="datetime" >
-				<option value="8-10시">8-10시</option>
-				<option value="10-12시">10-12시</option>
-				<option value="12-2시">12-2시</option>
-			</select>
-		</div>
-		<div>
-			<select name="location_locationId" id="">
-				<option value="7">경기</option>
-			</select>
-		</div>
+			<div class="mb-3">
+				<label for="" class="form-label">매칭</label>
+				<select name="matchType" id="matchType">
+					<option value="3">3 vs 3</option>
+					<option value="4">4 vs 4</option>
+					<option value="5">5 vs 5</option>
+				</select>
+			</div>
 	
-
-		<div class="mb-3">
-			<input type="text" name="matchType" placeholder="matchType">
+			<div class="mb-3">
+				<label for="" class="form-label">실력</label>
+				<select name="level" id="level">
+					<option value="1">하</option>
+					<option value="2">중</option>
+					<option value="3">상</option>
+				</select>
+			</div>
+	
+			<div class="mb-3">
+				<label for="" class="form-label"> 팀 성별</label>
+				<input type="radio" name="teamGender" id="male" value="M">남
+				<input type="radio" name="teamGender" id="female" value="F">여
+			</div>
+	
+			<div class="mb-3">
+				<label for="" class="form-label">모집상태</label>
+				<input type="radio" name="status" id="status1" value="1">모집 중
+				<input type="radio" name="status" id="status2" value="0">모집 완료
+			</div>
+			
+			<div class="mb-3">
+				<label for="" class="form-label">본문</label>
+				<textarea required="required" rows="10" class="form-control" name="content"></textarea>
+			</div>
+			
+			<input type="submit" value="작성 완료">
+			<input type="button" value="작성 취소" onclick="location.href='/main/list'">
+			</div>
 		</div>
-
-		<div class="mb-3">
-			<input type="text" name="level" placeholder="level">
-		</div>
-
-		<div class="mb-3">
-			<input type="text" name="teamGender" placeholder="teamGender">
-		</div>
-
-		<div class="mb-3">
-			<input type="text" name="status" placeholder="status">
-		</div>
-		
-		
-		
-		
-		<div>
-			<label for="" class="form-label">
-			</label>
-			<input class="form-control-plaintext" type="text" readonly>
-		</div>
-		
-		<input type="submit" value="등록">
 	</form>
+	</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script>

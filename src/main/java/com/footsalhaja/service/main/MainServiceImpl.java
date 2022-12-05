@@ -1,12 +1,15 @@
 package com.footsalhaja.service.main;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import com.footsalhaja.domain.main.BookDto;
 import com.footsalhaja.domain.main.MainDto;
-import com.footsalhaja.domain.main.PageInfo;
 import com.footsalhaja.mapper.main.MainMapper;
 
 @Service
@@ -15,21 +18,24 @@ public class MainServiceImpl implements MainService {
 	@Autowired
 	private MainMapper mapper;
 	
-	
 	@Override
-	public int insert(MainDto mainBoard) {
+	public int insert(MainDto book) {
 		System.out.println("테스트");
-		
-		return mapper.insert(mainBoard);
+		LocalDateTime date  = LocalDateTime.now();
+		// spring security에서 정보 가져오기
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal(); 
+		UserDetails userDetails = (UserDetails)principal; 
+		String username = userDetails.getUsername();
+		String nickname =  mapper.selectNick(username);
+		// 작성시간을 book에 넣음
+		book.setInsertDatetime(date);
+		// 로그인한 ID를 book에 넣음 (Security에 있는 로그인한 Id)
+		book.setUserId(username);
+		book.setNickName(nickname);
+		System.out.println("book2 : "  + book);
+		return mapper.insert(book);
 	}
 
-	public List<MainDto> mainList(int page, String type, String keyword, PageInfo pageInfo) {
-		int records = 10;
-		int offset = (page - 1) * records;
-		
-		
-		return mapper.list(offset, records, type, "%" + keyword +"%");
-	}
 
 	@Override
 	public MainDto get(int bookId) {
@@ -39,6 +45,13 @@ public class MainServiceImpl implements MainService {
 	
 	public int update(MainDto main) {
 		return mapper.update(main);
+	}
+
+
+	//@Override
+	// 메인리스트 불러오기
+	public List<BookDto> listBook() {
+		return mapper.listBook();
 	}
 
 }
