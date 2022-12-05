@@ -22,7 +22,7 @@ import com.footsalhaja.domain.academy.ReplyPageDto;
 import com.footsalhaja.service.academy.AcademyReplyService;
 
 @Controller
-@RequestMapping("reply")
+@RequestMapping("academy/reply")
 public class AcademyReplyController {
 	@Autowired
 	private AcademyReplyService service;

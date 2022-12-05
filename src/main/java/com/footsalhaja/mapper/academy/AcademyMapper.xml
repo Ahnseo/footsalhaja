@@ -76,7 +76,7 @@
 	
 	<!-- 페이지네이션 & 검색 -->
 	<select id="getListWithPaging" resultType="com.footsalhaja.domain.academy.BoardDto">
-	
+<!-- 	<![CDATA[ -->
 	SELECT 		
 		b.ab_number,
 		b.ab_category,
@@ -87,31 +87,32 @@
 		COUNT(r.academyBoard_ab_number) replyCnt
 		
 	FROM academyBoard b LEFT JOIN academyBoardReply r ON b.ab_number = r.academyBoard_ab_number
+<!-- 	WHERE -->
+<!-- 	]]> -->
+<!-- 	<include refid="criteria"></include> -->
+<!-- 	<![CDATA[ -->
 	GROUP BY b.ab_number
 	ORDER BY b.ab_number DESC
-<!-- <include refid="criteria"></include> -->
-
 	LIMIT #{offset}, #{records}
-	
+<!-- 	]]> -->
 	</select>
 	
 	
 	<!-- 전체 데이터 수 -->
 	
 	<select id="getTotalCount" resultType="int">
+<!-- 	<![CDATA[ -->	
 		SELECT Count(*)
 		FROM academyBoard
-		WHERE <!-- 검색조건 호출  -->
-			<include refid="criteria"></include>
+		WHERE
+<!-- 		]]>  -->
+		<!-- 검색조건 호출  -->
+<!-- 	<include refid="criteria"></include> -->
+<!-- 	<![CDATA[ -->		
 		ab_number >0
+<!-- 	]]> -->
 	</select>
 	
-	<!-- 게시물 당 댓글 갯수 -->
-	<update id="updateReplyCnt">
-		UPDATE academyBoard
-		SET ab_replyCount = ab_replyCount + #{amount} 
-		WHERE ab_number = #{ab_number}
-	</update>
  
  </mapper>
   

@@ -135,7 +135,7 @@
 	function listReply(page) {
 		console.log("b");
 		
-		fetch(`\${ctx}/reply/list/\${ab_number}/\${page}`)
+		fetch(`\${ctx}/academy/reply/list/\${ab_number}/\${page}`)
 		.then(res => res.json())
 		.then(list => {
 			const replyListContainer = document.querySelector("#replyListContainer");
@@ -189,7 +189,7 @@
 					e.preventDefault();
 					console.log("page click");
 					var targetPageNum = this.getAttribute("href");
-					console.log("targetPageNum : " + targetPageNum);
+
 					//댓글 페이지 번호를 변경한 후 
 					pageNum = targetPageNum;
 					//해당 페이지의 댓글 가져오게 함
@@ -240,7 +240,7 @@
 	
 	/* 수정모달에서 댓글 읽어오기 */
 	function readReplyAndSetModalForm(replyId) {
-		fetch(ctx + "/reply/get/" + replyId)
+		fetch(ctx + "/academy/reply/get/" + replyId)
 		.then(res => res.json())
 		.then(reply => {
 			document.querySelector("#modifyReplyInput").value = reply.ab_replyContent;
@@ -253,7 +253,7 @@
 	const ab_replyNumber = this.dataset.replyId;
 	const data = {ab_replyNumber, ab_replyContent};
 	
-	fetch(`\${ctx}/reply/modify`, {
+	fetch(`\${ctx}/academy/reply/modify`, {
 		method : "put",
 		headers : {
 			"Content-Type" : "application/json"
@@ -263,7 +263,7 @@
 	.then(res => res.json())
 	.then(data => {
 		document.querySelector("#replyMessage").innerText = data.message;})
-	.then(() => listReply());
+	.then(() => listReply(page));
 }); 
 	
 	/* 댓글 삭제 */
@@ -279,12 +279,12 @@
 	/* 댓글 삭제 */
 	function removeReply(replyId) {
 
-	fetch(ctx + "/reply/remove/" + replyId, {
+	fetch(ctx + "/academy/reply/remove/" + replyId, {
 		method: "delete"
 	})
 	.then(res => res.json())
 	.then(data => document.querySelector("#replyMessage").innerText = data.message)
-	.then(() => listReply());
+	.then(() => listReply(page));
 }
 	
 	
@@ -299,7 +299,7 @@
 			member_userId
 		};
 		
-		fetch(`\${ctx}/reply/add`, {
+		fetch(`\${ctx}/academy/reply/add`, {
 			method : "post",
 			headers : {
 				"Content-Type" : "application/json"
@@ -311,7 +311,7 @@
 			document.querySelector("#replyInput").value = "";
 			document.querySelector("#replyMessage").innerText = data.message;
 		})
-		.then(() => listReply());
+		.then(() => listReply(page));
 	});
 </script>
 
