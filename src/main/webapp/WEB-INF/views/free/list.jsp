@@ -43,10 +43,13 @@
 						</c:url>
 						<a href="${getLink}">
 							${board.fb_title }
-						</a>							
+						</a>
+						<c:if test="${board.fb_replyCount > 0 }">
+							댓글[${board.fb_replyCount }]
+						</c:if>
 					</td>
 					<td>${board.member_userId }</td>
-					<td>${board.fb_insertDatetime }</td>
+					<td>${board.ago }</td>
 				</tr>
 			</c:forEach>
 		</tbody>

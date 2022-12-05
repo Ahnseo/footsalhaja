@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.footsalhaja.domain.free.BoardDto;
 import com.footsalhaja.domain.free.PageInfo;
@@ -11,6 +12,7 @@ import com.footsalhaja.mapper.free.FreeMapper;
 import com.footsalhaja.mapper.free.FreeReplyMapper;
 
 @Service
+@Transactional
 public class FreeServiceImpl implements FreeService{
 	
 	@Autowired
@@ -61,6 +63,7 @@ public class FreeServiceImpl implements FreeService{
 		return freeMapper.list(offset, records, type,  "%" + keyword + "%");
 	}
 	 
+	// 게시물 보기
 	@Override
 	public BoardDto get(int fb_number) {
 		return freeMapper.select(fb_number);
@@ -71,11 +74,12 @@ public class FreeServiceImpl implements FreeService{
 		return freeMapper.update(board);
 	}
 	
+	
+	// 게시물 지우기
 	@Override
 	public int remove(int fb_number) {
 		// 게시물의 댓글 지우기
 		replyMapper.deleteByBoardId(fb_number);
-		
 		
 		// 게시물 지우기
 		return freeMapper.delete(fb_number);
