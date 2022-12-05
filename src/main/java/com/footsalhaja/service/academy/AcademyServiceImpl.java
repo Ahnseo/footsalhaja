@@ -33,6 +33,9 @@ public class AcademyServiceImpl implements AcademyService{
 		
 		int offset = (cri.getPageNum() -1) * cri.getAmount();
 		int records = cri.getAmount();
+		System.out.println(cri.getType());
+		
+		/* cri.setKeyword("%"+cri.getKeyword()+"%"); */
 		
 		return mapper.getListWithPaging(cri, offset,records);
 	}
@@ -59,7 +62,7 @@ public class AcademyServiceImpl implements AcademyService{
 	@Override
 	public int getTotal(Criteria cri) {
 		
-		return mapper.getTotalCount(cri);
+		return mapper.getTotalCount(cri, 123);
 	}
 	
 	

@@ -29,6 +29,8 @@ public class AcademyController {
 	public void list(Criteria cri, Model model) {
 		// request param
 		// business logic
+		System.out.println(cri);
+		cri.setKeyword("%"+cri.getKeyword()+"%");
 		List<BoardDto> list = service.listBord(cri);
 		
 		// add attribute
@@ -38,6 +40,9 @@ public class AcademyController {
 		int total = service.getTotal(cri);
 		model.addAttribute("pageMaker", new PageDto(cri, total));
 		// forward
+		
+
+		
 	}
 	
 	//register 등록
