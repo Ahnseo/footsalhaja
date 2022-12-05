@@ -2,6 +2,8 @@ package com.footsalhaja.controller.free;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.footsalhaja.domain.free.BoardDto;
+import com.footsalhaja.domain.free.PageInfo;
 import com.footsalhaja.service.free.FreeService;
 
 @Controller
@@ -41,11 +44,18 @@ public class FreeController {
 	}
 	
 	@GetMapping("list")
-	public void list(Model model) {
-		List<BoardDto> list = service.listBoard();
+	public void list(
+			@RequestParam(name = "page", defaultValue = "1") int page, // 페이지
+			@RequestParam(name = "t", defaultValue = "all") String type, // 검색범위(카테고리)
+			@RequestParam(name = "q", defaultValue = "") String keyword, // 검색어
+			PageInfo pageInfo,
+			Model model) {
+		
+		List<BoardDto> list = service.listBoard(page, type, keyword, pageInfo);
 		
 		model.addAttribute("boardList", list);
-	} 
+	}
+
 
 	@GetMapping("get")
 	public void get(

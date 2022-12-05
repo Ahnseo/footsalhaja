@@ -14,7 +14,7 @@ public class QnADto {
 	private String title;
 	private String content;
 
-	private int status; // 0= 처리중 / 1=처리완료
+	private String status; // 0= 처리중 / 1=처리완료
 
 	private String userId;
 	private String nickName;

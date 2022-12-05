@@ -13,6 +13,7 @@
 <body>
 <my:navbar></my:navbar>
 
+
 <div class="container-md">
 	<div class="row">
 		<div class="col">
@@ -87,6 +88,7 @@
 document.querySelector("#removeConfirmButton").addEventListener("click", function({
 	document.querySelector("#removeForm").submit();
 }); */ 
+
 </script>
 </body>
 </html>

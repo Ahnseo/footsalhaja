@@ -67,8 +67,8 @@ public class CustomConfig {
 	public org.springframework.security.web.SecurityFilterChain SecurityFilterChain(HttpSecurity http) throws Exception {
 		http.formLogin().loginPage("/member/login").defaultSuccessUrl("/main/list", true);// 로그인 성공하면  메인 리스트로. 
 		http.logout().logoutUrl("/member/logout").logoutSuccessUrl("/main/list");
+		http.csrf().disable(); // 원래는 이러면 안됌, 모든 페이지에 csrf공격 보안적용을 해제중!!!!!!  
 		http.rememberMe(); // 브라우저를 닫아도 쿠키를 저장 시킴 
-		http.csrf().disable(); // 원래는 이러면 안됌, 모든 페이지에 csrf를 적용해제중.  
 		
 		return http.build();
 	}

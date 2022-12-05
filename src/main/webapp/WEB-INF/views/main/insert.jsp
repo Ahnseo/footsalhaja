@@ -37,7 +37,9 @@
 			<input type="Date" name="bookDate"/>
 		</div>
 		<div>
+
 			<select name="dateTime" >
+
 				<option value="8-10시">8-10시</option>
 				<option value="10-12시">10-12시</option>
 				<option value="12-2시">12-2시</option>

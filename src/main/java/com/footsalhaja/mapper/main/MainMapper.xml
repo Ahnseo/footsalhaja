@@ -63,8 +63,10 @@
 		matchType = #{matchType},
 		level = #{level},
 		status = #{status},
+
 		bookDate = #{bookDate},
 		bookTime = #{bookTime}, 
+
 		teamGender = #{teamGender}
 	WHERE bookId = #{bookId}
 

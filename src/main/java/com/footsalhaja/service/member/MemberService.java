@@ -11,4 +11,8 @@ public interface MemberService {
 	List<MemberDto> selectMemberList();
 
 	MemberDto selectMemberInfoByUserId(String userId);
+
+	int deleteMemberInfoByUserId(String userId);
+
+	int updateMemberInfoByUserId(MemberDto memberModifiedValues);
 }

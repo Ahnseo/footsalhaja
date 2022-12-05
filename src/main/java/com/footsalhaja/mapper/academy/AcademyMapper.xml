@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.footsalhaja.mapper.academy.AcademyMapper">
+ 
+ 
+	<!-- register 등록 -->
+ 	<insert id="insert">
+	INSERT INTO academyBoard (ab_title, ab_category, ab_content, member_userId)
+	VALUES ( #{ab_title}, #{ab_category},  #{ab_content}, #{member_userId})
+	
+	</insert>
+	
+	<!-- list 목록 -->
+	<select id="list" resultType="com.footsalhaja.domain.academy.BoardDto">
+	SELECT *
+	FROM academyBoard
+	ORDER BY ab_number DESC
+	</select>
+	
+	<!-- get 게시물페이지  -->
+	<select id="select" resultType="com.footsalhaja.domain.academy.BoardDto">
+	SELECT 
+		ab_number,
+		ab_category,
+		ab_title,
+		ab_content,
+		member_userId,
+		ab_insertDatetime
+		
+	FROM academyBoard
+	WHERE
+		ab_number = #{ab_number}
+		
+	</select>
+	
+	<!-- modify 수정페이지 -->
+	<update id="modify">
+	UPDATE academyBoard
+	SET
+		ab_title = #{ab_title},
+		ab_category = #{ab_category},
+		ab_content = #{ab_content}
+	WHERE
+		ab_number = #{ab_number}
+	
+	</update>
+	
+	<!-- remove 삭제  -->
+	<delete id="remove">
+	DELETE FROM academyBoard
+	WHERE ab_number = #{ab_number}
+	</delete>
+	
+	<!-- 검색 조건 -->
+	<sql id="criteria">
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach item='type' collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()"> 
+							ab_title like '%#{keyword}%'
+						</when>
+						<when test="type == 'C'.toString()">
+							ab_content like '%#{keyword}%'
+						</when>
+						<when test="type == 'W'.toString()">
+							member_userId like '%#{keyword}%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+	
+	<!-- 페이지네이션 & 검색 -->
+	<select id="getListWithPaging" resultType="com.footsalhaja.domain.academy.BoardDto">
+	
+	SELECT 		
+		b.ab_number,
+		b.ab_category,
+		b.ab_title,
+		b.ab_content,
+		b.member_userId,
+		b.ab_insertDatetime,
+		COUNT(r.academyBoard_ab_number) replyCnt
+		
+	FROM academyBoard b LEFT JOIN academyBoardReply r ON b.ab_number = r.academyBoard_ab_number
+	GROUP BY b.ab_number
+	ORDER BY b.ab_number DESC
+
+<!-- <include refid="criteria"></include> -->
+
+	LIMIT #{offset}, #{records}
+	
+	</select>
+	
+	
+	<!-- 전체 데이터 수 -->
+	
+	<select id="getTotalCount" resultType="int">
+		SELECT Count(*)
+		FROM academyBoard
+		WHERE <!-- 검색조건 호출  -->
+			<include refid="criteria"></include>
+		ab_number >0
+	</select>
+
+ 
+ </mapper>
+  

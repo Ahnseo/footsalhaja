@@ -14,6 +14,8 @@ public interface MainMapper {
 
 	int update(MainDto main);
 
+
 	int delete(int bookId);
+
 	
 }
