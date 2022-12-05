@@ -37,7 +37,7 @@
 			<input type="Date" name="bookDate"/>
 		</div>
 		<div>
-			<select name="datetime" >
+			<select name="dateTime" >
 				<option value="8-10시">8-10시</option>
 				<option value="10-12시">10-12시</option>
 				<option value="12-2시">12-2시</option>
@@ -56,7 +56,7 @@
 
 		<div class="mb-3">
 			<input type="text" name="level" placeholder="level">
-		</div>
+		</div>1
 
 		<div class="mb-3">
 			<input type="text" name="teamGender" placeholder="teamGender">

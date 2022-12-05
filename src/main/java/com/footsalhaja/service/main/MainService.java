@@ -9,5 +9,7 @@ public interface MainService {
 	public int insert(MainDto mainBoard);
 	
 	public int update(MainDto main);
+	
+	public int remove(int bookId);
 
 }

@@ -29,7 +29,8 @@
  		b.matchType,
  		b.level,
  		b.status,
- 		b.bookDatetime,
+ 		b.bookDate,
+ 		b.bookTime,
  		b.insertDatetime,
  		b.teamGender
  	FROM
@@ -46,7 +47,8 @@
 		<result column="matchType" property="matchType"></result>
 		<result column="level" property="level"/>
 		<result column="status" property="status"/>
-		<result column="bookDatetime" property="bookDatetime"></result>
+		<result column="bookDate" property="bookDate"></result>
+		<result column="bookTime" property="bookTime"></result>
 		<result column="insertDatetime" property="insertDatetime"/>
 		<result column="teamGender" property="teamGender"></result>
  	</resultMap>	
@@ -61,13 +63,25 @@
 		matchType = #{matchType},
 		level = #{level},
 		status = #{status},
-		bookDatetime = #{bookDatetime}, 
+		bookDate = #{bookDate},
+		bookTime = #{bookTime}, 
 		teamGender = #{teamGender}
 	WHERE bookId = #{bookId}
 
 	</update>
 
 
+	<!--게시물 지우기  -->
+	<delete id="delete">
+	DELETE FROM book
+	WHERE bookId = #{bookId}
+	</delete>
+	
+	
+	
+	
+	
+	
  </mapper>
 
  

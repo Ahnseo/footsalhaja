@@ -41,4 +41,9 @@ public class MainServiceImpl implements MainService {
 		return mapper.update(main);
 	}
 
+	public int remove(int bookId) {
+		return mapper.delete(bookId);
+		
+	}
+
 }
