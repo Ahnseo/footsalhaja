@@ -73,7 +73,7 @@
 	</select>
 	
 	
-	<!-- 전체 댓글 수 -->
+	<!-- 댓글 수 -->
 	
 	<select id="getTotalReplyCount" resultType="int">
 		SELECT Count(ab_replyNumber)
