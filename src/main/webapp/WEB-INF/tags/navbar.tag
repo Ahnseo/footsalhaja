@@ -66,13 +66,21 @@
 		    	관리자
 		    </a>
       		<c:url value="/admin/dashboard" var="dashboardLink"></c:url>
-      		<c:url value="/admin/memberList" var="memberListLink"></c:url>
+      		<c:url value="/admin/allMemberList" var="allMemberListLink">
+      			<c:param name="page" value="1"/>
+      			<c:param name="q" value=""/>
+      			<c:param name="t" value="all"/>
+      		</c:url>
       		<c:url value="/admin/allBookList" var="allBookListLink"></c:url>
       		<c:url value="/admin/stadiumManagement" var="stadiumManagementLink"></c:url>
-      		<c:url value="/admin/allQnAList" var="allQnAListLink"></c:url>
+      		<c:url value="/admin/allQnAList" var="allQnAListLink">
+      			<c:param name="page" value="1"/>
+      			<c:param name="q" value=""/>
+      			<c:param name="t" value="all"/>
+      		</c:url>
 		    <ul class="dropdown-menu">
 			    <li><a class="dropdown-item" href="${dashboardLink }">대시보드</a></li>
-			    <li><a class="dropdown-item" href="${memberListLink }">회원관리</a></li>
+			    <li><a class="dropdown-item" href="${allMemberListLink }">회원관리</a></li>
 			    <li><a class="dropdown-item" href="${allBookListLink }">예약정보</a></li>
 			    <li><a class="dropdown-item" href="${stadiumManagementLink }">시설관리</a></li>
 			    <li><a class="dropdown-item" href="${allQnAListLink }">전체문의</a></li>

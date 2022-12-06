@@ -28,7 +28,6 @@ public class QnAController {
 	@Autowired
 	private QnAService qnaService;
 
-	
 	// main
 	@GetMapping("qnaMainBoard")
 	public void qnaMainBoard(Model model) {
@@ -37,7 +36,6 @@ public class QnAController {
 		// System.out.println(FAQList);
 
 		model.addAttribute("FAQList", FAQList);
-
 	}
 
 	// insert

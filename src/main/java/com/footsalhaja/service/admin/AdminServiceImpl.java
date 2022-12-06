@@ -16,11 +16,11 @@ public class AdminServiceImpl implements AdminService {
 	private QnAMapper qnaMapper;
 	
 	@Override
-	public List<QnADto> selectAllQnAList(int page, QnAPageInfo qnaPageInfo) {
+	public List<QnADto> selectAllQnAList(int page, QnAPageInfo qnaPageInfo, String keyword, String type) {
 		// 페이지네이션 추가
 		int records = 10; // 10 rows 씩 목록에 나타냅니다  
 		int offset = (page - 1) * records; //page=2 : 11~20 rows ,  page=3 : 21~30 rows 나타냄 		
-		int countAll = qnaMapper.countAllQnA();
+		int countAll = qnaMapper.countAllQnA(type, "%"+keyword+"%");
 		int lastPageNumber = (countAll - 1) / records + 1;
 		int leftPageNumber = (page - 1) / 10 * 10 + 1;
 		int rightPageNumber = leftPageNumber + 9;
@@ -44,6 +44,6 @@ public class AdminServiceImpl implements AdminService {
 		qnaPageInfo.setHasPrevButton(hasPrevButton);	
 		qnaPageInfo.setHasNextButton(hasNextButton);
 				
-		return qnaMapper.selectAllQnAList(offset, records);
+		return qnaMapper.selectAllQnAList(offset, records, "%"+keyword+"%", type);
 	}
 }

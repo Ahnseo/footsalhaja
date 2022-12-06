@@ -97,14 +97,42 @@
 	 		likeCount
 	 	FROM 
 	 	 	QnABoard
+	 	WHERE
+		<trim prefixOverrides="OR">
+			<if test="type == 'all' or type == 'title'">
+			OR title LIKE #{keyword}
+			</if>
+			
+			<if test="type == 'all' or type == 'content'">
+			OR content LIKE #{keyword}
+			</if>
+			
+			<if test="type == 'all' or type == 'userId'">
+			OR member_userId LIKE #{keyword}
+			</if>
+		</trim>  	
 	 	ORDER BY qnaId DESC
-	 	LIMIT #{offset}, #{records} 
+	 	LIMIT #{offset}, #{records}
 	</select>
 	<select id="countAllQnA" resultType="int">
 		SELECT 
 	 		COUNT(*)
 	 	FROM 
 	 	 	QnABoard 
+	 	WHERE
+		<trim prefixOverrides="OR">
+			<if test="type == 'all' or type == 'title'">
+			OR title LIKE #{keyword}
+			</if>
+			
+			<if test="type == 'all' or type == 'content'">
+			OR content LIKE #{keyword}
+			</if>
+			
+			<if test="type == 'all' or type == 'userId'">
+			OR member_userId LIKE #{keyword}
+			</if>
+		</trim> 	
 	</select>
 	
 	<!-- 좋아요 기능추가  -->

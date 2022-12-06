@@ -27,10 +27,10 @@ public interface QnAMapper {
 	QnADto selectMyQnAGetByQnAIdAndUserId(String userId, int qnaId);
 
 	//select All QnAList (관리자 전용)
-	List<QnADto> selectAllQnAList(int offset, int records);
+	List<QnADto> selectAllQnAList(int offset, int records, String keyword, String type);
 	
 	//
-	int countAllQnA();
+	int countAllQnA(String type, String keyword);
 
 	//QnA Id와 로그인된 Id로 좋아요기능 추가
 	int selectQnABoardLikeCount(String qnaId, String loggedinId);

@@ -23,8 +23,21 @@
 	 	WHERE
 	 		userId = #{userId}	 			 		
  	</update>
+ 	<select id="selectAllMemberCount" resultType="int">
+	 	SELECT COUNT(*)
+	 	FROM member
+	 	WHERE
+		<trim prefixOverrides="OR">
+			<if test="type == 'all' or type == 'userId'">
+ 			OR userId LIKE #{keyword}
+			</if>
+			<if test="type == 'all' or type == 'name'">
+ 			OR name LIKE #{keyword}
+			</if>
+		</trim>
+ 	</select>
  	
- 	<!-- 모든 회원정보 List로 가져오기 -->
+ 	<!-- 모든 회원정보 List로 가져오기 , 페이지네이션 & 검색 기능 추가 -->
  	<select id="selectMemberList" resultType="com.footsalhaja.domain.member.MemberDto">
  	SELECT 
  		userId,
@@ -41,7 +54,17 @@
  		permission
  	FROM
  		member
- 	ORDER BY name	
+ 	WHERE
+ 		<trim prefixOverrides="OR">
+ 			<if test="type == 'all' or type == 'userId'">
+ 			OR userId LIKE #{keyword}
+ 			</if>
+ 			<if test="type == 'all' or type == 'name'">
+ 			OR name LIKE #{keyword}
+ 			</if>
+ 		</trim>
+ 	ORDER BY name
+ 	LIMIT #{offset}, #{records}
  	</select>
  	
  	<!-- userId 로 하나의 회원정보 가져오기 -->

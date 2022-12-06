@@ -40,7 +40,7 @@
 				</c:forEach>
 
 				<!-- 검색기능 추가 예정  -->
-				<h3> QnA 무엇이 궁굼하신가요? </h3>
+				<h3> QnA 무엇이 궁금하신가요? </h3>
 				<form class="d-flex" role="search">
 					<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
 					<button class="btn btn-outline-success" type="submit">Search</button>
