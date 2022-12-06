@@ -55,18 +55,18 @@
 	
 	<!-- 검색 조건 -->
 	<sql id="criteria">
-		<trim prefix="(" suffix=")" prefixOverrides="OR">
+		<trim prefixOverrides="OR">
 			<foreach item='type' collection="cri.typeArr">
 				<trim prefix="OR">
 					<choose>
 						<when test="type == 'T'.toString()"> 
-							ab_title LIKE #{cri.keyword}
+							b.ab_title LIKE #{cri.keyword}
 						</when>
 						<when test="type == 'C'.toString()">
-							ab_content LIKE #{cri.keyword}
+							b.ab_content LIKE #{cri.keyword}
 						</when>
 						<when test="type == 'W'.toString()">
-							member_userId LIKE #{cri.keyword}
+							b.member_userId LIKE #{cri.keyword}
 						</when>
 					</choose>
 				</trim>
@@ -89,7 +89,7 @@
 	FROM academyBoard b LEFT JOIN academyBoardReply r ON b.ab_number = r.academyBoard_ab_number
 	]]>
 	
-	 <if test="cri.type!=null">
+	 <if test="cri.type!=null and cri.type!=''">
 	 <![CDATA[
 		WHERE
 	]]>
@@ -108,10 +108,10 @@
 	<select id="getTotalCount" resultType="int">
 	<![CDATA[	
 		SELECT Count(*)
-		FROM academyBoard
+		FROM academyBoard b
 		]]> 
 		<!-- 검색조건 호출  -->
-	<if test="cri.type !=null">
+	<if test="cri.type!=null and cri.type!=''">
 	<![CDATA[	
 		WHERE
 		]]> 
