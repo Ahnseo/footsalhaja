@@ -23,7 +23,7 @@
 			<form id="modifyForm" action="" method="post">
 				<input type="hidden" name="bookId" value="${main.bookId }">
 				<div class="form-floating mb-3">
-					<input type="text" class="form-control" name="stadiumTitle" value=" ${main.stadiumTitle }">		
+					<input type="text" class="form-control" name="title" value=" ${main.title }">		
 					<label for="floatingInput">제목</label>
 				</div>
 				

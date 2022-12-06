@@ -53,7 +53,7 @@
 				<div class="title">매치 작성</div>
 				
 			<div class="mb-3">
-				<input required="required" type="text" class="form-control" name="stadiumTitle" placeholder="제목을 작성해주세요">		
+				<input required="required" type="text" class="form-control" name="title" placeholder="제목을 작성해주세요">		
 			</div>
 			
 			<div class="mb-3">

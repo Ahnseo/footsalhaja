@@ -12,9 +12,9 @@
  	<!-- 게시글 등록 -->
  	<insert id="insert">
  	INSERT INTO book
-		(stadiumTitle, content, matchType, level, status, bookDate, teamGender, location_locationId, member_userId, bookTime)
+		(title, content, matchType, level, status, bookDate, teamGender, location_locationId, member_userId, bookTime)
 	VALUES
-		(#{stadiumTitle}, #{content}, #{matchType}, #{level}, #{status}, #{bookDate}, #{teamGender}, #{location_locationId}, #{userId}, #{bookTime})
+		(#{title}, #{content}, #{matchType}, #{level}, #{status}, #{bookDate}, #{teamGender}, #{location_locationId}, #{userId}, #{bookTime})
  	</insert>
  
 	<select id="selectNick" resultType="java.lang.String">
@@ -28,7 +28,7 @@
  		m.userId,
  		m.nickName,
  		b.bookId,
- 		b.stadiumTitle,
+ 		b.title,
  		b.content, 
  		b.matchType,
  		b.level,
@@ -47,7 +47,7 @@
  		<id column="bookId" property="bookId"></id>
  		<result column="userId" property="userId"/>
 		<result column="nickName" property="nickName"></result>
-		<result column="stadiumTitle" property="stadiumTitle"/>
+		<result column="title" property="title"/>
 		<result column="matchType" property="matchType"></result>
 		<result column="level" property="level"/>
 		<result column="status" property="status"/>
@@ -61,7 +61,7 @@
   	<select id="listBook" resultMap="getBookList">
  	SELECT 
  		b.bookId,
- 		b.stadiumTitle,
+ 		b.title,
  		b.bookDate,
  		b.bookTime,
  		l.stadiumName,
@@ -77,7 +77,7 @@
  	</select>
  	<resultMap type="com.footsalhaja.domain.main.BookDto" id="getBookList">
  		<id column="bookId" property="bookId"></id>
- 		<result column="stadiumTitle" property="stadiumTitle"/>
+ 		<result column="title" property="title"/>
 		<result column="bookDate" property="bookDate"></result>
 		<result column="bookTime" property="bookTime"/>
 		<result column="stadiumName" property="stadiumName"></result>
@@ -92,7 +92,7 @@
 	<update id="update">
 	UPDATE book
 	SET
-		stadiumTitle = #{stadiumTitle}, 
+		title = #{title}, 
 		content = #{content},
 		matchType = #{matchType},
 		level = #{level},

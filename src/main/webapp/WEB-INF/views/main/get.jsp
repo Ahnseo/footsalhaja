@@ -55,7 +55,7 @@
 				</a>
 				
 				<div class="form-floating mb-3">
-					<input id="matchInfo" type="text" class="form-control" value=" ${main.stadiumTitle} ${main.bookDate } ${main.bookTime} ${main.nickName } ${main.matchType } ${main.teamGender }" readonly>
+					<input id="matchInfo" type="text" class="form-control" value=" ${main.title} ${main.bookDate } ${main.bookTime} ${main.nickName } ${main.matchType } ${main.teamGender }" readonly>
 					<label for="floatingInput">경기정보</label>
 				</div>
 			
