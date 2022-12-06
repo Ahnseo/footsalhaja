@@ -12,7 +12,7 @@ public class ReplyDto {
 	private int replyId;
 	private String replyContent;
 	private String writer;
-	private String bookId;
+	private int bookId;
 	private String userId;
 	
 	@JsonFormat(shape = Shape.STRING)

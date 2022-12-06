@@ -19,10 +19,15 @@
 		insertDatetime
 	FROM 
 		bookReply
-	WHERE bookId = #{bookId}
+	WHERE book_bookId = #{bookId}
 	ORDER BY 
 		replyId DESC
  	</select>
+
+	<delete id="deleteById">
+	DELETE FROM bookReply
+	WHERE replyId = #{replyId}
+	</delete>
 
  
  </mapper>

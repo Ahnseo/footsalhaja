@@ -10,7 +10,7 @@ public interface ReplyMapper {
 
 	List<ReplyDto> selectReplyByBookId(int bookId);
 
-	
+	int deleteById(int replyId);
 
 
 }

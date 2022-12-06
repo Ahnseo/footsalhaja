@@ -29,5 +29,6 @@ public class MainDto {
 	private String bookDate;
 	private String bookTime;
 
-
+	private float lat;
+	private float lng;
 }

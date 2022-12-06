@@ -10,4 +10,5 @@ public interface ReplyService {
 
 	public List<ReplyDto> listReplyByBookId(int bookId);
 
+	public int removeById(int replyId);
 }

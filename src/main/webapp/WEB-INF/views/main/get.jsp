@@ -102,12 +102,55 @@ function listReply(){
 	fetch(`\${ctx}/mainReply/list/\${bookId}`)
 	.then(res => res.json())
 	.then(list => {
-		for(const item of list){
-			const replyDiv = `<div>\${item.content} : \${item.inserted}</div>`;
-			document.querySelector("#replyListContainer").insertAdjacentHTML("beforeend", replyDiv);
+		const replyListContainer = document.querySelector("#replyListContainer");
+		replyListContainer.innerHTML = "";
+		
+for(const item of list){
+
+const removeReplyButtonId = `removeReplyButton\${item.replyId}`;
+			
+			const replyDiv = `
+				<div>
+					\${item.replyId} : \${item.replyContent}
+					<button data-reply-id="\${item.replyId}" id="\${removeReplyButtonId}">삭제</button>
+				</div>`;
+			replyListContainer.insertAdjacentHTML("beforeend", replyDiv);
+			
+			document.querySelector("#"+ removeReplyButtonId)
+					.addEventListener("click", function(){
+						removeReply(this.dataset.replyId);
+					});
+			
 		}
 	});
 }
+
+function removeReply(replyId){
+	fetch(ctx + "/mainReply/remove/" + replyId, {
+		method : "delete"
+	}) 
+} 
+
+
+
+document.querySelector("#replySendButton").addEventListener("click", function(){
+	const bookId = document.querySelector("#bookId").value;
+	const replyContent = document.querySelector("#replyInput").value;
+document.querySelector("#replySendButton").addEventListener("click", function(){
+	})
+	.then(res=>res.json())
+	.then(data => {
+		document.querySelector("#replyInput").value= "";
+		document.querySelector("#replyMessage").innerText = data.message;
+
+
+
+	})
+	.then(() => listReply());
+});
+
+
+
 
 document.querySelector("#replySendButton").addEventListener("click", function(){
 	const bookId = document.querySelector("#bookId").value;

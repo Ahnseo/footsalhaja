@@ -24,5 +24,8 @@ public class ReplyServiceImpl {
 		return mapper.selectReplyByBookId(bookId);
 	}
 
-	
+	public int removeById(int replyId) {
+		return mapper.deleteById(replyId);
+		
+	}
 }
