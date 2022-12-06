@@ -8,10 +8,10 @@ import lombok.Data;
 @Data
 public class MainDto {
 
-//#{stadiumTitle}, #{content}, #{matchType}, #{level}, #{status}, 
+//#{title}, #{content}, #{matchType}, #{level}, #{status}, 
 //#{bookDate}, #{teamGender}, #{location_locationId}, #{userId}, #{bookTime}
 	private int bookId;
-	private String stadiumTitle;
+	private String title;
 	private String content;
 	private String matchType;
 	private String level;

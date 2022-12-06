@@ -245,7 +245,7 @@
 						<c:param name="bookId" value="${main.bookId }"></c:param>
 					</c:url>
 						<a href="${getLink }">
-							${main.stadiumTitle }
+							${main.title }
 						</a>
 					</td>
 					<td>${main.bookDate }</td>			
