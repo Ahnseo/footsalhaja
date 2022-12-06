@@ -11,12 +11,16 @@ import org.springframework.stereotype.Service;
 import com.footsalhaja.domain.main.BookDto;
 import com.footsalhaja.domain.main.MainDto;
 import com.footsalhaja.mapper.main.MainMapper;
+import com.footsalhaja.mapper.main.ReplyMapper;
 
 @Service
 public class MainServiceImpl implements MainService {
 
 	@Autowired
-	private MainMapper mapper;
+	private MainMapper bookMapper;
+	
+	@Autowired
+	private ReplyMapper replyMapper;
 	
 	@Override
 	public int insert(MainDto book) {
@@ -26,25 +30,25 @@ public class MainServiceImpl implements MainService {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal(); 
 		UserDetails userDetails = (UserDetails)principal; 
 		String username = userDetails.getUsername();
-		String nickname =  mapper.selectNick(username);
+		String nickname =  bookMapper.selectNick(username);
 		// 작성시간을 book에 넣음
 		book.setInsertDatetime(date);
 		// 로그인한 ID를 book에 넣음 (Security에 있는 로그인한 Id)
 		book.setUserId(username);
 		book.setNickName(nickname);
 		System.out.println("book2 : "  + book);
-		return mapper.insert(book);
+		return bookMapper.insert(book);
 	}
 
 
 	@Override
 	public MainDto get(int bookId) {
-		return mapper.getById(bookId);
+		return bookMapper.getById(bookId);
 
 	}
 	
 	public int update(MainDto main) {
-		return mapper.update(main);
+		return bookMapper.update(main);
 	}
 
 
@@ -52,11 +56,14 @@ public class MainServiceImpl implements MainService {
 	//@Override
 	// 메인리스트 불러오기
 	public List<BookDto> listBook() {
-		return mapper.listBook();
+		return bookMapper.listBook();
 	}
 
 	public int remove(int bookId) {
-		return mapper.delete(bookId);
+		
+		replyMapper.deleteByBookId(bookId);
+		
+		return bookMapper.delete(bookId);
 		
 	}
 

@@ -28,4 +28,12 @@ public class ReplyServiceImpl {
 		return mapper.deleteById(replyId);
 		
 	}
+
+	public ReplyDto getByReplyId(int replyId) {
+		return mapper.selectByReplyId(replyId);
+	}
+
+	
+
 }
+

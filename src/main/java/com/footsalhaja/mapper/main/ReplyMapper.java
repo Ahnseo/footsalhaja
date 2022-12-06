@@ -12,5 +12,7 @@ public interface ReplyMapper {
 
 	int deleteById(int replyId);
 
+	ReplyDto selectByReplyId(int replyId);
 
+	int deleteByBookId(int bookId);
 }

@@ -48,6 +48,13 @@ public class ReplyController {
 	@DeleteMapping("remove/{replyId}")
 	public void remove(@PathVariable int replyId) {
 		service.removeById(replyId);
+		
 	}
 	
+	@GetMapping("get/{replyId}")
+	@ResponseBody
+	public ReplyDto get(@PathVariable int replyId) {
+		return service.getByReplyId(replyId);
+		
+	}
 }

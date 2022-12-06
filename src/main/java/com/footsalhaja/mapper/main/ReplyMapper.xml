@@ -29,7 +29,21 @@
 	WHERE replyId = #{replyId}
 	</delete>
 
- 
+ 	<select id="selectByReplyId">
+ 	SELECT 
+ 		replyId, 
+ 		book_bookId,
+ 		replyContent,
+ 		writer,
+ 		insertDatetime
+ 	FROM bookReply
+ 	WHERE replyId = #{replyId}
+ 	</select>
+ 	
+ 	<delete id="deleteByBookId">
+ 	DELETE FROM bookReply
+ 	WHERE book_bookId = #{bookId}
+ 	</delete>
  </mapper>
  
  
