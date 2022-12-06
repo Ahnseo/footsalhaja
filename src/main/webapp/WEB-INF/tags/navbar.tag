@@ -40,14 +40,12 @@
           커뮤니티
         </a>
 
- 
-
         <ul class="dropdown-menu">
           <li><a class="dropdown-item" href="#">자유게시판</a></li>
           <li><a class="dropdown-item" href="http://localhost:8080/academy/list">아카데미</a></li>
           <li><a class="dropdown-item" href="#">중고장터</a></li>
         </ul>
-       </li>
+     </li>
 
         
         <%-- security 를 사용하여, 로그인 된 userId를 c:param value="로그인된 ID값" 사용합니다. 현재 주소창에 접속방법 예시) mypage/list?userId=askc6361 --%>
@@ -62,14 +60,24 @@
         <li class="nav-item active">
         	<a class="nav-link ${active eq 'qnaMainBoard' ? 'active' : '' }" href="${qnaLink}">고객문의</a>
       	</li>
-        <c:url value="/admin/list" var="memberLink"></c:url>
-        <li class="nav-item active">
-        	<a class="nav-link  ${active eq 'memberList' ? 'active' : '' }" href="${memberLink}">관리자</a>
-      	</li>
-       <%--  <c:url value="/member/insert" var="insertMemberLink"></c:url>
-        <li class="nav-item active">
-        	<a class="nav-link  ${active eq 'insert' ? 'active' : '' }" href="${insertMemberLink}">회원가입</a>
-      	</li> --%>
+      	
+        <li class="nav-item dropdown">
+		    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+		    	관리자
+		    </a>
+      		<c:url value="/admin/dashboard" var="dashboardLink"></c:url>
+      		<c:url value="/admin/memberList" var="memberListLink"></c:url>
+      		<c:url value="/admin/allBookList" var="allBookListLink"></c:url>
+      		<c:url value="/admin/stadiumManagement" var="stadiumManagementLink"></c:url>
+      		<c:url value="/admin/allQnAList" var="allQnAListLink"></c:url>
+		    <ul class="dropdown-menu">
+			    <li><a class="dropdown-item" href="${dashboardLink }">대시보드</a></li>
+			    <li><a class="dropdown-item" href="${memberListLink }">회원관리</a></li>
+			    <li><a class="dropdown-item" href="${allBookListLink }">예약정보</a></li>
+			    <li><a class="dropdown-item" href="${stadiumManagementLink }">시설관리</a></li>
+			    <li><a class="dropdown-item" href="${allQnAListLink }">전체문의</a></li>
+		    </ul>
+	    </li>
       	
       	<sec:authorize access="isAnonymous()">
 	     	<c:url value="/member/login" var="loginLink"></c:url>

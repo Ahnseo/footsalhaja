@@ -37,8 +37,8 @@
 				<br>
 				개인ID/팀ID 
 					<select name="permission" >
-						<option value="0" selected="selected">개인용 ID</option>
-						<option value="1">팀전용 ID</option>
+						<option value="개인용ID" selected="selected">개인용ID</option>
+						<option value="팀전용ID">팀전용ID</option>
 					</select>
 				<br>
 				Email <input type="email" name="email" id="">

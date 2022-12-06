@@ -21,6 +21,7 @@
 <div class="container">
 	<div class="row">
 		<div class="col">
+			<h3>전체 회원 목록 (기능추가 '검색' : 회원 정보 찾기 )</h3>
 			<table class="table">
 				<thead>
 					<th>#status</th>
@@ -37,7 +38,7 @@
 				</thead>
 				<tbody>
 					 <c:forEach items="${memberList}" var="member" varStatus="st">
-					 <c:url value="/member/get" var="getLink">
+					 <c:url value="/admin/get" var="getLink">
 					 	<c:param name="userId" value="${member.userId}"/>
 					 </c:url>
 							<tr>
