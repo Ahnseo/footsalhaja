@@ -17,8 +17,8 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 <!-- include summernote css/js -->
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script> 
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
 
 <body>
 <my:navbar></my:navbar>
@@ -36,7 +36,7 @@
     
     <br>
 	
-	본문 <textarea id="summernote" name="ab_content"></textarea> <br>
+	본문 <textarea id="summernote" name="ab_content" ></textarea> <br>
 	
 	작성자 <input type ="text" name="member_userId"> <br>
 	
@@ -54,8 +54,8 @@
   	        maxHeight: null,
   	        focus: true, 
   	        lang : 'ko-KR'
-  	        placeholder: '최대 2048자까지 쓸 수 있습니다'
-  	        	callbacks: {	//여기 부분이 이미지를 첨부하는 부분
+  	       
+/*   	        	callbacks: {	//여기 부분이 이미지를 첨부하는 부분
 					onImageUpload : function(files) {
 						uploadSummernoteImageFile(files[0],this);
 					},
@@ -68,15 +68,14 @@
 							}
 						}
 					}
-				}
+				} */
 	});
-        
         
 
 		/**
 		* 이미지 파일 업로드
 		*/
-		function uploadSummernoteImageFile(file, editor) {
+/* 		function uploadSummernoteImageFile(file, editor) {
 			data = new FormData();
 			data.append("file", file);
 			$.ajax({
@@ -90,8 +89,12 @@
 					$(editor).summernote('insertImage', data.url);
 				}
 			});
-		}
-    }
+		} */
+    })
+    
+	$('#summernote').summernote('code').replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g,'"').replace(/&#40;/g,'(').replace(/&#41;/g,')').replace(/&#35;/g,'#');
+  
+
     </script>
 
 </body>
