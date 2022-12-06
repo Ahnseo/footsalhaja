@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -67,7 +68,8 @@ public class FreeController {
 	}
 	
 	
-	@GetMapping("modify")
+	@GetMapping("modify") // @은 외부 빈, #은 메소드의 파라미터
+	@PreAuthorize("@boardSecurity.checkWriter(authentication.name, #fb_number)")
 	public void modify(
 			@RequestParam(name = "number") int fb_number,
 			Model model) {
@@ -77,6 +79,7 @@ public class FreeController {
 	}
 	
 	@PostMapping("modify")
+	@PreAuthorize("@boardSecurity.checkWriter(authentication.name, #board.fb_number)")
 	public String modify(BoardDto board, RedirectAttributes rttr) {
 		int cnt = service.update(board);
 		

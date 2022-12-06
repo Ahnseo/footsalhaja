@@ -2,6 +2,7 @@
 <%@ page import="java.net.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,17 +11,8 @@
 </head>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-<!-- include libraries(jQuery, bootstrap) -->
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
-<!-- include summernote css/js -->
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-
 <body>
+
 <my:navbar></my:navbar>
 
 
@@ -32,10 +24,19 @@
 	작성일시 <input type="datetime-local" value="${board.fb_insertDatetime }" readonly /><br>
 	작성자 <input type="text" value="${board.member_userId }" readonly /><br>
 	
-	<c:url value="/free/modify" var="modifyLink">
-		<c:param name="number" value="${board.fb_number }"></c:param>
-	</c:url>
-	<a class="btn btn-warning" href="${modifyLink }">수정</a>
+	<sec:authorize access="isAnonymous()">
+	</sec:authorize>
+	
+	<!-- 작성자와 authentication.name이 같아야 수정버튼 보여주기 -->
+	<sec:authentication property="name" var="userIdValue" />
+	
+	<c:if test="${board.member_userId == userIdValue}" >
+		<c:url value="/free/modify" var="modifyLink">
+			<c:param name="number" value="${board.fb_number }"></c:param>
+		</c:url>
+		<a class="btn btn-warning" href="${modifyLink }">수정</a>
+	</c:if>
+	
 	
 	<hr />
 	
@@ -110,6 +111,7 @@ const ctx = "${pageContext.request.contextPath}";
 
 /* const data = document.querySelector("#summernote").value;
 $('#summernote').summernote('pasteHTML', data);
+
 $("#summernote").html(data.replace(/&amp;/g, "&")
 		.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g,'"')
 		.replace(/&#40;/g,'(').replace(/&#41;/g,')').replace(/&#35;/g,'#')); */
