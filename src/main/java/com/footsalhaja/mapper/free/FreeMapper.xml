@@ -18,9 +18,11 @@
 		f.fb_title,
 		f.fb_insertDatetime,
 		f.member_userId,
-    	COUNT(r.fb_replyNumber) fb_replyCount
+    	COUNT(DISTINCT r.fb_replyNumber) fb_replyCount,
+    	COUNT(DISTINCT l.member_userId) fb_likeCount
  	FROM
  		freeBoard f LEFT JOIN freeBoardReply r ON f.fb_number = r.freeBoard_fb_number
+ 					LEFT JOIN freeBoardLike l ON f.fb_number = l.freeBoard_fb_number
  	WHERE
  		<trim prefixOverrides="OR">
 	 		<if test="type == 'all' or type == 'title'">
@@ -44,14 +46,15 @@
  	<!-- 게시글 보기(get) -->
  	<select id="select" resultType="com.footsalhaja.domain.free.BoardDto">
  	SELECT
- 		fb_number,
- 		fb_category,
- 		fb_title,
- 		fb_content,
- 		fb_insertDatetime,
- 		member_userId
+ 		f.fb_number,
+ 		f.fb_category,
+ 		f.fb_title,
+ 		f.fb_content,
+ 		f.fb_insertDatetime,
+ 		f.member_userId,
+ 		COUNT(l.member_userId) fb_likeCount
  	FROM
- 		freeBoard
+ 		freeBoard f LEFT JOIN freeBoardLike l ON f.fb_number = l.freeBoard_fb_number
  	WHERE
  		fb_number = #{fb_number}
  	</select>

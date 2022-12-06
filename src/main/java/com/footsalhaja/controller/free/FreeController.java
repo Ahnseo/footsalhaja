@@ -1,6 +1,7 @@
 package com.footsalhaja.controller.free;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -10,8 +11,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.footsalhaja.domain.free.BoardDto;
@@ -106,6 +110,15 @@ public class FreeController {
 		}
 		
 		return "redirect:/free/list";
+	}
+	
+	@PutMapping("like")
+	@ResponseBody
+	@PreAuthorize("isAuthenticated()")
+	public Map<String, Object> like(@RequestBody Map<String, String> req){
+		System.out.println(req);
+		
+		return null;
 	}
 
 	

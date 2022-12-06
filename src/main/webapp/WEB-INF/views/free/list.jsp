@@ -25,7 +25,8 @@
 	<table class="table">
 		<thead>
 			<tr>
-				<td>#</td>
+				<td>글번호</td>
+				<td>좋아요</td>
 				<td>카테고리</td>
 				<td>제목</td>
 				<td>작성자</td>
@@ -36,6 +37,7 @@
 			<c:forEach items="${boardList }" var="board">
 				<tr>
 					<td>${board.fb_number }</td>
+					<td>${board.fb_likeCount }</td>
 					<td>${board.fb_category }</td>
 					<td>
 						<c:url value="/free/get" var="getLink">

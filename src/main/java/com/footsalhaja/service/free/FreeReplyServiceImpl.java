@@ -22,8 +22,8 @@ public class FreeReplyServiceImpl implements FreeReplyService {
 	}
 	
 	@Override
-	public List<FreeReplyDto> listReplyByBoardId(int freeBoard_fb_number){
-		return mapper.listReplyByBoardId(freeBoard_fb_number);
+	public List<FreeReplyDto> listReplyByBoardId(int freeBoard_fb_number, String username){
+		return mapper.listReplyByBoardId(freeBoard_fb_number, username);
 	}
 	
 	@Override

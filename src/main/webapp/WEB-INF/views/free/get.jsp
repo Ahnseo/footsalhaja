@@ -16,7 +16,14 @@
 <my:navbar></my:navbar>
 
 
+
 	<h1>프리보드 ${board.fb_number }번 게시물</h1>
+	
+	<!-- 좋아요 -->
+	<h1>
+		<span id="likeButton">좋아요</span>
+		<span id="likeCount">${board.fb_likeCount }</span>
+	</h1>
 	
 	제목 <input type="text" value="${board.fb_title }" readonly /><br>
 	카테고리 <input type="text" value="${board.fb_category }" readonly /><br>
@@ -24,8 +31,6 @@
 	작성일시 <input type="datetime-local" value="${board.fb_insertDatetime }" readonly /><br>
 	작성자 <input type="text" value="${board.member_userId }" readonly /><br>
 	
-	<sec:authorize access="isAnonymous()">
-	</sec:authorize>
 	
 	<!-- 작성자와 authentication.name이 같아야 수정버튼 보여주기 -->
 	<sec:authentication property="name" var="userIdValue" />
@@ -43,23 +48,30 @@
 	<!-- 댓글입력 알림 -->
 	<div id="replyMessage1"></div>
 	
+	게시글번호 <input type="text" id="freeBoard_fb_number" value="${board.fb_number }" readonly/><br>
+	<!-- 로그인 했을때-->
+	<sec:authorize access="isAuthenticated()">
 	<!-- 댓글입력  -->
-	<div class="container-md">
-		<div class="row">
-			<div class="col">
-				게시글번호 <input type="text" id="freeBoard_fb_number" value="${board.fb_number }" readonly/><br>
-				작성자 <input type="text" id="member_userId" /><br>
-				댓글 <input type="text" id="fb_replyContent" /><br>
-				<button id="replyButton1">댓글쓰기</button>
-			</div>
-		</div>
-	</div>
+		<%-- 댓글컨트롤러에서 Authentication으로 아이디 받음
+		작성자 <input
+				value="${userIdValue }" id="member_userId"
+		 		readonly type="text" name="member_userId"/><br> --%>
+		댓글 <input type="text" id="fb_replyContent" /><br>
+				
+		<button id="replyButton1">댓글쓰기</button>
+	</sec:authorize>
+	
+	<!-- 로그인 안했을때 -->
+	<sec:authorize access="not isAuthenticated()">
+		댓글을 작성하시려면 로그인하세요.
+	</sec:authorize>
+	
 	
 	<!-- 댓글 리스트 -->
 		<div class="row">
 			<div class="col">
 				<div id="replyListContainer">
-				
+					<!-- 댓글 나오는 부분 -->
 				</div>
 			</div>
 		</div>
@@ -107,14 +119,19 @@
 <script>
 const ctx = "${pageContext.request.contextPath}";
 
-/* 태그 없애기 */
+/* 좋아요 */
+document.querySelector("#likeButton").addEventListener("click", function() {
+	const freeBoard_fb_number = document.querySelector("#freeBoard_fb_number").value; 
+	
+	fetch(`\${ctx}/free/like`, {
+		method : "put",
+		headers : {
+			"Content-Type" : "application/json"
+		},
+		body : JSON.stringify({freeBoard_fb_number})
+	})
+});
 
-/* const data = document.querySelector("#summernote").value;
-$('#summernote').summernote('pasteHTML', data);
-
-$("#summernote").html(data.replace(/&amp;/g, "&")
-		.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g,'"')
-		.replace(/&#40;/g,'(').replace(/&#41;/g,')').replace(/&#35;/g,'#')); */
 
 
 // 댓글리스트
@@ -165,33 +182,39 @@ function listReply() {
 		replyListContainer.innerHTML = "";
 		
 		// 다시 댓글목록 가져오기
+		// item = replyDto
 		for (const item of list) {
 			
 			const modifyReplyButtonId = `modifyReplyButton\${item.fb_replyNumber}`;
 			const removeReplyButtonId = `removeReplyButton\${item.fb_replyNumber}`;
+			/* 수정 삭제버튼 */
+			const editButton = `<button data-bs-toggle="modal" data-bs-target="#replyModifyModal" data-reply-id="\${item.fb_replyNumber}" id="\${modifyReplyButtonId}"> 수정</button>
+								<button data-bs-toggle="modal" data-bs-target="#replyDeleteModal" data-reply-id="\${item.fb_replyNumber}" id="\${removeReplyButtonId}"> 삭제</button>`
 			
 			const replyDiv = 
 				`<div>
 					\${item.fb_replyContent} : \${item.ago}
-					<button data-bs-toggle="modal" data-bs-target="#replyModifyModal" data-reply-id="\${item.fb_replyNumber}" id="\${modifyReplyButtonId}">수정</button>
-					<button data-bs-toggle="modal" data-bs-target="#replyDeleteModal" data-reply-id="\${item.fb_replyNumber}" id="\${removeReplyButtonId}">삭제</button>
+					\${item.editable ? editButton : ''}
 				</div>`;
 				
 			replyListContainer.insertAdjacentHTML("beforeend", replyDiv);
 			
-			// 수정 모달에 댓글 내용 넣기
-			document.querySelector("#" + modifyReplyButtonId).addEventListener("click", function() {
-				document.querySelector("#replyModifyConfirmButton").setAttribute("data-reply-id", this.dataset.replyId)
-				readReplyAndSetModalForm(this.dataset.replyId);
-			});
+			if(item.editable){
+				// 수정 모달에 댓글 내용 넣기
+				document.querySelector("#" + modifyReplyButtonId).addEventListener("click", function() {
+					document.querySelector("#replyModifyConfirmButton").setAttribute("data-reply-id", this.dataset.replyId)
+					readReplyAndSetModalForm(this.dataset.replyId);
+				});
+				
+				// 모달 삭제확인 버튼에 replyId 옮기기
+				document.querySelector("#" + removeReplyButtonId).addEventListener("click", function() {
+					// console.log(item.fb_replyNumber + "번 삭제버튼 클릭됨");
+					// console.log(this.dataset.replyId + "번 댓글 삭제예정");
+					document.querySelector("#replyDeleteConfirmButton").setAttribute("data-reply-id", this.dataset.replyId)
+					// removeReply(this.dataset.replyId);
+				});
+			}
 			
-			// 모달 삭제확인 버튼에 replyId 옮기기
-			document.querySelector("#" + removeReplyButtonId).addEventListener("click", function() {
-				// console.log(item.fb_replyNumber + "번 삭제버튼 클릭됨");
-				// console.log(this.dataset.replyId + "번 댓글 삭제예정");
-				document.querySelector("#replyDeleteConfirmButton").setAttribute("data-reply-id", this.dataset.replyId)
-				// removeReply(this.dataset.replyId);
-			});
 		}
 	});
 }
@@ -212,12 +235,12 @@ function removeReply(replyId) {
 document.querySelector("#replyButton1").addEventListener("click", function() {
 	const freeBoard_fb_number = document.querySelector("#freeBoard_fb_number").value; 
 	const fb_replyContent = document.querySelector("#fb_replyContent").value;
-	const member_userId = document.querySelector("#member_userId").value;
+	/* const member_userId = document.querySelector("#member_userId").value; */
 	
 	const data = {
 		freeBoard_fb_number,
-		fb_replyContent,
-		member_userId
+		fb_replyContent
+		/* member_userId */
 	}
 	
 	fetch(`\${ctx}/freeReply/add`, {
@@ -234,11 +257,6 @@ document.querySelector("#replyButton1").addEventListener("click", function() {
 	})
 	.then(() => listReply());
 });
-
-
-
-
-
 
 </script>
 </body>

@@ -8,7 +8,7 @@ public interface FreeReplyMapper {
 
 	int insert(FreeReplyDto reply);
 
-	List<FreeReplyDto> listReplyByBoardId(int freeBoard_fb_number);
+	List<FreeReplyDto> listReplyByBoardId(int freeBoard_fb_number, String username);
 
 	int deleteById(int fb_replyNumber);
 

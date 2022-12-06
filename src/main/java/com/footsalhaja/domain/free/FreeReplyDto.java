@@ -16,6 +16,8 @@ public class FreeReplyDto {
 	private int freeBoard_fb_number; // 프리보드 게시글번호
 	private String member_userId; 
 	
+	private boolean editable; // 로그인한 아이디가 댓글작성자인지
+	
 	@JsonFormat(shape = Shape.STRING)
 	private LocalDateTime fb_inserDatetime; //댓글작성시간
 	
