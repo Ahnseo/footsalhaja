@@ -93,6 +93,7 @@ public class FreeController {
 	}
 
 	@PostMapping("remove")
+	@PreAuthorize("@boardSecurity.checkWriter(authentication.name, #fb_number)")
 	public String remove(
 			@RequestParam(name = "number") int fb_number,
 			RedirectAttributes rttr) {
