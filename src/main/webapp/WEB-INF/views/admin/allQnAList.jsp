@@ -31,7 +31,6 @@
 					<th>내용</th>
 					<th>작성자</th>
 					<th>문의상태</th>
-					<th>좋아요</th>
 				</thead>
 				 <tbody>
 					 <c:forEach items="${allQnAList}" var="allQnAList"  >
@@ -47,7 +46,7 @@
 						 	<td>${allQnAList.content}</td>
 						 	<td>${allQnAList.userId}</td>
 						 	<td>${allQnAList.status}</td>
-						 	<td>${allQnAList.likeCount}</td>
+						 	
 					 	</tr>
 				 	</c:forEach>
 				 </tbody>
@@ -58,8 +57,7 @@
 			  	<!-- 맨앞 페이지 -->
 			  	<c:if test="${qnaPageInfo.currentPageNumber > 10}">
 				    <li class="page-item">
-				      <c:url value="/qna/myQnAList" var="firstPageLink">
-				     	<c:param name="userId" value="${userIdValue}"/>
+				      <c:url value="/admin/allQnAList" var="firstPageLink">   	
 				     	<c:param name="page" value="1"/>
 				      </c:url>	
 				      <a class="page-link" href="${firstPageLink}" aria-label="First">
@@ -71,8 +69,7 @@
 			    <!-- 이전 10개의 페이지 ( 1 or 11 or 21 로 가기 ) -->
 			    <c:if test="${qnaPageInfo.hasPrevButton}">
 				    <li class="page-item">
-				      <c:url value="/qna/myQnAList" var="previousPageLink">
-				     	<c:param name="userId" value="${userIdValue}"/>
+				      <c:url value="/admin/allQnAList" var="previousPageLink">
 				     	<c:param name="page" value="${jumpPrevPageNumber}"/>
 				      </c:url>	
 				      <a class="page-link" href="${previousPageLink}" aria-label="Previous">
@@ -84,8 +81,7 @@
 			    <!-- 페이지 -->
 			    <c:forEach begin="${qnaPageInfo.leftPageNumber}" end="${qnaPageInfo.rightPageNumber}" var="pageNumber">
 			    	<li class="page-item">
-				    	<c:url value="/qna/myQnAList" var="pageLink" >
-					    	<c:param name="userId" value="${userIdValue}"/>
+				    	<c:url value="/admin/allQnAList" var="pageLink" >
 					    	<c:param name="page" value="${pageNumber}"/>
 				    	</c:url>
 				    	<a class="page-link" href="${pageLink}">
@@ -97,8 +93,7 @@
 			    <!-- 다음 10개의 페이지 ( 11 or 21 or 31 로 가기 )-->
 			    <c:if test="${qnaPageInfo.hasNextButton}">
 				    <li class="page-item">
-				      <c:url value="/qna/myQnAList" var="nextPageLink">
-				     	<c:param name="userId" value="${userIdValue}"/>
+				      <c:url value="/admin/allQnAList" var="nextPageLink">
 				     	<c:param name="page" value="${qnaPageInfo.jumpNextPageNumber}"/>
 				      </c:url>	
 				      <a class="page-link" href="${nextPageLink}" aria-label="Previous">
@@ -109,8 +104,7 @@
 			    
 			    <!-- 마지막 페이지 -->
 			    <li class="page-item">
-			      <c:url value="/qna/myQnAList" var="lastPageLink">  
-			        <c:param name="userId" value="${userIdValue}"/>
+			      <c:url value="/admin/allQnAList" var="lastPageLink">  
 			        <c:param name="page" value="${qnaPageInfo.lastPageNumber}"/>
 			      </c:url>	
 			      <a class="page-link" href="${lastPageLink}" aria-label="Last">

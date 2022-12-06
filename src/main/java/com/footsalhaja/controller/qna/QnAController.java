@@ -83,17 +83,15 @@ public class QnAController {
 	@ResponseBody
 	@PreAuthorize("isAuthenticated()")
 	private Map<String, String> insertlikeCount(@RequestBody Map<String, String> req, Authentication authentication) {
-		String loggedinId = authentication.getName();
 		String qnaId = req.get("qnaId");
+		String loggedinId = authentication.getName();
 		
 		System.out.println("qnaId : " + qnaId );
 		System.out.println("loggedinId : " + loggedinId);
 		
 		//클릭하면 저장, 다시클릭하면 삭제되는 좋아요 DB
-		System.out.println(qnaService);
-		Map<String, String> result = qnaService.updateLikeCount( qnaId ,loggedinId);
-		System.out.println(result);
-		return result;
+		
+		return qnaService.updateLikeCount(qnaId, loggedinId);
 		
 
 	}

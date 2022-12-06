@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.footsalhaja.domain.member.MemberDto;
 import com.footsalhaja.domain.qna.QnADto;
 import com.footsalhaja.domain.qna.QnAPageInfo;
+import com.footsalhaja.service.admin.AdminService;
 import com.footsalhaja.service.member.MemberService;
 import com.footsalhaja.service.qna.QnAService;
 
@@ -21,6 +22,10 @@ public class AdminController {
 
 	@Autowired
 	private QnAService qnaService;
+	
+	@Autowired
+	private AdminService adminService;
+	
 	@Autowired
 	private MemberService memberService;
 	
@@ -30,13 +35,12 @@ public class AdminController {
 	}
 	
 	@GetMapping("allQnAList")
-	public void allQnAList( Model model) {
-		
-		List<QnADto> allQnAList= qnaService.selectAllQnAList();
-		
+	public void allQnAList(@RequestParam(name="page", defaultValue = "1") int page , QnAPageInfo qnaPageInfo ,Model model) {	
+		List<QnADto> allQnAList= adminService.selectAllQnAList(page, qnaPageInfo);
+		System.out.println(allQnAList);
 		//아직 allQnAList.jsp 작업 못함 
 		model.addAttribute("allQnAList", allQnAList);
-		//model.addAttribute("qnaPageInfo", qnaPageInfo);
+		model.addAttribute("qnaPageInfo", qnaPageInfo);
 	}
 	
 	@GetMapping("dashboard")

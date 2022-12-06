@@ -83,43 +83,12 @@ public class QnAServiceImpl implements QnAService {
 	public QnADto selectMyQnAGetByQnAIdAndUserId(String userId, int qnaId) {
 		return qnaMapper.selectMyQnAGetByQnAIdAndUserId(userId, qnaId);
 	}
-	@Override
-	public List<QnADto> selectAllQnAList() {
-		// 페이지네이션 추가
-//		int records = 2; // 10 rows 씩 목록에 나타냅니다  
-//		int offset = (page - 1) * records; //page=2 : 11~20 rows ,  page=3 : 21~30 rows 나타냄 		
-//		int countAll = qnaMapper.countAllQnA();
-//		int lastPageNumber = (countAll - 1) / records + 1;
-//		int leftPageNumber = (page - 1) / 10 * 10 + 1;
-//		int rightPageNumber = leftPageNumber + 9;
-//		rightPageNumber = Math.min(rightPageNumber, lastPageNumber);
-//
-//		// 이전버튼 눌렀을 때 가는 페이지 번호
-//		int jumpPrevPageNumber = (page - 1) / 10 * 10 - 9;					
-//		int jumpNextPageNumber = (page - 1) / 10 * 10 + 11; 
-//							
-//		// 이전버튼 유무
-//		boolean hasPrevButton = page > 10;
-//		// 다음버튼 유무
-//		boolean hasNextButton = page <= ((lastPageNumber - 1) / 10 * 10);
-//
-//		qnaPageInfo.setCurrentPageNumber(page);
-//		qnaPageInfo.setLeftPageNumber(leftPageNumber);
-//		qnaPageInfo.setRightPageNumber(rightPageNumber);
-//		qnaPageInfo.setLastPageNumber(lastPageNumber);	
-//		qnaPageInfo.setJumpPrevPageNumber(jumpPrevPageNumber);	
-//		qnaPageInfo.setJumpNextPageNumber(jumpNextPageNumber);
-//		qnaPageInfo.setHasPrevButton(hasPrevButton);	
-//		qnaPageInfo.setHasNextButton(hasNextButton);
-				
-		return qnaMapper.selectAllQnAList();
-	}
+	
 	//좋아요 기능 만들기 
 	@Override
 	public Map<String, String> updateLikeCount(String qnaId, String loggedinId) {
-		
-		System.out.println("service : " + qnaId);
-		System.out.println("service : " + loggedinId);
+		//System.out.println("service : " + qnaId);
+		//System.out.println("service : " + loggedinId);
 
 		Map<String, String> map = new HashMap<>();
 		
@@ -135,5 +104,6 @@ public class QnAServiceImpl implements QnAService {
 			map.put("current", "not liked");
 			return map;
 		}
+		
 	}
 }

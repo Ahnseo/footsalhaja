@@ -26,8 +26,8 @@ public interface QnAMapper {
 	//myQnA 1개 정보 가져오기 by userId, qnaId
 	QnADto selectMyQnAGetByQnAIdAndUserId(String userId, int qnaId);
 
-	//selectAllQnAList
-	List<QnADto> selectAllQnAList();
+	//select All QnAList (관리자 전용)
+	List<QnADto> selectAllQnAList(int offset, int records);
 	
 	//
 	int countAllQnA();

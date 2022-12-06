@@ -88,18 +88,17 @@
 	
 	<select id="selectAllQnAList" resultType="com.footsalhaja.domain.qna.QnADto">
 		SELECT 
-	 		q.qnaId,
-	 		q.category,
-	 		q.title,
-	 		q.content,
-	 		q.status,
-	 		q.member_userId AS userId,
-	 		COUNT(l.userId) AS likeCount
+	 		qnaId,
+	 		category,
+	 		title,
+	 		content,
+	 		status,
+	 		member_userId AS userId,
+	 		likeCount
 	 	FROM 
-	 	 	QnABoard q
-	 	LEFT JOIN QnABoardLike l 	
-	 	ON q.qnaId = l.qnaId
-	 	ORDER BY qnaId DESC 
+	 	 	QnABoard
+	 	ORDER BY qnaId DESC
+	 	LIMIT #{offset}, #{records} 
 	</select>
 	<select id="countAllQnA" resultType="int">
 		SELECT 
