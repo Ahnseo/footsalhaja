@@ -19,7 +19,5 @@ public interface AcademyService {
 	public List<BoardDto> listBord(Criteria cri);
 	
 	public int getTotal(Criteria cri);
-
 	
-
 }

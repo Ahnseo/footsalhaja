@@ -9,7 +9,6 @@
 <title>Insert title here</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
-
 <!-- include libraries(jQuery, bootstrap) -->
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -18,7 +17,6 @@
 <!-- include summernote css/js -->
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.js"></script>
-
 
 </head>
 <body>
@@ -38,9 +36,7 @@
     
     <br>
 	
-
 	본문 <textarea id="summernote" name="ab_content">${board.ab_content }</textarea> <br>
-
 	
 	작성자 <input type ="text" value="${board.member_userId }" readonly> <br>
 	작성일시 <input type = "datetime-local" value = "${board.ab_insertDatetime }" readonly>
@@ -106,10 +102,8 @@
 
 
 <!-- 수정&삭제 확인 모달  -->
-
 	 <script>
 	
-
 		document.querySelector("#modifyConfirmButton").addEventListener(
 				"click", function() {
 					document.querySelector("#modifyForm").submit();
@@ -120,7 +114,6 @@
 					document.querySelector("#removeForm").submit();
 				})
 	</script>
-
 	
     <script type="text/javascript"> 
 	const ctx = "${pageContext.request.contextPath}";
@@ -169,7 +162,6 @@
     
 	
     </script>
-
 
 </body>
 </html>

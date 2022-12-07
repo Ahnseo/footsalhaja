@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.footsalhaja.domain.academy.AcademyReplyDto;
 import com.footsalhaja.domain.academy.Criteria;
 import com.footsalhaja.domain.academy.ReplyPageDto;
-
 import com.footsalhaja.mapper.academy.AcademyReplyMapper;
 
 @Service
@@ -41,9 +40,7 @@ public class AcademyReplyServiceImpl implements AcademyReplyService{
 	public int modify(AcademyReplyDto reply) {
 		return mapper.modify(reply);
 	}
-
 	
-
 
 
 	@Override
@@ -58,8 +55,6 @@ public class AcademyReplyServiceImpl implements AcademyReplyService{
 		return new ReplyPageDto(mapper.getTotalReplyCount(ab_number), mapper.getReplyListWithPaging(cri, ab_number, offset, records));
 	}
 
-
 	
 	
-
 }
