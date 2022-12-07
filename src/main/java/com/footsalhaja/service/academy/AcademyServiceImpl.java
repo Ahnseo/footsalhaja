@@ -97,4 +97,9 @@ public class AcademyServiceImpl implements AcademyService{
 		return get(ab_number, null);
 	}
 	
+	@Override
+	public int updateViewCount(int ab_number) {
+		return mapper.updateViewCount(ab_number);
+	}
+	
 }

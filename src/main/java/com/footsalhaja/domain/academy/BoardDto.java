@@ -17,4 +17,5 @@ public class BoardDto {
 	private int replyCnt;
 	private int countLike;
 	private boolean liked;
+	private int ab_viewCount;
 }

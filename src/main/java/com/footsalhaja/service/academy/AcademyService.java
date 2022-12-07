@@ -25,4 +25,7 @@ public interface AcademyService {
 	
 	//게시물 수정&삭제 default 메소드 get
 	public BoardDto get(int ab_number);
+	
+	//게시물 조회수
+	int updateViewCount(int ab_number);
 }

@@ -2,6 +2,7 @@
 <%@ page import="java.net.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,11 +15,18 @@
 <body>
 <my:navbar></my:navbar>
 
-<sec:authorize access="not isAuthenticated()"> </sec:authorize>
+
 	<div class="d-flex">
 		<h1 class="me-auto">${board.ab_number }번페이지</h1>
 		<h1>
-			<span id="likeButton" class="btn btn-light" > 
+			<span
+
+			<sec:authorize access="not isAuthenticated()">
+				style="pointer-events: none;"
+			</sec:authorize>
+
+			id="likeButton" class="btn btn-light"
+			>
 				<c:if test="${board.liked }">
 					<i class="fa-solid fa-thumbs-up"></i>
 				</c:if> 

@@ -38,6 +38,8 @@ public interface AcademyMapper {
 	default BoardDto select(int ab_number) {
 		return select(ab_number, null);
 	}
+	//조회수
+	public int updateViewCount(int ab_number);
 	
 	
 }

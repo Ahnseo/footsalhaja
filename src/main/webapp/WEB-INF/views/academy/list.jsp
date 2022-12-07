@@ -43,6 +43,7 @@
 							<th>제목</th>
 							<th>작성자</th>
 							<th>작성시간</th>
+							<th>조회수</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -80,6 +81,7 @@
 								</td>
 								<td>${board.member_userId }</td>
 								<td>${board.ab_insertDatetime }</td>
+								<td>${board.ab_viewCount }</td>
 							</tr>
 						</c:forEach> 
 					</tbody>

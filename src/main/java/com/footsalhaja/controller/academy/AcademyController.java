@@ -49,6 +49,8 @@ public class AcademyController {
 		cri.setKeyword("%"+cri.getKeyword()+"%");
 		List<BoardDto> list = service.listBord(cri);
 		
+		System.out.println(list);
+		
 		// add attribute
 		model.addAttribute("boardList", list);
 		
@@ -121,8 +123,8 @@ public class AcademyController {
 			member_userId = authentication.getName();
 		}
 		
+		service.updateViewCount(ab_number);
 		BoardDto board = service.get(ab_number, member_userId);
-		
 		model.addAttribute("board",board);
 		
 	}

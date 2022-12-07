@@ -87,7 +87,8 @@
 		b.member_userId,
 		b.ab_insertDatetime,
 		COUNT(r.academyBoard_ab_number) replyCnt,
-		COUNT(DISTINCT l.member_userId) countLike
+		COUNT(DISTINCT l.member_userId) countLike,
+		b.ab_viewCount
 		
 	FROM academyBoard b LEFT JOIN academyBoardReply r ON b.ab_number = r.academyBoard_ab_number
 						LEFT JOIN academyBoardLike l ON b.ab_number = l.academyBoard_ab_number
@@ -147,6 +148,13 @@
 		SELECT COUNT(*) FROM academyBoardLike
 		WHERE academyBoard_ab_number = #{ab_number}
 	</select>
+	
+	<!-- 조회수 -->
+	<update id="updateViewCount">
+		UPDATE academyBoard
+		SET ab_viewCount = ab_viewCount + 1
+		WHERE ab_number = #{ab_number}
+	</update>
  
  </mapper>
   
