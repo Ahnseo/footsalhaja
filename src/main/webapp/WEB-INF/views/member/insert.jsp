@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>      
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,6 +20,7 @@
 <!--현재 member테이블 의 컬럼들 ( userId, name, password, nickName, email, birthYY, birthMM, birthDD, activityArea, phone, personalGender, permission ) -->
 <my:navbar active="insert"></my:navbar>
 <div class="container">
+	<h3>회원가입</h3>
 	<div class="row">
 		<div class="col">
 			<form action="" method="post">
@@ -34,12 +36,6 @@
 					</select>
 				<br>
 				닉네임 <input type="text" name="nickName" id="">
-				<br>
-				개인ID/팀ID 
-					<select name="permission" >
-						<option value="개인용ID" selected="selected">개인용ID</option>
-						<option value="팀전용ID">팀전용ID</option>
-					</select>
 				<br>
 				Email <input type="email" name="email" id="">
 				<br>
@@ -93,29 +89,33 @@
 </div>	
 <div>
 	<textarea name="" id="" cols="300" rows="100">
-	-- member table 새로 만들어서 해봤는데요. DB저장 됩니당. 
-	-- 각자 jdbc에서, member table 수정 하시고 해보세요 , 그리고.. 어떻게 더 수정해야할까요 
+	### 권한 사용하기 위해 member 테이블 컬럼변경  permission => auth (user/manager/admin) ###
+	예시) member.auth = admin 일 때만, 버튼 보이게하기 ! 
+    	sec:authorize access="hasAuthority('admin')">
+			<button type="button" class="btn btn-danger">블랙리스트</button>
+		sec:authorize>
 	
 	CREATE TABLE `member` (
-	  `userId` varchar(50) NOT NULL,
-	  `name` varchar(45) NOT NULL,
-	  `password` varchar(255) NOT NULL,
-	  `nickName` varchar(45) NOT NULL,
-	  `email` varchar(45) NOT NULL,
-	  `birthYY` int(11) NOT NULL,
-	  `birthMM` int(11) NOT NULL,
-	  `birthDD` int(11) NOT NULL,
-	  `activityArea` varchar(45) NOT NULL,
-	  `phone` varchar(45) NOT NULL,
-	  `profileImage` varchar(255) DEFAULT NULL,
-	  `personalGender` char(1) NOT NULL,
-	  `permission` int(1) NOT NULL DEFAULT 0,
-	  `insertDateTime` datetime NOT NULL DEFAULT current_timestamp(),
-	  PRIMARY KEY (`userId`),
-	  UNIQUE KEY `nickName_UNIQUE` (`nickName`),
-	  UNIQUE KEY `email_UNIQUE` (`email`),
-	  UNIQUE KEY `phone_UNIQUE` (`phone`)
-	) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+			  `userId` varchar(50) NOT NULL,
+			  `name` varchar(45) NOT NULL,
+			  `password` varchar(255) NOT NULL,
+			  `nickName` varchar(45) NOT NULL,
+			  `email` varchar(45) NOT NULL,
+			  `birthYY` int(11) NOT NULL,
+			  `birthMM` int(11) NOT NULL,
+			  `birthDD` int(11) NOT NULL,
+			  `activityArea` varchar(45) NOT NULL,
+			  `phone` varchar(45) NOT NULL,
+			  `profileImage` varchar(255) DEFAULT NULL,
+			  `personalGender` char(1) NOT NULL,
+			  `auth` char(45) DEFAULT 'user',
+			  `insertDateTime` datetime NOT NULL DEFAULT current_timestamp(),
+			  PRIMARY KEY (`userId`),
+			  UNIQUE KEY `nickName_UNIQUE` (`nickName`),
+			  UNIQUE KEY `email_UNIQUE` (`email`),
+			  UNIQUE KEY `phone_UNIQUE` (`phone`)
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+	
 	</textarea>
 </div>
 	
