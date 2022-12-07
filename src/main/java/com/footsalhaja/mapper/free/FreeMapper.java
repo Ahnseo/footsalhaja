@@ -8,8 +8,12 @@ public interface FreeMapper {
 
 	int insert(BoardDto board);
 
-	BoardDto select(int fb_number);
-
+	BoardDto select(int fb_number, String member_userId);
+	
+	default BoardDto select(int fb_number) {
+		return select(fb_number, null);
+	}
+	
 	int update(BoardDto board);
 
 	int delete(int fb_number);
@@ -26,5 +30,8 @@ public interface FreeMapper {
 
 	int insertLike(String fb_number, String member_userId);
 
+	int deleteLikeByBoardId(int fb_number);
+
+	int updateViewCount(int fb_number);
 	
 }

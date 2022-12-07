@@ -18,6 +18,7 @@
 		f.fb_title,
 		f.fb_insertDatetime,
 		f.member_userId,
+		f.fb_viewCount,
     	COUNT(DISTINCT r.fb_replyNumber) fb_replyCount,
     	COUNT(DISTINCT l.member_userId) fb_likeCount
  	FROM
@@ -52,11 +53,13 @@
  		f.fb_content,
  		f.fb_insertDatetime,
  		f.member_userId,
- 		COUNT(l.member_userId) fb_likeCount
+ 		f.fb_viewCount,
+ 		(SELECT COUNT(*) FROM freeBoardLike WHERE freeBoard_fb_number = f.fb_number AND member_userId = #{member_userId}) liked,
+ 		(SELECT COUNT(*) FROM freeBoardLike WHERE freeBoard_fb_number = f.fb_number) fb_likeCount
  	FROM
- 		freeBoard f LEFT JOIN freeBoardLike l ON f.fb_number = l.freeBoard_fb_number
+ 		freeBoard f
  	WHERE
- 		fb_number = #{fb_number}
+ 		f.fb_number = #{fb_number}
  	</select>
  	
  	<!-- 글 수정 -->
@@ -118,5 +121,18 @@
  	SELECT COUNT(*) FROM freeBoardLike
  	WHERE freeBoard_fb_number = #{fb_number}
  	</select>
+ 	
+ 	<!-- 게시글 삭제할때 좋아요 삭제 -->
+ 	<delete id="deleteLikeByBoardId">
+ 	DELETE FROM freeBoardLike
+ 	WHERE freeBoard_fb_number = #{fb_number}
+ 	</delete>
+ 	
+ 	<!-- 조회수 -->
+ 	<update id="updateViewCount">
+ 	UPDATE freeBoard
+	SET fb_viewCount = fb_viewCount + 1
+	WHERE fb_number = #{fb_number}
+ 	</update>
  	
  </mapper>

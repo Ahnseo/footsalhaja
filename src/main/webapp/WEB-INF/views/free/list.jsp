@@ -29,6 +29,7 @@
 				<td>좋아요</td>
 				<td>카테고리</td>
 				<td>제목</td>
+				<td>조회수</td>
 				<td>작성자</td>
 				<td>작성일시</td>
 			</tr>
@@ -50,6 +51,7 @@
 							댓글[${board.fb_replyCount }]
 						</c:if>
 					</td>
+					<td>${board.fb_viewCount }</td>
 					<td>${board.member_userId }</td>
 					<td>${board.ago }</td>
 				</tr>

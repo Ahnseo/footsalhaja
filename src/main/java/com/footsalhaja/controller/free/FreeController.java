@@ -66,9 +66,17 @@ public class FreeController {
 	@GetMapping("get")
 	public void get(
 			@RequestParam(name = "number") int fb_number,
+			Authentication auth,
 			Model model) {
-		BoardDto board = service.get(fb_number);
+		String member_userId = null;
+		 
+		if (auth != null) {
+			member_userId = auth.getName();
+		}
+		// 조회수
+		service.updateViewCount(fb_number);
 		
+		BoardDto board = service.get(fb_number, member_userId);
 		model.addAttribute("board", board);
 	}
 	
@@ -78,8 +86,8 @@ public class FreeController {
 	public void modify(
 			@RequestParam(name = "number") int fb_number,
 			Model model) {
-		BoardDto board = service.get(fb_number);
 		
+		BoardDto board = service.get(fb_number);
 		model.addAttribute("board", board);
 	}
 	

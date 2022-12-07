@@ -67,8 +67,13 @@ public class FreeServiceImpl implements FreeService{
 	 
 	// 게시물 보기
 	@Override
+	public BoardDto get(int fb_number, String member_userId) {
+		return freeMapper.select(fb_number, member_userId);
+	} 
+	
+	@Override
 	public BoardDto get(int fb_number) {
-		return freeMapper.select(fb_number);
+		return get(fb_number, null);
 	}
 	 
 	@Override
@@ -83,6 +88,9 @@ public class FreeServiceImpl implements FreeService{
 		// 게시물의 댓글 지우기
 		replyMapper.deleteByBoardId(fb_number);
 		
+		// 좋아요 지우기
+		freeMapper.deleteLikeByBoardId(fb_number);
+		 
 		// 게시물 지우기
 		return freeMapper.delete(fb_number);
 	}
@@ -113,6 +121,12 @@ public class FreeServiceImpl implements FreeService{
 		map.put("count", countAll);
 		
 		return map;
+	}
+	
+	// 조회수
+	@Override
+	public int updateViewCount(int fb_number) {
+		return freeMapper.updateViewCount(fb_number);
 	}
 	
 }
