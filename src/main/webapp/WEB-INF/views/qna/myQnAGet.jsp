@@ -92,7 +92,9 @@
 		fetch(ctx + "/qnaReply/add", { method : "put",
 									    headers : { "Content-Type" : "application/json" },
 									    body : JSON.string(data)
-		});
+		})
+		.then(res => res.json())
+		.then(data => )
 	});
 	
 </script>
