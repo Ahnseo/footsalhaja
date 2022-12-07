@@ -6,7 +6,7 @@
  
  
 	<!-- register 등록 -->
- 	<insert id="insert">
+ 	<insert id="insert" useGeneratedKeys="true" keyProperty="ab_number">
 	INSERT INTO academyBoard (ab_title, ab_category, ab_content, member_userId)
 	VALUES ( #{ab_title}, #{ab_category},  #{ab_content}, #{member_userId})
 	
@@ -162,6 +162,7 @@
 		INSERT INTO academyBoardFileAttach (academyBoard_ab_number, ab_fileName, ab_filePath, ab_fileType)
 		VALUES (#{ab_number}, #{ab_fileName}, #{ab_filePath}, #{ab_fileType})
 	</insert>
+	
  
  </mapper>
   
