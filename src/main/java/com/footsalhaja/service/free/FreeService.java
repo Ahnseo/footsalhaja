@@ -19,5 +19,5 @@ public interface FreeService {
 	// 페이지네이션
 	public List<BoardDto> listBoard(int page, String type, String keyword2, PageInfo pageInfo);
 
-	public Map<String, Object> updateLike(String freeBoard_fb_number, String username);
+	public Map<String, Object> updateLike(String fb_number, String member_userId);
 }

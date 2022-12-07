@@ -117,9 +117,10 @@ public class FreeController {
 	@ResponseBody
 	@PreAuthorize("isAuthenticated()")
 	public Map<String, Object> like(@RequestBody Map<String, String> req, Authentication auth){
-		// System.out.println(req); {freeBoard_fb_number=32}
+		//System.out.println(req);
+		String fb_number = req.get("fb_number");
 		
-		Map<String, Object> result = service.updateLike(req.get("freeBoard_fb_number"), auth.getName());
+		Map<String, Object> result = service.updateLike(fb_number, auth.getName());
 														// 게시물번호, 로그인한 아이디
 		return result;
 	}

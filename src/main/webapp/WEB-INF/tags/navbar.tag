@@ -42,7 +42,7 @@
 
  
         <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#">자유게시판</a></li>
+          <li><a class="dropdown-item" href="http://localhost:8080/free/list"">자유게시판</a></li>
           <li><a class="dropdown-item" href="http://localhost:8080/academy/list">아카데미</a></li>
           <li><a class="dropdown-item" href="#">중고장터</a></li>
         </ul>

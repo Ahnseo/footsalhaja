@@ -128,7 +128,7 @@ document.querySelector("#likeButton").addEventListener("click", function() {
 		headers : {
 			"Content-Type" : "application/json"
 		},
-		body : JSON.stringify({freeBoard_fb_number})
+		body : JSON.stringify({fb_number:freeBoard_fb_number})
 	})
 	.then(res => res.json())
 	.then(data => {

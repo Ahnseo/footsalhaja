@@ -88,23 +88,28 @@ public class FreeServiceImpl implements FreeService{
 	}
 	
 	// 좋아요
-	public Map<String, Object> updateLike(String freeBoard_fb_number, String member_userId) {
+	@Override
+	public Map<String, Object> updateLike(String fb_number, String member_userId) {
+		// System.out.println(fb_number);
+		
 		Map<String, Object> map = new HashMap<>();
 		
 		// freeBoard_fb_number랑 member_userId으로 좋아요 테이블에서 검색
-		int cnt = freeMapper.getLikeByBoardNumberAndUserId(freeBoard_fb_number, member_userId);
+		int cnt = freeMapper.getLikeByBoardNumberAndUserId(fb_number, member_userId);
+		// System.out.println(cnt);
 		if (cnt == 1) {
 			// 있으면 취소
-			freeMapper.deleteLike(freeBoard_fb_number, member_userId);
+			freeMapper.deleteLike(fb_number, member_userId);
 			map.put("currrent", "not liked");			
 		} else { 
 			// 없으면 추가
-			freeMapper.insertLike(freeBoard_fb_number, member_userId);
+			int a = freeMapper.insertLike(fb_number, member_userId);
+			// System.out.println(a);
 			map.put("currrent", "liked");			
 		}
 		
 		// 현재 몇개인지
-		int countAll = freeMapper.countLikeByBoardNumber(freeBoard_fb_number);
+		int countAll = freeMapper.countLikeByBoardNumber(fb_number);
 		map.put("count", countAll);
 		
 		return map;
