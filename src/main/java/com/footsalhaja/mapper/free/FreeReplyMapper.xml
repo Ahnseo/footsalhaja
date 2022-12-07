@@ -14,6 +14,8 @@
  		fb_replyNumber,
  		freeBoard_fb_number,
  		fb_replyContent,
+ 		member_userId,
+ 		(member_userId = #{username}) editable,
  		fb_inserDatetime
  	FROM
  		freeBoardReply
@@ -33,6 +35,7 @@
  		fb_replyNumber,
  		freeBoard_fb_number,
  		fb_replyContent,
+ 		member_userId,
  		fb_inserDatetime
  	FROM
  		freeBoardReply

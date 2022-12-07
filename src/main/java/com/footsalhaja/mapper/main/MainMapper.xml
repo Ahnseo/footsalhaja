@@ -36,9 +36,12 @@
  		b.bookDate,
  		b.bookTime,
  		b.insertDatetime,
- 		b.teamGender
+ 		b.teamGender,
+ 		l.lat,
+ 		l.lng
  	FROM
  		member m LEFT JOIN book b ON m.userId = b.member_userId
+ 				 LEFT JOIN location l ON b.location_locationId = l.locationId
  	WHERE 
  		b.bookId = #{bookId}
  	</select>
@@ -55,6 +58,8 @@
 		<result column="bookTime" property="bookTime"></result>
 		<result column="insertDatetime" property="insertDatetime"/>
 		<result column="teamGender" property="teamGender"></result>
+		<result column="lat" property="lat"></result>
+		<result column="lng" property="lng"></result>
  	</resultMap>	
  	
  	<!-- 게시글 리스트 -->

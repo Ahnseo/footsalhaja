@@ -16,7 +16,7 @@ import com.footsalhaja.domain.member.MemberDto;
 import com.footsalhaja.service.member.MemberService;
 
 @Controller
-@RequestMapping({"member","admin"})
+@RequestMapping("member")
 public class MemberController {
 	
 	@Autowired
@@ -37,12 +37,6 @@ public class MemberController {
 		int cnt = memberService.insertMember(member);
 		
 		return "redirect:/main/list"; // 등록하고 -> /main/list.jsp 로 이동  
-	}
-	@GetMapping("list")
-	public void list(Model model) {
-		List <MemberDto> memberList = memberService.selectMemberList();
-		//System.out.println(memberList);
-		model.addAttribute("memberList", memberList);
 	}
 	
 	@GetMapping({"get", "modify"})

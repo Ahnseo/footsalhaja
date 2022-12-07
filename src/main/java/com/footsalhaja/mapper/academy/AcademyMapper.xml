@@ -55,18 +55,20 @@
 	
 	<!-- 검색 조건 -->
 	<sql id="criteria">
-		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
-			<foreach item='type' collection="typeArr">
+
+		<trim prefixOverrides="OR">
+			<foreach item='type' collection="cri.typeArr">
 				<trim prefix="OR">
 					<choose>
 						<when test="type == 'T'.toString()"> 
-							ab_title like '%#{keyword}%'
+							b.ab_title LIKE #{cri.keyword}
 						</when>
 						<when test="type == 'C'.toString()">
-							ab_content like '%#{keyword}%'
+							b.ab_content LIKE #{cri.keyword}
 						</when>
 						<when test="type == 'W'.toString()">
-							member_userId like '%#{keyword}%'
+							b.member_userId LIKE #{cri.keyword}
+
 						</when>
 					</choose>
 				</trim>
@@ -77,7 +79,7 @@
 	<!-- 페이지네이션 & 검색 -->
 	<select id="getListWithPaging" resultType="com.footsalhaja.domain.academy.BoardDto">
 
-<!-- 	<![CDATA[ -->
+	<![CDATA[
 
 	SELECT 		
 		b.ab_number,
@@ -90,14 +92,19 @@
 		
 	FROM academyBoard b LEFT JOIN academyBoardReply r ON b.ab_number = r.academyBoard_ab_number
 
-<!-- 	WHERE -->
-<!-- 	]]> -->
-<!-- 	<include refid="criteria"></include> -->
-<!-- 	<![CDATA[ -->
+	]]>
+	
+	 <if test="cri.type!=null and cri.type!=''">
+	 <![CDATA[
+		WHERE
+	]]>
+	<include refid="criteria"></include>
+	</if>
+	<![CDATA[
 	GROUP BY b.ab_number
 	ORDER BY b.ab_number DESC
 	LIMIT #{offset}, #{records}
-<!-- 	]]> -->
+ 	]]> 
 
 	</select>
 	
@@ -106,16 +113,18 @@
 	
 	<select id="getTotalCount" resultType="int">
 
-<!-- 	<![CDATA[ -->	
+	<![CDATA[	
 		SELECT Count(*)
-		FROM academyBoard
-		WHERE
-<!-- 		]]>  -->
+		FROM academyBoard b
+		]]> 
 		<!-- 검색조건 호출  -->
-<!-- 	<include refid="criteria"></include> -->
-<!-- 	<![CDATA[ -->		
-		ab_number >0
-<!-- 	]]> -->
+	<if test="cri.type!=null and cri.type!=''">
+	<![CDATA[	
+		WHERE
+		]]> 
+		<include refid="criteria"></include>
+	</if>
+
 	</select>
 	
 

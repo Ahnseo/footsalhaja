@@ -23,12 +23,12 @@ public class MemberDto {
 	private String phone;
 	private String personalGender; //성별 M 또는 F
 	private String activityArea;   //활동지역 
-	private int permission;     //허가 0 또는 1 으로 권한 ?  디폰트 0 설정함.
+	private String permission;     //허가 0 또는 1 으로 권한 ?  디폰트 0 설정함.
 
 	private LocalDateTime insertDatetime; //필요하다면, 사용하세요 
 	//private LocalDateTime deleteDatetime;
 	
-	private List<String> auth;
+	private List<String> auth; 
 
 }
 

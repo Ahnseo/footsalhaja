@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.footsalhaja.domain.member.MemberDto;
+import com.footsalhaja.domain.member.MemberPageInfo;
 import com.footsalhaja.mapper.member.MemberMapper;
 
 @Service
@@ -26,9 +27,36 @@ public class MemberServiceImpl implements MemberService {
 	
 	//회원목록
 	@Override
-	public List<MemberDto> selectMemberList() {
-		return memberMapper.selectMemberList();
+	public List<MemberDto> selectMemberList(int page, MemberPageInfo memberPageInfo, String keyword, String type) {
+		int records = 10;
+		int offset = (page - 1) * records; //?page=2 =>  11~20 레코드들.  offset = 10  이어야함 .
+		int countAllMember = memberMapper.selectAllMemberCount(type, "%"+keyword+"%");
+		// 11명 => lastP =2 .. 11 - 1 /10 +1 ? 
+		//  21 => 3             21-1/10 =2 +1
+		int lastPageNumber = (countAllMember - 1) / records + 1;
+		// page보기 1~10 개중...현재 page=2 라면,, 왼쪽에 1 오른쪽 8
+		// page보기 11~20 개중...현재 page=15 라면,, 왼쪽에 4(11,12,13,14) 오른쪽 5 (16,17,18,19,20) =>leftPageNumber=11
+							//15 -1 /10 =1 *10 =10 +1 =>11
+							//27 -1 /10 =2 *10 =20 +1 =>21
+		int leftPageNumber = (page - 1) / 10 * 10 + 1;
+		int rightPageNumber = leftPageNumber + 9; //11 ~ 20 , 21 ~ 30, 31 ~ 40 
+		rightPageNumber = Math.min(rightPageNumber, lastPageNumber);
 		
+		int jumpPrevPageNumber = (page - 1) / 10 * 10 - 9; 
+		int jumpNextPageNumber = (page - 1) / 10 * 10 + 11;  
+		boolean hasPrevButton = page > 10;
+		boolean hasNextButton = page <= (lastPageNumber - 1) /10 * 10 ;
+		
+		memberPageInfo.setCurrentPageNumber(page);
+		memberPageInfo.setLastPageNumber(lastPageNumber);
+		memberPageInfo.setLeftPageNumber(leftPageNumber);
+		memberPageInfo.setRightPageNumber(rightPageNumber);
+		memberPageInfo.setJumpPrevPageNumber(jumpPrevPageNumber);
+		memberPageInfo.setJumpPrevPageNumber(jumpNextPageNumber);
+		memberPageInfo.setHasPrevButton(hasPrevButton);
+		memberPageInfo.setHasNextButton(hasNextButton);
+		
+		return memberMapper.selectMemberList(offset, records, "%"+keyword+"%", type);
 	}
 	
 	//userId로 회원정보 가져오기 

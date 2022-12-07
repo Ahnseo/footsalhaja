@@ -4,7 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,13 +30,16 @@ public class FreeReplyController {
 	private FreeReplyService service;
 	
 	
-	
 	@PostMapping("add")
 	@ResponseBody
-	public Map<String, Object> add(@RequestBody FreeReplyDto reply) {
+	@PreAuthorize("isAuthenticated()") // 로그인 여부
+	public Map<String, Object> add(@RequestBody FreeReplyDto reply, Authentication auth) { // Authentication -> 로그인한 정보 들어있음
+		
+		reply.setMember_userId(auth.getName());
+		
+		Map<String, Object> map = new HashMap<>();
 		
 		int cnt = service.addReply(reply);
-		Map<String, Object> map = new HashMap<>();
 		if (cnt == 1) {
 			map.put("message", "새 댓글 등록완료");
 		}else {
@@ -45,13 +51,20 @@ public class FreeReplyController {
 	
 	@GetMapping("list/{freeBoard_fb_number}")
 	@ResponseBody
-	public List<FreeReplyDto> list(@PathVariable int freeBoard_fb_number) {
+	public List<FreeReplyDto> list(@PathVariable int freeBoard_fb_number, Authentication auth) {
+		String username = "";
 		
-		return service.listReplyByBoardId(freeBoard_fb_number);
+		// 로그인 상태면
+		if(auth != null) {
+			username = auth.getName(); // 로그인한 아이디 얻어오기
+		}
+		
+		return service.listReplyByBoardId(freeBoard_fb_number, username);
 	}
 	
 	@DeleteMapping("delete/{fb_replyNumber}")
 	@ResponseBody
+	@PreAuthorize("@replySecurity.checkWriter(authentication.name, #fb_replyNumber)")
 	public Map<String, Object> delete(@PathVariable int fb_replyNumber) {
 		int cnt = service.deleteById(fb_replyNumber);
 		
@@ -73,7 +86,8 @@ public class FreeReplyController {
 	}
 	
 	@PutMapping("modify")
-	@ResponseBody
+	@ResponseBody									// @은 외부 빈, #은 메소드의 파라미터
+	@PreAuthorize("@replySecurity.checkWriter(authentication.name, #reply.fb_replyNumber)")
 	public Map<String, Object> modify(@RequestBody FreeReplyDto reply) {
 		Map<String, Object> map = new HashMap<>();
 		

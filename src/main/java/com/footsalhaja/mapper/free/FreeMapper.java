@@ -18,5 +18,13 @@ public interface FreeMapper {
 
 	int countAll(String type, String keyword);
 
+	int getLikeByBoardNumberAndUserId(String freeBoard_fb_number, String member_userId);
+
+	int countLikeByBoardNumber(String fb_number);
+
+	int deleteLike(String fb_number, String userId);
+
+	int insertLike(String fb_number, String userId);
+
 	
 }

@@ -78,4 +78,12 @@ public class CustomConfig {
 		//security 암호화된 패스워드를 비교
 		return new BCryptPasswordEncoder();
 	}
+	
 }
+
+
+
+
+
+
+

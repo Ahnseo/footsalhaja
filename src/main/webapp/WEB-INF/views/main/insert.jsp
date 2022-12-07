@@ -52,6 +52,7 @@
 
 
 	<div id="wrapper">
+
 		<form id="insertForm1" action="/main/insert" method="post">
 			<input type="text" name="userId" value="${member.userId }"
 				disabled="disabled">
@@ -142,6 +143,7 @@
 						value="작성 취소" onclick="location.href='/main/list'">
 				</div>
 
+
 			</div>
 		</form>
 	</div>
@@ -151,6 +153,7 @@
 		integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
 		crossorigin="anonymous"></script>
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
 <script>
    $(document).ready(function() {
          $('#region').change(function() {

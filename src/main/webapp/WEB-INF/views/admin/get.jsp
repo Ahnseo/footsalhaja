@@ -1,7 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>      
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>      
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -55,6 +55,7 @@
 			
 			<form action="">
 				<h3>${member.userId}님에게 쪽지보내기 넣을까?</h3>
+				<h3>매너지수(좋이요,나빠요, 블랙리스트 여부 )</h3>
 			
 			</form>
 		</div>

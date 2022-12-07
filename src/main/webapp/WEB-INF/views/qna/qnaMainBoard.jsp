@@ -40,7 +40,7 @@
 				</c:forEach>
 
 				<!-- 검색기능 추가 예정  -->
-				<h3> QnA 무엇이 궁굼하신가요? </h3>
+				<h3> QnA 무엇이 궁금하신가요? </h3>
 				<form class="d-flex" role="search">
 					<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
 					<button class="btn btn-outline-success" type="submit">Search</button>
@@ -67,15 +67,15 @@
 				</table>
 				
 				<form action="/qna/insert" method="get">
-					<button type="submit" id="insertBtn"> 문의하기 : qnaController insert -> insert.jsp </button>	
+					<button type="submit" id="insertBtn">문의하기</button>	
 				</form>
 				
 				<%-- 시큐리티 로그인된 userId = userIdValue -> ${userIdValue } 으로 사용하겠습니다.--%>
-				<p>${userIdValue}</p>
 				<sec:authentication property="name" var="userIdValue"/>
-				<form action="/qna/myQnAList/${userIdValue}" method="get">
-					
-					<button type="submit" id="myQnAListBtn">  내 문의내역 : qnaController myQnA보기 -> myQnAList.jsp </button>
+				<form action="/qna/myQnAList" method="get">
+					<input type="hidden" name="userId" value="${userIdValue}">
+					<input type="hidden" name="page" value="1">
+					<button type="submit" id="myQnAListBtn">내 문의내역</button>
 			
 				</form>
 				<hr>

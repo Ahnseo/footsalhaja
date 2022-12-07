@@ -35,7 +35,8 @@ public class MainController {
 		MainDto main = service.get(bookId);
 		
 		model.addAttribute("main", main);
-
+		model.addAttribute("lat", main.getLat());
+		model.addAttribute("lng", main.getLng());
 	}
 	
 	@GetMapping("insert")

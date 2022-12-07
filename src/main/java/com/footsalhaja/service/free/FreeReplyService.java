@@ -8,7 +8,7 @@ public interface FreeReplyService {
 
 	public int addReply(FreeReplyDto reply);
 
-	public List<FreeReplyDto> listReplyByBoardId(int freeBoard_fb_number);
+	public List<FreeReplyDto> listReplyByBoardId(int freeBoard_fb_number, String username);
 
 	public int deleteById(int fb_replyNumber);
 

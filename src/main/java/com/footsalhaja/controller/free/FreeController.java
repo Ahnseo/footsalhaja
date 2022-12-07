@@ -1,16 +1,22 @@
 package com.footsalhaja.controller.free;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.footsalhaja.domain.free.BoardDto;
@@ -67,7 +73,8 @@ public class FreeController {
 	}
 	
 	
-	@GetMapping("modify")
+	@GetMapping("modify") // @은 외부 빈, #은 메소드의 파라미터
+	@PreAuthorize("@boardSecurity.checkWriter(authentication.name, #fb_number)")
 	public void modify(
 			@RequestParam(name = "number") int fb_number,
 			Model model) {
@@ -77,6 +84,7 @@ public class FreeController {
 	}
 	
 	@PostMapping("modify")
+	@PreAuthorize("@boardSecurity.checkWriter(authentication.name, #board.fb_number)")
 	public String modify(BoardDto board, RedirectAttributes rttr) {
 		int cnt = service.update(board);
 		
@@ -90,6 +98,7 @@ public class FreeController {
 	}
 
 	@PostMapping("remove")
+	@PreAuthorize("@boardSecurity.checkWriter(authentication.name, #fb_number)")
 	public String remove(
 			@RequestParam(name = "number") int fb_number,
 			RedirectAttributes rttr) {
@@ -102,6 +111,17 @@ public class FreeController {
 		}
 		
 		return "redirect:/free/list";
+	}
+	
+	@PutMapping("like")
+	@ResponseBody
+	@PreAuthorize("isAuthenticated()")
+	public Map<String, Object> like(@RequestBody Map<String, String> req, Authentication auth){
+		// System.out.println(req); {freeBoard_fb_number=32}
+		
+		Map<String, Object> result = service.updateLike(req.get("freeBoard_fb_number"), auth.getName());
+														// 게시물번호, 로그인한 아이디
+		return result;
 	}
 
 	

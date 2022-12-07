@@ -8,9 +8,9 @@
 	<!-- Create QnABoard -->	 
 	 <insert id="insertQnABoard" >
 		 INSERT INTO QnABoard 
-		 		(  category,   title,    content , member_userId, member_nickName )
+		 		(  category,   title,    content , member_userId )
 		 VALUES 
-		 		(#{category}, #{title}, #{content}, #{userId}, #{nickName}  );
+		 		(#{category}, #{title}, #{content}, #{userId}  );
 	 </insert>
 	 
 	 <select id="myQnAList" resultType="com.footsalhaja.domain.qna.QnADto">
@@ -27,14 +27,25 @@
 	 	LEFT JOIN member m 
 	 	ON q.member_userId = m.userId 	
 	 	WHERE
-	 		m.userId = #{userId} 	
+	 		m.userId = #{userId}
 	 	ORDER BY 
-	 		qnaId DESC 	 
-	 
+	 		qnaId DESC 
+	 	LIMIT
+	 		#{offset}, #{records}
 	 </select>
 	 
+	 <select id="countAllQnAByUserId" resultType="int">
+	 	SELECT 
+	 		COUNT(*)
+	 	FROM 
+	 	 	QnABoard q
+	 	LEFT JOIN member m 
+	 	ON q.member_userId = m.userId 	
+	 	WHERE
+	 		m.userId = #{userId}
+	 </select>
 	 
-	 <select id="selectMyQnAListByUserId" resultType="com.footsalhaja.domain.qna.QnADto">
+	<select id="selectMyQnAListByUserId" resultType="com.footsalhaja.domain.qna.QnADto">
 	 	SELECT 
 	 		qnaId, category, title, content, status, member_userId, member_nickName
 	 	FROM 
@@ -43,7 +54,28 @@
 	 		member_userId = #{userId} 
 	 	ORDER BY 
 	 		qnaId DESC 
-	 </select>
+	</select>
+
+	<select id="selectMyQnAGetByQnAIdAndUserId" resultType="com.footsalhaja.domain.qna.QnADto">
+		SELECT 
+	 		q.qnaId,
+	 		q.category,
+	 		q.title,
+	 		q.content,
+	 		q.status,
+	 		q.insertDatetime,
+	 		m.userId
+	 	FROM 
+	 	 	QnABoard q
+	 	LEFT JOIN 
+	 		member m
+	 	ON 
+	 		q.member_userId = m.userId
+	 	WHERE 
+	 		m.userId = #{userId} AND q.qnaId = #{qnaId}
+	 	
+	</select>	
+	
 	
 	<select id="selectFAQList" resultType="com.footsalhaja.domain.qna.FAQDto">
 		SELECT 
@@ -53,6 +85,74 @@
 		FROM
 			FAQ	
 	</select>
+	
+	<select id="selectAllQnAList" resultType="com.footsalhaja.domain.qna.QnADto">
+		SELECT 
+	 		qnaId,
+	 		category,
+	 		title,
+	 		content,
+	 		status,
+	 		member_userId AS userId,
+	 		likeCount
+	 	FROM 
+	 	 	QnABoard
+	 	WHERE
+		<trim prefixOverrides="OR">
+			<if test="type == 'all' or type == 'title'">
+			OR title LIKE #{keyword}
+			</if>
+			
+			<if test="type == 'all' or type == 'content'">
+			OR content LIKE #{keyword}
+			</if>
+			
+			<if test="type == 'all' or type == 'userId'">
+			OR member_userId LIKE #{keyword}
+			</if>
+		</trim>  	
+	 	ORDER BY qnaId DESC
+	 	LIMIT #{offset}, #{records}
+	</select>
+	<select id="countAllQnA" resultType="int">
+		SELECT 
+	 		COUNT(*)
+	 	FROM 
+	 	 	QnABoard 
+	 	WHERE
+		<trim prefixOverrides="OR">
+			<if test="type == 'all' or type == 'title'">
+			OR title LIKE #{keyword}
+			</if>
+			
+			<if test="type == 'all' or type == 'content'">
+			OR content LIKE #{keyword}
+			</if>
+			
+			<if test="type == 'all' or type == 'userId'">
+			OR member_userId LIKE #{keyword}
+			</if>
+		</trim> 	
+	</select>
+	
+	<!-- 좋아요 기능추가  -->
+	<select id="selectQnABoardLikeCount" resultType="int">
+		SELECT 
+			COUNT(*)
+		FROM 
+			QnABoardLike
+		WHERE 
+			qnaId = #{qnaId} AND userId = #{loggedinId}
+	</select>
+	<insert id="insertQnABoardLikeCount">
+		INSERT INTO QnABoardLike (qnaId, userId)
+		VALUES (#{qnaId}, #{loggedinId})
+	</insert>
+	<delete id="deleteQnABoardLikeCount">
+		DELETE FROM QnABoardLike
+		WHERE qnaId = #{qnaId} AND userId = #{loggedinId}
+	</delete>
+	
 	 
 
 

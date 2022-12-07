@@ -174,6 +174,7 @@ for (const button of pageButtons){
 var searchForm = document.getElementById("searchForm");
 	
 document.querySelector("#searchForm button").addEventListener("click", function(e) {
+
 		//화면에 검색 종류가 없다면 검색하지 않도록 제어
 		if(searchForm.querySelector("select[name='type']").value=="") {
 			alert("검색 종류를 선택하세요");
@@ -187,7 +188,7 @@ document.querySelector("#searchForm button").addEventListener("click", function(
 		
 		//검색버튼을 클릭하면 <form>태그의 전송을 막고, 페이지 번호는 1 이되도록 처리
 		searchForm.querySelector("input[name='pageNum']").value="1";
-		e.preventDefault();
+
 		
 		searchForm.submit();
 	});

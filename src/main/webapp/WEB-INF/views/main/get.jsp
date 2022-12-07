@@ -17,27 +17,28 @@
 <div id="map" style="width:800px;height:400px;margin:30px auto;"></div>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=17df836d167348dc7ea95e69cb597603"></script>
 	<script>
-		var container = document.getElementById('map');
-		var options = {
-			center: new kakao.maps.LatLng(33.450701, 126.570667),
-			level: 3
-		};
+	var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+	
+	var lat = ${lat};	//위도 
+	var lng = ${lng};	// 경도
+	
+	//alert("lat : " + lat  + "lng :" +lng);
+	var options = { //지도를 생성할 때 필요한 기본 옵션
+		center: new kakao.maps.LatLng(lat, lng), //지도의 중심좌표.
+		level: 3, //지도의 레벨(확대, 축소 정도)
+		marker: marker
+	};
 
-		var map = new kakao.maps.Map(container, options);
-		
-		// 마커가 표시될 위치
-        var markerPosition  = new kakao.maps.LatLng(36.300442, 127.574917); 
- 
-        // 마커 생성
-        var marker = new kakao.maps.Marker({
-            position: markerPosition
-        });
- 
-        // 마커가 지도 위에 표시되도록 설정
-        marker.setMap(map);
- 
-        // 아래 코드는 지도 위의 마커를 제거하는 코드
-        // marker.setMap(null);  
+	var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+	
+  	var markerPosition  = new kakao.maps.LatLng(lat, lng); 
+  
+     // 마커 생성
+     var marker = new kakao.maps.Marker({
+         position: markerPosition
+     });
+     
+     marker.setMap(map);
 		</script>
 <%-- ---------------------------------------------------------------- --%>	
 
@@ -55,7 +56,10 @@
 				</a>
 				
 				<div class="form-floating mb-3">
+
 					<input id="matchInfo" type="text" class="form-control" value=" ${main.title} ${main.bookDate } ${main.bookTime} ${main.location_locationId } ${main.nickName } ${main.matchType } ${main.teamGender }" readonly>
+
+
 					<label for="floatingInput">경기정보</label>
 				</div>
 			

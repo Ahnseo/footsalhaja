@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="com.footsalhaja.mapper.admin.AdminMapper">
+ 
+ 	<select id="selectWatingQnAList" resultType="com.footsalhaja.domain.qna.QnADto">
+ 	<!-- qnaId category title status userId insertDatetime -->
+ 		SELECT qnaId,category,title,member_userId AS userId,status,insertDatetime
+ 		FROM QnABoard
+ 		WHERE status = #{status}
+ 		ORDER BY insertDatetime DESC
+ 	</select>
+ 
+ </mapper>
