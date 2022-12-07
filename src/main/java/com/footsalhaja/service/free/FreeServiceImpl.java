@@ -1,6 +1,8 @@
 package com.footsalhaja.service.free;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +16,7 @@ import com.footsalhaja.mapper.free.FreeReplyMapper;
 @Service
 @Transactional
 public class FreeServiceImpl implements FreeService{
-	
+	 
 	@Autowired
 	private FreeMapper freeMapper;
 	
@@ -85,6 +87,27 @@ public class FreeServiceImpl implements FreeService{
 		return freeMapper.delete(fb_number);
 	}
 	
-	
+	// 좋아요
+	public Map<String, Object> updateLike(String freeBoard_fb_number, String member_userId) {
+		Map<String, Object> map = new HashMap<>();
+		
+		// freeBoard_fb_number랑 member_userId으로 좋아요 테이블에서 검색
+		int cnt = freeMapper.getLikeByBoardNumberAndUserId(freeBoard_fb_number, member_userId);
+		if (cnt == 1) {
+			// 있으면 취소
+			freeMapper.deleteLike(freeBoard_fb_number, member_userId);
+			map.put("currrent", "not liked");			
+		} else { 
+			// 없으면 추가
+			freeMapper.insertLike(freeBoard_fb_number, member_userId);
+			map.put("currrent", "liked");			
+		}
+		
+		// 현재 몇개인지
+		int countAll = freeMapper.countLikeByBoardNumber(freeBoard_fb_number);
+		map.put("count", countAll);
+		
+		return map;
+	}
 	
 }

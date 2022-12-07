@@ -130,6 +130,10 @@ document.querySelector("#likeButton").addEventListener("click", function() {
 		},
 		body : JSON.stringify({freeBoard_fb_number})
 	})
+	.then(res => res.json())
+	.then(data => {
+		document.querySelector("#likeCount").innerText = data.count;
+	})
 });
 
 

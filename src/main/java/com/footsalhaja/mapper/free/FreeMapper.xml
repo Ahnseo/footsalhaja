@@ -95,4 +95,28 @@
  		</trim>
  	</select>
  	
+ 	<!-- 좋아요 유무 -->
+ 	<select id="getLikeByBoardNumberAndUserId" resultType="int">
+ 	SELECT COUNT(*) FROM freeBoardLike
+ 	WHERE freeBoard_fb_number = #{freeBoard_fb_number} AND member_userId = #{member_userId}
+ 	</select>
+ 	
+ 	<!-- 좋아요 삭제 -->
+ 	<delete id="deleteLike">
+ 	DELETE FROM freeBoardLike
+ 	WHERE freeBoard_fb_number = #{freeBoard_fb_number} AND member_userId = #{member_userId}
+ 	</delete>
+ 	
+ 	<!-- 좋아요 추가 -->
+ 	<insert id="insertLike">
+ 	INSERT INTO freeBoardLike (freeBoard_fb_number, member_userId)
+ 	VALUES (#{freeBoard_fb_number}, #{member_userId})
+ 	</insert>
+ 	
+ 	<!-- 좋아요 총 갯수 -->
+ 	<select id="countLikeByBoardNumber" resultType="int">
+ 	SELECT COUNT(*) FROM freeBoardLike
+ 	WHERE freeBoard_fb_number = #{freeBoard_fb_number}
+ 	</select>
+ 	
  </mapper>
