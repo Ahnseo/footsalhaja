@@ -22,14 +22,15 @@
 	<!-- get 게시물페이지  -->
 	<select id="select" resultType="com.footsalhaja.domain.academy.BoardDto">
 	SELECT 
-		ab_number,
-		ab_category,
-		ab_title,
-		ab_content,
-		member_userId,
-		ab_insertDatetime
+		b.ab_number,
+		b.ab_category,
+		b.ab_title,
+		b.ab_content,
+		b.member_userId,
+		b.ab_insertDatetime,
+		COUNT(DISTINCT l.member_userId) countLike
 		
-	FROM academyBoard
+	FROM academyBoard b LEFT JOIN academyBoardLike l ON b.ab_number = l.academyBoard_ab_number
 	WHERE
 		ab_number = #{ab_number}
 		
@@ -84,9 +85,11 @@
 		b.ab_content,
 		b.member_userId,
 		b.ab_insertDatetime,
-		COUNT(r.academyBoard_ab_number) replyCnt
+		COUNT(r.academyBoard_ab_number) replyCnt,
+		COUNT(DISTINCT l.member_userId) countLike
 		
 	FROM academyBoard b LEFT JOIN academyBoardReply r ON b.ab_number = r.academyBoard_ab_number
+						LEFT JOIN academyBoardLike l ON b.ab_number = l.academyBoard_ab_number
 	]]>
 	
 	 <if test="cri.type!=null and cri.type!=''">
@@ -120,6 +123,29 @@
 
 	</select>
 	
+	<!-- 좋아요 숫자 가져오기 -->
+	<select id="getLike" resultType="int">
+		SELECT COUNT(*) FROM academyBoardLike
+		WHERE academyBoard_ab_number = #{ab_number} AND member_userId = #{member_userId}
+	</select>
+	
+	<!-- 좋아요 취소 -->
+	<delete id="deleteLike">
+		DELETE FROM academyBoardLike
+		WHERE academyBoard_ab_number = #{ab_number} AND member_userId = #{member_userId}
+	</delete>
+	
+	<!-- 좋아요 추가 -->
+	<insert id="insertLike">
+		INSERT INTO academyBoardLike (academyBoard_ab_number, member_userId) 
+		VALUES (#{ab_number}, #{member_userId})
+	</insert>
+	
+	<!-- 게시물 당 좋아요 갯수 -->
+	<select id="countLikeByab_number" resultType="int">
+		SELECT COUNT(*) FROM academyBoardLike
+		WHERE academyBoard_ab_number = #{ab_number}
+	</select>
  
  </mapper>
   

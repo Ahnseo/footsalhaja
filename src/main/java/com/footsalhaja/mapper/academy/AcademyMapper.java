@@ -24,6 +24,16 @@ public interface AcademyMapper {
 	public List<BoardDto> getListWithPaging(Criteria cri, int offset, int records);
 	
 	public int getTotalCount(Criteria cri, int ab_number);
+
+	public int getLike(String ab_number, String member_userId);
+
+	public void deleteLike(String ab_number, String member_userId);
+
+	public void insertLike(String ab_number, String member_userId);
+
+	public int countLikeByab_number(String ab_number);
+
+	
 	
 	
 }

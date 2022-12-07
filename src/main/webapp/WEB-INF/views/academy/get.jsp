@@ -14,8 +14,19 @@
 <body>
 <my:navbar></my:navbar>
 
-	<h1>${board.ab_number }번 페이지</h1>
+	<div class="d-flex">
+		<h1 class="me-auto">${board.ab_number }번페이지</h1>
+		<h1>
+			<span id="likeButton"> 좋아요 </span> <span id="likeCount">
+				${board.countLike } </span>
+		</h1>
+
+	</div>
 	
+	<c:url value="/academy/modify" var="modifyLink">
+		<c:param name="ab_number" value="${board.ab_number }"></c:param>
+	</c:url>
+
 	제목 <input type ="text" value="${board.ab_title }" readonly> <br>
 	말머리 <input type ="text" value="${board.ab_category }" readonly> <br>
 	본문 <div id="summernote" readonly>${board.ab_content }</div> <br>
@@ -25,7 +36,13 @@
 	<c:url value="/academy/modify" var="modifyLink">
 		<c:param name="ab_number" value="${board.ab_number }"></c:param>
 	</c:url>
-	<a class="btn btn-warning" href="${modifyLink }">수정</a>
+	
+	<sec:authentication property="name" var="username" />
+
+	<c:if test="${board.member_userId == username}">
+		<a class="btn btn-warning" href="${modifyLink }">수정</a>
+	</c:if>
+
 
 
 	<!-- 글 목록버튼 -->
@@ -287,7 +304,7 @@
 	.then(() => listReply(page));
 }
 	
-	
+	/* 댓글 입력 버튼 */
 	document.querySelector("#replySendButton").addEventListener("click", function() {
 		const ab_number = document.querySelector("#ab_number").value;
 		const ab_replyContent = document.querySelector("#replyInput").value;
@@ -313,6 +330,32 @@
 		})
 		.then(() => listReply(page));
 	});
+	
+	/* 좋아요 버튼 */
+	document.querySelector("#likeButton").addEventListener("click", function() {
+	const boardId = document.querySelector("#ab_number").value;
+	
+	fetch(`\${ctx}/academy/like`, {
+		method : "put",
+		headers : {
+			"Content-Type" : "application/json"
+		},
+		body : JSON.stringify({ab_number})
+	})
+	.then(res => res.json())
+	.then(data => {
+		
+		if (data.current == 'liked') {
+			document.querySelector("#likeButton").innerHTML = `<i class="fa-solid fa-thumbs-up"></i>`
+		} else {
+			document.querySelector("#likeButton").innerHTML = `<i class="fa-regular fa-thumbs-up"></i>`
+		}
+		
+		document.querySelector("#likeCount").innerText = data.count;
+	});
+});
+	
+	
 </script>
 
 

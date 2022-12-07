@@ -39,6 +39,7 @@
 						<tr>
 							<th>번호</th>
 							<th>말머리</th>
+							<th>좋아요</th>
 							<th>제목</th>
 							<th>작성자</th>
 							<th>작성시간</th>
@@ -49,6 +50,7 @@
 							<tr>
 								<td>${board.ab_number }</td>
 								<td>${board.ab_category }</td>
+								<td>${board.countLike }</td>
 								<td>
  									<c:url value="/academy/get" var="getLink">
 										<c:param name="ab_number" value="${board.ab_number}"></c:param>

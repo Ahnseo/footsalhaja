@@ -1,6 +1,7 @@
 package com.footsalhaja.service.academy;
 
 import java.util.List;
+import java.util.Map;
 
 import com.footsalhaja.domain.academy.BoardDto;
 import com.footsalhaja.domain.academy.Criteria;
@@ -20,4 +21,5 @@ public interface AcademyService {
 	
 	public int getTotal(Criteria cri);
 	
+	public Map<String, Object> updateLike(String ab_number, String member_userId); 
 }
