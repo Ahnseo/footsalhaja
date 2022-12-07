@@ -28,10 +28,11 @@
 		b.ab_content,
 		b.member_userId,
 		b.ab_insertDatetime,
+		f.ab_fileName,
 		(SELECT COUNT(*) FROM academyBoardLike WHERE academyBoard_ab_number = b.ab_number AND member_userId = #{member_userId}) liked,
 		(SELECT COUNT(*) FROM academyBoardLike WHERE academyBoard_ab_number = b.ab_number) countLike
 
-	FROM academyBoard b 
+	FROM academyBoard b LEFT JOIN academyBoardFileAttach f ON b.ab_number = f.academyBoard_ab_number
 	WHERE
 		ab_number = #{ab_number}
 		
@@ -155,6 +156,12 @@
 		SET ab_viewCount = ab_viewCount + 1
 		WHERE ab_number = #{ab_number}
 	</update>
+	
+	<!-- 파일 첨부 -->
+	<insert id="insertFile">
+		INSERT INTO academyBoardFileAttach (academyBoard_ab_number, ab_fileName, ab_filePath, ab_fileType)
+		VALUES (#{ab_number}, #{ab_fileName}, #{ab_filePath}, #{ab_fileType})
+	</insert>
  
  </mapper>
   

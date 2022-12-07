@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.footsalhaja.domain.academy.BoardDto;
 import com.footsalhaja.domain.academy.Criteria;
@@ -70,9 +71,17 @@ public class AcademyController {
 	}
 	
 	@PostMapping("register")
-	public String register(BoardDto board) {
-
-		service.insert(board);
+	public String register(BoardDto board, MultipartFile file,
+			RedirectAttributes rttr) {
+		
+		// request param 수집/가공
+		System.out.println(file.getOriginalFilename());
+		
+		// business logic
+		service.insertFile(board, file);
+		
+		/* service.insert(board); */
+		
 				
 		return "redirect:/academy/list";
 	}
@@ -89,17 +98,17 @@ public class AcademyController {
 	  String ab_filePath = "C:\\Users\\lnh1017\\Desktop\\study\\project\\"; //저장될 외부 파일 경로 String
 	  String originalFileName = multipartFile.getOriginalFilename(); //오리지날 파일명 String
 	  
-	  String ab_fileName = UUID.randomUUID() + originalFileName; //랜덤 UUID+파일이름으로 저장될 파일 새 이름
+	  String ab_image = UUID.randomUUID() + originalFileName; //랜덤 UUID+파일이름으로 저장될 파일 새 이름
 	  
-	  File targetFile = new File(ab_filePath + ab_fileName);
+	  File targetFile = new File(ab_filePath + ab_image);
 	  
 	  System.out.println(targetFile);
 	  
 	  try {
 		  InputStream fileStream = multipartFile.getInputStream();
 		  FileUtils.copyInputStreamToFile(fileStream, targetFile); // 파일 저장
-		  jsonObject.put("url", "/summernoteImage/" + ab_fileName);
-		  jsonObject.put("ab_fileName", ab_fileName);
+		  jsonObject.put("url", "/summernoteImage/" + ab_image);
+		  jsonObject.put("ab_image", ab_image);
 		  jsonObject.put("responseCode", "success");
 	  
 	  } catch (IOException e) {

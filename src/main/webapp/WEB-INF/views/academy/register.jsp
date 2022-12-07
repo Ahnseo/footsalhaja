@@ -24,24 +24,40 @@
 <my:navbar></my:navbar>
 
 	<h1>글작성 페이지</h1>
-	<form action="" method="post">
-	제목 <input type="text" name="ab_title"> <br>
-	  
-	말머리 <select name="ab_category">
-        <option value="lesson">레슨</option>
-        <option value="tip">꿀팁</option>
-        <option value="recruitment">팀원모집</option>
-        <option value="qna">질문/답변</option>
-    </select>
-    
-    <br>
 	
-	본문 <textarea id="summernote" name="ab_content" ></textarea> <br>
+	<form action="" method="post" enctype="multipart/form-data">
+		<div class="mb-3">
+			<label for="" class="form-label">제목</label> 
+			<input type="text" name="ab_title"> <br>
+		 </div>
+		<div class="mb-3"> 
+		말머리 <select name="ab_category">
+	        <option value="lesson">레슨</option>
+	        <option value="tip">꿀팁</option>
+	        <option value="recruitment">팀원모집</option>
+	        <option value="qna">질문/답변</option>
+	    </select>
+	    </div>
+	    
+	    <br>
+		<div class="mb-3">
+			<label for="" class="form-label">본문</label><br>
+			<textarea id="summernote" name="ab_content" ></textarea>
+		</div> 
+		<br>
 	
-	작성자 <input type ="text" name="member_userId"> <br>
-	
-	<input type="submit" value="등록">
-	
+		<div class="mb-3">
+			<label for="" class="form-label">파일</label> 
+			<input type="file" class="form-control" name="file">
+		</div>
+		
+		<div class="mb-3">
+			<label for="" class="form-label">작성자</label>
+			<input type ="text" name="member_userId">
+		</div>
+		<br>
+		
+		<input type="submit" value="등록">
 	
 	</form>
 	
@@ -83,7 +99,7 @@
 				processData : false,
 				success : function(data) {
 	            	//항상 업로드된 파일의 url이 있어야 한다. ('insertImage', url, filename)
-					$(editor).summernote('insertImage', data.url, data.ab_fileName);
+					$(editor).summernote('insertImage', data.url, data.ab_image);
 	            	/* //이미지가 업로드 되면, 하위에 테스트 확인차 추가하도록 해놓은 부분
 					$('#imageBoard > ul').append('<li><img src="'+url+'" width="480" height="auto"/></li>'); */
 				}

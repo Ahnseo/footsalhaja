@@ -1,12 +1,15 @@
 package com.footsalhaja.service.academy;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.footsalhaja.domain.academy.BoardDto;
 import com.footsalhaja.domain.academy.Criteria;
@@ -100,6 +103,48 @@ public class AcademyServiceImpl implements AcademyService{
 	@Override
 	public int updateViewCount(int ab_number) {
 		return mapper.updateViewCount(ab_number);
+	}
+	@Override
+	public int insertFile(BoardDto board, MultipartFile file) {
+		// DB에 게시물 정보 저장
+		int cnt = mapper.insert(board);
+		
+		if (file != null && file.getSize() > 0) {
+			// db에 파일 정보 저장
+			String originalFileName = file.getOriginalFilename(); //오리지날 파일명 String
+			  
+			String ab_fileName = UUID.randomUUID() + originalFileName; //랜덤 UUID+파일이름으로 저장될 파일 새 이름
+			
+			String extension  = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자(파일 타입)
+			
+			int ab_fileType;
+			
+			//파일 확장자가 jpg 여부 체크하기 위해 (나중에 변경해도 뭐 ㅇㅋ)
+			if (extension  == "jpg") {
+				ab_fileType = 1;
+			}else {
+				ab_fileType = 0;
+			}
+			
+			// 파일 저장
+			// ab_number 이름의 새 폴더 만들기 (파일 첨부된 게시물 ab_number번호의 새폴더가 생성됨)
+			File folder = new File("C:\\Users\\lnh1017\\Desktop\\study\\project"+ board.getAb_number());
+			folder.mkdirs();
+			
+			File dest = new File(folder, ab_fileName);
+			//첨부된 파일을 새 폴더에 전송
+			try {
+				file.transferTo(dest);
+			} catch (Exception e) {
+				//@@Transactional은 RuntimeExceptional에서만 rollback됨
+				e.printStackTrace();
+				throw new RuntimeException(e);
+			}
+			String ab_filePath = folder.getAbsolutePath();
+			
+			mapper.insertFile(board.getAb_number(), ab_fileName, ab_filePath, ab_fileType);
+		}
+		return cnt;
 	}
 	
 }

@@ -40,6 +40,8 @@ public interface AcademyMapper {
 	}
 	//조회수
 	public int updateViewCount(int ab_number);
+
+	public void insertFile(int ab_number, String ab_fileName, String ab_filePath, int ab_fileType);
 	
 	
 }

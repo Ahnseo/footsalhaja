@@ -150,7 +150,7 @@
 				processData : false,
 				success : function(data) {
 	            	//항상 업로드된 파일의 url이 있어야 한다. ('insertImage', url, filename)
-					$(editor).summernote('insertImage', data.url, data.ab_fileName);
+					$(editor).summernote('insertImage', data.url, data.ab_image);
 	            	/* //이미지가 업로드 되면, 하위에 테스트 확인차 추가하도록 해놓은 부분
 					$('#imageBoard > ul').append('<li><img src="'+url+'" width="480" height="auto"/></li>'); */
 				}
