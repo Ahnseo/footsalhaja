@@ -100,7 +100,7 @@
 #wrapper {
 	display: block;
 	width: 100%;
-	background-color: #000000;
+	background-color: #faf5f5;
 }
 
 /* 게시글 body */
@@ -129,6 +129,8 @@
 <c:url value="/main/insert" var="insertLink" >
 	<c:param name="userId" value="${userIdValue }"></c:param>
 </c:url>
+<c:url value="/member/login" var="loginLink"></c:url>
+
 
 <div id="wrapper">
 	<my:navbar></my:navbar>
@@ -185,11 +187,13 @@
     </div>
 
 <!-- 플로팅 버튼 -->
+<sec:authorize access="isAuthenticated()" var="loggedIn"/>
+<c:if test="${loggedIn }">
 <div class="fab-container">
 	<div class="fab fab-icon-holder">
 		<i class="fa-solid fa-pen-nib"></i>
 	</div>
-	
+
 	<ul class="fab-options">
 		<li>
 			<span class="fab-label">작성하기</span>
@@ -217,9 +221,16 @@
 		</li>
 	</ul>
 </div>
+</c:if>
+
+<c:if test="${not loggedIn }">
+	<div class="fab-container">
+		<div onclick="location.href='${loginLink}'" class="fab fab-icon-holder"><i class="fa-solid fa-pen-nib"></i></div>
+	</div>
+</c:if>
+
 
 <!-- 게시글 목록 -->
-
 <div class="matches" id="body">
 	<table class="table">
 		<thead class="table-dark">

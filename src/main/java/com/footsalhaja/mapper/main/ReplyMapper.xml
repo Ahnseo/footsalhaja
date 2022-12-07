@@ -8,7 +8,7 @@
  
  	<insert id="insert">
  	INSERT INTO bookReply (replyContent, book_bookId, member_userId)
- 	VALUES (#{replyContent}, #{bookId}, 'asdf')
+ 	VALUES (#{replyContent}, #{bookId})
  	</insert>
  
 <select id="selectReplyByBookId" resultType="com.footsalhaja.domain.main.ReplyDto">

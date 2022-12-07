@@ -150,6 +150,8 @@
                option += '<option value="6">피치 부천 이마트 부천점</option>';
                option += '<option value="7">용인 기흥 낫소 풋살파크</option>';
                option += '<option value="8">칼라힐 풋살파크 B구장</option>';
+               option += '<option value="9">인천 더 베스트 풋볼파크 구월점</option>';
+               option += '<option value="10">하남 감일 장수천 풋살파크</option>';
             }
             $('#location').empty().append(option);
          });

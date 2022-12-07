@@ -18,8 +18,8 @@
  	</insert>
  
 	<select id="selectNick" resultType="java.lang.String">
-		select nickName from member 
-		where userId = #{userId}
+		SELECT nickName FROM member 
+		WHERE userId = #{userId}
 	</select>
 	
 	<!-- 게시물 얻어오기  -->
