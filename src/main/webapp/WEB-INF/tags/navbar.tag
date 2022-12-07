@@ -1,3 +1,4 @@
+
 <%@ tag language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%-- c커스텀 태그 사용하기 위해 --%>
 <%@ attribute name="active" required="false" %> <%-- narvar active 초기값 false --%>

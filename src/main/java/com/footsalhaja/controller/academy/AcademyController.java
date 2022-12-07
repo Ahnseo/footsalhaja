@@ -9,6 +9,7 @@ import java.util.UUID;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -118,12 +119,13 @@ public class AcademyController {
 	}
 	
 	//modify 게시글
+	@PreAuthorize("@boardSecurity.checkWriter2(authentication.name, #ab_number)")
 	@GetMapping("modify")
 	public void modify(int ab_number, Model model) {
 		BoardDto board = service.get(ab_number);
 		model.addAttribute("board",board);
 	}
-	
+	@PreAuthorize("@boardSecurity.checkWriter2(authentication.name, #board.ab_number)")
 	@PostMapping("modify")
 	public String modify(BoardDto board ) {
 		service.modify(board);
@@ -132,6 +134,7 @@ public class AcademyController {
 	}
 	
 	//remove 게시글
+	@PreAuthorize("@boardSecurity.checkWriter2(authentication.name, #ab_number)")
 	@PostMapping("remove") 
 	public String remove(int ab_number) {
 		service.remove(ab_number);

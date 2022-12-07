@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,6 +50,7 @@ public class AcademyReplyController {
 	
 
 	@PostMapping("add")
+	@PreAuthorize("isAuthenticated()") // 로그인 여부
 	@ResponseBody
 	public Map<String, Object> add(@RequestBody AcademyReplyDto reply) {
 
@@ -67,6 +69,7 @@ public class AcademyReplyController {
 		return map;
 	}
 	
+	@PreAuthorize("@replySecurity.checkWriter2(authentication.name, #ab_replyNumber)")
 	@DeleteMapping("remove/{ab_replyNumber}")
 	@ResponseBody
 	public Map<String, Object> remove(@PathVariable int ab_replyNumber) {
@@ -88,6 +91,7 @@ public class AcademyReplyController {
 	}
 	
 	@PutMapping("modify")
+	@PreAuthorize("@replySecurity.checkWriter2(authentication.name, #reply.ab_replyNumber)")
 	@ResponseBody
 	public Map<String, Object> modify(@RequestBody AcademyReplyDto reply) {
 		Map<String, Object> map = new HashMap<>();
