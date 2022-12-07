@@ -21,7 +21,7 @@
     <ul class="navbar-nav  w-100 px-3 justify-content-center">
       <li class="nav-item active">
 
-        <a class="nav-link" href="http://localhost:8080/main/list">풋살하자<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="${listLink }">풋살하자<span class="sr-only" style="text-align: left;">(current)</span></a>
 
       </li> 
       <li class="nav-item active">
