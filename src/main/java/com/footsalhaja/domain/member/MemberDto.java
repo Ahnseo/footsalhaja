@@ -28,7 +28,7 @@ public class MemberDto {
 	private LocalDateTime insertDatetime; //필요하다면, 사용하세요 
 	//private LocalDateTime deleteDatetime;
 	
-	private List<String> auth;
+	private List<String> auth; 
 
 }
 

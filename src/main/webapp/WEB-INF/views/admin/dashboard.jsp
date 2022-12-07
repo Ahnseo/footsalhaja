@@ -1,7 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>      
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>      
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,6 +20,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col">
+			
 				<!-- 대시보드 만들기 -->
 				<div>
 					<!-- 1. 관리자가 오늘할일 숫자로 표기  ( 매치예약건수(?), 매치취소건수(?), 답변대기문의(?) )  -->

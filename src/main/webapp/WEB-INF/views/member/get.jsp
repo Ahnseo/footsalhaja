@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>      
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,7 +38,7 @@
 				<br>
 				닉네임 <input type="text" name="nickName" value="${member.nickName}" readonly >
 				<br>
-				개인ID/팀ID <input type="text" name="permission" value="${member.permission}" readonly >
+				회원권한 <input type="text" name="auth" value="${member.auth}" readonly >
 				<br>
 				Email <input type="email" name="email" value="${member.email}" readonly >
 				<br>
@@ -51,8 +52,13 @@
 				<br>
 				전화번호 <input type="text" name="phone" value="${member.phone}" readonly >
 				<br>
-				<input type="submit" value="회원정보수정">
+				<button type="submit" class="btn btn-primary" >회원정보수정</button>
 			</form>
+			
+			<%-- "hasAuthority('admin')" DB 수정해야! --%>
+			<sec:authorize access="hasAuthority('admin')">
+				<button type="button" class="btn btn-danger">블랙리스트</button>
+			</sec:authorize>
 		</div>
 	</div>
 </div>	

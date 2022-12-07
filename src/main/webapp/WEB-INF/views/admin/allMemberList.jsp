@@ -1,7 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>      
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>      
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,7 +48,7 @@
 					<th>생년월일</th>
 					<th>활동지역</th>
 					<th>전화번호</th>
-					<th>회원권한(개인/팀)</th>
+					<th>회원권한</th>
 				</thead>
 				<tbody>
 					 <c:forEach items="${allMemberList}" var="member" >
@@ -68,7 +68,7 @@
 							 	<td>${member.birthYY}-${member.birthMM}-${member.birthDD}</td>
 							 	<td>${member.activityArea}</td>
 							 	<td>${member.phone}</td>
-							 	<td>${member.permission}</td>
+							 	<td>${member.auth}</td>
 						 	</tr>
 				 	</c:forEach>
 				</tbody>
