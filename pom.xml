@@ -32,7 +32,21 @@
 	</dependencyManagement>
 	
 	<dependencies>
-	
+
+	<!-- FileUtils 사용 -->	
+			<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>2.11.0</version>
+			</dependency>
+	<!-- JSON을 사용 -->	
+			<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+			<dependency>
+				<groupId>com.google.code.gson</groupId>
+				<artifactId>gson</artifactId>
+				</dependency>	
+
 	<!-- security  -->
 		<dependency>
 		    <groupId>org.springframework.security</groupId>
@@ -102,6 +116,7 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
 	</dependencies>
 
 	<build>

@@ -24,6 +24,7 @@ public class MainDto {
 
 	private String location_locationId;
 	private String userId;
+	private String member_userId;
 	private String nickName;
 
 	private String bookDate;

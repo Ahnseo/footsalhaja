@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.footsalhaja.domain.qna.QnADto;
 import com.footsalhaja.domain.qna.QnAPageInfo;
+import com.footsalhaja.mapper.admin.AdminMapper;
 import com.footsalhaja.mapper.qna.QnAMapper;
 
 @Service
@@ -14,6 +15,8 @@ public class AdminServiceImpl implements AdminService {
 
 	@Autowired
 	private QnAMapper qnaMapper;
+	@Autowired
+	private AdminMapper adminMapper;
 	
 	@Override
 	public List<QnADto> selectAllQnAList(int page, QnAPageInfo qnaPageInfo, String keyword, String type) {
@@ -46,4 +49,11 @@ public class AdminServiceImpl implements AdminService {
 				
 		return qnaMapper.selectAllQnAList(offset, records, "%"+keyword+"%", type);
 	}
+	
+	@Override
+	public List<QnADto> selectWatingQnAList() {
+		String status = "답변대기";
+		return adminMapper.selectWatingQnAList(status);
+	}
+	
 }

@@ -23,7 +23,7 @@
 			<form id="modifyForm" action="" method="post">
 				<input type="hidden" name="bookId" value="${main.bookId }">
 				<div class="form-floating mb-3">
-					<input type="text" class="form-control" name="stadiumTitle" value=" ${main.stadiumTitle }">		
+					<input type="text" class="form-control" name="title" value=" ${main.title }">		
 					<label for="floatingInput">제목</label>
 				</div>
 				
@@ -43,10 +43,28 @@
 					</select>
 				</div>
 				<div class="mb-3">
-					<select name="location_locationId" id="">
-						<option value="10">경기</option>
-					</select>
-				</div>
+	<label for="">구장 지역</label>
+		<select id="region" name="region">
+			<option value="서울" selected="selected">서울</option>
+			<option value="경기">경기</option>
+		</select>
+</div>
+			
+<div class="mb-3">
+			   <label for="" class="form-label">예약장소</label>
+			   <select id="region" name="region">
+			      <option value="서울">서울</option>
+			      <option value="경기">경기</option>
+			   </select>
+			   <select name="location_locationId" id="location">
+			      <option value="1">천마 풋살파크</option>
+			      <option value="2">아디다스 더베이스</option>
+			      <option value="3">도봉 루다 풋살장</option>
+			      <option value="4">영등포 SKY 풋살파크 A구장</option>
+			      <option value="5">은평 롯데몰 A구장</option>
+			   </select>
+  			 </div>
+			
 				
 				<div class="form-floating mb-3">
 					<input type="text" name="matchType" class="form-control"  placeholder="matchType" value="${main.matchType }">
@@ -122,7 +140,32 @@
 	</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
+   $(document).ready(function() {
+         $('#region').change(function() {
+            var res = $('#region option:selected').val();
+            var option = '';
+            console.log(res);
+            if (res == '서울') {
+               console.log("1");
+               option += '<option value="1">천마 풋살파크</option>';
+               option += '<option value="2">아디다스 더베이스</option>';
+               option += '<option value="3">도봉 루다 풋살장</option>';
+               option += '<option value="4">영등포 SKY 풋살파크 A구장</option>';
+               option += '<option value="5">은평 롯데몰 A구장</option>';
+            
+            } else {
+               console.log("2");
+               option += '<option value="6">피치 부천 이마트 부천점</option>';
+               option += '<option value="7">용인 기흥 낫소 풋살파크</option>';
+               option += '<option value="8">칼라힐 풋살파크 B구장</option>';
+            }
+            $('#location').empty().append(option);
+         });
+      });
+
+
 //수정확인 버튼 클릭하면 수정 form 전송
 document.querySelector("#modifyConfirmButton").addEventListener("click", function() {
 	document.querySelector("#modifyForm").submit();

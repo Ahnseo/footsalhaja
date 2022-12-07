@@ -8,6 +8,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Insert title here</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+
+<!-- include libraries(jQuery, bootstrap) -->
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<!-- include summernote css/js -->
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.js"></script>
+
+
 </head>
 <body>
 	<h1>${board.ab_number }번 게시물 수정</h1>
@@ -26,7 +38,9 @@
     
     <br>
 	
-	본문 <textarea name="ab_content">${board.ab_content }</textarea> <br>
+
+	본문 <textarea id="summernote" name="ab_content">${board.ab_content }</textarea> <br>
+
 	
 	작성자 <input type ="text" value="${board.member_userId }" readonly> <br>
 	작성일시 <input type = "datetime-local" value = "${board.ab_insertDatetime }" readonly>
@@ -92,7 +106,10 @@
 
 
 <!-- 수정&삭제 확인 모달  -->
-	<script>
+
+	 <script>
+	
+
 		document.querySelector("#modifyConfirmButton").addEventListener(
 				"click", function() {
 					document.querySelector("#modifyForm").submit();
@@ -103,6 +120,55 @@
 					document.querySelector("#removeForm").submit();
 				})
 	</script>
+
+	
+    <script type="text/javascript"> 
+	const ctx = "${pageContext.request.contextPath}";
+	
+    $(document).ready(function() {
+    	  $('#summernote').summernote({
+    		minHeight: 370,
+  	        maxHeight: null,
+  	        focus: true, 
+  	        lang : "ko-KR",
+			callbacks: {	//여기 부분이 이미지를 첨부하는 부분
+				onImageUpload: function(files, editor) {
+		            for (var i = files.length - 1; i >= 0; i--) {
+		            	uploadSummernoteImageFile(files[i], this);
+		            }
+				}
+			}
+		});
+        
+
+		/**
+		* 이미지 파일 업로드
+		*/
+ 		function uploadSummernoteImageFile(file, editor) {
+			data = new FormData();
+			data.append("file", file);
+			$.ajax({
+				data : data,
+				type : "POST",
+				url : `\${ctx}/academy/uploadSummernoteImageFile`,
+				contentType : false,
+				enctype : 'multipart/data',
+				processData : false,
+				success : function(data) {
+	            	//항상 업로드된 파일의 url이 있어야 한다. ('insertImage', url, filename)
+					$(editor).summernote('insertImage', data.url, data.ab_fileName);
+	            	/* //이미지가 업로드 되면, 하위에 테스트 확인차 추가하도록 해놓은 부분
+					$('#imageBoard > ul').append('<li><img src="'+url+'" width="480" height="auto"/></li>'); */
+				}
+			});
+		} 
+
+	 $("<textarea />").html($("#summernote").summernote("code")).text().replace(/(<([^>]+)>)/ig,"");
+	
+    })
+    
+	
+    </script>
 
 
 </body>

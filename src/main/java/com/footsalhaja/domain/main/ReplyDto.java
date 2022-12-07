@@ -11,9 +11,10 @@ import lombok.Data;
 public class ReplyDto {
 	private int replyId;
 	private String replyContent;
-	private String writer;
+	private String nickName;
 	private int bookId;
 	private String userId;
+	private String member_userId;
 	
 	@JsonFormat(shape = Shape.STRING)
 	private LocalDateTime insertDatetime;

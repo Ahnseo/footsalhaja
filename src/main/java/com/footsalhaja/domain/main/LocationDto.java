@@ -10,4 +10,6 @@ public class LocationDto {
 	private String address;
 	private String stadiumName;
 	private String region;
+	private float lat;
+	private float lng;
 }

@@ -15,4 +15,6 @@ public interface ReplyMapper {
 	ReplyDto selectByReplyId(int replyId);
 
 	int deleteByBookId(int bookId);
+
+	//String selectNick(String userId);
 }

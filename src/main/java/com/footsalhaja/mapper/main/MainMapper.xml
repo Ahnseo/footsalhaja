@@ -23,7 +23,7 @@
 	</select>
 	
 	<!-- 게시물 얻어오기  -->
- 	<select id="getById" resultMap="getMap">
+ 	<select id="getById" resultMap="getMap">  <!-- location JOIN -->
  	SELECT 
  		m.userId,
  		m.nickName,

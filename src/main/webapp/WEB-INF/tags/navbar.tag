@@ -21,9 +21,7 @@
   <div class="collapse navbar-collapse flex-column " id="navbar">
     <ul class="navbar-nav  w-100 px-3 justify-content-center" >
       <li class="nav-item active" >
-
         <a class="nav-link" href="${listLink }">풋살하자<span class="sr-only">(current)</span></a>
-
       </li> 
       <li class="nav-item active">
          <a class="nav-link" href="" ><span style="font-weight:bold; ">${userIdValue } 님 환영합니다.</span></a>
@@ -41,12 +39,13 @@
           커뮤니티
         </a>
 
+ 
         <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="http://localhost:8080/free/list">자유게시판</a></li>
+          <li><a class="dropdown-item" href="#">자유게시판</a></li>
           <li><a class="dropdown-item" href="http://localhost:8080/academy/list">아카데미</a></li>
           <li><a class="dropdown-item" href="#">중고장터</a></li>
         </ul>
-     </li>
+       </li>
 
         
         <%-- security 를 사용하여, 로그인 된 userId를 c:param value="로그인된 ID값" 사용합니다. 현재 주소창에 접속방법 예시) mypage/list?userId=askc6361 --%>

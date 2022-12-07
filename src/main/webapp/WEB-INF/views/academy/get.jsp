@@ -20,7 +20,9 @@
 	
 	제목 <input type ="text" value="${board.ab_title }" readonly> <br>
 	말머리 <input type ="text" value="${board.ab_category }" readonly> <br>
-	본문 <textarea readonly>${board.ab_content }</textarea> <br>
+
+	본문 <div id="summernote" readonly>${board.ab_content }</div> <br>
+
 	작성자 <input type ="text" value="${board.member_userId }" readonly> <br>
 	작성일시 <input type = "datetime-local" value = "${board.ab_insertDatetime }" readonly>
 	
@@ -119,9 +121,12 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script>
 
+
+
+
+
 /* 댓글 이벤트 처리 */
 	const ctx = "${pageContext.request.contextPath}";
-
 	
 
 	const ab_number = document.querySelector("#ab_number").value;
@@ -139,9 +144,8 @@
 	
 	//댓글 리스트
 	function listReply(page) {
-		console.log("b");
-		
 
+		
 		fetch(`\${ctx}/academy/reply/list/\${ab_number}/\${page}`)
 
 		.then(res => res.json())
@@ -202,7 +206,6 @@
 					e.preventDefault();
 					console.log("page click");
 					var targetPageNum = this.getAttribute("href");
-
 
 
 					//댓글 페이지 번호를 변경한 후 

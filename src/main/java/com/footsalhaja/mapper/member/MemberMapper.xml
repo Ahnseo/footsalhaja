@@ -7,9 +7,9 @@
 	<!-- 회원정보 저장 -->
 	<insert id="insertMember">
 		INSERT INTO member 
-			(  userId,   name,    password,    nickName,    email,    birthYY,    birthMM,    birthDD,    activityArea,    phone,     personalGender,    permission  )
+			(  userId,   name,    password,    nickName,    email,    birthYY,    birthMM,    birthDD,    activityArea,    phone,     personalGender  )
 		VALUES
-			(#{userId}, #{name}, #{password}, #{nickName}, #{email}, #{birthYY}, #{birthMM}, #{birthDD}, #{activityArea}, #{phone},  #{personalGender}, #{permission} )
+			(#{userId}, #{name}, #{password}, #{nickName}, #{email}, #{birthYY}, #{birthMM}, #{birthDD}, #{activityArea}, #{phone},  #{personalGender} )
 	</insert>
  	
  	
@@ -38,7 +38,7 @@
  	</select>
  	
  	<!-- 모든 회원정보 List로 가져오기 , 페이지네이션 & 검색 기능 추가 -->
- 	<select id="selectMemberList" resultType="com.footsalhaja.domain.member.MemberDto">
+ 	<select id="selectMemberList" resultMap="memberListMap">
  	SELECT 
  		userId,
  		name,
@@ -51,7 +51,7 @@
  		activityArea,
  		phone,
  		personalGender,
- 		permission
+ 		auth
  	FROM
  		member
  	WHERE
@@ -66,9 +66,25 @@
  	ORDER BY name
  	LIMIT #{offset}, #{records}
  	</select>
+ 	<resultMap type="com.footsalhaja.domain.member.MemberDto" id="memberListMap">
+ 		<id column="userId" property="userId" />
+ 		<result column="name" property="name" />
+ 		<result column="password" property="password" />
+ 		<result column="nickName" property="nickName" />
+ 		<result column="email" property="email" />
+ 		<result column="birthYY" property="birthYY" />
+ 		<result column="birthMM" property="birthMM" />
+ 		<result column="birthDD" property="birthDD" />
+ 		<result column="activityArea" property="activityArea" />
+ 		<result column="phone" property="phone" />
+ 		<result column="personalGender" property="personalGender" />
+ 		<collection ofType="string" property="auth">
+ 			<result column="auth" property="auth"/>
+ 		</collection>
+ 	</resultMap>
  	
  	<!-- userId 로 하나의 회원정보 가져오기 -->
- 	<select id="selectMemberInfoByUserId" resultType="com.footsalhaja.domain.member.MemberDto">
+ 	<select id="selectMemberInfoByUserId" resultMap="memberMap">
 	SELECT 
 		userId,
 		name,
@@ -81,12 +97,28 @@
 		activityArea,
 		phone,
 		personalGender,
-		permission
+		auth
 	FROM
 		member
 	WHERE
 		userId = #{userId}
 	</select>
+	<resultMap type="com.footsalhaja.domain.member.MemberDto" id="memberMap">
+ 		<id column="userId" property="userId" />
+ 		<result column="name" property="name" />
+ 		<result column="password" property="password" />
+ 		<result column="nickName" property="nickName" />
+ 		<result column="email" property="email" />
+ 		<result column="birthYY" property="birthYY" />
+ 		<result column="birthMM" property="birthMM" />
+ 		<result column="birthDD" property="birthDD" />
+ 		<result column="activityArea" property="activityArea" />
+ 		<result column="phone" property="phone" />
+ 		<result column="personalGender" property="personalGender" />
+ 		<collection ofType="string" property="auth">
+ 			<result column="auth" property="auth"/>
+ 		</collection>
+ 	</resultMap>
 	
  	<!-- 회원탈퇴 member ByUserId -->
  	<delete id="deleteMemberInfoByUserId">

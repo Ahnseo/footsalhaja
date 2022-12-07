@@ -26,6 +26,21 @@ public class AdminController {
 	@Autowired
 	private MemberService memberService;
 	
+	@GetMapping("dashboard")
+	public void dashboard(Model model) {
+		
+		//날짜별 최신순으로 문의 리스트 가져오기 
+		List <QnADto> waitingQnAList = adminService.selectWatingQnAList();
+		model.addAttribute("waitingQnAList", waitingQnAList);
+		
+		
+	}
+	
+	@GetMapping("admin")
+    public String getAdmin() {
+        return "admin/admin";
+    }
+	
 	@GetMapping("allBookList")
 	public void allBookList() {
 		
@@ -41,11 +56,6 @@ public class AdminController {
 		List<QnADto> allQnAList= adminService.selectAllQnAList(page, qnaPageInfo, keyword, type);
 		model.addAttribute("allQnAList", allQnAList);
 		model.addAttribute("qnaPageInfo", qnaPageInfo);
-		
-	}
-	
-	@GetMapping("dashboard")
-	public void dashboard() {
 		
 	}
 	

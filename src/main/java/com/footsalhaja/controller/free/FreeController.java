@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -115,10 +116,12 @@ public class FreeController {
 	@PutMapping("like")
 	@ResponseBody
 	@PreAuthorize("isAuthenticated()")
-	public Map<String, Object> like(@RequestBody Map<String, String> req){
-		System.out.println(req);
+	public Map<String, Object> like(@RequestBody Map<String, String> req, Authentication auth){
+		// System.out.println(req); {freeBoard_fb_number=32}
 		
-		return null;
+		Map<String, Object> result = service.updateLike(req.get("freeBoard_fb_number"), auth.getName());
+														// 게시물번호, 로그인한 아이디
+		return result;
 	}
 
 	

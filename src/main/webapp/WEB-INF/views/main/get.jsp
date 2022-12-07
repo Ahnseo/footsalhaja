@@ -56,7 +56,10 @@
 				</a>
 				
 				<div class="form-floating mb-3">
-					<input id="matchInfo" type="text" class="form-control" value=" ${main.title} ${main.bookDate } ${main.bookTime} ${main.nickName } ${main.matchType } ${main.teamGender }" readonly>
+
+					<input id="matchInfo" type="text" class="form-control" value=" ${main.title} ${main.bookDate } ${main.bookTime} ${main.location_locationId } ${main.nickName } ${main.matchType } ${main.teamGender }" readonly>
+
+
 					<label for="floatingInput">경기정보</label>
 				</div>
 			
@@ -80,6 +83,7 @@
 	<div class="row">
 		<div class="col">
 			<input type="hidden" id="bookId" value="${main.bookId }">
+			<input type="hidden" id="userId" value="${main.userId }">
 			<input type="text" id="replyInput">
 			<button id="replySendButton">댓글 작성</button>
 		</div>
@@ -139,12 +143,12 @@ const removeReplyButtonId = `removeReplyButton\${item.replyId}`;
 			
 			const replyDiv = `
 				<div>
-					\${item.replyId} : \${item.replyContent}
+					\${item.replyId}: \${item.member_userId} : \${item.replyContent}
 					<button data-bs-toggle="modal" data-bs-target="#removeReplyConfirmModal" data-reply-id="\${item.replyId}" id="\${removeReplyButtonId}">삭제</button>
 				</div>`;
 			replyListContainer.insertAdjacentHTML("beforeend", replyDiv);
 			
-			//삭제 확인 버튼에 replyId 옮기기
+			//삭제 확인 버튼에 replyId 옮기기000
 			document.querySelector("#"+ removeReplyButtonId)
 					.addEventListener("click", function(){
 						document.querySelector("#removeConfirmModalSubmitButton").setAttribute("data-reply-id", this.dataset.replyId);
@@ -167,10 +171,12 @@ function removeReply(replyId){
 
 document.querySelector("#replySendButton").addEventListener("click", function(){
 	const bookId = document.querySelector("#bookId").value;
+	const userId = document.querySelector("#userId").value;
 	const replyContent = document.querySelector("#replyInput").value;
 	
 	const data = {
 			bookId,
+			userId,
 			replyContent
 	};
 	
