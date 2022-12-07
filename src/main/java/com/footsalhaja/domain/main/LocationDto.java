@@ -6,6 +6,8 @@ import lombok.Data;
 
 @Data
 public class LocationDto {
-	private int id;
+	private int locationId;
 	private String address;
+	private String stadiumName;
+	private String region;
 }

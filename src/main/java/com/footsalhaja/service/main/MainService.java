@@ -1,13 +1,24 @@
 package com.footsalhaja.service.main;
 
+import java.util.List;
+
+import com.footsalhaja.domain.main.BookDto;
 import com.footsalhaja.domain.main.MainDto;
 
 public interface MainService {
-	// public void register()
 	
-
 	public MainDto get(int bookId);
 
-	public void getById(int id);
+	public int insert(MainDto book);
+	
+	public int update(MainDto main);
+
+
+	public List<BookDto> listBook();
+
+	
+	public int remove(int bookId);
+
+
 
 }

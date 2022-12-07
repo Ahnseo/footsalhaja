@@ -4,37 +4,62 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="com.footsalhaja.mapper.free.FreeMapper">
  
+ 	<!-- 글 입력 -->
  	<insert id="insert" >
  	INSERT INTO freeBoard (fb_category, fb_title, fb_content, member_userId)
  	VALUES (#{fb_category}, #{fb_title}, #{fb_content}, #{member_userId})
  	</insert>
  
+ 	<!-- 글 목록 -->
  	<select id="list" resultType="com.footsalhaja.domain.free.BoardDto">
  	SELECT
- 		fb_number,
- 		fb_category,
- 		fb_title,
- 		fb_insertDatetime,
- 		member_userId
+ 		f.fb_number,
+		f.fb_category,
+		f.fb_title,
+		f.fb_insertDatetime,
+		f.member_userId,
+    	COUNT(DISTINCT r.fb_replyNumber) fb_replyCount,
+    	COUNT(DISTINCT l.member_userId) fb_likeCount
  	FROM
- 		freeBoard
- 	ORDER BY fb_number DESC
+ 		freeBoard f LEFT JOIN freeBoardReply r ON f.fb_number = r.freeBoard_fb_number
+ 					LEFT JOIN freeBoardLike l ON f.fb_number = l.freeBoard_fb_number
+ 	WHERE
+ 		<trim prefixOverrides="OR">
+	 		<if test="type == 'all' or type == 'title'">
+	 		OR f.fb_title LIKE #{keyword}
+	 		</if>
+	 		
+	 		<if test="type == 'all' or type == 'content'">
+	 		OR f.fb_content LIKE #{keyword}
+	 		</if>
+	 		
+	 		<if test="type == 'all' or type == 'writer'">
+	 		OR f.member_userId LIKE #{keyword}
+	 		</if>
+ 		</trim>
+ 		
+ 	GROUP BY f.fb_number	
+ 	ORDER BY f.fb_number DESC
+ 	LIMIT #{offset}, #{records}
  	</select>
  	
+ 	<!-- 게시글 보기(get) -->
  	<select id="select" resultType="com.footsalhaja.domain.free.BoardDto">
  	SELECT
- 		fb_number,
- 		fb_category,
- 		fb_title,
- 		fb_content,
- 		fb_insertDatetime,
- 		member_userId
+ 		f.fb_number,
+ 		f.fb_category,
+ 		f.fb_title,
+ 		f.fb_content,
+ 		f.fb_insertDatetime,
+ 		f.member_userId,
+ 		COUNT(l.member_userId) fb_likeCount
  	FROM
- 		freeBoard
+ 		freeBoard f LEFT JOIN freeBoardLike l ON f.fb_number = l.freeBoard_fb_number
  	WHERE
  		fb_number = #{fb_number}
  	</select>
  	
+ 	<!-- 글 수정 -->
  	<update id="update">
  	UPDATE freeBoard
  	SET
@@ -45,10 +70,29 @@
  		fb_number = #{fb_number}
  	</update>
  	
+ 	<!-- 글 삭제 -->
  	<delete id="delete">
  	DELETE FROM freeBoard
  	WHERE fb_number = #{fb_number}
  	</delete>
  	
+ 	<!-- 게시물 갯수 -->
+ 	<select id="countAll" resultType="int">
+ 	SELECT COUNT(*) FROM freeBoard
+ 	WHERE
+ 		<trim prefixOverrides="OR">
+	 		<if test="type == 'all' or type == 'title'">
+	 		fb_title LIKE #{keyword}
+	 		</if>
+	 		
+	 		<if test="type == 'all' or type == 'content'">
+	 		OR fb_content LIKE #{keyword}
+	 		</if>
+	 		
+	 		<if test="type == 'all' or type == 'writer'">
+	 		OR member_userId LIKE #{keyword}
+	 		</if>
+ 		</trim>
+ 	</select>
  	
  </mapper>

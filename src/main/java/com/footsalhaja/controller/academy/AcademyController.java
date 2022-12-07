@@ -1,5 +1,6 @@
 package com.footsalhaja.controller.academy;
 
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.apache.commons.io.FileUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,13 +18,17 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
 
 import com.footsalhaja.domain.academy.BoardDto;
 import com.footsalhaja.domain.academy.Criteria;
 import com.footsalhaja.domain.academy.PageDto;
 import com.footsalhaja.service.academy.AcademyServiceImpl;
+
+
 
 
 @Controller
@@ -31,17 +37,21 @@ public class AcademyController {
 	
 	@Autowired
 	private AcademyServiceImpl service;
+
 	
+
 	
 	//list 목록
 	@GetMapping("list")
 	public void list(Criteria cri, Model model) {
+
 	
 		// request param
 		// business logic
 
 		String keyword = cri.getKeyword();
 		cri.setKeyword("%"+cri.getKeyword()+"%");
+
 		List<BoardDto> list = service.listBord(cri);
 		
 		// add attribute
@@ -51,9 +61,11 @@ public class AcademyController {
 		int total = service.getTotal(cri);
 		model.addAttribute("pageMaker", new PageDto(cri, total));
 		// forward
+
 		
 		cri.setKeyword(keyword);
 		
+
 	}
 	
 	//register 등록
@@ -64,6 +76,7 @@ public class AcademyController {
 	
 	@PostMapping("register")
 	public String register(BoardDto board) {
+
 
 		service.insert(board);
 				
@@ -107,6 +120,7 @@ public class AcademyController {
 	  
 
 	
+
 	//get 게시글
 	@GetMapping("get")
 	public void get (@RequestParam("ab_number") int ab_number, Model model, @ModelAttribute("cri") Criteria cri) {

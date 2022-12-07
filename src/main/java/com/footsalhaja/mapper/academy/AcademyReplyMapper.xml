@@ -12,6 +12,7 @@
 		ab_replyInsertDatetime,
 		academyBoard_ab_number as ab_number,
 		member_userId
+
 	FROM
 		academyBoardReply
 	WHERE
@@ -37,6 +38,7 @@
 		DELETE FROM academyBoardReply
 		WHERE academyBoard_ab_number = #{ab_number}
 	</delete>
+
 	
 <!-- 댓글 get-->
 	<select id="selectById" resultType="com.footsalhaja.domain.academy.AcademyReplyDto">
@@ -69,7 +71,9 @@
 	FROM academyBoardReply
 	WHERE academyBoard_ab_number = #{ab_number}
 	LIMIT #{offset}, #{records}
+
 	
+
 	</select>
 	
 	
@@ -80,4 +84,5 @@
 		FROM academyBoardReply
 		WHERE academyBoard_ab_number= #{ab_number}
 	</select>		
+
 </mapper>

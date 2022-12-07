@@ -14,7 +14,8 @@ public class AcademyReplyDto {
 	private String ab_replyContent;
 	private String member_userId;
 	
+
 	
-	
+
 	private LocalDateTime ab_replyInsertDatetime;
 }

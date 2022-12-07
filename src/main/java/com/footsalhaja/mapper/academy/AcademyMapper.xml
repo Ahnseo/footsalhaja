@@ -55,6 +55,7 @@
 	
 	<!-- 검색 조건 -->
 	<sql id="criteria">
+
 		<trim prefixOverrides="OR">
 			<foreach item='type' collection="cri.typeArr">
 				<trim prefix="OR">
@@ -67,6 +68,7 @@
 						</when>
 						<when test="type == 'W'.toString()">
 							b.member_userId LIKE #{cri.keyword}
+
 						</when>
 					</choose>
 				</trim>
@@ -76,7 +78,9 @@
 	
 	<!-- 페이지네이션 & 검색 -->
 	<select id="getListWithPaging" resultType="com.footsalhaja.domain.academy.BoardDto">
+
 	<![CDATA[
+
 	SELECT 		
 		b.ab_number,
 		b.ab_category,
@@ -87,6 +91,7 @@
 		COUNT(r.academyBoard_ab_number) replyCnt
 		
 	FROM academyBoard b LEFT JOIN academyBoardReply r ON b.ab_number = r.academyBoard_ab_number
+
 	]]>
 	
 	 <if test="cri.type!=null and cri.type!=''">
@@ -100,12 +105,14 @@
 	ORDER BY b.ab_number DESC
 	LIMIT #{offset}, #{records}
  	]]> 
+
 	</select>
 	
 	
 	<!-- 전체 데이터 수 -->
 	
 	<select id="getTotalCount" resultType="int">
+
 	<![CDATA[	
 		SELECT Count(*)
 		FROM academyBoard b
@@ -120,6 +127,7 @@
 
 	</select>
 	
+
  
  </mapper>
   

@@ -21,10 +21,12 @@
 	</c:if>
 
 	<h1>프리보드 목록</h1>
+	
 	<table class="table">
 		<thead>
 			<tr>
-				<td>#</td>
+				<td>글번호</td>
+				<td>좋아요</td>
 				<td>카테고리</td>
 				<td>제목</td>
 				<td>작성자</td>
@@ -35,6 +37,7 @@
 			<c:forEach items="${boardList }" var="board">
 				<tr>
 					<td>${board.fb_number }</td>
+					<td>${board.fb_likeCount }</td>
 					<td>${board.fb_category }</td>
 					<td>
 						<c:url value="/free/get" var="getLink">
@@ -42,14 +45,107 @@
 						</c:url>
 						<a href="${getLink}">
 							${board.fb_title }
-						</a>							
+						</a>
+						<c:if test="${board.fb_replyCount > 0 }">
+							댓글[${board.fb_replyCount }]
+						</c:if>
 					</td>
 					<td>${board.member_userId }</td>
-					<td>${board.fb_insertDatetime }</td>
+					<td>${board.ago }</td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
+	
+	
+	<!-- 검색창 -->
+	<c:url value="/free/list" var="listLink"></c:url>
+	<form action="${listLink }" class="d-flex" role="search">
+		<!-- 검색 범위 설정 -->
+		<select name="t" class="">
+			<option value="all">전체</option>
+			<option value="title" ${param.t == 'title' ? 'selected' : '' }>제목</option>
+			<option value="content" ${param.t == 'content' ? 'selected' : '' }>본문</option>
+			<option value="writer" ${param.t == 'writer' ? 'selected' : '' }>작성자</option>
+		</select>
+		<!-- 검색창 -->
+        <input value="${param.q }" class="" type="search" placeholder="검색어를 입력해주세요." aria-label="Search" name="q">
+        <button class="btn btn-outline-success" type="submit">검색</button>
+        
+        
+    </form>
+	    <!-- 글작성 버튼 -->
+	    <c:url value="/free/insert" var="insertLink"></c:url>
+	    <a href="${insertLink}">
+		    <button>글작성</button>
+	    </a>
+    
+    
+	
+	
+	<!-- 페이지네이션 -->
+	<div class="row">
+		<div class="col">
+			<nav aria-label="Page navigation example">
+			  <ul class="pagination">
+			  
+				  <!-- 첫페이지로 가는 버튼 : 1페이지일때 빼고 다 존재함 -->
+				  <c:if test="${pageInfo.currentPageNumber != 1 }">
+					  <c:url value="/free/list" var="listLink">
+					  		<c:param name="page" value="1"></c:param>
+					  		<c:param name="q" value="${param.q }"></c:param>
+					  		<c:param name="t" value="${param.t }"></c:param>
+					  </c:url>
+					  <li class="page-item"><a class="page-link" href="${listLink }">맨앞버튼</a></li>
+				  </c:if>
+				  
+				  <!-- 이전 페이지 버튼 -->
+				  <c:if test="${pageInfo.hasPrevButton}">
+					  <c:url value="/free/list" var="listLink">
+					  		<c:param name="page" value="${ pageInfo.jumpPrevPageNumber}"></c:param>
+					  		<c:param name="q" value="${param.q }"></c:param>
+					  		<c:param name="t" value="${param.t }"></c:param>
+					  </c:url>
+					  <li class="page-item"><a class="page-link" href="${listLink }">이전</a></li>
+				  </c:if>
+			  
+				  <c:forEach begin="${pageInfo.leftPageNumber }" end="${pageInfo.rightPageNumber }" var="pageNumber">
+				  	<c:url value="/free/list" var="listLink">
+				  		<c:param name="page" value="${pageNumber }"></c:param>
+				  		<c:param name="q" value="${param.q }"></c:param>
+				  		<c:param name="t" value="${param.t }"></c:param>
+				  	</c:url>
+				  	
+				  	<!-- 현재 페이지 active 클래스 추가 -->
+				    <li class="page-item
+				  		  ${ pageInfo.currentPageNumber == pageNumber ? 'active' : ''}
+				    "><a class="page-link" href="${listLink }">${pageNumber }</a></li>
+				  </c:forEach>
+				  
+				  <!-- 다음 페이지 버튼 -->
+				  <c:if test="${pageInfo.hasNextButton}">
+					  <c:url value="/free/list" var="listLink">
+					  		<c:param name="page" value="${ pageInfo.jumpNextPageNumber}"></c:param>
+					  		<c:param name="q" value="${param.q }"></c:param>
+					  		<c:param name="t" value="${param.t }"></c:param>
+					  </c:url>
+					  <li class="page-item"><a class="page-link" href="${listLink }">다음</a></li>
+				  </c:if>
+				  
+				  <!-- 마지막 페이지로 가는 버튼 : 마지막페이지일때 빼고 다 존재함 -->
+				  <c:if test="${pageInfo.currentPageNumber != pageInfo.lastPageNumber }">				  	
+					  <c:url value="/free/list" var="listLink">
+					  		<c:param name="page" value="${pageInfo.lastPageNumber }"></c:param>
+					  		<c:param name="q" value="${param.q }"></c:param>
+					  		<c:param name="t" value="${param.t }"></c:param>
+					  </c:url>
+					  <li class="page-item"><a class="page-link" href="${listLink }">맨뒤버튼</a></li>
+				  </c:if>
+				  
+			   </ul>
+			</nav>
+		</div>
+	</div>
 
 	
 	
