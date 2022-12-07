@@ -94,7 +94,7 @@
 #body {
 	max-width: 928px;
 	margin: 0 auto;
-	background-color: #fff;
+	background-color: #faf5f5;
 }
 
 #wrapper {
@@ -118,6 +118,7 @@
 	display: block;
 	width: 100%;s
 }
+
 
 </style>
 </head>
@@ -148,23 +149,23 @@
                         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
                             aria-label="Slide 3"></button>
                     </div>
-                    <div class="carousel-inner">
+                    <div class="carousel-inner" style="border-radius: 5%">
                         <div class="carousel-item active">
-                            <img src="https://t3.ftcdn.net/jpg/02/25/24/20/240_F_225242028_xlGLtiC9NeKtn1I4RAgIjOQuUFuh46br.jpg" class="d-block w-100" alt="...">
+                            <img src="https://thumb.mt.co.kr/06/2022/10/2022100408360974086_1.jpg/dims/optimize/" class="w-100" style="margin: 0 auto;" alt="...">
                             <div class="carousel-caption d-none d-md-block">
                                 <h5>1</h5>
                                 <p></p>
                             </div>
                         </div>
                         <div class="carousel-item">
-                            <img src="https://t4.ftcdn.net/jpg/03/21/18/85/240_F_321188579_bDutS7gk5QgHls5I0WVXXxET7HQBflA7.jpg" class="d-block w-100" alt="...">
+                            <img src="http://www.footballist.co.kr/news/photo/201802/105313_40203_012.jpg" class="w-100" alt="...">
                             <div class="carousel-caption d-none d-md-block">
                                 <h5>2</h5>
                                 <p></p>
                             </div>
                         </div>
                         <div class="carousel-item">
-                            <img src="https://t3.ftcdn.net/jpg/04/80/30/84/240_F_480308454_1n1iJz3wHLy1oleocBhk6j1zEPWj1qH5.jpg" class="d-block w-100" alt="...">
+                            <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fs0Yc1%2FbtrnL7wfLC6%2FT28ucgZkikSLV7pdnxIkLk%2Fimg.jpg" class="w-100" alt="...">
                             <div class="carousel-caption d-none d-md-block">
                                 <h5>3</h5>
                                 <p></p>
@@ -233,7 +234,7 @@
 <!-- 게시글 목록 -->
 <div class="matches" id="body">
 	<table class="table">
-		<thead class="table-dark">
+		<thead class="table-light">
 			<tr>
 				<th>#</th>
 				<th>제목</th>
