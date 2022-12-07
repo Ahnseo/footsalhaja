@@ -11,7 +11,7 @@ public class MainDto {
 //#{stadiumTitle}, #{content}, #{matchType}, #{level}, #{status}, 
 //#{bookDate}, #{teamGender}, #{location_locationId}, #{userId}, #{bookTime}
 	private int bookId;
-	private String stadiumTitle;
+	private String title;
 	private String content;
 	private String matchType;
 	private String level;
@@ -24,6 +24,7 @@ public class MainDto {
 
 	private String location_locationId;
 	private String userId;
+	private String member_userId;
 	private String nickName;
 
 	private String bookDate;

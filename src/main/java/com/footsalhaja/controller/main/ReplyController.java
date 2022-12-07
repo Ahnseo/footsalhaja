@@ -6,55 +6,70 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.footsalhaja.domain.main.ReplyDto;
+import com.footsalhaja.domain.member.MemberDto;
 import com.footsalhaja.service.main.ReplyServiceImpl;
+import com.footsalhaja.service.member.MemberServiceImpl;
 
 @Controller
 @RequestMapping("mainReply")
 public class ReplyController {
 	
 	@Autowired
-	private ReplyServiceImpl service;
+	private ReplyServiceImpl replyService;
+	
+	@Autowired
+	private MemberServiceImpl memberService;
 	
 	@PostMapping("add")
 	@ResponseBody
 	public Map<String, Object> add(@RequestBody ReplyDto reply) {		
+		
 		Map<String, Object> map = new HashMap<>();
-		
-		int cnt = service.addReply(reply);
-		
-		if(cnt == 1 ) {
-			map.put("message", "새 댓글이 등록되었습니다.");
-		} else {
-			map.put("message", "새 댓글이 등록되지 않았습니다.");
-		}
+	
+		replyService.addReply(reply);
+
 		return map;
 	}
 	
 	@GetMapping("list/{bookId}")
 	@ResponseBody
 	public List<ReplyDto> list(@PathVariable int bookId){
-		return service.listReplyByBookId(bookId);
+		return replyService.listReplyByBookId(bookId);
 	}
 	
 	@DeleteMapping("remove/{replyId}")
 	public void remove(@PathVariable int replyId) {
-		service.removeById(replyId);
+		replyService.removeById(replyId);
 		
 	}
 	
 	@GetMapping("get/{replyId}")
 	@ResponseBody
 	public ReplyDto get(@PathVariable int replyId) {
-		return service.getByReplyId(replyId);
+		return replyService.getByReplyId(replyId);
 		
 	}
+	
+	/*
+	 * @GetMapping("add")
+	 * 
+	 * @ResponseBody public void add(@RequestParam(name="userId") String userId,
+	 * Model model) { MemberDto member =
+	 * memberService.selectMemberInfoByUserId(userId); model.addAttribute("member",
+	 * member);
+	 * 
+	 * }
+	 */
+				
 }
