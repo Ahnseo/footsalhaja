@@ -2,7 +2,6 @@ package com.footsalhaja.service.academy;
 
 import java.util.List;
 
-
 import com.footsalhaja.domain.academy.BoardDto;
 import com.footsalhaja.domain.academy.Criteria;
 
@@ -21,5 +20,4 @@ public interface AcademyService {
 	
 	public int getTotal(Criteria cri);
 	
-
 }

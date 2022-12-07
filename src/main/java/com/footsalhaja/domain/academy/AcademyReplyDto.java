@@ -15,6 +15,6 @@ public class AcademyReplyDto {
 	private String member_userId;
 	
 	
-	@JsonFormat(shape = Shape.STRING)
+	
 	private LocalDateTime ab_replyInsertDatetime;
 }

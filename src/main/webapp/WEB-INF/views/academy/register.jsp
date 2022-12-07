@@ -46,7 +46,10 @@
 	
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 
+
     <script type="text/javascript"> 
+	const ctx = "${pageContext.request.contextPath}";
+	
     $(document).ready(function() {
     	  $('#summernote').summernote({
     		minHeight: 370,
@@ -55,7 +58,7 @@
   	        lang : "ko-KR",
   	        placeholder: '최대 2048자까지 쓸수 있다 함',	//placeholder 설정
 			callbacks: {	//여기 부분이 이미지를 첨부하는 부분
-				onImageUpload: function(files, editor, welEditable) {
+				onImageUpload: function(files, editor) {
 		            for (var i = files.length - 1; i >= 0; i--) {
 		            	uploadSummernoteImageFile(files[i], this);
 		            }
@@ -73,15 +76,15 @@
 			$.ajax({
 				data : data,
 				type : "POST",
-				url : "/uploadSummernoteImageFile",
+				url : `\${ctx}/academy/uploadSummernoteImageFile`,
 				contentType : false,
 				enctype : 'multipart/data',
 				processData : false,
 				success : function(data) {
 	            	//항상 업로드된 파일의 url이 있어야 한다. ('insertImage', url, filename)
 					$(editor).summernote('insertImage', data.url, data.ab_fileName);
-	            	//이미지가 업로드 되면, 하위에 테스트 확인차 추가하도록 해놓은 부분
-					$('#imageBoard > ul').append('<li><img src="'+url+'" width="480" height="auto"/></li>');
+	            	/* //이미지가 업로드 되면, 하위에 테스트 확인차 추가하도록 해놓은 부분
+					$('#imageBoard > ul').append('<li><img src="'+url+'" width="480" height="auto"/></li>'); */
 				}
 			});
 		} 

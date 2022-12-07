@@ -136,7 +136,6 @@
 	
 	//댓글 리스트
 	function listReply(page) {
-		console.log("b");
 		
 		fetch(`\${ctx}/academy/reply/list/\${ab_number}/\${page}`)
 		.then(res => res.json())

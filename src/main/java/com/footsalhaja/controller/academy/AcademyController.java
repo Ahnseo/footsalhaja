@@ -3,6 +3,7 @@ package com.footsalhaja.controller.academy;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,8 +23,7 @@ import com.footsalhaja.domain.academy.BoardDto;
 import com.footsalhaja.domain.academy.Criteria;
 import com.footsalhaja.domain.academy.PageDto;
 import com.footsalhaja.service.academy.AcademyServiceImpl;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+
 
 @Controller
 @RequestMapping("academy")
@@ -74,36 +74,38 @@ public class AcademyController {
 
 	  @PostMapping(value="/uploadSummernoteImageFile", produces = "application/json")
 	  
-	  @ResponseBody public JsonObject uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile) {
+	  @ResponseBody public HashMap<String, String> uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile) {
 	  
-	  JsonObject jsonObject = new JsonObject();
+	  HashMap<String, String> jsonObject = new HashMap<>();
+	  
 	  
 	  String ab_filePath = "C:\\Users\\lnh1017\\Desktop\\study\\project\\"; //저장될 외부 파일 경로 String
 	  String originalFileName = multipartFile.getOriginalFilename(); //오리지날 파일명 String
-	  String extension = originalFileName.substring(originalFileName.lastIndexOf("."));//파일 확장자
 	  
-	  String ab_fileName = UUID.randomUUID() + extension; //랜덤 UUID+확장자로 저장될 파일 새 이름
+	  String ab_fileName = UUID.randomUUID() + originalFileName; //랜덤 UUID+파일이름으로 저장될 파일 새 이름
 	  
 	  File targetFile = new File(ab_filePath + ab_fileName);
+	  
 	  System.out.println(targetFile);
+	  
 	  try {
 		  InputStream fileStream = multipartFile.getInputStream();
 		  FileUtils.copyInputStreamToFile(fileStream, targetFile); // 파일 저장
-		  jsonObject.addProperty("url", "/summernoteImage/" + ab_fileName);
-		  jsonObject.addProperty("ab_fileName", ab_fileName);
-		  jsonObject.addProperty("responseCode", "success");
+		  jsonObject.put("url", "/summernoteImage/" + ab_fileName);
+		  jsonObject.put("ab_fileName", ab_fileName);
+		  jsonObject.put("responseCode", "success");
 	  
 	  } catch (IOException e) {
 		  System.out.println(targetFile);
+		  
 		  FileUtils.deleteQuietly(targetFile); //저장된 파일 삭제
-		  jsonObject.addProperty("responseCode", "error"); e.printStackTrace();
+		  jsonObject.put("responseCode", "error"); e.printStackTrace();
 	  }
 	  
 	  return jsonObject;
 	  }
-	 
+	  
 
-	
 	
 	//get 게시글
 	@GetMapping("get")
