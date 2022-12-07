@@ -10,7 +10,7 @@ public interface AcademyService {
 
 	public void insert(BoardDto board);
 	
-	public BoardDto get(int ab_number);
+	public BoardDto get(int ab_number, String member_userId);
 	
 	public int modify(BoardDto board);
 	
@@ -22,4 +22,7 @@ public interface AcademyService {
 	public int getTotal(Criteria cri);
 	
 	public Map<String, Object> updateLike(String ab_number, String member_userId); 
+	
+	//게시물 수정&삭제 default 메소드 get
+	public BoardDto get(int ab_number);
 }

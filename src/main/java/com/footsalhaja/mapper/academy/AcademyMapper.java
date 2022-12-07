@@ -12,7 +12,7 @@ public interface AcademyMapper {
 	
 	public int insert(BoardDto board);
 
-	public BoardDto select(int ab_number);
+	public BoardDto select(int ab_number, String member_userId);
 
 	public int modify(BoardDto board);
 
@@ -24,7 +24,8 @@ public interface AcademyMapper {
 	public List<BoardDto> getListWithPaging(Criteria cri, int offset, int records);
 	
 	public int getTotalCount(Criteria cri, int ab_number);
-
+	
+	//좋아요
 	public int getLike(String ab_number, String member_userId);
 
 	public void deleteLike(String ab_number, String member_userId);
@@ -32,8 +33,11 @@ public interface AcademyMapper {
 	public void insertLike(String ab_number, String member_userId);
 
 	public int countLikeByab_number(String ab_number);
-
 	
+	//좋아요가 외래키로 참조되서 게시물 수정, 삭제에 쓸 default 메소드 select 
+	default BoardDto select(int ab_number) {
+		return select(ab_number, null);
+	}
 	
 	
 }

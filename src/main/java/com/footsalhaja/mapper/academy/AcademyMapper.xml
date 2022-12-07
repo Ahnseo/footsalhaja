@@ -28,9 +28,10 @@
 		b.ab_content,
 		b.member_userId,
 		b.ab_insertDatetime,
-		COUNT(DISTINCT l.member_userId) countLike
-		
-	FROM academyBoard b LEFT JOIN academyBoardLike l ON b.ab_number = l.academyBoard_ab_number
+		(SELECT COUNT(*) FROM academyBoardLike WHERE academyBoard_ab_number = b.ab_number AND member_userId = #{member_userId}) liked,
+		(SELECT COUNT(*) FROM academyBoardLike WHERE academyBoard_ab_number = b.ab_number) countLike
+
+	FROM academyBoard b 
 	WHERE
 		ab_number = #{ab_number}
 		

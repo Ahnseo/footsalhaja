@@ -114,9 +114,14 @@ public class AcademyController {
 	
 	//get 게시글
 	@GetMapping("get")
-	public void get (@RequestParam("ab_number") int ab_number, Model model, @ModelAttribute("cri") Criteria cri) {
+	public void get (@RequestParam("ab_number") int ab_number, Model model, @ModelAttribute("cri") Criteria cri, Authentication authentication) {
+		String member_userId = null;
 		
-		BoardDto board = service.get(ab_number);
+		if (authentication != null) {
+			member_userId = authentication.getName();
+		}
+		
+		BoardDto board = service.get(ab_number, member_userId);
 		
 		model.addAttribute("board",board);
 		

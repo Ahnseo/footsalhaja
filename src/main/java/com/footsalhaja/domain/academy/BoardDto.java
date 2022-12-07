@@ -16,4 +16,5 @@ public class BoardDto {
 	private String member_userId;
 	private int replyCnt;
 	private int countLike;
+	private boolean liked;
 }

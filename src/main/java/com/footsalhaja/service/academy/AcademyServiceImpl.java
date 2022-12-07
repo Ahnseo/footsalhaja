@@ -43,9 +43,9 @@ public class AcademyServiceImpl implements AcademyService{
 	}
 	
 	@Override
-	public BoardDto get(int ab_number) {
+	public BoardDto get(int ab_number, String member_userId) {
 		// TODO Auto-generated method stub
-		return mapper.select(ab_number);
+		return mapper.select(ab_number, member_userId);
 	}
 	
 	@Override
@@ -73,7 +73,7 @@ public class AcademyServiceImpl implements AcademyService{
 		
 		int cnt = mapper.getLike(ab_number, member_userId);
 		if (cnt == 1) {
-			// ab_number와 username으로 좋아요 테이블 검색해서 있으면?
+			// ab_number와 member_userId으로 좋아요 테이블 검색해서 있으면?
 			// 삭제
 			mapper.deleteLike(ab_number, member_userId);
 			map.put("current", "not liked");
@@ -90,6 +90,11 @@ public class AcademyServiceImpl implements AcademyService{
 		map.put("count", countAll);
 		
 		return map;
+	}
+	
+	@Override
+	public BoardDto get(int ab_number) {
+		return get(ab_number, null);
 	}
 	
 }

@@ -14,10 +14,21 @@
 <body>
 <my:navbar></my:navbar>
 
+<sec:authorize access="not isAuthenticated()"> </sec:authorize>
 	<div class="d-flex">
 		<h1 class="me-auto">${board.ab_number }번페이지</h1>
 		<h1>
-			<span id="likeButton"> 좋아요 </span> <span id="likeCount">
+			<span id="likeButton" class="btn btn-light" > 
+				<c:if test="${board.liked }">
+					<i class="fa-solid fa-thumbs-up"></i>
+				</c:if> 
+				<c:if test="${not board.liked }">
+					<i class="fa-regular fa-thumbs-up"></i>
+				</c:if>
+
+			</span> 
+			
+			<span id="likeCount">
 				${board.countLike } </span>
 		</h1>
 
