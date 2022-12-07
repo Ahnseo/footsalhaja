@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.footsalhaja.domain.qna.FAQDto;
 import com.footsalhaja.domain.qna.QnADto;
 import com.footsalhaja.domain.qna.QnAPageInfo;
+import com.footsalhaja.domain.qna.QnAReplyDto;
 import com.footsalhaja.service.qna.QnAService;
 
 @Controller
@@ -77,7 +79,7 @@ public class QnAController {
 		model.addAttribute("qna", qna);
 		
 	}
-	@PostMapping("likeCount")
+	@PutMapping("likeCount")
 	@ResponseBody
 	@PreAuthorize("isAuthenticated()")
 	private Map<String, String> insertlikeCount(@RequestBody Map<String, String> req, Authentication authentication) {
@@ -87,12 +89,11 @@ public class QnAController {
 		System.out.println("qnaId : " + qnaId );
 		System.out.println("loggedinId : " + loggedinId);
 		
-		//클릭하면 저장, 다시클릭하면 삭제되는 좋아요 DB
-		
+		//클릭하면 저장, 다시클릭하면 삭제되는 좋아요 DB	
 		return qnaService.updateLikeCount(qnaId, loggedinId);
-		
-
 	}
+	
+	
 	
 	
 }

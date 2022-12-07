@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.footsalhaja.domain.qna.FAQDto;
 import com.footsalhaja.domain.qna.QnADto;
+import com.footsalhaja.domain.qna.QnAReplyDto;
 
 @Mapper
 public interface QnAMapper {
@@ -36,6 +37,9 @@ public interface QnAMapper {
 	int selectQnABoardLikeCount(String qnaId, String loggedinId);
 	int insertQnABoardLikeCount(String qnaId, String loggedinId);
 	int deleteQnABoardLikeCount(String qnaId, String loggedinId);
+	
+	//QnA 답변 등록하기 (관리자/매니저)
+	int insertQnAReply(QnAReplyDto qnaReply, String loggedinId);
 	
 	
 	

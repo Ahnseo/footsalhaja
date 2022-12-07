@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.footsalhaja.domain.qna.FAQDto;
 import com.footsalhaja.domain.qna.QnADto;
 import com.footsalhaja.domain.qna.QnAPageInfo;
+import com.footsalhaja.domain.qna.QnAReplyDto;
 import com.footsalhaja.mapper.qna.QnAMapper;
 
 @Service
@@ -106,4 +107,12 @@ public class QnAServiceImpl implements QnAService {
 		}
 		
 	}
+	
+	@Override
+	public int insertQnAReply(QnAReplyDto qnaReply, String loggedinId) {
+		System.out.println("servi:"+ qnaReply);
+		int cnt = qnaMapper.insertQnAReply(qnaReply, loggedinId);
+		return cnt;
+	}
+	
 }

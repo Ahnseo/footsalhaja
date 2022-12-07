@@ -153,7 +153,10 @@
 		WHERE qnaId = #{qnaId} AND userId = #{loggedinId}
 	</delete>
 	
-	 
+	<insert id="insertQnAReply">
+		INSERT INTO QnAReply (qnaId, userId, writer, content)
+		VALUES( #{qnaId}, #{userId}, #{loggedinId}, #{content} )
+	</insert>
 
 
  </mapper>

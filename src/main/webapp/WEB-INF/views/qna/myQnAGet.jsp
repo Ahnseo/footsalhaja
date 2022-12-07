@@ -46,31 +46,53 @@
 						<button type="sumbit" id="" >삭제</button>
 					</form>
 				</div>
+				<!-- 답변하기 post -> controller -->
 				
-				<h3>관리자 답변 => 댓글 형식 c:if test="${not empty reply or reply }" 적용으로 보이거나 안보이거나 .</h3>
-				<!-- 폼 method="post" 인 이유는 => controller post 방식으로 관리자의 댓글 저장/수정/삭제 하기 위해 .. -->
-				<div>
-					<form action="" method="post">
-						본문 <input type="text" name="content" value="">
-						아이디(관리자) <input type="text" name="userId" value="${reply.userId}">
-						작성시간 <input type="text" name="insertDatetime" value="${reply.insertDatetime} " readonly ><br>
-						<input type="submit" value="답변하기">
-					</form>
-				</div>
+				<sec:authorize access="hasAuthority('admin')">
+					<div>
+					    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#qnaReplyDiv" aria-expanded="false" aria-controls="collapseExample">
+					    	답변하기
+					    </button>
+			    	</div>
+					<div class="collapse" id="qnaReplyDiv">
+						<div class="card card-body">
+							<input type="hidden" id="qnaReplyQnAId" value="${qna.qnaId}">
+							<input type="hidden" id="qnaReplyUserId" value="${qna.userId}">
+							답변<textarea id="qnaReplyContent" cols="50" rows="5"></textarea>
+							작성자 <input type="text" value="${userIdValue}" readonly>
+							<div>
+								<button type="button" id="qnaReplyBtn">등록</button>
+							</div>
+						</div>
+					</div>
+				</sec:authorize>
 			</div>
 		</div>
 	</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script>
-	const ctx = "${pageContext.request.contextPath}";
+	const ctx = "${pageContext.request.contextPath}";\
+	<!-- 좋아요 기능 -->
 	document.querySelector("#likeBtn1").addEventListener("click", function(){
 		const qnaId = document.querySelector("#qnaId").value;
 		fetch(ctx + "/qna/likeCount", { 
-			method : "post",
+			method : "put",
 			headers : { "Content-Type" : "application/json" },
 			body : JSON.stringify({qnaId : qnaId})
 		})
 		
+	});
+	
+	<!-- 답변 기능 -->
+	document.querySelector("#qnaReplyBtn").addEventListener("click", function() {
+		const qnaId = document.querySelector("#qnaReplyQnAId").value;
+		const userId = document.querySelector("#qnaReplyUserId").value;
+		const content = document.querySelector("#qnaReplyContentId").value;
+		const data = {qnaId, content};
+		fetch(ctx + "/qnaReply/add", { method : "put",
+									    headers : { "Content-Type" : "application/json" },
+									    body : JSON.string(data)
+		});
 	});
 	
 </script>
