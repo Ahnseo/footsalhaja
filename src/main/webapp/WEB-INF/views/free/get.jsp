@@ -21,22 +21,23 @@
 	
 	<!-- 좋아요 -->
 	<h1>
-		<span 			
+		<span 
 			<sec:authorize access="not isAuthenticated()">
 				style="pointer-events: none;"
-			</sec:authorize>
-		id="likeButton">
-		
+			</sec:authorize>		
+		id="likeButton" >
+							
 			<c:if test="${board.liked }">
 				<i class="fa-solid fa-thumbs-up"></i>
 			</c:if>
 			<c:if test="${not board.liked }">
-				<i class="fa-regular fa-thumbs-up"></i>
-			</c:if>
+			<i class="fa-regular fa-thumbs-up"></i>
+			</c:if>					
 		</span>
 		
 		<span id="likeCount">${board.fb_likeCount }</span>
 	</h1>
+	
 	<p>조회수 ${board.fb_viewCount }</p> 
 	제목 <input type="text" value="${board.fb_title }" readonly /><br>
 	카테고리 <input type="text" value="${board.fb_category }" readonly /><br>
@@ -152,7 +153,7 @@ document.querySelector("#likeButton").addEventListener("click", function() {
 		}
 		
 		document.querySelector("#likeCount").innerText = data.count;
-	})
+	});
 });
 
 

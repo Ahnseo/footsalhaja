@@ -108,12 +108,12 @@ public class FreeServiceImpl implements FreeService{
 		if (cnt == 1) {
 			// 있으면 취소
 			freeMapper.deleteLike(fb_number, member_userId);
-			map.put("currrent", "not liked");			
+			map.put("current", "not liked");			
 		} else { 
 			// 없으면 추가
 			int a = freeMapper.insertLike(fb_number, member_userId);
 			// System.out.println(a);
-			map.put("currrent", "liked");			
+			map.put("current", "liked");			
 		}
 		
 		// 현재 몇개인지
