@@ -53,9 +53,9 @@
 	작성일시 <input type = "datetime-local" value = "${board.ab_insertDatetime }" readonly>
 
 	<div>
-		<c:forEach items="${fileName }" var="fileName">
+		<c:forEach items="${board.ab_fileName }" var="fileName">
 			<div>
-				<i class="fa-solid fa-paperclip"></i><c:out value="${fileName}" /><br>
+				<i class="fa-solid fa-paperclip"></i><c:out value="${fileName.substring(36)}" /><br>
 			</div>
 		</c:forEach>
 	</div>

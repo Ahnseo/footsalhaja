@@ -1,6 +1,7 @@
 package com.footsalhaja.controller.academy;
 
 import java.io.File;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -13,12 +14,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -137,22 +142,8 @@ public class AcademyController {
 		service.updateViewCount(ab_number);
 		BoardDto board = service.get(ab_number, member_userId);
 		
-		
-		//uuid제거하고 파일 이름 보이기
-		int fileList = board.getAb_fileName().size();
-		System.out.println("파일 갯수: "+ fileList);
-		List<String> ab_fileNames = new ArrayList<>();
-		
-		for(int i =0; i<fileList; i++) {
-			
-			String file = board.getAb_fileName().get(i).substring(36);
-			ab_fileNames.add(file);
-		}
-		
-		
 		model.addAttribute("board",board);
-		
-		model.addAttribute("fileName", ab_fileNames);
+	
 		
 	}
 	
@@ -193,9 +184,14 @@ public class AcademyController {
 	}
 	
 	//파일 다운로드
-	@GetMapping("download")
-	public void downloadFile(@RequestParam("fileName") String fileName, HttpServletResponse response) {
-		response.addHeader("Content-disposition", "attachment; fileName=" + fileName);
+	@GetMapping("list/{ab_number}/{filename}")
+	public Resource downloadFile(@PathVariable("ab_number") int ab_number,
+								@PathVariable String filename) {
+		FileSystemResource resource = new FileSystemResource("C:\\Users\\lnh1017\\Desktop\\study\\project"+ab_number+"\\"+filename);
+		
+		System.out.println(resource);
+		
+		return null;
 	}
 	
 }

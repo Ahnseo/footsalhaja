@@ -47,9 +47,7 @@ public class AcademyServiceImpl implements AcademyService{
 	
 	@Override
 	public BoardDto get(int ab_number, String member_userId) {
-		// TODO Auto-generated method stub
-		BoardDto select = mapper.select(ab_number, member_userId);
-		System.out.println(select);
+	
 		return mapper.select(ab_number, member_userId);
 	}
 	

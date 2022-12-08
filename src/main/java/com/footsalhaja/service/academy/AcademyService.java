@@ -33,4 +33,5 @@ public interface AcademyService {
 	
 	//파일 등록
 	public int insertFile(BoardDto board, MultipartFile[] files);
+	
 }
