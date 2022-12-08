@@ -51,7 +51,16 @@
 	본문 <div id="summernote" readonly>${board.ab_content }</div> <br>
 	작성자 <input type ="text" value="${board.member_userId }" readonly> <br>
 	작성일시 <input type = "datetime-local" value = "${board.ab_insertDatetime }" readonly>
-	
+
+	<div>
+		<c:forEach items="${fileName }" var="fileName">
+			<div>
+				<i class="fa-solid fa-paperclip"></i><c:out value="${fileName}" /><br>
+			</div>
+		</c:forEach>
+	</div>
+
+
 	<c:url value="/academy/modify" var="modifyLink">
 		<c:param name="ab_number" value="${board.ab_number }"></c:param>
 	</c:url>

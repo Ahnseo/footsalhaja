@@ -134,7 +134,12 @@ public class AcademyController {
 		
 		service.updateViewCount(ab_number);
 		BoardDto board = service.get(ab_number, member_userId);
+		
+		String ab_fileName = board.getAb_fileName().substring(36);
+		
 		model.addAttribute("board",board);
+		
+		model.addAttribute("fileName", ab_fileName);
 		
 	}
 	
