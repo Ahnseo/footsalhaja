@@ -32,5 +32,5 @@ public interface AcademyService {
 	int updateViewCount(int ab_number);
 	
 	//파일 등록
-	public int insertFile(BoardDto board, MultipartFile file);
+	public int insertFile(BoardDto board, MultipartFile[] files);
 }

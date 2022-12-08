@@ -20,7 +20,7 @@
 	</select>
 	
 	<!-- get 게시물페이지  -->
-	<select id="select" resultType="com.footsalhaja.domain.academy.BoardDto">
+	<select id="select" resultMap="boardMap">
 	SELECT 
 		b.ab_number,
 		b.ab_category,
@@ -28,6 +28,7 @@
 		b.ab_content,
 		b.member_userId,
 		b.ab_insertDatetime,
+
 		f.ab_fileName,
 		(SELECT COUNT(*) FROM academyBoardLike WHERE academyBoard_ab_number = b.ab_number AND member_userId = #{member_userId}) liked,
 		(SELECT COUNT(*) FROM academyBoardLike WHERE academyBoard_ab_number = b.ab_number) countLike
@@ -37,6 +38,19 @@
 		ab_number = #{ab_number}
 		
 	</select>
+	
+	<resultMap type="com.footsalhaja.domain.academy.BoardDto" id="boardMap">
+		<id column="ab_number" property="ab_number"></id>
+		<result column="ab_title" property="ab_title"/>
+		<result column="ab_category" property="ab_category"/>
+		<result column="member_userId" property="member_userId"/>
+		<result column="ab_content" property="ab_content"/>
+		<result column="ab_insertDatetime" property="ab_insertDatetime"/>
+		<collection property="ab_fileName" ofType="string">
+			<result property="ab_fileName" column="ab_fileName"/>
+		</collection>
+	</resultMap>
+	
 	
 	<!-- modify 수정페이지 -->
 	<update id="modify">
