@@ -64,13 +64,12 @@
 	 		q.content,
 	 		q.status,
 	 		q.insertDatetime,
-	 		m.userId
+	 		m.userId,
+	 		r.qnaReplyId
 	 	FROM 
 	 	 	QnABoard q
-	 	LEFT JOIN 
-	 		member m
-	 	ON 
-	 		q.member_userId = m.userId
+	 	LEFT JOIN member m   ON q.member_userId = m.userId
+	 	LEFT JOIN QnAReply r ON q.member_userId = r.userId
 	 	WHERE 
 	 		m.userId = #{userId} AND q.qnaId = #{qnaId}
 	 	
@@ -160,9 +159,17 @@
 	</insert>
 	<select id="selectQnAReply" resultType="com.footsalhaja.domain.qna.QnAReplyDto">
 		<!-- //qnaReplyId,qnaId,userId,writer,content,insertDatetime -->
-		SELECT qnaReplyId,qnaId,userId,writer,content,insertDatetime
-		FROM QnAReply
-		WHERE qnaId = #{qnaId}
+		SELECT 
+			qnaReplyId,
+			qnaId,
+			userId,
+			writer,
+			content,
+			insertDatetime
+		FROM 
+			QnAReply
+		WHERE 
+			qnaId = #{qnaId}
 	</select>
 	
 	<insert id="insertQnAReplyToAnswer">
@@ -172,9 +179,20 @@
 	</insert>
 	<select id="selectQnAReplyToAnswerList" resultType="com.footsalhaja.domain.qna.QnAReplyToAnswerDto">
 		<!-- //qnaReplyToAnswerId, qnaReplyId, qnaId, writer, content, userId, insertDatetime -->
-		SELECT qnaReplyToAnswerId, qnaReplyId, qnaId, writer, content, userId, insertDatetime
-		FROM QnAReplyToAnswer
-		WHERE qnaId = #{qnaId}
+		SELECT 
+			t.qnaReplyToAnswerId,
+			t.qnaReplyId,
+			t.qnaId,
+			t.userId,
+			t.writer,
+			t.content,
+			t.insertDatetime
+		FROM 
+			QnAReplyToAnswer t
+		LEFT JOIN QnAReply q ON t.qnaReplyId = q.qnaReplyId
+		LEFT JOIN QnABoard b ON t.qnaId = b.qnaId
+		WHERE 
+			t.qnaReplyId = #{qnaReplyId}
 	</select>
 
  </mapper>

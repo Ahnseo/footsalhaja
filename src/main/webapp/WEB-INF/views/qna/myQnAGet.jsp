@@ -18,84 +18,163 @@
 </head>
 <body>
 	<my:navbar active="getMyQnA"></my:navbar>
-	<div class="container">
+	<sec:authentication property="name" var="userIdValue"/>	
+	<div class="container mt-3 mb-3">
+		<div class="d-flex">
+			<div class="mr-auto p-2"><h1>문의내용</h1></div>
+		    <div class="p-3"><button class="btn btn-outline-success" type="button" id="likeBtn1"><i class="fa-regular fa-thumbs-up"></i></button></div>
+	    </div>
 		<div class="row">
-			<div class="col">
-				<sec:authentication property="name" var="userIdValue"/>
-				<h3>문의번호:${qna.qnaId}</h3> 
-				<!-- 데이터 불러오기  -->
-				<form action="" method="post">
-					<input type="hidden" name="qnaId" id="qnaId" value="${qna.qnaId}">
-					카테고리 <input type="text" name="category" value="${qna.category}" readonly ><br>
-					제목 <input type="text"name="title" value="${qna.title}" readonly ><br>
-					본문 <textarea name="content" readonly >${qna.content}</textarea><br>
-					아이디 <input type="text" name="userId" value="${qna.userId}"><br>
-					처리상태 <input type="text" name="status" value="${qna.status} " readonly ><br>
-					작성시간 <input type="text" name="insertDatetime" value="${qna.insertDatetime} " readonly ><br>
-				</form>
+			<div class="col">		
+				<form action="" method="post" class="form-control row g-3 mb-3">
+					<div class="d-flex">
+						<div class="col-md-2">
+							<label for="formControlInput1" class="form-label">문의번호</label>
+							<input id="formControlInput1" class="form-control" type="hidden" name="qnaId" id="qnaId" value="${qna.qnaId}">						
+							<span class="badge bg-primary rounded-pill">${qna.qnaId}</span>
+						</div>
+						<div class="col-md-2">
+							<label for="formControlInput2" class="form-label">카테고리</label>
+							<input id="formControlInput2" class="form-control" type="hidden" name="category" value="${qna.category}" readonly >
+							<span class="badge bg-primary rounded-pill">${qna.category}</span>
+						</div>
+						<div class="col-md-2">
+							<label for="formControlInput5" class="form-label"><i class="fa-solid fa-user"></i></label>
+							<input id="formControlInput5" class="form-control" type="hidden" name="userId" value="${qna.userId}" readonly >
+							<span class="badge bg-primary rounded-pill">${qna.userId}</span>
+						</div>
+						<div class="col-md-2">
+							<label for="formControlInput6" class="form-label"><i class="fa-regular fa-clock"></i></label>						
+							<input id="formControlInput6" class="form-control" type="hidden" name="insertDatetime" value="${qna.insertDatetime} " readonly >						
+							<span class="badge bg-primary rounded-pill">${qna.insertDatetime}</span>
+						</div>
+						<div class="col-md-2">
+							<label for="formControlInput7" class="form-label">처리상태</label>						
+							<input id="formControlInput7" class="form-control" type="hidden" name="status" value="${qna.status} " readonly >
+							<span class="badge bg-primary rounded-pill">${qna.status}</span>
+						</div>
+					</div>
+					<div class="mb-3">
+						<label for="formControlInput3" class="form-label">제목</label>
+						<input id="formControlInput3" class="form-control" type="text"name="title" value="${qna.title}" readonly >
+					</div>	
+					<div class="mb-3">
+						<label for="formControlInput4" class="form-label">내용</label>
+						<textarea id="formControlInput4" class="form-control" name="content" readonly >${qna.content}</textarea>
+					</div>
 				
-				<!-- 수정 삭제 버튼 -->  
-				<div class = "d-flex">
-					<div>
-						<button class="btn btn-outline-success"  type="button" id="" >수정</button>
-					</div>
-					<div>
-						<button class="btn btn-outline-success" type="button" id="" >삭제</button>
-					</div>
-					<div>
-						<button class="btn btn-outline-success" type="button" id="likeBtn1"><i class="fa-regular fa-thumbs-up"></i></button>
-					</div>
-					<sec:authorize access="hasAuthority('admin')">
+					<div class = "d-flex flex-row-reverse">
 						<div>
-							<!-- 답변하기 post -> controller -->
-						    <button class="btn btn-outline-success" type="button" data-bs-toggle="collapse" data-bs-target="#qnaReplyCollapse" aria-expanded="false" aria-controls="collapseExample">
-						    	답변하기
-						    </button>
-					    </div>
-				    </sec:authorize>
-				</div>
+							<button class="btn btn-outline-danger" type="button" id="" >삭제</button>
+						</div>	
+						<div>
+							<button class="btn btn-outline-warning"  type="button" id="" >수정</button>
+						</div >					
+						<div class = "d-flex flex-row-reverse">
+							<sec:authorize access="hasAuthority('admin')">
+								<div>
+								<!-- 답변하기 post -> controller -->
+									<button class="btn btn-outline-success" type="button" data-bs-toggle="collapse" data-bs-target="#qnaReplyCollapseAnswer" aria-expanded="false" aria-controls="collapseExample">
+										답변하기
+									</button>
+								</div>
+							</sec:authorize>
+						</div>
+					</div>
+				</form>	
+				
+				<h1>답변내용 </h1>
+				
 				<sec:authorize access="hasAuthority('admin')">
-					<div class="collapse" id="qnaReplyCollapse">
+					<div class="collapse" id="qnaReplyCollapseAnswer">
 						<div class="card card-body">
 							<input type="hidden" id="qnaReplyQnAId" value="${qna.qnaId}" readonly>
 							<input type="hidden" id="qnaReplyUserId" value="${qna.userId}" readonly>
-							답변<textarea id="qnaReplyContent" cols="50" rows="3"></textarea>
-							작성자<input type="text" id="qnaReplyWriter" value="${userIdValue}"  readonly>
-							<div>
-								<button type="button" id="qnaReplyBtn">등록</button>
+							<input type="hidden" id="qnaReplyWriter" value="${userIdValue}"  readonly>
+							<div class="mb-3">
+								<label for="qnaReplyContent" class="form-label">내용</label>
+								<textarea id="qnaReplyContent" class="form-control"></textarea>
+							</div>
+							<div class="d-flex flex-row-reverse">
+								<button class="btn btn-outline-success" type="button" id="qnaReplyBtn">등록</button>
 							</div>
 						</div>
 					</div>
 				</sec:authorize>
-				
-					<c:forEach items="${qnaReplyList}" var="qnaReply">
-						<div>
-							<div class="d-flex">
-								<p>${qnaReply}</p>
-								<button class="btn btn-outline-success" type="button" data-bs-toggle="collapse" data-bs-target="#qnaReplyCollapse${qnaReply.qnaReplyId}" aria-expanded="false" aria-controls="collapseExample">
-							    	댓글작성
-							    </button>
-					    	</div>
-					    	<div>
-					    		<c:forEach items="${qnaReplyToAnswerList}" var="qnaReplyToAnswer">
-					    			<p>${qnaReplyToAnswer}</p>
-					    		</c:forEach>
-					    	</div>
-							<div class="collapse" id="qnaReplyCollapse${qnaReply.qnaReplyId}">
-								<div class="card card-body">
-									답변 번호<input type="text" id="qnaReplyId2" value="${qnaReply.qnaReplyId}" readonly>
-									게시물 번호 <input type="text" id="qnaReplyQnAId2" value="${qnaReply.qnaId}" readonly>
-									답변 작성자<input type="text" id="qnaReplyUserId2" value="${qnaReply.userId}" readonly>
-									댓글<textarea id="qnaReplyContent2" cols="50" rows="2"></textarea>
-									작성자<input type="text" id="qnaReplyWriter2" value="${userIdValue}" readonly>
-									<div>
-										<button type="button" id="qnaReplyBtn2">등록</button>
-									</div>
+				<!-- 답변 가져오기(리스트 ..)  -->
+				<!-- //qnaReplyId,qnaId,userId,writer,content,insertDatetime -->
+				<c:forEach items="${qnaReplyList}" var="qnaReply">	
+				<div class="row g-3 mb-3">
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-header d-flex">
+								<span class="p-1"><i class="fas fa-comments"></i></span>
+								<span class="p-1"><i class="fa-solid fa-user"></i>${qnaReply.writer}</span>
+								<span class="p-1"><i class="fa-regular fa-clock"></i>${qnaReply.insertDatetime}</span>
+							</div>
+							<div class="card-body">
+								<p class="card-text">${qnaReply.content}</p>
+								<div class="d-flex flex-row-reverse">
+								<a href="#" class="btn btn-danger">삭제</a>    		    
+								<button class="btn btn-outline-success" type="button" data-bs-toggle="modal" data-bs-target="#replyInputModal">
+								댓글작성 <!-- 댓글작성 버튼 modal  -->
+								</button>
 								</div>
 							</div>
 						</div>
-					</c:forEach>
-				
+					</div>
+				</div> 
+				</c:forEach>
+		    	<!-- 댓글작성 Modal by 답변Id  -->
+		    	<div class="modal fade" id="replyInputModal" tabindex="-1" aria-labelledby="replyInputModalLabel" aria-hidden="true">
+		    	  <div class="modal-dialog">
+		    	    <div class="modal-content">
+		    	      <div class="modal-header">
+		    	        <h1 class="modal-title fs-5" id="replyInputModalLabel">댓글작성</h1>
+		    	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		    	      </div>
+		    	      <div class="modal-body">
+		    	      	<!-- //qnaReplyId,qnaId,userId,writer,content,insertDatetime -->
+		    	      	${qnaReply}
+		    	      	답변 번호 <input type="hidden" id="qnaReplyId2" value="${qna.qnaReplyId}" readonly>
+						게시물 번호 <input type="hidden" id="qnaReplyQnAId2" value="${qna.qnaId}" readonly>
+						게시물 작성자 <input type="hidden" id="qnaReplyUserId2" value="${qna.userId}" readonly>
+						댓글 작성자 <input type="hidden" id="qnaReplyWriter2" value="${userIdValue}" readonly>
+						댓글 <textarea id="qnaReplyContent2" cols="40" rows="2"></textarea>
+		    	      </div>
+		    	      <div class="modal-footer">
+		    	        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">취소</button>
+		    	        <button id="qnaReplyBtn2" type="button" class="btn btn-outline-success">등록</button>
+		    	      </div>
+		    	    </div>
+		    	  </div>
+		    	</div>
+				<!-- 댓글보기 by 답변Id  -->
+				<div>
+		    		<c:forEach items="${qnaReplyToAnswerList}" var="qnaReplyToAnswer">
+		    			<div class="row g-3 mb-3">
+			    			<div class="col-md-1">
+			    				<i class="fa-solid fa-arrow-right"></i>
+			    			</div>
+			    			<div class="col-md-11">
+					    		<div class="card">
+					    		  <div class="card-header d-flex">
+					    		  	<span class="p-1"><i class="fas fa-comments"></i></span>
+					    		  	<span class="p-1"><i class="fa-solid fa-user"></i>${qnaReplyToAnswer.userId}</span>
+					    		  	<span class="p-1"><i class="fa-regular fa-clock"></i>${qnaReplyToAnswer.insertDatetime}</span>
+					    		  </div>
+					    		  <div class="card-body">
+					    		    <p class="card-text">${qnaReplyToAnswer.content}</p>
+					    		    <div class="d-flex flex-row-reverse">
+						    		    <a href="#" class="btn btn-danger">삭제</a>
+						    		    <a href="#" class="btn btn-primary">답글</a>
+					    		    </div>
+					    		  </div>
+					    		</div>
+				    		</div>
+			    		</div>
+		    		</c:forEach>
+		    	</div>			
 			</div>
 		</div>
 	</div>
@@ -114,7 +193,7 @@
 	});
 
 	<!-- 답변 저장기능 (관리자만 작성가능)-->
-	<c:if test="${userIdValue == admin}">
+	<c:if test="${not empty userIdValue}">
 		document.querySelector("#qnaReplyBtn").addEventListener("click", function() {
 			const qnaId = document.querySelector("#qnaReplyQnAId").value;
 			const userId = document.querySelector("#qnaReplyUserId").value;

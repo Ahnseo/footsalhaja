@@ -128,9 +128,9 @@ public class QnAServiceImpl implements QnAService {
 	}
 	//QnA답변에 대한 댓글 리스트 가져오기
 	@Override
-	public List<QnAReplyToAnswerDto> selectQnAReplyToAnswerList(QnAReplyToAnswerDto qnaReplyToAnswer) {
-
-		return qnaMapper.selectQnAReplyToAnswerList(qnaReplyToAnswer);
+	public List<QnAReplyToAnswerDto> selectQnAReplyToAnswerList(int qnaReplyId) {
+		
+		return qnaMapper.selectQnAReplyToAnswerList(qnaReplyId);
 	}
 	
 }

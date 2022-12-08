@@ -76,15 +76,15 @@ public class QnAController {
 	@GetMapping("myQnAGet")
 	public void myQnAGet(String userId, int qnaId, Model model, QnAReplyDto qnaReply, QnAReplyToAnswerDto qnaReplyToAnswer) {
 		QnADto qna = qnaService.selectMyQnAGetByQnAIdAndUserId(userId, qnaId);
-		//System.out.println(qna);
 		model.addAttribute("qna", qna);
+		//System.out.println("qna 정보 : "+ qna);
 		
 		List<QnAReplyDto> qnaReplyList = qnaService.selectQnAReply(qnaReply);
 		model.addAttribute("qnaReplyList", qnaReplyList);
 		
-		//System.out.println("qnaReplyToAnswer : "+qnaReplyToAnswer);
-		List<QnAReplyToAnswerDto> qnaReplyToAnswerList = qnaService.selectQnAReplyToAnswerList(qnaReplyToAnswer);
-		System.out.println("qnaReplyToAnswerList : "+qnaReplyToAnswerList);
+		int qnaReplyId = qna.getQnaReplyId();
+		List<QnAReplyToAnswerDto> qnaReplyToAnswerList = qnaService.selectQnAReplyToAnswerList(qnaReplyId);
+		//System.out.println("qnaReplyToAnswerList : "+qnaReplyToAnswerList);
 		
 		model.addAttribute("qnaReplyToAnswerList", qnaReplyToAnswerList);
 		

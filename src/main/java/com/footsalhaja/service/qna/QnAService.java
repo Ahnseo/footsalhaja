@@ -28,7 +28,7 @@ public interface QnAService {
 
 	public int insertQnAReplyToAnswer(QnAReplyToAnswerDto qnaReplyToAnswer);
 
-	public List<QnAReplyToAnswerDto> selectQnAReplyToAnswerList(QnAReplyToAnswerDto qnaReplyToAnswer);
+	public List<QnAReplyToAnswerDto> selectQnAReplyToAnswerList(int qnaReplyId);
 
 
 	

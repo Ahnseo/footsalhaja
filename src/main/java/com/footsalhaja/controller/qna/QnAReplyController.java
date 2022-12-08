@@ -30,7 +30,7 @@ public class QnAReplyController {
 		qnaService.insertQnAReply(qnaReply) ;
 		
 		//redirect: 넣자 
-		return "qna/myQnAGet?userId="+qnaReply.getUserId()+"&qnaId="+qnaReply.getQnaId();
+		return "redirect:/qna/myQnAGet?userId="+qnaReply.getUserId()+"&qnaId="+qnaReply.getQnaId();
 	}
 	
 	@PutMapping("addToAnswer")

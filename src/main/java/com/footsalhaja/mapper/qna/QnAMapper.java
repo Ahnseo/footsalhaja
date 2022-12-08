@@ -46,7 +46,7 @@ public interface QnAMapper {
 	//QnA 답변에 대한 댓글쓰기 (모든 회원이용 가능)
 	int insertQnAReplyToAnswer(QnAReplyToAnswerDto qnaReplyToAnswer);
 	//QnA 답변에 대한 댓글리스트 모두 가져오기 (모든 회원이용 가능)
-	List<QnAReplyToAnswerDto> selectQnAReplyToAnswerList(QnAReplyToAnswerDto qnaReplyToAnswer);
+	List<QnAReplyToAnswerDto> selectQnAReplyToAnswerList(int qnaReplyId);
 	
 	
 	
