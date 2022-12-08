@@ -20,4 +20,5 @@ public class BoardDto {
 	private boolean liked;
 	private int ab_viewCount;
 	private List<String> ab_fileName;
+	private int countFile;
 }

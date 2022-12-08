@@ -9,9 +9,11 @@
 	SELECT 
 		ab_replyNumber,
 		ab_replyContent,
-		ab_replyInsertDatetime,
 		academyBoard_ab_number as ab_number,
-		member_userId
+		member_userId,
+		(member_userId = #{username}) editable,
+		ab_replyInsertDatetime
+		
 	FROM
 		academyBoardReply
 	WHERE
@@ -63,9 +65,11 @@
 	
 	SELECT ab_replyNumber,
 		ab_replyContent,
-		ab_replyInsertDatetime,
 		academyBoard_ab_number as ab_number,
-		member_userId
+		member_userId,
+		(member_userId = #{username}) editable,
+		ab_replyInsertDatetime
+		
 	FROM academyBoardReply
 	WHERE academyBoard_ab_number = #{ab_number}
 	LIMIT #{offset}, #{records}

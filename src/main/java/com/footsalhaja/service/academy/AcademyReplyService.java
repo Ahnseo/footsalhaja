@@ -10,7 +10,7 @@ public interface AcademyReplyService {
 
 	public int addReply(AcademyReplyDto reply);
 	
-	public List<AcademyReplyDto> listReplyByab_number(int ab_number);
+	public List<AcademyReplyDto> listReplyByab_number(int ab_number, String username);
 	
 	public int removeById(int ab_replyNumber);
 
@@ -19,7 +19,7 @@ public interface AcademyReplyService {
 	public int modify(AcademyReplyDto reply);
 	
 	//페이지네이션 (댓글 수 포함)
-	public ReplyPageDto replyWithPaging(Criteria cri, int ab_number);
+	public ReplyPageDto replyWithPaging(Criteria cri, int ab_number, String username);
 	
 
 }

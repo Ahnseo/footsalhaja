@@ -103,10 +103,12 @@
 		b.ab_insertDatetime,
 		COUNT(r.academyBoard_ab_number) replyCnt,
 		COUNT(DISTINCT l.member_userId) countLike,
+		COUNT(DISTINCT f.academyBoard_ab_number) countFile,
 		b.ab_viewCount
 		
 	FROM academyBoard b LEFT JOIN academyBoardReply r ON b.ab_number = r.academyBoard_ab_number
 						LEFT JOIN academyBoardLike l ON b.ab_number = l.academyBoard_ab_number
+						LEFT JOIN academyBoardFileAttach f ON b.ab_number = f.academyBoard_ab_number
 	]]>
 	
 	 <if test="cri.type!=null and cri.type!=''">

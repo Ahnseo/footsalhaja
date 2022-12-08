@@ -72,12 +72,12 @@
 									</c:if>
 									
 									<!-- 파일 수 출력 -->
-									<%-- <c:if test="${board.countFile > 0 }">
+									<c:if test="${board.countFile > 0 }">
 										<span class="badge rounded-pill text-bg-light">
 											<i class="fa-regular fa-file"></i>
 											${board.countFile }
 										</span>
-									</c:if> --%>
+									</c:if>
 								</td>
 								<td>${board.member_userId }</td>
 								<td>${board.ab_insertDatetime }</td>

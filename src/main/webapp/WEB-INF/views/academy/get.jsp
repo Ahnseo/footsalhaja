@@ -203,12 +203,15 @@
 			
 			/* 댓글 출력 */
 			for (const item of list[0].list) {
+				
+				console.log(item);
+				
 				const modifyReplyButtonId = `modifyReplyButton\${item.ab_replyNumber}`;
 
 				const removeReplyButtonId = `removeReplyButton\${item.ab_replyNumber}`;
 				
 				
-				const replyDiv = `<div>\${item.ab_replyContent} : \${item.ab_replyInsertDatetime}
+				const replyDiv = `<div><b>\${item.member_userId}</b> \${item.ab_replyContent} : \${item.ab_replyInsertDatetime}
 								<button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#modifyReplyFormModal" data-reply-id="\${item.ab_replyNumber}" id="\${modifyReplyButtonId}">
 									<i class="fa-solid fa-pen"></i>
 								</button>

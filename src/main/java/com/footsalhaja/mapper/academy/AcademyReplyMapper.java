@@ -11,7 +11,7 @@ public interface AcademyReplyMapper {
 
 	int insert(AcademyReplyDto reply);
 
-	List<AcademyReplyDto> selectReplyByBoardId(int ab_number);
+	List<AcademyReplyDto> selectReplyByBoardId(int ab_number, String username);
 
 	int deleteById(int ab_replyNumber);
 	
@@ -21,7 +21,7 @@ public interface AcademyReplyMapper {
 
 	int modify(AcademyReplyDto reply);
 	//페이지 네이션
-	public List<AcademyReplyDto> getReplyListWithPaging(Criteria cri, int ab_number, int offset, int records);
+	public List<AcademyReplyDto> getReplyListWithPaging(Criteria cri, int ab_number, String username, int offset, int records);
 	//댓글 수
 	public int getTotalReplyCount(int ab_number);
 
