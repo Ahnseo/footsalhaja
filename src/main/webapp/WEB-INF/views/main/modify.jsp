@@ -26,6 +26,8 @@
 					<input type="text" class="form-control" name="title" value=" ${main.title }">		
 					<label for="floatingInput">제목</label>
 				</div>
+				<h2>작성자</h2>
+				<input type="text" value="${main.member_userId }" readonly>
 				
 				<div class="form-floating mb-3">
 					<textarea class="form-control" name="content" style="resize: none; height: 100px" >${main.content}</textarea>
@@ -43,14 +45,14 @@
 					</select>
 				</div>
 				<div class="mb-3">
-	<label for="">구장 지역</label>
-		<select id="region" name="region">
-			<option value="서울" selected="selected">서울</option>
-			<option value="경기">경기</option>
-		</select>
-</div>
+					<label for="">구장 지역</label>
+					<select id="region" name="region">
+						<option value="서울" selected="selected">서울</option>
+						<option value="경기">경기</option>
+					</select>
+			</div>
 			
-<div class="mb-3">
+			<div class="mb-3">
 			   <label for="" class="form-label">예약장소</label>
 			   <select id="region" name="region">
 			      <option value="서울">서울</option>

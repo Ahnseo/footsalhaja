@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.net.*"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
 <!DOCTYPE html>
@@ -48,12 +50,18 @@
 
 				<h1>no.${main.bookId }</h1> 
 				
-				<c:url value="/main/modify" var="modifyLink">
-					<c:param name="bookId" value="${main.bookId }"></c:param>
-				</c:url>
-				<a href="${modifyLink }">
-					<button id="modifyButton" type="button">수정하기</button>				
-				</a>
+				<h1>${main.userId }</h1>
+				
+				<sec:authentication property="name" var="username" />
+				
+				<c:if test="${main.userId == username }">
+					<c:url value="/main/modify" var="modifyLink">
+						<c:param name="bookId" value="${main.bookId }"></c:param>
+					</c:url>
+					<a href="${modifyLink }">
+						<button id="modifyButton" type="button">수정하기</button>				
+					</a>				
+				</c:if>
 				
 				<div class="form-floating mb-3">
 
@@ -67,7 +75,8 @@
 					<textarea class="form-control" style="resize: none; height: 100px" readonly>${main.content}</textarea>
 					<label for="floatingInput">본문</label>
 				</div>
-        
+        		
+        		<h3>${main.ago }</h3>
 		</div>
 	</div>
 </div>
@@ -143,7 +152,7 @@ const removeReplyButtonId = `removeReplyButton\${item.replyId}`;
 			
 			const replyDiv = `
 				<div>
-					\${item.replyId}: \${item.member_userId} : \${item.replyContent}
+					\${item.replyId}: \${item.member_userId} : \${item.replyContent} :\${item.ago}
 					<button data-bs-toggle="modal" data-bs-target="#removeReplyConfirmModal" data-reply-id="\${item.replyId}" id="\${removeReplyButtonId}">삭제</button>
 				</div>`;
 			replyListContainer.insertAdjacentHTML("beforeend", replyDiv);

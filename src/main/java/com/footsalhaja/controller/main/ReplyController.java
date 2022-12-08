@@ -61,15 +61,5 @@ public class ReplyController {
 		
 	}
 	
-	/*
-	 * @GetMapping("add")
-	 * 
-	 * @ResponseBody public void add(@RequestParam(name="userId") String userId,
-	 * Model model) { MemberDto member =
-	 * memberService.selectMemberInfoByUserId(userId); model.addAttribute("member",
-	 * member);
-	 * 
-	 * }
-	 */
 				
 }
