@@ -2,6 +2,7 @@
 <%@ page import="java.net.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -76,13 +77,21 @@
         <input value="${param.q }" class="" type="search" placeholder="검색어를 입력해주세요." aria-label="Search" name="q">
         <button class="btn btn-outline-success" type="submit">검색</button>
         
-        
     </form>
+    
+    
 	    <!-- 글작성 버튼 -->
-	    <c:url value="/free/insert" var="insertLink"></c:url>
-	    <a href="${insertLink}">
-		    <button>글작성</button>
-	    </a>
+	    <!-- 로그인 했을때 -->
+	    <sec:authorize access="isAuthenticated()">
+		    <c:url value="/free/insert" var="insertLink"></c:url>
+		    <a href="${insertLink}">
+			    <button>글작성</button>
+		    </a>
+	    </sec:authorize>
+	    <!-- 로그인 안 했을때 -->
+	    <sec:authorize access="not isAuthenticated()">
+			<button data-bs-toggle="modal" data-bs-target="#nonMemberModal" id="nonMemberInsertButton">글작성</button>
+	    </sec:authorize>
     
     
 	
@@ -152,7 +161,29 @@
 	</div>
 
 	
+	<!-- 비회원 글작성버튼 클릭시 로그인유도 팝업 -->
+	<div class="modal fade" id="nonMemberModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h1 class="modal-title fs-5" id="exampleModalLabel">비회원이 글작성 눌렀을때</h1>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        회원만 게시글 작성이 가능합니다. 로그인해주세요.
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+	        <c:url value="/member/login" var="loginLink"></c:url>
+	        <a href="${loginLink }">
+	       		<button type="button" class="btn btn-primary">로그인</button>
+	        </a>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 	
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+
 </body>
 </html>
