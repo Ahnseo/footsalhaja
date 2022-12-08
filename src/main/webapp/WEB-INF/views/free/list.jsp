@@ -31,6 +31,7 @@
 				<td>제목</td>
 				<td>조회수</td>
 				<td>작성자</td>
+				<td>닉네임</td>
 				<td>작성일시</td>
 			</tr>
 		</thead>
@@ -53,6 +54,7 @@
 					</td>
 					<td>${board.fb_viewCount }</td>
 					<td>${board.member_userId }</td>
+					<td>${board.nickName }</td>
 					<td>${board.ago }</td>
 				</tr>
 			</c:forEach>

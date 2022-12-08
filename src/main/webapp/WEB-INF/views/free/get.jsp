@@ -41,9 +41,12 @@
 	<p>조회수 ${board.fb_viewCount }</p> 
 	제목 <input type="text" value="${board.fb_title }" readonly /><br>
 	카테고리 <input type="text" value="${board.fb_category }" readonly /><br>
-	본문 <textarea name="fb_content" id="fb_content" readonly>${board.fb_content }</textarea><br>
+	
+	본문 <div id="summernote" readonly>${board.fb_content }</div> <br>
+	
 	작성일시 <input type="datetime-local" value="${board.fb_insertDatetime }" readonly /><br>
 	작성자 <input type="text" value="${board.member_userId }" readonly /><br>
+	작성자 <input type="text" value="${board.nickName }" readonly /><br>
 	
 	
 	<!-- 작성자와 authentication.name이 같아야 수정버튼 보여주기 -->

@@ -19,11 +19,13 @@
 		f.fb_insertDatetime,
 		f.member_userId,
 		f.fb_viewCount,
+		m.nickName,
     	COUNT(DISTINCT r.fb_replyNumber) fb_replyCount,
     	COUNT(DISTINCT l.member_userId) fb_likeCount
  	FROM
  		freeBoard f LEFT JOIN freeBoardReply r ON f.fb_number = r.freeBoard_fb_number
  					LEFT JOIN freeBoardLike l ON f.fb_number = l.freeBoard_fb_number
+ 					LEFT JOIN member m ON f.member_userId = m.userId
  	WHERE
  		<trim prefixOverrides="OR">
 	 		<if test="type == 'all' or type == 'title'">
@@ -54,10 +56,11 @@
  		f.fb_insertDatetime,
  		f.member_userId,
  		f.fb_viewCount,
+ 		m.nickName,
  		(SELECT COUNT(*) FROM freeBoardLike WHERE freeBoard_fb_number = f.fb_number AND member_userId = #{member_userId}) liked,
  		(SELECT COUNT(*) FROM freeBoardLike WHERE freeBoard_fb_number = f.fb_number) fb_likeCount
  	FROM
- 		freeBoard f
+ 		freeBoard f LEFT JOIN member m ON f.member_userId = m.userId
  	WHERE
  		f.fb_number = #{fb_number}
  	</select>
