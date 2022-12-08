@@ -26,7 +26,7 @@
 		border: 1px solid black;
 	}
 	div.left {
-		width: 40%;
+		width: 50%;
 		height: 500px;
 		float: left;
 		box-sizing: border-box;
@@ -34,7 +34,7 @@
 		overflow: scroll;
 	}
 	div.right {
-		width: 60%;
+		width: 50%;
 		height: 500px;
 		float: right;
 		box-sizing: border-box;
@@ -47,52 +47,77 @@
 <body>
 	<my:navbar active=""></my:navbar>
 	<div class="container">
-		<div class="row">
+		<div class="row mt-2 mb-5">
 			<div class="col">	
 		     	<div class="mainBoard">
 		     		<div class="top">
 		     			1. 관리자가 오늘의 할일 숫자로 표기  ( 매치예약건수(?), 매치취소건수(?), 답변대기문의(?), 신고접수(?) )
 		     		</div>
 			        <div class="left">
-			        	2. 방문현황 (<차트> 날짜/ 예약수/매출액/방문자/문의, goolge api )
+			        	2. 현황 (<그래프 차트 > 날짜/ 예약수/매출액/방문자/문의, goolge api )
 			        </div>
 			        <div class="right">
-			        	3. 일자별 요약 테이블 보기 by 날짜 (일자, 방문자, 예약수, 문의갯수 LEFT JOIN )
-			        	<table class="table">
-							<thead>
-								<th>날짜</th>
-								<th>예약</th>
-								<th>매출액</th>
-								<th>방문자</th>
-								<th>문의</th>
-							</thead>
-							<tbody>	
-								<tr>
-								 	<td></td>
-								 	<td></td>
-								 	<td></td>
-								 	<td></td>
-								 	<td></td>
-							 	</tr>						 	
-							</tbody>
-						</table>
+			        	<nav id="navbar-example1" class="navbar bg-light px-3 mb-3">
+					        <a class="navbar-brand" href="#">일자별 요약</a>
+				        </nav>
+				        <div data-bs-spy="scroll" data-bs-target="#navbar-example1" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-light p-3 rounded-2" tabindex="0">
+				        	<table class="table">
+								<thead>
+									<th>날짜</th>
+									<th>예약</th>		
+									<th>방문자</th>
+									<th>문의</th>
+								</thead>
+								<tbody>	
+									<tr>
+									 	<td></td>
+									 	<td></td>	 	
+									 	<td></td>
+									 	<td></td>
+								 	</tr>						 	
+								</tbody>
+							</table>
+						</div>
 			        </div>
 		        	<div class="left">
-		        		4. 현황 (<차트> 날짜/ 예약수/매출액/방문자/문의, goolge api )
+		        		
 			        </div>
 			        <div class="right">
-				        <ol class="list-group list-group-numbered">
-					    	<c:forEach items="${waitingQnAList}" var="waitingQnA">	
-					        	<li class="list-group-item d-flex justify-content-between align-items-start">
-						            <div class="ms-2 me-auto">
-							            <div class="fw-bold">${waitingQnA.title}</div>
-							            ${waitingQnA.userId}
-							        </div>
-							        <span>${waitingQnA.insertDatetime} </span>
-						            <span class="badge bg-danger rounded-pill">${waitingQnA.status}</span>
-					            </li>
-					        </c:forEach>
-				        </ol>	
+				        <nav id="navbar-example2" class="navbar bg-light px-3 mb-3">
+				        	<c:url value="/admin/allQnAList" var="allQnAListLink">
+				        		<c:param name="page" value="1"/>
+				        		<c:param name="q" value=""/>
+				        		<c:param name="t" value="all"/>
+				        	</c:url>
+					        <a class="navbar-brand" href="${allQnAListLink}">QnA</a>
+					        <ul class="nav nav-pills">
+					        	<li class="nav-item">
+					        		<a class="nav-link" href="#scrollspyHeading1">First</a>
+					        	</li>
+					        </ul>
+				        </nav>
+				        <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-light p-3 rounded-2" tabindex="0">
+					        <ol class="list-group list-group-numbered" >
+						    	<c:forEach items="${waitingQnAList}" var="waitingQnA">
+						    		<c:url value="/qna/myQnAGet" var="getWatingQnALink">
+						    			<c:param name="userId" value="${waitingQnA.userId}"/>
+						    			<c:param name="qnaId" value="${waitingQnA.qnaId}"/>
+						    		</c:url>
+						        	<li class="list-group-item d-flex justify-content-between align-items-start">	
+							            <div class="ms-2 me-auto">
+								            <div class="fw-bold">
+								            	<a href="${getWatingQnALink}">
+								            		${waitingQnA.title}
+								            	</a>
+								            </div>
+								            ${waitingQnA.userId}
+								        </div>
+								        <span>${waitingQnA.insertDatetime} </span>
+							            <span class="badge bg-danger rounded-pill">${waitingQnA.status}</span>   
+						            </li>           
+						        </c:forEach>
+					        </ol>
+				        </div>
 			        </div>	
 				</div>	
 			</div>

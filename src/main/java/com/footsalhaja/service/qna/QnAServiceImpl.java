@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import com.footsalhaja.domain.qna.FAQDto;
 import com.footsalhaja.domain.qna.QnADto;
 import com.footsalhaja.domain.qna.QnAPageInfo;
+import com.footsalhaja.domain.qna.QnAReplyDto;
+import com.footsalhaja.domain.qna.QnAReplyToAnswerDto;
 import com.footsalhaja.mapper.qna.QnAMapper;
 
 @Service
@@ -106,4 +108,29 @@ public class QnAServiceImpl implements QnAService {
 		}
 		
 	}
+	//QnA 답변하기
+	@Override
+	public int insertQnAReply(QnAReplyDto qnaReply) {
+		//System.out.println("servi:"+ qnaReply);
+		int cnt = qnaMapper.insertQnAReply(qnaReply);
+		return cnt;
+	}
+	@Override
+	public List<QnAReplyDto> selectQnAReply(QnAReplyDto qnaReply) {
+		
+		return qnaMapper.selectQnAReply(qnaReply);
+	}
+	//QnA 답변에대한 댓글 쓰기
+	@Override
+	public int insertQnAReplyToAnswer(QnAReplyToAnswerDto qnaReplyToAnswer) {
+		int cnt = qnaMapper.insertQnAReplyToAnswer(qnaReplyToAnswer);
+		return cnt;
+	}
+	//QnA답변에 대한 댓글 리스트 가져오기
+	@Override
+	public List<QnAReplyToAnswerDto> selectQnAReplyToAnswerList(QnAReplyToAnswerDto qnaReplyToAnswer) {
+
+		return qnaMapper.selectQnAReplyToAnswerList(qnaReplyToAnswer);
+	}
+	
 }

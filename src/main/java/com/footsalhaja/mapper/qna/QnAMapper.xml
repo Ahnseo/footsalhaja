@@ -153,7 +153,28 @@
 		WHERE qnaId = #{qnaId} AND userId = #{loggedinId}
 	</delete>
 	
-	 
-
+	<insert id="insertQnAReply">
+		<!-- //qnaReplyId,qnaId,userId,writer,content,insertDatetime -->
+		INSERT INTO QnAReply (qnaId, userId, writer, content)
+		VALUES( #{qnaId}, #{userId}, #{writer}, #{content} )
+	</insert>
+	<select id="selectQnAReply" resultType="com.footsalhaja.domain.qna.QnAReplyDto">
+		<!-- //qnaReplyId,qnaId,userId,writer,content,insertDatetime -->
+		SELECT qnaReplyId,qnaId,userId,writer,content,insertDatetime
+		FROM QnAReply
+		WHERE qnaId = #{qnaId}
+	</select>
+	
+	<insert id="insertQnAReplyToAnswer">
+		<!-- //qnaReplyToAnswerId, qnaReplyId, qnaId, writer, content, userId, insertDatetime -->
+		INSERT INTO QnAReplyToAnswer (qnaReplyId, qnaId, writer, content, userId)
+		VALUES( #{qnaReplyId}, #{qnaId}, #{writer}, #{content}, #{userId} )
+	</insert>
+	<select id="selectQnAReplyToAnswerList" resultType="com.footsalhaja.domain.qna.QnAReplyToAnswerDto">
+		<!-- //qnaReplyToAnswerId, qnaReplyId, qnaId, writer, content, userId, insertDatetime -->
+		SELECT qnaReplyToAnswerId, qnaReplyId, qnaId, writer, content, userId, insertDatetime
+		FROM QnAReplyToAnswer
+		WHERE qnaId = #{qnaId}
+	</select>
 
  </mapper>

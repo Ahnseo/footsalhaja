@@ -22,6 +22,6 @@ public interface MainMapper {
 	List<BookDto> listBook();
 	
 	BookDto select(int bookId, String nickName);
-	
+
 }
  

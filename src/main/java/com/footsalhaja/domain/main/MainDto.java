@@ -14,6 +14,7 @@ public class MainDto {
 	private int bookId;
 	private String title;
 	private String content;
+
 	private String matchType;
 	private String level;
 	private String status;
