@@ -13,10 +13,10 @@ public class MainDto {
 	private int bookId;
 	private String title;
 	private String content;
-	private String matchType;
-	private String level;
-	private String status;
-	private String region;
+	private int matchType;
+	private int level;
+	private int status;
+	private int region;
 	private LocalDateTime insertDatetime;
 	private String teamGender;
 

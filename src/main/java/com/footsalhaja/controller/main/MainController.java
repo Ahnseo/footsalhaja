@@ -1,14 +1,20 @@
 package com.footsalhaja.controller.main;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.footsalhaja.domain.main.BookDto;
@@ -29,8 +35,15 @@ public class MainController {
 	
 	@GetMapping("get")
 	public void get(@RequestParam(name="bookId") int bookId,
-			Model model) {
-
+			Model model
+			/*Authentication authentication*/) {
+		
+			/*
+			 * String nickName = null;
+			 * 
+			 * if (authentication != null) { nickName = authentication.getName(); }
+			 */
+		
 		//System.out.println(bookId);
 		MainDto main = service.get(bookId);
 		
@@ -64,11 +77,13 @@ public class MainController {
 	}
 	
 	
-	  @GetMapping("list") public void list(Model model) {
+	  @GetMapping("list")
+	  public void list(Model model) {
 	  
-	  List<BookDto> list = service.listBook();
-	  
-	  model.addAttribute("bookList", list); }
+		  List<BookDto> list = service.listBook();
+		  
+		  model.addAttribute("bookList", list); 
+	}
 	 
 	
 	@GetMapping("modify")
@@ -96,8 +111,5 @@ public class MainController {
 		 
 		 return "redirect:/main/list";
 	 }
-	
-
-
 	
 }

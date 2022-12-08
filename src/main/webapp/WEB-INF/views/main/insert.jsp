@@ -81,8 +81,8 @@
 					<div class="mb-3">
 					   <label for="" class="form-label">예약장소</label>
 					   <select id="region" name="region">
-					      <option value="서울">서울</option>
-					      <option value="경기">경기</option>
+					      <option value="1">서울</option>
+					      <option value="2">경기</option>
 					   </select>
 					   <select name="location_locationId" id="location">
 					      <option value="1">천마 풋살파크</option>
@@ -93,9 +93,6 @@
 					   </select>
 		  			 </div>
 			
-		
-	
-
 					<!-- items은  mainController에서 정해준 값 > 아래 위치 참조  
 					/prj1-20221115/src/main/java/com/study/controller/member/MemberController.java - @GetMapping("list")
 				-->
@@ -115,9 +112,9 @@
 					<div class="mb-3">
 						<label for="" class="form-label">실력</label> <select name="level"
 							id="level">
-							<option value="1">하</option>
-							<option value="2">중</option>
-							<option value="3">상</option>
+							<option value="1">비기너</option>
+							<option value="2">아마추어</option>
+							<option value="3">챌린저</option>
 						</select>
 					</div>
 
@@ -160,7 +157,7 @@
             var res = $('#region option:selected').val();
             var option = '';
             console.log(res);
-            if (res == '서울') {
+            if (res == '1') {
                console.log("1");
                option += '<option value="1">천마 풋살파크</option>';
                option += '<option value="2">아디다스 더베이스</option>';

@@ -263,10 +263,39 @@
 					<td>${main.bookDate }</td>			
 					<td>${main.bookTime }</td>			
 					<td>${main.stadiumName }</td>			
-					<td>${main.nickName }</td>				
-					<td>${main.status }</td>			
-					<td>${main.matchType }</td>			
-					<td>${main.level }</td>			
+					<td>${main.nickName }</td>
+					
+					<!-- 모집중, 모집완료 버튼 -->
+					<c:if test="${main.status == 0}">
+						<td><button class="btn btn-danger" disabled="disabled">모집완료</button></td>
+					</c:if>				
+
+					<c:if test="${main.status == 1}">
+						<td><button class="btn btn-primary" disabled="disabled">모집중</button></td>
+					</c:if>				
+					
+					<!-- 매치타입 -->
+					<c:if test="${main.matchType == 3 }">
+						<td>3 vs 3</td>			
+					</c:if>
+					<c:if test="${main.matchType == 4 }">
+						<td>4 vs 4</td>			
+					</c:if>
+					<c:if test="${main.matchType == 5 }">
+						<td>5 vs 5</td>			
+					</c:if>
+					
+					<!-- 실력 -->
+					<c:if test="${main.level == 1 }">
+						<td>비기너</td>			
+					</c:if>
+					<c:if test="${main.level == 2 }">
+						<td>아마추어</td>			
+					</c:if>
+					<c:if test="${main.level == 3 }">
+						<td>챌린저</td>			
+					</c:if>
+					
 					<td>${main.region }</td>			
 				</tr>
 			</c:forEach>

@@ -5,10 +5,6 @@
   
 
  <mapper namespace="com.footsalhaja.mapper.main.MainMapper">
-
- 	
-
- 
  	<!-- 게시글 등록 -->
  	<insert id="insert">
  	INSERT INTO book
@@ -110,7 +106,7 @@
 
 	</update>
 
-<!-- 예약날짜 가져오기 -->
+	<!-- 예약날짜 가져오기 -->
 	<select id="list">
 		select * from book 
 		<if test = "bookDate != null" >
