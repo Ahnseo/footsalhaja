@@ -113,8 +113,7 @@
 								            ${waitingQnA.userId}
 								        </div>
 								        <span>${waitingQnA.insertDatetime} </span>
-							            <span class="badge bg-danger rounded-pill">${waitingQnA.status}</span>
-							            
+							            <span class="badge bg-danger rounded-pill">${waitingQnA.status}</span>   
 						            </li>           
 						        </c:forEach>
 					        </ol>

@@ -36,42 +36,67 @@
 				
 				<!-- 수정 삭제 버튼 -->  
 				<div class = "d-flex">
-					<button type="button" id="likeBtn1">좋아요</button>
-					
-					<form action="" method="">
-						<button type="sumbit" id="" >수정</button>
-					</form>
-					
-					<form action="" method="">
-						<button type="sumbit" id="" >삭제</button>
-					</form>
-				</div>
-				<!-- 답변하기 post -> controller -->
-				
-				<sec:authorize access="hasAuthority('admin')">
 					<div>
-					    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#qnaReplyDiv" aria-expanded="false" aria-controls="collapseExample">
-					    	답변하기
-					    </button>
-			    	</div>
-					<div class="collapse" id="qnaReplyDiv">
+						<button class="btn btn-outline-success"  type="button" id="" >수정</button>
+					</div>
+					<div>
+						<button class="btn btn-outline-success" type="button" id="" >삭제</button>
+					</div>
+					<div>
+						<button class="btn btn-outline-success" type="button" id="likeBtn1"><i class="fa-regular fa-thumbs-up"></i></button>
+					</div>
+					<sec:authorize access="hasAuthority('admin')">
+						<div>
+							<!-- 답변하기 post -> controller -->
+						    <button class="btn btn-outline-success" type="button" data-bs-toggle="collapse" data-bs-target="#qnaReplyCollapse" aria-expanded="false" aria-controls="collapseExample">
+						    	답변하기
+						    </button>
+					    </div>
+				    </sec:authorize>
+				</div>
+				<sec:authorize access="hasAuthority('admin')">
+					<div class="collapse" id="qnaReplyCollapse">
 						<div class="card card-body">
-							<input type="hidden" id="qnaReplyQnAId" value="${qna.qnaId}">
-							<input type="hidden" id="qnaReplyUserId" value="${qna.userId}">
-							답변<textarea id="qnaReplyContent" cols="50" rows="5"></textarea>
-							작성자 <input type="text" value="${userIdValue}" readonly>
+							<input type="hidden" id="qnaReplyQnAId" value="${qna.qnaId}" readonly>
+							<input type="hidden" id="qnaReplyUserId" value="${qna.userId}" readonly>
+							답변<textarea id="qnaReplyContent" cols="50" rows="3"></textarea>
+							작성자<input type="text" id="qnaReplyWriter" value="${userIdValue}"  readonly>
 							<div>
 								<button type="button" id="qnaReplyBtn">등록</button>
 							</div>
 						</div>
 					</div>
 				</sec:authorize>
+				
+					<c:forEach items="${qnaReplyList}" var="qnaReply">
+						<div>
+							<div class="d-flex">
+								<p>${qnaReply}</p>
+								<button class="btn btn-outline-success" type="button" data-bs-toggle="collapse" data-bs-target="#qnaReplyCollapse${qnaReply.qnaReplyId}" aria-expanded="false" aria-controls="collapseExample">
+							    	댓글작성
+							    </button>
+					    	</div>
+							<div class="collapse" id="qnaReplyCollapse${qnaReply.qnaReplyId}">
+								<div class="card card-body">
+									답변 번호<input type="text" id="qnaReplyId2" value="${qnaReply.qnaReplyId}" readonly>
+									게시물 번호 <input type="text" id="qnaReplyQnAId2" value="${qnaReply.qnaId}" readonly>
+									답변 작성자<input type="text" id="qnaReplyUserId2" value="${qnaReply.userId}" readonly>
+									댓글<textarea id="qnaReplyContent2" cols="50" rows="2"></textarea>
+									작성자<input type="text" id="qnaReplyWriter2" value="${userIdValue}" readonly>
+									<div>
+										<button type="button" id="qnaReplyBtn2">등록</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</c:forEach>
+				
 			</div>
 		</div>
 	</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script>
-	const ctx = "${pageContext.request.contextPath}";\
+	const ctx = "${pageContext.request.contextPath}";
 	<!-- 좋아요 기능 -->
 	document.querySelector("#likeBtn1").addEventListener("click", function(){
 		const qnaId = document.querySelector("#qnaId").value;
@@ -82,21 +107,37 @@
 		})
 		
 	});
+
+	<!-- 답변 저장기능 (관리자만 작성가능)-->
+	<c:if test="${userIdValue == admin}">
+		document.querySelector("#qnaReplyBtn").addEventListener("click", function() {
+			const qnaId = document.querySelector("#qnaReplyQnAId").value;
+			const userId = document.querySelector("#qnaReplyUserId").value;
+			const writer = document.querySelector("#qnaReplyWriter").value;
+			const content = document.querySelector("#qnaReplyContent").value;
+			const data = {qnaId, userId, writer, content};
+			fetch(ctx + "/qnaReply/add", { method : "put",
+										    headers : { "Content-Type" : "application/json" },
+										    body : JSON.stringify(data)
+			});
+		});
+	</c:if>
 	
-	<!-- 답변 기능 -->
-	document.querySelector("#qnaReplyBtn").addEventListener("click", function() {
-		const qnaId = document.querySelector("#qnaReplyQnAId").value;
-		const userId = document.querySelector("#qnaReplyUserId").value;
-		const content = document.querySelector("#qnaReplyContentId").value;
-		const data = {qnaId, content};
-		fetch(ctx + "/qnaReply/add", { method : "put",
-									    headers : { "Content-Type" : "application/json" },
-									    body : JSON.string(data)
-		})
-		.then(res => res.json())
-		.then(data => )
-	});
-	
+	<!-- 답변에 대한 댓글 저장기능(답변글이 있을 때만 가능, 로그인한 모든 회원 ) -->
+	<c:if test="${not empty userIdValue}">
+		document.querySelector("#qnaReplyBtn2").addEventListener("click", function() {
+			const qnaReplyId = document.querySelector("#qnaReplyId2").value;
+			const qnaId = document.querySelector("#qnaReplyQnAId2").value;
+			const userId = document.querySelector("#qnaReplyUserId2").value;
+			const writer = document.querySelector("#qnaReplyWriter2").value;
+			const content = document.querySelector("#qnaReplyContent2").value;
+			const data = {qnaReplyId, qnaId, userId, writer, content};
+			fetch(ctx + "/qnaReply/addToAnswer", { method : "put",
+										    headers : { "Content-Type" : "application/json" },
+										    body : JSON.stringify(data)
+			});
+		});
+	</c:if>
 </script>
 </body>
 </html>

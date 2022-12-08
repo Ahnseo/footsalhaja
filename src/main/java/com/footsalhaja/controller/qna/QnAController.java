@@ -73,10 +73,14 @@ public class QnAController {
 
 	// MyQnAGet
 	@GetMapping("myQnAGet")
-	public void myQnAGet(String userId, int qnaId, Model model) {
+	public void myQnAGet(String userId, int qnaId, Model model, QnAReplyDto qnaReply) {
 		QnADto qna = qnaService.selectMyQnAGetByQnAIdAndUserId(userId, qnaId);
-		System.out.println(qna);
+		//System.out.println(qna);
 		model.addAttribute("qna", qna);
+		
+		List<QnAReplyDto> qnaReplyList = qnaService.selectQnAReply(qnaReply);
+		model.addAttribute("qnaReplyList", qnaReplyList);
+		
 		
 	}
 	@PutMapping("likeCount")

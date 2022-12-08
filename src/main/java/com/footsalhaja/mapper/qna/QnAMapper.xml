@@ -154,9 +154,21 @@
 	</delete>
 	
 	<insert id="insertQnAReply">
+		<!-- //qnaReplyId,qnaId,userId,writer,content,insertDatetime -->
 		INSERT INTO QnAReply (qnaId, userId, writer, content)
-		VALUES( #{qnaId}, #{userId}, #{loggedinId}, #{content} )
+		VALUES( #{qnaId}, #{userId}, #{writer}, #{content} )
 	</insert>
-
+	<select id="selectQnAReply" resultType="com.footsalhaja.domain.qna.QnAReplyDto">
+		<!-- //qnaReplyId,qnaId,userId,writer,content,insertDatetime -->
+		SELECT qnaReplyId,qnaId,userId,writer,content,insertDatetime
+		FROM QnAReply
+		WHERE qnaId = #{qnaId}
+	</select>
+	
+	<insert id="insertQnAReplyToAnswer">
+		<!-- //qnaReplyToAnswerId, qnaReplyId, qnaId, writer, content, userId, insertDatetime -->
+		INSERT INTO QnAReplyToAnswer (qnaReplyId, qnaId, writer, content, userId)
+		VALUES( #{qnaReplyId}, #{qnaId}, #{writer}, #{content}, #{userId} )
+	</insert>
 
  </mapper>
