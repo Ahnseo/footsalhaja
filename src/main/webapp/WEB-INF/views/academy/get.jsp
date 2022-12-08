@@ -52,10 +52,16 @@
 	작성자 <input type ="text" value="${board.member_userId }" readonly> <br>
 	작성일시 <input type = "datetime-local" value = "${board.ab_insertDatetime }" readonly>
 
+<!-- 파일 -->
+	<c:set var="ctx" value="${pageContext.request.contextPath}" />;
 	<div>
 		<c:forEach items="${board.ab_fileName }" var="fileName">
 			<div>
-				<i class="fa-solid fa-paperclip"></i><c:out value="${fileName.substring(36)}" /><br>
+				<i class="fa-solid fa-paperclip"></i>
+				<a href="${ctx }/academy/download/${board.ab_number}/${fileName}">
+				<c:out value="${fileName.substring(36)}" /></a>
+				
+				<br>
 			</div>
 		</c:forEach>
 	</div>

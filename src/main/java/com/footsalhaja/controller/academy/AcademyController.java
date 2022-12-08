@@ -4,6 +4,8 @@ import java.io.File;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -184,14 +187,38 @@ public class AcademyController {
 	}
 	
 	//파일 다운로드
-	@GetMapping("list/{ab_number}/{filename}")
-	public Resource downloadFile(@PathVariable("ab_number") int ab_number,
-								@PathVariable String filename) {
-		FileSystemResource resource = new FileSystemResource("C:\\Users\\lnh1017\\Desktop\\study\\project"+ab_number+"\\"+filename);
+	@GetMapping("download/{ab_number}/{filename}")
+	@ResponseBody
+	//서버에서 화면으로 응답을 하기 위해 HttpServletResponse 를 사용
+	public void  downloadFile(@PathVariable("ab_number") int ab_number,
+								@PathVariable String filename, HttpServletResponse response) throws Exception {
 		
-		System.out.println(resource);
+		//다운받을 파일 경로 지정
+		File downloadFile =  new File("C:\\Users\\lnh1017\\Desktop\\study\\project"+ab_number+"\\"+filename);
 		
-		return null;
+		//파일을 byte 배열로 변환
+		byte fileByte[] = FileUtils.readFileToByteArray(downloadFile);
+		
+		//"application/octet-stream" 은 자바에서 사용하는 파일 다운로드 응답 형식으로, 어플리케이션 파일이 리턴된다고 설정
+		response.setContentType("application/octet-stream");
+		
+		//파일 사이즈를 지정
+        response.setContentLength(fileByte.length);
+		response.setHeader("Content-Type", "application/octet-stream;");
+		
+		//다운로드시 파일 이름을 지정(UUID제거)
+		response.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode(filename.substring(36),"UTF-8") +"\";");
+		
+		//"application/octet-stream"은 binary 데이터이기 때문에 binary로 인코딩
+        response.setHeader("Content-Transfer-Encoding", "binary");
+		
+        //버퍼에 파일을 담아 스트림으로 출력
+        response.getOutputStream().write(fileByte);
+        //버퍼에 저장된 내용을 클라이언트로 전송하고 버퍼를 비운다.
+        response.getOutputStream().flush();
+        //출력 스트림을 종료
+        response.getOutputStream().close();
+        
 	}
 	
 }
