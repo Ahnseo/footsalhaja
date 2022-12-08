@@ -42,6 +42,10 @@ public interface AcademyMapper {
 	public int updateViewCount(int ab_number);
 
 	public void insertFile(int ab_number, String ab_fileName, String ab_filePath, int ab_fileType);
+
+	public void deleteFileByBoardId(int ab_number);
+
+	public void deleteByBoardIdAndFileName(int ab_number, String originalFilename);
 	
 	
 }

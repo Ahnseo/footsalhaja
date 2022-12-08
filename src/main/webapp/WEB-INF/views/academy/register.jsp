@@ -47,7 +47,7 @@
 		<br>
 	
 		<div class="mb-3">
-			<label for="" class="form-label">파일</label> 
+			<label for="" class="form-label">파일첨부</label> 
 			<input multiple type="file" class="form-control" name="files">
 		</div>
 		

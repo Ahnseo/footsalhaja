@@ -4,9 +4,9 @@ import java.io.File;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
+
 import java.net.URLEncoder;
-import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,10 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -157,10 +154,12 @@ public class AcademyController {
 		BoardDto board = service.get(ab_number);
 		model.addAttribute("board",board);
 	}
+	
 	@PreAuthorize("@boardSecurity.checkWriter2(authentication.name, #board.ab_number)")
 	@PostMapping("modify")
-	public String modify(BoardDto board ) {
-		service.modify(board);
+	public String modify(BoardDto board, @RequestParam("files") MultipartFile[] addFiles,
+			@RequestParam(name = "removeFiles", required = false) List<String> removeFiles) {
+		service.modify(board, addFiles,removeFiles);
 		
 		return "redirect:/academy/list";
 	}

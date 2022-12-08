@@ -14,7 +14,7 @@ public interface AcademyService {
 	
 	public BoardDto get(int ab_number, String member_userId);
 	
-	public int modify(BoardDto board);
+	public int modify(BoardDto board, MultipartFile[] addFiles, List<String> removeFiles);
 	
 	public int remove (int ab_number);
 	

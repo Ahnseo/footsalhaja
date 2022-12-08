@@ -48,7 +48,7 @@
 
 	제목 <input type ="text" value="${board.ab_title }" readonly> <br>
 	말머리 <input type ="text" value="${board.ab_category }" readonly> <br>
-	본문 <div id="summernote" readonly>${board.ab_content }</div> <br>
+	본문 <div id="summernote">${board.ab_content }</div> <br>
 	작성자 <input type ="text" value="${board.member_userId }" readonly> <br>
 	작성일시 <input type = "datetime-local" value = "${board.ab_insertDatetime }" readonly>
 
