@@ -50,6 +50,7 @@
 	말머리 <input type ="text" value="${board.ab_category }" readonly> <br>
 	본문 <div id="summernote">${board.ab_content }</div> <br>
 	작성자 <input type ="text" value="${board.member_userId }" readonly> <br>
+	닉네임 <input type ="text" value="${board.nickName }" readonly> <br>
 	작성일시 <input type = "datetime-local" value = "${board.ab_insertDatetime }" readonly>
 
 <!-- 파일 -->
@@ -223,7 +224,7 @@
 				const editButton = `<button data-bs-toggle="modal" data-bs-target="#replyModifyModal" data-reply-id="\${item.ab_replyNumber}" id="\${modifyReplyButtonId}"> <i class="fa-solid fa-pen"></i></button>
 									<button data-bs-toggle="modal" data-bs-target="#replyDeleteModal" data-reply-id="\${item.ab_replyNumber}" id="\${removeReplyButtonId}"> <i class="fa-solid fa-x"></i></button>`
 				
-				const replyDiv = `<div><b>\${item.member_userId}</b> \${item.ab_replyContent} : \${item.ago} \${item.editable ? editButton : ''}
+				const replyDiv = `<div><b>\${item.member_userId}</b> 닉네임: \${item.nickName} \${item.ab_replyContent} : \${item.ago} \${item.editable ? editButton : ''}
 								</div>`;
 				
 				replyListContainer.insertAdjacentHTML("beforeend", replyDiv);

@@ -23,6 +23,7 @@ public class BoardDto {
 	private int ab_viewCount;
 	private List<String> ab_fileName;
 	private int countFile;
+	private String nickName;
 	
 	public String getAgo() {
 		LocalDateTime now = LocalDateTime.now();

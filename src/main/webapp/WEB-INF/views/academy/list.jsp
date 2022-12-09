@@ -42,6 +42,7 @@
 							<th>좋아요</th>
 							<th>제목</th>
 							<th>작성자</th>
+							<th>닉네임</th>
 							<th>작성시간</th>
 							<th>조회수</th>
 						</tr>
@@ -80,6 +81,7 @@
 									</c:if>
 								</td>
 								<td>${board.member_userId }</td>
+								<td>${board.nickName }</td>
 								<td>${board.ago }</td>
 								<td>${board.ab_viewCount }</td>
 							</tr>

@@ -28,12 +28,13 @@
 		b.ab_content,
 		b.member_userId,
 		b.ab_insertDatetime,
-
+		m.nickName,
 		f.ab_fileName,
 		(SELECT COUNT(*) FROM academyBoardLike WHERE academyBoard_ab_number = b.ab_number AND member_userId = #{member_userId}) liked,
 		(SELECT COUNT(*) FROM academyBoardLike WHERE academyBoard_ab_number = b.ab_number) countLike
 
 	FROM academyBoard b LEFT JOIN academyBoardFileAttach f ON b.ab_number = f.academyBoard_ab_number
+						LEFT JOIN member m ON b.member_userId = m.userId
 	WHERE
 		ab_number = #{ab_number}
 		
@@ -46,6 +47,7 @@
 		<result column="member_userId" property="member_userId"/>
 		<result column="ab_content" property="ab_content"/>
 		<result column="ab_insertDatetime" property="ab_insertDatetime"/>
+		<result column="nickName" property="nickName"/>
 		<collection property="ab_fileName" ofType="string">
 			<result property="ab_fileName" column="ab_fileName"/>
 		</collection>
@@ -104,11 +106,13 @@
 		COUNT(r.academyBoard_ab_number) replyCnt,
 		COUNT(DISTINCT l.member_userId) countLike,
 		COUNT(DISTINCT f.academyBoard_ab_number) countFile,
-		b.ab_viewCount
+		b.ab_viewCount,
+		m.nickName
 		
 	FROM academyBoard b LEFT JOIN academyBoardReply r ON b.ab_number = r.academyBoard_ab_number
 						LEFT JOIN academyBoardLike l ON b.ab_number = l.academyBoard_ab_number
 						LEFT JOIN academyBoardFileAttach f ON b.ab_number = f.academyBoard_ab_number
+						LEFT JOIN member m ON b.member_userId = m.userId
 	]]>
 	
 	 <if test="cri.type!=null and cri.type!=''">
