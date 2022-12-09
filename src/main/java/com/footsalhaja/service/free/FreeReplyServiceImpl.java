@@ -14,7 +14,6 @@ public class FreeReplyServiceImpl implements FreeReplyService {
 	@Autowired
 	FreeReplyMapper mapper;
 	
-	
 
 	@Override
 	public int addReply(FreeReplyDto reply) {

@@ -3,6 +3,7 @@ package com.footsalhaja.mapper.free;
 import java.util.List;
 
 import com.footsalhaja.domain.free.BoardDto;
+import com.footsalhaja.domain.free.FreeReplyDto;
 
 public interface FreeMapper {
 

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.footsalhaja.domain.free.BoardDto;
+import com.footsalhaja.domain.free.FreeReplyDto;
 import com.footsalhaja.domain.free.PageInfo;
 
 public interface FreeService {

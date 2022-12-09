@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.footsalhaja.domain.free.BoardDto;
+import com.footsalhaja.domain.free.FreeReplyDto;
 import com.footsalhaja.domain.free.PageInfo;
 import com.footsalhaja.mapper.free.FreeMapper;
 import com.footsalhaja.mapper.free.FreeReplyMapper;

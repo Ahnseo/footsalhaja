@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="com.footsalhaja.mapper.free.FreeMapper">
- 
+
  	<!-- 글 입력 -->
  	<insert id="insert" >
  	INSERT INTO freeBoard (fb_category, fb_title, fb_content, member_userId)

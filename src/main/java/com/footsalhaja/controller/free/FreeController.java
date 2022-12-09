@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,6 +78,7 @@ public class FreeController {
 		
 		BoardDto board = service.get(fb_number, member_userId);
 		model.addAttribute("board", board);
+		
 	}
 	
 	

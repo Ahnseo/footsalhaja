@@ -15,7 +15,7 @@
 
 <my:navbar></my:navbar>
 
-
+	
 
 	<h1>프리보드 ${board.fb_number }번 게시물</h1>
 	
@@ -46,7 +46,7 @@
 	
 	작성일시 <input type="datetime-local" value="${board.fb_insertDatetime }" readonly /><br>
 	작성자 <input type="text" value="${board.member_userId }" readonly /><br>
-	작성자 <input type="text" value="${board.nickName }" readonly /><br>
+	닉네임 <input type="text" value="${board.nickName }" readonly /><br>
 	
 	
 	<!-- 작성자와 authentication.name이 같아야 수정버튼 보여주기 -->
@@ -220,7 +220,10 @@ function listReply() {
 			
 			const replyDiv = 
 				`<div>
-					\${item.fb_replyContent} : \${item.ago}
+					댓글 : \${item.fb_replyContent}
+					작성시간 : \${item.ago}
+					작성자 : \${item.member_userId}
+					닉네임 : \${item.nickName}
 					\${item.editable ? editButton : ''}
 				</div>`;
 				
