@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="com.footsalhaja.mapper.free.FreeMapper">
-
+ 
  	<!-- 글 입력 -->
  	<insert id="insert" >
  	INSERT INTO freeBoard (fb_category, fb_title, fb_content, member_userId)
@@ -27,6 +27,10 @@
  					LEFT JOIN freeBoardLike l ON f.fb_number = l.freeBoard_fb_number
  					LEFT JOIN member m ON f.member_userId = m.userId
  	WHERE
+ 		<if test="category != ''">
+ 		f.fb_category = #{category} AND 
+ 		</if>
+ 		(
  		<trim prefixOverrides="OR">
 	 		<if test="type == 'all' or type == 'title'">
 	 		OR f.fb_title LIKE #{keyword}
@@ -39,8 +43,9 @@
 	 		<if test="type == 'all' or type == 'writer'">
 	 		OR f.member_userId LIKE #{keyword}
 	 		</if>
+	 		
  		</trim>
- 		
+ 		)
  	GROUP BY f.fb_number	
  	ORDER BY f.fb_number DESC
  	LIMIT #{offset}, #{records}

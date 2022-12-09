@@ -27,9 +27,9 @@
 	
 	<form action="" method="post">
 	카테고리 <select name="fb_category">
-				<option>매칭후기</option>
-				<option>구장후기</option>
-				<option>잡담</option>
+				<option name="matching">매칭후기</option>
+				<option name="stadium">구장후기</option>
+				<option name="talk">잡담</option>
 			</select>
 	<br>
 	제목 <input type="text" name="fb_title"/><br>

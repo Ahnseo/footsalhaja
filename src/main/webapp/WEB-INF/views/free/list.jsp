@@ -78,16 +78,10 @@
 		<!-- 검색창 -->
         <input value="${param.q }" class="" type="search" placeholder="검색어를 입력해주세요." aria-label="Search" name="q">
         <button class="btn btn-outline-success" type="submit">검색</button>
-        
-    </form>
-    
-    <form action="${listLink }" >
-    	<div name="c">
-		    <button name="all" >전체</button>
-			<button name="matching" >매칭후기</button>
-			<button name="stadium" >구장후기</button>
-			<button name="talk" >잡담</button>
-    	</div>
+        <!-- 카테고리 -->
+		<button name="category" value="매칭후기" >매칭후기</button>
+		<button name="category" value="구장후기" >구장후기</button>
+		<button name="category" value="잡담" >잡담</button>
 	</form>
     
     
@@ -119,6 +113,7 @@
 					  		<c:param name="page" value="1"></c:param>
 					  		<c:param name="q" value="${param.q }"></c:param>
 					  		<c:param name="t" value="${param.t }"></c:param>
+					  		<c:param name="category" value="${param.category }"></c:param>
 					  </c:url>
 					  <li class="page-item"><a class="page-link" href="${listLink }">맨앞버튼</a></li>
 				  </c:if>
@@ -129,6 +124,7 @@
 					  		<c:param name="page" value="${ pageInfo.jumpPrevPageNumber}"></c:param>
 					  		<c:param name="q" value="${param.q }"></c:param>
 					  		<c:param name="t" value="${param.t }"></c:param>
+					  		<c:param name="category" value="${param.category }"></c:param>
 					  </c:url>
 					  <li class="page-item"><a class="page-link" href="${listLink }">이전</a></li>
 				  </c:if>
@@ -138,6 +134,7 @@
 				  		<c:param name="page" value="${pageNumber }"></c:param>
 				  		<c:param name="q" value="${param.q }"></c:param>
 				  		<c:param name="t" value="${param.t }"></c:param>
+				  		<c:param name="category" value="${param.category }"></c:param>
 				  	</c:url>
 				  	
 				  	<!-- 현재 페이지 active 클래스 추가 -->
@@ -152,6 +149,7 @@
 					  		<c:param name="page" value="${ pageInfo.jumpNextPageNumber}"></c:param>
 					  		<c:param name="q" value="${param.q }"></c:param>
 					  		<c:param name="t" value="${param.t }"></c:param>
+					  		<c:param name="category" value="${param.category }"></c:param>
 					  </c:url>
 					  <li class="page-item"><a class="page-link" href="${listLink }">다음</a></li>
 				  </c:if>
@@ -162,6 +160,7 @@
 					  		<c:param name="page" value="${pageInfo.lastPageNumber }"></c:param>
 					  		<c:param name="q" value="${param.q }"></c:param>
 					  		<c:param name="t" value="${param.t }"></c:param>
+					  		<c:param name="category" value="${param.category }"></c:param>
 					  </c:url>
 					  <li class="page-item"><a class="page-link" href="${listLink }">맨뒤버튼</a></li>
 				  </c:if>
@@ -199,9 +198,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script>
 
-document.querySelector("#matching").addEventListener("click", function() {
-	
-}
 
 </script>
 </body>

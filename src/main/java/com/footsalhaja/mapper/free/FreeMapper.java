@@ -19,7 +19,7 @@ public interface FreeMapper {
 
 	int delete(int fb_number);
 	
-	List<BoardDto> list(int offset, int records, String type, String keyword);
+	List<BoardDto> list(int offset, int records, String type, String keyword, String category);
 
 	int countAll(String type, String keyword);
 
