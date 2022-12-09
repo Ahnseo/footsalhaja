@@ -2,7 +2,7 @@
 <%@ page import="java.net.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
-
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +22,7 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.js"></script>
 <body>
 <my:navbar></my:navbar>
-
+<sec:authentication property="name" var="userIdValue"/>
 	<h1>글작성 페이지</h1>
 	
 	<form action="" method="post" enctype="multipart/form-data">
@@ -51,11 +51,6 @@
 			<input multiple type="file" class="form-control" name="files">
 		</div>
 		
-		<div class="mb-3">
-			<label for="" class="form-label">작성자</label>
-			<input type ="text" name="member_userId">
-		</div>
-		<br>
 		
 		<input type="submit" value="등록">
 	

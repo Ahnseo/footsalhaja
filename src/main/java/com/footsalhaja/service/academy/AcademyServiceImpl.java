@@ -237,5 +237,5 @@ public class AcademyServiceImpl implements AcademyService{
 		}
 		return cnt;
 	}
-	
+
 }

@@ -55,7 +55,7 @@
 			<input multiple type="file" class="form-control" name="files">
 		</div>
 	
-	작성자 <input type ="text" value="${board.member_userId }" readonly> <br>
+	닉네임 <input type ="text" value="${board.nickName }" readonly> <br>
 	작성일시 <input type = "datetime-local" value = "${board.ab_insertDatetime }" readonly>
 	</form>
 	

@@ -41,7 +41,6 @@
 							<th>말머리</th>
 							<th>좋아요</th>
 							<th>제목</th>
-							<th>작성자</th>
 							<th>닉네임</th>
 							<th>작성시간</th>
 							<th>조회수</th>
@@ -80,7 +79,6 @@
 										</span>
 									</c:if>
 								</td>
-								<td>${board.member_userId }</td>
 								<td>${board.nickName }</td>
 								<td>${board.ago }</td>
 								<td>${board.ab_viewCount }</td>
@@ -154,6 +152,7 @@
 				</div>
 			</div>
 		</div>
+	</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 
 <script type="text/javascript">

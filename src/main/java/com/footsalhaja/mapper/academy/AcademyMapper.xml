@@ -191,9 +191,10 @@
 	
 	<!-- 파일 수정에 따른 중복파일 삭제 -->
 	<delete id="deleteByBoardIdAndFileName">
-	DELETE FROM academyBoardFileAttach
-	WHERE academyBoard_ab_number = #{ab_number} AND ab_fileName = #{originalFilename}
+		DELETE FROM academyBoardFileAttach
+		WHERE academyBoard_ab_number = #{ab_number} AND ab_fileName = #{originalFilename}
 	</delete>
+	
  
  </mapper>
   
