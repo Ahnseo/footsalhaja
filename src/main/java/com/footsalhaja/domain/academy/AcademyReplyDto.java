@@ -13,7 +13,7 @@ public class AcademyReplyDto {
 	private int ab_number;
 	private String ab_replyContent;
 	private String member_userId;
-	
+	private boolean editable;
 	
 	
 	private LocalDateTime ab_replyInsertDatetime;

@@ -61,8 +61,10 @@ public class AcademyReplyController {
 	@PostMapping("add")
 	@PreAuthorize("isAuthenticated()") // 로그인 여부
 	@ResponseBody
-	public Map<String, Object> add(@RequestBody AcademyReplyDto reply) {
+	public Map<String, Object> add(@RequestBody AcademyReplyDto reply, Authentication authentication) {
 
+		reply.setMember_userId(authentication.getName());
+		
 		Map<String, Object> map = new HashMap<>();
 		
 		int cnt = service.addReply(reply);
