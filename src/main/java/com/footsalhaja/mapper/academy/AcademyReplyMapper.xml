@@ -5,7 +5,7 @@
  <mapper namespace="com.footsalhaja.mapper.academy.AcademyReplyMapper">
  
  <!-- 게시글 별 댓글리스트 -->
- 	<select id="selectReplyByBoardId" resultType="com.footsalhaja.domain.academy.AcademyReplyDto">
+<!--  	<select id="selectReplyByBoardId" resultType="com.footsalhaja.domain.academy.AcademyReplyDto">
 	SELECT 
 		r.ab_replyNumber,
 		r.ab_replyContent,
@@ -21,7 +21,7 @@
 		academyBoard_ab_number = #{ab_number}
 	ORDER BY
 		academyBoard_ab_number DESC
-	</select>
+	</select> -->
 
 <!-- 댓글 입력 -->
 	<insert id="insert">
@@ -82,7 +82,7 @@
 	<!-- 댓글 수 -->
 	
 	<select id="getTotalReplyCount" resultType="int">
-		SELECT Count(ab_replyNumber)
+		SELECT Count(*)
 		FROM academyBoardReply
 		WHERE academyBoard_ab_number= #{ab_number}
 	</select>		

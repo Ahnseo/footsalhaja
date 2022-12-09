@@ -51,6 +51,9 @@
 			<input multiple type="file" class="form-control" name="files">
 		</div>
 		
+		<input type = "hidden"
+		value="${userIdValue }"
+		 readonly type="text" name="member_userId"/><br>
 		
 		<input type="submit" value="등록">
 	

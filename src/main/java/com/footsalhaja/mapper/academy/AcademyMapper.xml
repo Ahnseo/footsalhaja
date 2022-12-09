@@ -103,7 +103,7 @@
 		b.ab_content,
 		b.member_userId,
 		b.ab_insertDatetime,
-		COUNT(r.academyBoard_ab_number) replyCnt,
+		COUNT(DISTINCT r.ab_replyNumber) replyCnt,
 		COUNT(DISTINCT l.member_userId) countLike,
 		COUNT(DISTINCT f.academyBoard_ab_number) countFile,
 		b.ab_viewCount,
@@ -169,6 +169,12 @@
 		SELECT COUNT(*) FROM academyBoardLike
 		WHERE academyBoard_ab_number = #{ab_number}
 	</select>
+	
+	<!-- 게시글 삭제 전 좋아요 삭제 -->
+		<delete id="deleteLikeByBoardId">
+		DELETE FROM academyBoardLike
+		WHERE academyBoard_ab_number = #{ab_number}
+	</delete>
 	
 	<!-- 조회수 -->
 	<update id="updateViewCount">

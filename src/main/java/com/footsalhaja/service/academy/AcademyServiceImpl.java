@@ -145,6 +145,8 @@ public class AcademyServiceImpl implements AcademyService{
 		mapper.deleteFileByBoardId(ab_number);
 		//댓글 지우기
 		replyMapper.deleteByBoardId(ab_number);
+		//좋아요 지우기
+		mapper.deleteLikeByBoardId(ab_number);
 		//게시물 지우기
 		return mapper.remove(ab_number);
 	}

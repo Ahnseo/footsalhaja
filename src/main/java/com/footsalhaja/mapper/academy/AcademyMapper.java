@@ -47,5 +47,9 @@ public interface AcademyMapper {
 	public void deleteFileByBoardId(int ab_number);
 
 	public void deleteByBoardIdAndFileName(int ab_number, String originalFilename);
+
+	public void deleteLikeByBoardId(int ab_number);
+	
+	
 	
 }

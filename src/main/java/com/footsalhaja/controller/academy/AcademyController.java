@@ -94,7 +94,7 @@ public class AcademyController {
 	}
 	
 	
-
+	//썸머노트 이미지 업로드
 	  @PostMapping(value="/uploadSummernoteImageFile", produces = "application/json")
 	  
 	  @ResponseBody public HashMap<String, String> uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile) {
@@ -102,7 +102,7 @@ public class AcademyController {
 	  HashMap<String, String> jsonObject = new HashMap<>();
 	  
 	  
-	  String ab_filePath = "C:\\Users\\lnh1017\\Desktop\\study\\project\\"; //저장될 외부 파일 경로 String
+	  String ab_filePath = "C:\\Users\\lnh1017\\Desktop\\study\\project\\footsalhaja\\sn_img\\"; //저장될 외부 파일 경로 String
 	  String originalFileName = multipartFile.getOriginalFilename(); //오리지날 파일명 String
 	  
 	  String ab_image = UUID.randomUUID() + originalFileName; //랜덤 UUID+파일이름으로 저장될 파일 새 이름
