@@ -80,7 +80,7 @@
 									</c:if>
 								</td>
 								<td>${board.member_userId }</td>
-								<td>${board.ab_insertDatetime }</td>
+								<td>${board.ago }</td>
 								<td>${board.ab_viewCount }</td>
 							</tr>
 						</c:forEach> 
