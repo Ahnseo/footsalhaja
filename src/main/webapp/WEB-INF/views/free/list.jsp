@@ -23,6 +23,8 @@
 
 	<h1>프리보드 목록</h1>
 	
+
+	
 	<table class="table">
 		<thead>
 			<tr>
@@ -78,6 +80,15 @@
         <button class="btn btn-outline-success" type="submit">검색</button>
         
     </form>
+    
+    <form action="${listLink }" >
+    	<div name="c">
+		    <button name="all" >전체</button>
+			<button name="matching" >매칭후기</button>
+			<button name="stadium" >구장후기</button>
+			<button name="talk" >잡담</button>
+    	</div>
+	</form>
     
     
 	    <!-- 글작성 버튼 -->
@@ -184,7 +195,14 @@
 	</div>
 	
 	
+	
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<script>
 
+document.querySelector("#matching").addEventListener("click", function() {
+	
+}
+
+</script>
 </body>
 </html>
