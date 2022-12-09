@@ -33,7 +33,7 @@ public class AcademyServiceImpl implements AcademyService{
 	}
 	
 	@Override
-	public List<BoardDto> listBord(Criteria cri) {
+	public List<BoardDto> listBord(Criteria cri, String category) {
 		System.out.println("get List with Criteria: " +cri);
 		
 		int offset = (cri.getPageNum() -1) * cri.getAmount();
@@ -42,7 +42,7 @@ public class AcademyServiceImpl implements AcademyService{
 		
 		/* cri.setKeyword("%"+cri.getKeyword()+"%"); */
 		
-		return mapper.getListWithPaging(cri, offset,records);
+		return mapper.getListWithPaging(cri, offset,records, category);
 	}
 	
 	@Override

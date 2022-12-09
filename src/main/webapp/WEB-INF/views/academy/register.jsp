@@ -32,10 +32,10 @@
 		 </div>
 		<div class="mb-3"> 
 		말머리 <select name="ab_category">
-	        <option value="lesson">레슨</option>
-	        <option value="tip">꿀팁</option>
-	        <option value="recruitment">팀원모집</option>
-	        <option value="qna">질문/답변</option>
+	        <option value="레슨">레슨</option>
+	        <option value="꿀팁">꿀팁</option>
+	        <option value="팀원모집">팀원모집</option>
+	        <option value="질문/답변">질문/답변</option>
 	    </select>
 	    </div>
 	    

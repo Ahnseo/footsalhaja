@@ -74,7 +74,7 @@
 	
 	<!-- 검색 조건 -->
 	<sql id="criteria">
-		<trim prefixOverrides="OR">
+		<trim prefix="(" suffix=")" prefixOverrides="OR">
 			<foreach item='type' collection="cri.typeArr">
 				<trim prefix="OR">
 					<choose>
@@ -95,7 +95,6 @@
 	
 	<!-- 페이지네이션 & 검색 -->
 	<select id="getListWithPaging" resultType="com.footsalhaja.domain.academy.BoardDto">
-	<![CDATA[
 	SELECT 		
 		b.ab_number,
 		b.ab_category,
@@ -113,14 +112,17 @@
 						LEFT JOIN academyBoardLike l ON b.ab_number = l.academyBoard_ab_number
 						LEFT JOIN academyBoardFileAttach f ON b.ab_number = f.academyBoard_ab_number
 						LEFT JOIN member m ON b.member_userId = m.userId
-	]]>
 	
 	 <if test="cri.type!=null and cri.type!=''">
 	 <![CDATA[
-		WHERE
+	WHERE
 	]]>
 	<include refid="criteria"></include>
 	</if>
+	<if test ="category !=null and category != ''">
+		AND b.ab_category = #{category}
+	</if>
+	
 	<![CDATA[
 	GROUP BY b.ab_number
 	ORDER BY b.ab_number DESC
@@ -132,10 +134,10 @@
 	<!-- 전체 데이터 수 -->
 	
 	<select id="getTotalCount" resultType="int">
-	<![CDATA[	
+
 		SELECT Count(*)
 		FROM academyBoard b
-		]]> 
+	
 		<!-- 검색조건 호출  -->
 	<if test="cri.type!=null and cri.type!=''">
 	<![CDATA[	

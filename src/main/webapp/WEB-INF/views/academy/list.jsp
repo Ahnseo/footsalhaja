@@ -112,6 +112,13 @@
 								value='<c:out value="${pageMaker.cri.amount }"/>'>
 								
 							<button class='btn btn-default'>Search</button>
+							
+							<!-- 카테고리 -->
+							<button class='btn btn-default' name = "category" value = "레슨">레슨</button>
+							<button class='btn btn-default' name = "category" value = "꿀팁">꿀팁</button>
+							<button class='btn btn-default' name = "category" value = "팀원모집">팀원모집</button>
+							<button class='btn btn-default' name = "category" value = "질문/답변">질문/답변</button>
+							
 						</form>
 					</div>
 				</div>

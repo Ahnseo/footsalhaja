@@ -19,7 +19,7 @@ public interface AcademyService {
 	public int remove (int ab_number);
 	
 	//페이지네이션 
-	public List<BoardDto> listBord(Criteria cri);
+	public List<BoardDto> listBord(Criteria cri, String category);
 	
 	public int getTotal(Criteria cri);
 	

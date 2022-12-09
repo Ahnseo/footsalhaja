@@ -49,16 +49,18 @@ public class AcademyController {
 	
 	//list 목록
 	@GetMapping("list")
-	public void list(Criteria cri, Model model) {
+	public void list(@RequestParam(name = "category", defaultValue = "") String category,
+			Criteria cri, Model model) {
 	
 		// request param
 		// business logic
 
 		String keyword = cri.getKeyword();
 		cri.setKeyword("%"+cri.getKeyword()+"%");
-		List<BoardDto> list = service.listBord(cri);
+		List<BoardDto> list = service.listBord(cri, category);
 		
 		System.out.println(list);
+		System.out.println("category:"+ category);
 		
 		// add attribute
 		model.addAttribute("boardList", list);
