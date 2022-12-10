@@ -12,6 +12,13 @@
 		 VALUES 
 		 		(#{category}, #{title}, #{content}, #{userId}  );
 	 </insert>
+	 <update id="updateMyQnABoard">
+	 	UPDATE QnABoard SET
+	 		title = #{title},
+	 		content = #{content}		
+	 	WHERE
+	 		qnaId = #{qnaId}
+	 </update>
 	 
 	 <select id="myQnAList" resultType="com.footsalhaja.domain.qna.QnADto">
 	 	SELECT 
@@ -32,6 +39,38 @@
 	 		qnaId DESC 
 	 	LIMIT
 	 		#{offset}, #{records}
+	 </select>
+	 
+	 <select id="selectQnAListByStatusDone" resultType="com.footsalhaja.domain.qna.QnADto">
+	 	SELECT 
+	 		qnaId,
+	 		category,
+	 		title,
+	 		content,
+	 		status,
+	 		member_userId AS userId,
+	 		likeCount
+	 	FROM 
+	 	 	QnABoard
+	 	WHERE
+	 		status = #{status} 
+	 	AND (
+		<trim prefixOverrides="OR">
+			<if test="type == 'all' or type == 'title'">
+			OR title LIKE #{keyword}
+			</if>
+			
+			<if test="type == 'all' or type == 'content'">
+			OR content LIKE #{keyword}
+			</if>
+			
+			<if test="type == 'all' or type == 'userId'">
+			OR member_userId LIKE #{keyword}
+			</if>
+		</trim> 
+		) 	
+	 	ORDER BY qnaId DESC
+	 	LIMIT #{offset}, #{records}
 	 </select>
 	 
 	 <select id="countAllQnAByUserId" resultType="int">
@@ -180,19 +219,48 @@
 	<select id="selectQnAReplyToAnswerList" resultType="com.footsalhaja.domain.qna.QnAReplyToAnswerDto">
 		<!-- //qnaReplyToAnswerId, qnaReplyId, qnaId, writer, content, userId, insertDatetime -->
 		SELECT 
-			t.qnaReplyToAnswerId,
-			t.qnaReplyId,
-			t.qnaId,
-			t.userId,
-			t.writer,
-			t.content,
-			t.insertDatetime
+			qnaReplyToAnswerId,
+			qnaReplyId,
+			qnaId,
+			userId,
+			writer,
+			content,
+			insertDatetime
 		FROM 
-			QnAReplyToAnswer t
-		LEFT JOIN QnAReply q ON t.qnaReplyId = q.qnaReplyId
-		LEFT JOIN QnABoard b ON t.qnaId = b.qnaId
+			QnAReplyToAnswer
 		WHERE 
-			t.qnaReplyId = #{qnaReplyId}
+			qnaReplyId = #{qnaReplyId}
 	</select>
 
+	<update id="updateQnAStatus">
+		UPDATE QnABoard SET
+			status = #{status}
+		WHERE qnaId = #{qnaId} 	
+	</update>
+	
+	<delete id="deleteAnswerByAnswerId">
+		DELETE FROM QnAReply
+		WHERE qnaReplyId = #{qnaReplyId}
+	</delete>
+	
+	<delete id="deleteQnAReplyByReplyId">
+		DELETE FROM QnAReplyToAnswer
+		WHERE qnaReplyToAnswerId = #{qnaReplyToAnswerId}
+	</delete>
+	<delete id="deleteQnAReplyByAnswerId">
+		DELETE FROM QnAReplyToAnswer
+		WHERE qnaReplyId = #{qnaAnswerId}
+	</delete>
+	<delete id="deleteAllQnAReplyById">
+		DELETE FROM QnAReplyToAnswer
+		WHERE qnaId = #{qnaId}
+	</delete>
+	<delete id="deleteAnswerBYqnaId">
+		DELETE FROM QnAReply
+		WHERE qnaId = #{qnaId}
+	</delete>
+	<delete id="deleteQnA">
+		DELETE FROM QnABoard
+		WHERE qnaId = #{qnaId}
+	</delete>
  </mapper>

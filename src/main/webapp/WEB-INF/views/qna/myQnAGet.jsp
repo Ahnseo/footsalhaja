@@ -21,16 +21,15 @@
 	<sec:authentication property="name" var="userIdValue"/>	
 	<div class="container mt-3 mb-3">
 		<div class="d-flex">
-			<div class="mr-auto p-2"><h1>문의내용</h1></div>
-		    <div class="p-3"><button class="btn btn-outline-success" type="button" id="likeBtn1"><i class="fa-regular fa-thumbs-up"></i></button></div>
+			<div class="mr-auto p-2"><h1>문의내용</h1></div> 
 	    </div>
 		<div class="row">
 			<div class="col">		
 				<form action="" method="post" class="form-control row g-3 mb-3">
-					<div class="d-flex">
+					<div class="row d-flex">
 						<div class="col-md-2">
 							<label for="formControlInput1" class="form-label">문의번호</label>
-							<input id="formControlInput1" class="form-control" type="hidden" name="qnaId" id="qnaId" value="${qna.qnaId}">						
+							<input id="formControlInput1" class="form-control" type="hidden" name="qnaId" id="qnaIdVal" value="${qna.qnaId}">						
 							<span class="badge bg-primary rounded-pill">${qna.qnaId}</span>
 						</div>
 						<div class="col-md-2">
@@ -38,20 +37,27 @@
 							<input id="formControlInput2" class="form-control" type="hidden" name="category" value="${qna.category}" readonly >
 							<span class="badge bg-primary rounded-pill">${qna.category}</span>
 						</div>
-						<div class="col-md-2">
+					</div>
+					<div class="row d-flex">
+						<div class="col-md-4">
 							<label for="formControlInput5" class="form-label"><i class="fa-solid fa-user"></i></label>
-							<input id="formControlInput5" class="form-control" type="hidden" name="userId" value="${qna.userId}" readonly >
+							<input id="formControlInput5" class="form-control" type="hidden" name="userId" id="userIdVal" value="${qna.userId}" readonly >
 							<span class="badge bg-primary rounded-pill">${qna.userId}</span>
 						</div>
-						<div class="col-md-2">
+						<div class="col-md-4">
 							<label for="formControlInput6" class="form-label"><i class="fa-regular fa-clock"></i></label>						
 							<input id="formControlInput6" class="form-control" type="hidden" name="insertDatetime" value="${qna.insertDatetime} " readonly >						
 							<span class="badge bg-primary rounded-pill">${qna.insertDatetime}</span>
 						</div>
-						<div class="col-md-2">
-							<label for="formControlInput7" class="form-label">처리상태</label>						
+						<div class="col-md-4">
+							<label for="formControlInput7" class="form-label">처리상태</label>	
 							<input id="formControlInput7" class="form-control" type="hidden" name="status" value="${qna.status} " readonly >
-							<span class="badge bg-primary rounded-pill">${qna.status}</span>
+							<c:if test="${qna.status == '답변대기'}">
+								<span class="badge bg-danger rounded-pill">${qna.status}</span>
+							</c:if>
+							<c:if test="${qna.status != '답변대기'}">
+								<span class="badge bg-success rounded-pill">${qna.status}</span>
+							</c:if>
 						</div>
 					</div>
 					<div class="mb-3">
@@ -63,68 +69,88 @@
 						<textarea id="formControlInput4" class="form-control" name="content" readonly >${qna.content}</textarea>
 					</div>
 				
-					<div class = "d-flex flex-row-reverse">
+					<div class = "d-flex flex-row-reverse">			
+						<c:url value="/qna/myQnAModify" var="myQnAModifyLink">
+							<c:param name="userId" value="${qna.userId}"/>
+							<c:param name="qnaId" value="${qna.qnaId}"/>
+						</c:url>
+						<button onclick="location.href='${myQnAModifyLink}'" class="btn btn-outline-warning" type="button">수정</button>		
 						<div>
-							<button class="btn btn-outline-danger" type="button" id="" >삭제</button>
-						</div>	
-						<div>
-							<button class="btn btn-outline-warning"  type="button" id="" >수정</button>
-						</div >					
-						<div class = "d-flex flex-row-reverse">
+							<button class="btn btn-outline-success" type="button" id="likeBtn1">
+								<!-- 문의내용 좋아요 버튼 -->
+								<i class="fa-regular fa-thumbs-up"></i>
+							</button>
+						</div>
+						<c:if test="${qnaAnswer == null}">
 							<sec:authorize access="hasAuthority('admin')">
-								<div>
-								<!-- 답변하기 post -> controller -->
-									<button class="btn btn-outline-success" type="button" data-bs-toggle="collapse" data-bs-target="#qnaReplyCollapseAnswer" aria-expanded="false" aria-controls="collapseExample">
-										답변하기
-									</button>
+								<div class = "d-flex flex-row-reverse">
+									<div>
+										<!-- 답변하기 fetch -> post -> controller -->
+										<button class="btn btn-outline-success" type="button" data-bs-toggle="collapse" data-bs-target="#qnaReplyCollapseAnswer" aria-expanded="false" aria-controls="collapseExample">
+											답변하기
+										</button>
+									</div>
 								</div>
 							</sec:authorize>
-						</div>
+						</c:if>
 					</div>
 				</form>	
-				
-				<h1>답변내용 </h1>
-				
-				<sec:authorize access="hasAuthority('admin')">
+				<!-- 답변 작성하기 -->
+				<sec:authorize access="hasAuthority('admin')">		
 					<div class="collapse" id="qnaReplyCollapseAnswer">
 						<div class="card card-body">
-							<input type="hidden" id="qnaReplyQnAId" value="${qna.qnaId}" readonly>
-							<input type="hidden" id="qnaReplyUserId" value="${qna.userId}" readonly>
-							<input type="hidden" id="qnaReplyWriter" value="${userIdValue}"  readonly>
 							<div class="mb-3">
+								<input type="hidden" id="qnaReplyQnAId" value="${qna.qnaId}" readonly>
+								<input type="hidden" id="qnaReplyUserId" value="${qna.userId}" readonly>
+								<input type="hidden" id="qnaReplyWriter" value="${userIdValue}" readonly>
 								<label for="qnaReplyContent" class="form-label">내용</label>
 								<textarea id="qnaReplyContent" class="form-control"></textarea>
 							</div>
+							<sec:authorize access="isAuthenticated()">
 							<div class="d-flex flex-row-reverse">
 								<button class="btn btn-outline-success" type="button" id="qnaReplyBtn">등록</button>
 							</div>
+							</sec:authorize>
 						</div>
 					</div>
 				</sec:authorize>
-				<!-- 답변 가져오기(리스트 ..)  -->
+				<!-- 답변 가져오기  -->
 				<!-- //qnaReplyId,qnaId,userId,writer,content,insertDatetime -->
-				<c:forEach items="${qnaReplyList}" var="qnaReply">	
-				<div class="row g-3 mb-3">
-					<div class="col-md-12">
-						<div class="card">
-							<div class="card-header d-flex">
-								<span class="p-1"><i class="fas fa-comments"></i></span>
-								<span class="p-1"><i class="fa-solid fa-user"></i>${qnaReply.writer}</span>
-								<span class="p-1"><i class="fa-regular fa-clock"></i>${qnaReply.insertDatetime}</span>
-							</div>
-							<div class="card-body">
-								<p class="card-text">${qnaReply.content}</p>
-								<div class="d-flex flex-row-reverse">
-								<a href="#" class="btn btn-danger">삭제</a>    		    
-								<button class="btn btn-outline-success" type="button" data-bs-toggle="modal" data-bs-target="#replyInputModal">
-								댓글작성 <!-- 댓글작성 버튼 modal  -->
-								</button>
+				<c:if test="${qnaAnswer != null}">
+					<h1>답변내용 </h1>
+					<div class="row g-3 mb-3">
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-header d-flex">
+									<span class="p-1"><i class="fas fa-comments"></i></span>
+									<span class="p-1"><i class="fa-solid fa-user"></i>${qnaAnswer.writer}</span>
+									<span class="p-1"><i class="fa-regular fa-clock"></i>${qnaAnswer.insertDatetime}</span>
+								</div>
+								<div class="card-body">
+									<p class="card-text">${qnaAnswer.content}</p>
+									<div class="d-flex flex-row-reverse">
+										<%-- <c:if test="${userIdValue == 'admin'}"> --%>
+										<div>
+											<input id="qnaReplyIdValue" type="hidden" value="${qnaAnswer.qnaReplyId}">
+											<input id="qnaIdValue" type="hidden" value="${qnaAnswer.qnaId}">
+											<input id="qnaUserIdValue" type="hidden" value="${qnaAnswer.userId}">
+											<button id="qnaAnswerDeleteBtn" class="btn btn-outline-danger" type="button" >삭제</button>
+										</div>
+										<div>
+											<button class="btn btn-outline-warning"  type="button" id="" >수정</button>
+										</div>
+										<%-- </c:if> --%>
+										<sec:authorize access="isAuthenticated()">
+											<button class="btn btn-outline-success" type="button" data-bs-toggle="modal" data-bs-target="#replyInputModal">
+												댓글작성
+											</button>
+										</sec:authorize>	
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-				</div> 
-				</c:forEach>
+					</div> 
+				</c:if>
 		    	<!-- 댓글작성 Modal by 답변Id  -->
 		    	<div class="modal fade" id="replyInputModal" tabindex="-1" aria-labelledby="replyInputModalLabel" aria-hidden="true">
 		    	  <div class="modal-dialog">
@@ -149,10 +175,10 @@
 		    	    </div>
 		    	  </div>
 		    	</div>
-				<!-- 댓글보기 by 답변Id  -->
-				<div>
-		    		<c:forEach items="${qnaReplyToAnswerList}" var="qnaReplyToAnswer">
-		    			<div class="row g-3 mb-3">
+				<!-- 댓글보기 답변이있을때만 , by 답변Id가있으면   -->
+				<c:forEach items="${qnaReplyToAnswerList}" var="qnaReplyToAnswer">
+					<div class="container">
+						<div class="row g-3 mb-3">
 			    			<div class="col-md-1">
 			    				<i class="fa-solid fa-arrow-right"></i>
 			    			</div>
@@ -166,62 +192,109 @@
 					    		  <div class="card-body">
 					    		    <p class="card-text">${qnaReplyToAnswer.content}</p>
 					    		    <div class="d-flex flex-row-reverse">
-						    		    <a href="#" class="btn btn-danger">삭제</a>
-						    		    <a href="#" class="btn btn-primary">답글</a>
+					    		    	<%-- 로그인=> ${userIdValue} / 작성자=> ${qnaReplyToAnswer.userId} --%>
+					    		    	<c:if test="${qnaReplyToAnswer.userId == userIdValue}">
+						    		    	<div>
+							    		    	<input id="qnaReplyToAnswerIdValue" type="hidden" value="${qnaReplyToAnswer.qnaReplyToAnswerId}">
+						    		    		<button id="qnaReplyDeleteBtn${qnaReplyToAnswer.qnaReplyToAnswerId}" onclick="deleteReply()" class="btn btn-outline-danger" type="button">삭제</button>
+						    		    	</div>
+						    		    	<div>
+							    		    	<a href="#" class="btn btn-outline-warning">수정</a>
+							    		    </div> 
+							    		</c:if>
 					    		    </div>
 					    		  </div>
 					    		</div>
 				    		</div>
 			    		</div>
-		    		</c:forEach>
-		    	</div>			
+					</div>			
+				</c:forEach>
 			</div>
 		</div>
 	</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script>
 	const ctx = "${pageContext.request.contextPath}";
-	<!-- 좋아요 기능 -->
-	document.querySelector("#likeBtn1").addEventListener("click", function(){
-		const qnaId = document.querySelector("#qnaId").value;
-		fetch(ctx + "/qna/likeCount", { 
-			method : "put",
-			headers : { "Content-Type" : "application/json" },
-			body : JSON.stringify({qnaId : qnaId})
+//	<!-- 좋아요 기능 -->
+//	document.querySelector("#likeBtn1").addEventListener("click", function(){
+//		const qnaId = document.querySelector("#qnaId").value;
+//		fetch(ctx + "/qna/likeCount", { 
+//			method : "put",
+//			headers : { "Content-Type" : "application/json" },
+//			body : JSON.stringify({qnaId : qnaId})
+//		})
+//	});
+	
+if(qnaReplyBtn != null) {
+	<!-- 답변 저장기능 (관리자만 작성가능)-->
+	document.querySelector("#qnaReplyBtn").addEventListener("click", function() {
+		const qnaId = document.querySelector("#qnaReplyQnAId").value;
+		const userId = document.querySelector("#qnaReplyUserId").value;
+		const writer = document.querySelector("#qnaReplyWriter").value;
+		const content = document.querySelector("#qnaReplyContent").value;
+		const data = {qnaId, userId, writer, content};
+		fetch(ctx + "/qnaReply/add", { method : "put",
+									    headers : { "Content-Type" : "application/json" },
+									    body : JSON.stringify(data)
 		})
-		
+		.then(res => res.text())
+		.then(redirectPath => location.href = redirectPath)
+	});
+}	
+	<!-- 답변 삭제  -->
+	function deleteAnswer() {
+		document.querySelector("#qnaAnswerDeleteBtn").addEventListener("click", function() {
+			const qnaReplyId = document.querySelector("#qnaReplyIdValue").value;
+			const qnaId = document.querySelector("#qnaIdValue").value;
+			const userId = document.querySelector("#qnaUserIdValue").value;
+			const data = {qnaReplyId, qnaId, userId};
+			fetch(ctx + "/qnaReply/deleteQnAAnswer", 
+					{ method : "delete",
+			    	headers : { "Content-Type" : "application/json" },
+			    	body : JSON.stringify(data)
+			})
+			.then(res => res.text())
+			.then(redirectPath => location.href = redirectPath)
+			
+		});
+	}
+	
+	
+	<!-- 댓글 저장기능(답변글이 있을 때만 가능, 로그인한 모든 회원 ) -->
+	document.querySelector("#qnaReplyBtn2").addEventListener("click", function() {
+		const qnaReplyId = document.querySelector("#qnaReplyId2").value;
+		const qnaId = document.querySelector("#qnaReplyQnAId2").value;
+		const userId = document.querySelector("#qnaReplyUserId2").value;
+		const writer = document.querySelector("#qnaReplyWriter2").value;
+		const content = document.querySelector("#qnaReplyContent2").value;
+		const data = {qnaReplyId, qnaId, userId, writer, content};
+		fetch(ctx + "/qnaReply/addToAnswer", 
+				{ method : "put",
+				headers : { "Content-Type" : "application/json" },
+				body : JSON.stringify(data)
+		})
+		.then(res => res.text())
+		.then(redirectPath => location.href = redirectPath)
 	});
 
-	<!-- 답변 저장기능 (관리자만 작성가능)-->
-	<c:if test="${not empty userIdValue}">
-		document.querySelector("#qnaReplyBtn").addEventListener("click", function() {
-			const qnaId = document.querySelector("#qnaReplyQnAId").value;
-			const userId = document.querySelector("#qnaReplyUserId").value;
-			const writer = document.querySelector("#qnaReplyWriter").value;
-			const content = document.querySelector("#qnaReplyContent").value;
-			const data = {qnaId, userId, writer, content};
-			fetch(ctx + "/qnaReply/add", { method : "put",
-										    headers : { "Content-Type" : "application/json" },
-										    body : JSON.stringify(data)
-			});
-		});
-	</c:if>
 	
-	<!-- 답변에 대한 댓글 저장기능(답변글이 있을 때만 가능, 로그인한 모든 회원 ) -->
-	<c:if test="${not empty userIdValue}">
-		document.querySelector("#qnaReplyBtn2").addEventListener("click", function() {
-			const qnaReplyId = document.querySelector("#qnaReplyId2").value;
-			const qnaId = document.querySelector("#qnaReplyQnAId2").value;
-			const userId = document.querySelector("#qnaReplyUserId2").value;
-			const writer = document.querySelector("#qnaReplyWriter2").value;
-			const content = document.querySelector("#qnaReplyContent2").value;
-			const data = {qnaReplyId, qnaId, userId, writer, content};
-			fetch(ctx + "/qnaReply/addToAnswer", { method : "put",
-										    headers : { "Content-Type" : "application/json" },
-										    body : JSON.stringify(data)
-			});
-		});
-	</c:if>
+	<!-- function() 댓글 삭제  qnaReplyToAnswerId, qnaReplyId, qnaId, writer, content, userId, insertDatetime -->
+	function deleteReply() {
+		console.log("t삭제버튼 클릭됨 ");
+		const qnaReplyToAnswerId = document.querySelector("#qnaReplyToAnswerIdValue").value;
+		fetch(ctx + "/qnaReply/deleteQnAReply",
+				{ method : "delete",
+		    	headers : { "Content-Type" : "application/json" },
+		    	body : JSON.stringify(qnaReplyToAnswerId)
+		})
+		.then(res => res.text())
+		.then(redirectPath => location.href = redirectPath)
+	};
+	
+	
+	
+	
+	
 </script>
 </body>
 </html>

@@ -33,12 +33,19 @@ public class QnAController {
 
 	// main
 	@GetMapping("qnaMainBoard")
-	public void qnaMainBoard(Model model) {
+	public void qnaMainBoard(@RequestParam(name="page", defaultValue = "1") int page,
+							@RequestParam(name="q") String keyword,
+							@RequestParam(name="t") String type,
+							QnAPageInfo qnaPageInfo,
+							Model model
+							) {
 		// FAQ data 가져오기
 		List<FAQDto> FAQList = qnaService.selectFAQList();
-		// System.out.println(FAQList);
-
+		// 답변완료된!! allQnAList 만!! 가져오기
+		List<QnADto> allQnAListByDone = qnaService.selectQnAListByStatusDone(page, qnaPageInfo, type, keyword);
+		
 		model.addAttribute("FAQList", FAQList);
+		model.addAttribute("allQnAListByDone", allQnAListByDone);
 	}
 
 	// insert
@@ -58,7 +65,7 @@ public class QnAController {
 	// MyQnAList
 	@GetMapping("myQnAList")
 	public void myQnAList(@RequestParam(name = "page", defaultValue = "1") int page, QnAPageInfo qnaPageInfo,
-			Model model, String userId) {
+			Model model, String userId) throws Exception {
 		// myQnAList 페이지네이션 추가
 		List<QnADto> myQnAList = new ArrayList<>();
 		myQnAList = qnaService.myQnAList(userId, page, qnaPageInfo);
@@ -74,22 +81,41 @@ public class QnAController {
 
 	// MyQnAGet
 	@GetMapping("myQnAGet")
-	public void myQnAGet(String userId, int qnaId, Model model, QnAReplyDto qnaReply, QnAReplyToAnswerDto qnaReplyToAnswer) {
+	public void myQnAGet(String userId, int qnaId, Model model, QnAReplyDto qnaReply) {
 		QnADto qna = qnaService.selectMyQnAGetByQnAIdAndUserId(userId, qnaId);
 		model.addAttribute("qna", qna);
-		//System.out.println("qna 정보 : "+ qna);
+		System.out.println("qna 정보 : "+ qna);
 		
-		List<QnAReplyDto> qnaReplyList = qnaService.selectQnAReply(qnaReply);
-		model.addAttribute("qnaReplyList", qnaReplyList);
+		QnAReplyDto qnaAnswer = qnaService.selectQnAReply(qnaReply);
+		System.out.println("qnaAnswer :"+qnaAnswer);
+		
+		model.addAttribute("qnaAnswer", qnaAnswer);
 		
 		int qnaReplyId = qna.getQnaReplyId();
+		//System.out.println(qnaReplyId);
 		List<QnAReplyToAnswerDto> qnaReplyToAnswerList = qnaService.selectQnAReplyToAnswerList(qnaReplyId);
 		//System.out.println("qnaReplyToAnswerList : "+qnaReplyToAnswerList);
 		
 		model.addAttribute("qnaReplyToAnswerList", qnaReplyToAnswerList);
-		
-		
 	}
+	
+	// myQnA게시물 . 저장한 정보 내용 또는 수정된 최신 내용 가저오기  
+	@GetMapping("myQnAModify")
+	public void myQnAModify(String userId, int qnaId, Model model) {
+		QnADto qna = qnaService.selectMyQnAGetByQnAIdAndUserId(userId, qnaId);
+		//System.out.println("수정! qna 정보 : "+ qna);
+		model.addAttribute("qna", qna);
+	}
+	// myQnA게시물 수정하기 !
+	@PostMapping("myQnAModify")
+	public String updateQnAInfo(QnADto modifiedQnA) {
+		//업데이트 하고,select 해서 model에 넣고 -> 페이지 이동 해서 보여주기 
+		//System.out.println("myQnAModify qna " + modifiedQnA);
+		qnaService.updateMyQnABoard(modifiedQnA);
+		
+		return "redirect:/qna/qnaMainBoard";
+	}
+	
 	@PutMapping("likeCount")
 	@ResponseBody
 	@PreAuthorize("isAuthenticated()")

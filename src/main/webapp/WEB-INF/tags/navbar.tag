@@ -57,8 +57,12 @@
         <li class="nav-item active">
         	<a class="nav-link ${active eq 'mypageLink' ? 'active' : '' }" href="${mypageLink}">마이페이지</a>
       	</li>
-        <c:url value="/qna/qnaMainBoard" var="qnaLink"></c:url>
         <li class="nav-item active">
+        	<c:url value="/qna/qnaMainBoard" var="qnaLink">
+      			<c:param name="page" value="1"/>
+      			<c:param name="q" value=""/>
+      			<c:param name="t" value="all"/>
+      		</c:url>
         	<a class="nav-link ${active eq 'qnaMainBoard' ? 'active' : '' }" href="${qnaLink}">고객문의</a>
       	</li>
       	
