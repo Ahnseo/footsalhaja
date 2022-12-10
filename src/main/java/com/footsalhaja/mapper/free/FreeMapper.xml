@@ -143,4 +143,26 @@
 	WHERE fb_number = #{fb_number}
  	</update>
  	
+ 	<!-- 좋아요 순위 -->
+ 	<!-- 기준 시간을 자동으로 바뀌게 해야함
+ 	현재시간으로 정해두기엔 초마다 바뀌니까 시간대별로(1시간간격쯤으로 )-->
+ 	 <select id="likeRank" resultType="com.footsalhaja.domain.free.BoardDto">
+	SELECT
+		f.fb_number,
+		f.fb_category,
+		f.fb_title,
+        f.fb_viewCount,
+        f.fb_insertDatetime,
+    	COUNT(DISTINCT r.fb_replyNumber) fb_replyCount,
+    	COUNT(DISTINCT l.member_userId) fb_likeCount,
+        DENSE_RANK() OVER (ORDER BY fb_likeCount DESC) as ranking
+ 	FROM
+		(select * from freeBoard f where f.fb_insertDatetime > date_add(now(),interval -1 week))
+ 		f LEFT JOIN freeBoardReply r ON f.fb_number = r.freeBoard_fb_number
+ 					LEFT JOIN freeBoardLike l ON f.fb_number = l.freeBoard_fb_number
+ 	GROUP BY f.fb_number
+ 	ORDER BY fb_likeCount DESC, fb_viewCount DESC
+    LIMIT 5
+ 	</select>
+ 	
  </mapper>

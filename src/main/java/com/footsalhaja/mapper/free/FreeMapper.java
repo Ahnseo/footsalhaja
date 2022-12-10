@@ -34,5 +34,7 @@ public interface FreeMapper {
 	int deleteLikeByBoardId(int fb_number);
 
 	int updateViewCount(int fb_number);
+
+	List<BoardDto> likeRank(BoardDto board);
 	
 }

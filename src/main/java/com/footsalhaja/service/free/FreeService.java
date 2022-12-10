@@ -25,5 +25,8 @@ public interface FreeService {
 
 	// 조회수
 	public int updateViewCount(int fb_number);
+
+	// 좋아요 순위
+	public List<BoardDto> likeRank(BoardDto board);
 	
 }

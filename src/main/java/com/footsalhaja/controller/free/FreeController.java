@@ -49,6 +49,7 @@ public class FreeController {
 		return "redirect:/free/list";
 	}
 	
+	
 	@GetMapping("list")
 	public void list(
 			@RequestParam(name = "page", defaultValue = "1") int page, // 페이지
@@ -56,11 +57,17 @@ public class FreeController {
 			@RequestParam(name = "q", defaultValue = "") String keyword, // 검색어
 			@RequestParam(name = "category", defaultValue = "") String category, // 카테고리
 			PageInfo pageInfo,
-			Model model) {
+			Model model,
+			BoardDto board) {
 		
+		// 목록
 		List<BoardDto> list = service.listBoard(page, type, keyword, pageInfo, category);
-
 		model.addAttribute("boardList", list);
+		
+		// 좋아요 순위
+		List<BoardDto> rank = service.likeRank(board); 
+		model.addAttribute("likeRank", rank);
+		System.out.println(rank);
 	}
 
 

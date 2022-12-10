@@ -8,6 +8,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+ul{
+   list-style:none;
+   padding-left:0px;
+   }
+</style>
 </head>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -23,6 +29,36 @@
 
 	<h1>프리보드 목록</h1>
 	
+	<!-- 좋아요 베스트 -->
+	<table class="table">
+		<thead>
+			<tr>
+				<td>순위</td>
+				<td>카테고리</td>
+				<td>제목</td>
+				<td>좋아요</td>
+				<td>조회수</td>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach items="${likeRank }" var="rank" >
+			<tr>
+				<td>${rank.ranking }</td>
+				<td>${rank.fb_category }</td>
+				<td>
+					<c:url value="/free/get" var="getLink">
+						<c:param name="number" value="${rank.fb_number }"></c:param>
+					</c:url>
+					<a href="${getLink}">
+						${rank.fb_title }
+					</a>
+				</td>
+				<td>${rank.fb_likeCount }</td>
+				<td>${rank.fb_viewCount }</td>
+			</tr>
+			</c:forEach>
+		</tbody>
+	</table>
 
 	
 	<table class="table">
