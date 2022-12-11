@@ -44,6 +44,10 @@ public class MemberDto {
 	private List<AcademyReplyDto> userAbReplyList;
 	
 	private List<FreeReplyDto> userFbReplyList;
+	
+	private List<BoardDto> userAbLikeList;
+	
+	private List<com.footsalhaja.domain.free.BoardDto> userFbLikeList;
 
 }
 

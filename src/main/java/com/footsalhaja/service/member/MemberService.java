@@ -23,5 +23,7 @@ public interface MemberService {
 	MemberDto getUserFbList(String userId);
 	
 	List<MemberDto> getUserReplyList(String userId);
+	
+	List<MemberDto> getUserLikeList(String userId);
 
 }

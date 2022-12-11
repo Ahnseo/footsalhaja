@@ -39,4 +39,8 @@ public interface MemberMapper {
 	//내 댓글보기
 	public MemberDto getUserFbReplyList(String userId);
 	public MemberDto getUserAbReplyList(String userId);
+	
+	//내가 좋아요한 글 보기
+	public MemberDto getUserAbLikeList(String userId);
+	public MemberDto getUserFbLikeList(String userId);
 }

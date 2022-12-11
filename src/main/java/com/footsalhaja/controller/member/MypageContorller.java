@@ -95,6 +95,8 @@ public class MypageContorller {
 		List<MemberDto> ReplylistByUserId = memberService.getUserReplyList(userId);
 		System.out.println("작성한 댓글리스트 : " + ReplylistByUserId);
 		
+		//List<MemberDto>라 아래와 같이 분리해서 함... 분리 안하면 jsp에서 못찾음. 분리 안하고 하는 방법은 없는지...?
+		
 		String userId1 = ReplylistByUserId.get(0).getUserId();
 		
 		System.out.println(userId1);
@@ -109,6 +111,24 @@ public class MypageContorller {
 		model.addAttribute("userAbReplyList", AbReply);
 		model.addAttribute("userFbReplyList", FbReply);
 		
+	}
+	
+	@GetMapping("myLikeList")
+	public void getMyLikeList(@RequestParam("userId") String userId, Model model) {
+		List<MemberDto> LikelistByUserId = memberService.getUserLikeList(userId);
+		System.out.println("좋아요한 글 리스트: " + LikelistByUserId);
+		
+		String userId2 = LikelistByUserId.get(0).getUserId();
+		List<BoardDto> AbLike = LikelistByUserId.get(0).getUserAbLikeList();
+		List<com.footsalhaja.domain.free.BoardDto> FbLike = LikelistByUserId.get(1).getUserFbLikeList();
+		
+		model.addAttribute("userId", userId2);
+		model.addAttribute("userFbLikeList", FbLike);
+		model.addAttribute("usrAbLikeList", AbLike);
+		
+		
+		System.out.println(FbLike);
+		System.out.println(AbLike);
 	}
 	
 }

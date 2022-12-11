@@ -108,10 +108,19 @@ public class MemberServiceImpl implements MemberService {
 		list.add(userAbReplyList); 
 		list.add(userFbReplyList);
 
+		return list;
+	}
+	
+	@Override
+	public List<MemberDto> getUserLikeList(String userId) {
+		List<MemberDto> list = new ArrayList<>();
 		
-		System.out.println(userAbReplyList);
-		System.out.println(userFbReplyList);
-		System.out.println(list);
+		MemberDto userAbLikeList = memberMapper.getUserAbLikeList(userId);
+		MemberDto userFbLikeList = memberMapper.getUserFbLikeList(userId);
+		
+		list.add(userAbLikeList);
+		list.add(userFbLikeList);
+		
 		return list;
 	}
 	

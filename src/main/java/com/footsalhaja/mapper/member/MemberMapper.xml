@@ -192,7 +192,7 @@
 		<result column="fb_viewCount" property="fb_viewCount"/>
  	</resultMap>
  	
- 	<!-- 내가 쓴 댓글보기 -->
+ 	<!-- 내가 쓴 댓글보기 (자유게시판)-->
  	<select id="getUserFbReplyList" resultMap="userFbReplyMap">
 	 	SELECT 
 			m.userId,
@@ -216,7 +216,7 @@
 		<result column="fb_inserDatetime" property="fb_inserDatetime"/>
  	</resultMap>
 
- 	
+ 	<!-- 내가 쓴 댓글보기 (아카데미게시판)-->
  	 <select id="getUserAbReplyList" resultMap="userAbReplyMap">
 	 	SELECT 
 			m.userId,
@@ -238,6 +238,49 @@
  		<result column="ab_replyContent" property="ab_replyContent"/>
  		<result column="academyBoard_ab_number" property="ab_number"/>
 		<result column="ab_replyInsertDatetime" property="ab_replyInsertDatetime"/>
+ 	</resultMap>
+ 	
+ 	<!-- 내가 좋아요한 글 목록 -->
+ 	<select id="getUserAbLikeList" resultMap="userAbLikeMap">
+ 		SELECT m.userId,
+	    	m.nickName,
+	    	(SELECT a.ab_number FROM academyBoard a WHERE academyBoard_ab_number = a.ab_number) ab_number,
+			(SELECT a.ab_title FROM academyBoard a WHERE academyBoard_ab_number = a.ab_number) ab_title,
+		    (SELECT a.ab_insertDatetime FROM academyBoard a WHERE academyBoard_ab_number = a.ab_number) ab_insertDatetime
+  		FROM member m LEFT JOIN academyBoardLike al ON m.userId = al.member_userId
+   		WHERE m.userId = #{userId};
+ 	</select>
+ 	<resultMap type="com.footsalhaja.domain.member.MemberDto" id="userAbLikeMap">
+ 		<id column="userId" property="userId"></id>
+ 		<result column="nickName" property="nickName" />
+ 		<collection property="userAbLikeList" resultMap="userAbLikeInfo"></collection>
+ 	</resultMap>
+ 	
+ 	<resultMap type="com.footsalhaja.domain.academy.BoardDto" id="userAbLikeInfo">
+ 		<result column="ab_number" property="ab_number"/>
+ 		<result column="ab_title" property="ab_title"/>
+ 		<result column="ab_insertDatetime" property="ab_insertDatetime"/>
+ 	</resultMap>
+ 	
+ 	 	<select id="getUserFbLikeList" resultMap="userFbLikeMap">
+ 		SELECT m.userId,
+	    	m.nickName,
+	    	(SELECT f.fb_number FROM freeBoard f WHERE freeBoard_fb_number = f.fb_number) fb_number,
+			(SELECT f.fb_title FROM freeBoard f WHERE freeBoard_fb_number = f.fb_number) fb_title,
+    		(SELECT f.fb_insertDatetime FROM freeBoard f WHERE freeBoard_fb_number = f.fb_number) fb_insertDatetime
+  		FROM member m LEFT JOIN freeBoardLike fl ON m.userId = fl.member_userId
+   		WHERE m.userId = #{userId};
+ 	</select>
+ 	<resultMap type="com.footsalhaja.domain.member.MemberDto" id="userFbLikeMap">
+ 		<id column="userId" property="userId"></id>
+ 		<result column="nickName" property="nickName" />
+ 		<collection property="userFbLikeList" resultMap="userFbLikeInfo"></collection>
+ 	</resultMap>
+ 	
+ 	<resultMap type="com.footsalhaja.domain.free.BoardDto" id="userFbLikeInfo">
+ 		<result column="fb_number" property="fb_number"/>
+ 		<result column="fb_title" property="fb_title"/>
+ 		<result column="fb_insertDatetime" property="fb_insertDatetime"/>
  	</resultMap>
  	
  </mapper>
