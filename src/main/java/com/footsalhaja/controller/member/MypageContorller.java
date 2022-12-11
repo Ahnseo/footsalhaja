@@ -74,6 +74,15 @@ public class MypageContorller {
 
 		model.addAttribute("list", AbdoucumentListByUserId);
 		
+	}
+	
+	@GetMapping("myFbDocumentList")
+	public void getMyFbDocumnetList(@RequestParam("userId") String userId, Model model) {
+
+		MemberDto FbdoucumentListByUserId = memberService.getUserFbList(userId);
+		System.out.println("자유 게시판에 작성한 글 리스트: " + FbdoucumentListByUserId);
+
+		model.addAttribute("list", FbdoucumentListByUserId);
 		
 	}
 	

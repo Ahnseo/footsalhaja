@@ -160,4 +160,36 @@
 		<result column="ab_insertDatetime" property="ab_insertDatetime"/>
 		<result column="ab_viewCount" property="ab_viewCount"/>
  	</resultMap>
+ 	
+ 	
+ 	 	<!-- 내글 보기(자유 게시판) -->
+ 	<select id="getUserFbList" resultMap="userFbMap">
+ 		SELECT
+	 		m.userId,
+			m.nickName,
+	        f.fb_number,
+	        f.fb_category,
+	        f.fb_title,
+	        f.fb_insertDatetime,
+	        f.fb_viewCount
+		FROM member m LEFT JOIN freeBoard f ON m.userId = f.member_userId
+	    WHERE m.userId = #{userId}
+	    ORDER BY f.fb_number DESC
+ 	
+ 	</select>
+ 	
+ 	<resultMap type="com.footsalhaja.domain.member.MemberDto" id="userFbMap">
+ 		<id column="userId" property="userId"></id>
+ 		<result column="nickName" property="nickName" />
+ 		<collection property="userFbList" resultMap="userFbList"></collection>
+ 	</resultMap>
+ 	
+ 	<resultMap type="com.footsalhaja.domain.free.BoardDto" id="userFbList">
+ 		<result column="fb_number" property="fb_number" />
+		<result column="fb_category" property="fb_category"/>
+ 		<result column="fb_title" property="fb_title"/>
+		<result column="fb_insertDatetime" property="fb_insertDatetime"/>
+		<result column="fb_viewCount" property="fb_viewCount"/>
+ 	</resultMap>
+ 	
  </mapper>

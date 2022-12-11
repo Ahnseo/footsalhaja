@@ -90,5 +90,10 @@ public class MemberServiceImpl implements MemberService {
 	public MemberDto getUserAbList(String userId) {
 		return memberMapper.getUserAbList(userId);
 	}
+	//내글 보기 (자유 게시판)
+	@Override
+	public MemberDto getUserFbList(String userId) {
+		return memberMapper.getUserFbList(userId);
+	}
 	
 }

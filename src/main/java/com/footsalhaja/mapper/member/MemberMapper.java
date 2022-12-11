@@ -31,4 +31,7 @@ public interface MemberMapper {
 	
 	//내글보기(아카데미 게시판)
 	public MemberDto getUserAbList(String userId);
+	
+	//내글보기(자유 게시판)
+	public MemberDto getUserFbList(String userId);
 }
