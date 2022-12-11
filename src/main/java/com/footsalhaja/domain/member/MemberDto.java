@@ -3,6 +3,9 @@ package com.footsalhaja.domain.member;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.footsalhaja.domain.academy.BoardDto;
+
+
 import lombok.Data;
 
 @Data
@@ -30,5 +33,10 @@ public class MemberDto {
 	
 	private List<String> auth; 
 
+	//마이페이지 내글 보기(아카데미게시판) 
+	private List<BoardDto> userAbList;
+	
+	//마이페이지 내글 보기 (자유게시판)
+	private List<com.footsalhaja.domain.free.BoardDto> userFbList;
 }
 

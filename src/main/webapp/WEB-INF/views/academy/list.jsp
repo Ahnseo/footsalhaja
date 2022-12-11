@@ -55,9 +55,6 @@
 								<td>
  									<c:url value="/academy/get" var="getLink">
 										<c:param name="ab_number" value="${board.ab_number}"></c:param>
-										<c:param name="pageNum" value="${pageMaker.cri.pageNum }"></c:param>
-										<c:param name="amount" value="${pageMaker.cri.amount }"></c:param>
-										
 									</c:url>
 									<a class= 'move' href="${getLink }">
 										${board.ab_title}

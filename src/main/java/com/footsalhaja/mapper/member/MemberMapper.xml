@@ -131,4 +131,33 @@
 	 	WHERE userId = #{userId}
  	</delete>
  	
+ 	<!-- 내글 보기(아카데미 게시판) -->
+ 	<select id="getUserAbList" resultMap="userAbMap">
+	 	SELECT
+		 	m.userId,
+			m.nickName,
+	        a.ab_number,
+	        a.ab_category,
+	        a.ab_title,
+	        a.ab_insertDatetime,
+	        a.ab_viewCount
+		FROM member m LEFT JOIN academyBoard a ON m.userId = a.member_userId
+	    WHERE m.userId = #{userId}
+	    ORDER BY a.ab_number DESC
+ 	
+ 	</select>
+ 	
+ 	<resultMap type="com.footsalhaja.domain.member.MemberDto" id="userAbMap">
+ 		<id column="userId" property="userId"></id>
+ 		<result column="nickName" property="nickName" />
+ 		<collection property="userAbList" resultMap="userAbList"></collection>
+ 	</resultMap>
+ 	
+ 	<resultMap type="com.footsalhaja.domain.academy.BoardDto" id="userAbList">
+ 		<result column="ab_number" property="ab_number" />
+		<result column="ab_category" property="ab_category"/>
+ 		<result column="ab_title" property="ab_title"/>
+		<result column="ab_insertDatetime" property="ab_insertDatetime"/>
+		<result column="ab_viewCount" property="ab_viewCount"/>
+ 	</resultMap>
  </mapper>

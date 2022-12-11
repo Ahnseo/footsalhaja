@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.footsalhaja.domain.academy.BoardDto;
 import com.footsalhaja.domain.member.MemberDto;
 import com.footsalhaja.domain.member.MemberPageInfo;
 import com.footsalhaja.mapper.member.MemberMapper;
@@ -83,4 +84,11 @@ public class MemberServiceImpl implements MemberService {
 		System.out.println(memberModifiedValues);
 		return cnt;
 	}
+	
+	//내글 보기 (아카데미 게시판)
+	@Override
+	public MemberDto getUserAbList(String userId) {
+		return memberMapper.getUserAbList(userId);
+	}
+	
 }

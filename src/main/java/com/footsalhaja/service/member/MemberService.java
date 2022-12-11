@@ -2,6 +2,7 @@ package com.footsalhaja.service.member;
 
 import java.util.List;
 
+import com.footsalhaja.domain.academy.BoardDto;
 import com.footsalhaja.domain.member.MemberDto;
 import com.footsalhaja.domain.member.MemberPageInfo;
 
@@ -16,4 +17,6 @@ public interface MemberService {
 	int deleteMemberInfoByUserId(String userId);
 
 	int updateMemberInfoByUserId(MemberDto memberModifiedValues);
+	
+	MemberDto getUserAbList(String userId);
 }
