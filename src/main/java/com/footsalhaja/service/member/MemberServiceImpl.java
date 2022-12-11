@@ -1,5 +1,6 @@
 package com.footsalhaja.service.member;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.footsalhaja.domain.academy.BoardDto;
 import com.footsalhaja.domain.member.MemberDto;
 import com.footsalhaja.domain.member.MemberPageInfo;
+import com.footsalhaja.domain.member.UserReplyDto;
 import com.footsalhaja.mapper.member.MemberMapper;
 
 @Service
@@ -94,6 +96,23 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public MemberDto getUserFbList(String userId) {
 		return memberMapper.getUserFbList(userId);
+	}
+	
+	//내가 쓴 댓글 보기
+	@Override
+	public List<MemberDto> getUserReplyList(String userId) {
+		List<MemberDto> list = new ArrayList<>();
+		MemberDto userAbReplyList = memberMapper.getUserAbReplyList(userId);
+		MemberDto userFbReplyList = memberMapper.getUserFbReplyList(userId);
+		
+		list.add(userAbReplyList); 
+		list.add(userFbReplyList);
+
+		
+		System.out.println(userAbReplyList);
+		System.out.println(userFbReplyList);
+		System.out.println(list);
+		return list;
 	}
 	
 }

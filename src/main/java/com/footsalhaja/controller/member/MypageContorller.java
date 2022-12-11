@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.footsalhaja.domain.academy.AcademyReplyDto;
 import com.footsalhaja.domain.academy.BoardDto;
+import com.footsalhaja.domain.free.FreeReplyDto;
 import com.footsalhaja.domain.member.MemberDto;
+import com.footsalhaja.domain.member.UserReplyDto;
 import com.footsalhaja.service.member.MemberService;
 
 @Controller
@@ -83,6 +86,28 @@ public class MypageContorller {
 		System.out.println("자유 게시판에 작성한 글 리스트: " + FbdoucumentListByUserId);
 
 		model.addAttribute("list", FbdoucumentListByUserId);
+		
+	}
+	
+	@GetMapping("myReplyList")
+	public void getMyReplyList(@RequestParam("userId") String userId, Model model) {
+		
+		List<MemberDto> ReplylistByUserId = memberService.getUserReplyList(userId);
+		System.out.println("작성한 댓글리스트 : " + ReplylistByUserId);
+		
+		String userId1 = ReplylistByUserId.get(0).getUserId();
+		
+		System.out.println(userId1);
+		List<AcademyReplyDto> AbReply = ReplylistByUserId.get(0).getUserAbReplyList();
+		
+		System.out.println(AbReply);
+		List<FreeReplyDto> FbReply = ReplylistByUserId.get(1).getUserFbReplyList();
+		
+		System.out.println(FbReply);
+		/* model.addAttribute("replyList", ReplylistByUserId); */
+		model.addAttribute("userId", userId1);
+		model.addAttribute("userAbReplyList", AbReply);
+		model.addAttribute("userFbReplyList", FbReply);
 		
 	}
 	

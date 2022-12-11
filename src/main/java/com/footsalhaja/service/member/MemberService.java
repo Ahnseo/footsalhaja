@@ -21,4 +21,7 @@ public interface MemberService {
 	MemberDto getUserAbList(String userId);
 	
 	MemberDto getUserFbList(String userId);
+	
+	List<MemberDto> getUserReplyList(String userId);
+
 }

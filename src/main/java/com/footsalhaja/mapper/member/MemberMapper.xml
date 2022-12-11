@@ -162,7 +162,7 @@
  	</resultMap>
  	
  	
- 	 	<!-- 내글 보기(자유 게시판) -->
+ 	 <!-- 내글 보기(자유 게시판) -->
  	<select id="getUserFbList" resultMap="userFbMap">
  		SELECT
 	 		m.userId,
@@ -190,6 +190,54 @@
  		<result column="fb_title" property="fb_title"/>
 		<result column="fb_insertDatetime" property="fb_insertDatetime"/>
 		<result column="fb_viewCount" property="fb_viewCount"/>
+ 	</resultMap>
+ 	
+ 	<!-- 내가 쓴 댓글보기 -->
+ 	<select id="getUserFbReplyList" resultMap="userFbReplyMap">
+	 	SELECT 
+			m.userId,
+		    m.nickName,
+		    fr.freeBoard_fb_number,
+		    fr.fb_replyContent,
+		    fr.fb_inserDatetime
+		FROM member m LEFT JOIN freeBoardReply fr ON m.userId = fr.member_userId
+		WHERE m.userId = #{userId}
+ 	</select>
+ 	
+ 	 <resultMap type="com.footsalhaja.domain.member.MemberDto" id="userFbReplyMap">
+ 		<id column="userId" property="userId"></id>
+ 		<result column="nickName" property="nickName" />
+ 		<collection property="userFbReplyList" resultMap="userFbReplyList"></collection>
+ 	</resultMap>
+ 	
+ 	<resultMap type="com.footsalhaja.domain.free.FreeReplyDto" id="userFbReplyList">
+ 		<result column="fb_replyContent" property="fb_replyContent"/>
+ 		<result column="freeBoard_fb_number" property="freeBoard_fb_number"/>
+		<result column="fb_inserDatetime" property="fb_inserDatetime"/>
+ 	</resultMap>
+
+ 	
+ 	 <select id="getUserAbReplyList" resultMap="userAbReplyMap">
+	 	SELECT 
+			m.userId,
+		    m.nickName,
+		    ar.academyBoard_ab_number,
+			ar.ab_replyContent,
+		    ar.ab_replyInsertDatetime
+		FROM member m LEFT JOIN academyBoardReply ar ON m.userId = ar.member_userId
+		WHERE m.userId = #{userId}
+ 	</select>
+ 	
+ 	 <resultMap type="com.footsalhaja.domain.member.MemberDto" id="userAbReplyMap">
+ 		<id column="userId" property="userId"></id>
+ 		<result column="nickName" property="nickName" />
+ 		<collection property="userAbReplyList" resultMap="userAbReplyList"></collection>
+ 	</resultMap>
+ 	
+ 	 <resultMap type="com.footsalhaja.domain.academy.AcademyReplyDto" id="userAbReplyList">
+ 		<result column="ab_replyContent" property="ab_replyContent"/>
+ 		<result column="academyBoard_ab_number" property="ab_number"/>
+		<result column="ab_replyInsertDatetime" property="ab_replyInsertDatetime"/>
  	</resultMap>
  	
  </mapper>
