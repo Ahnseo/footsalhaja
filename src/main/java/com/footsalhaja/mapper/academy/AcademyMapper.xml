@@ -48,6 +48,8 @@
 		<result column="ab_content" property="ab_content"/>
 		<result column="ab_insertDatetime" property="ab_insertDatetime"/>
 		<result column="nickName" property="nickName"/>
+		<result column="countLike" property="countLike"/>
+		<result column="liked" property="liked"/>
 		<collection property="ab_fileName" ofType="string">
 			<result property="ab_fileName" column="ab_fileName"/>
 		</collection>
@@ -74,6 +76,7 @@
 	
 	<!-- 검색 조건 -->
 	<sql id="criteria">
+	AND 
 		<trim prefix="(" suffix=")" prefixOverrides="OR">
 			<foreach item='type' collection="cri.typeArr">
 				<trim prefix="OR">
@@ -113,9 +116,10 @@
 						LEFT JOIN academyBoardFileAttach f ON b.ab_number = f.academyBoard_ab_number
 						LEFT JOIN member m ON b.member_userId = m.userId
 	
+	WHERE 1=1
 	 <if test="cri.type!=null and cri.type!=''">
 	 <![CDATA[
-	WHERE
+
 	]]>
 	<include refid="criteria"></include>
 	</if>
@@ -139,9 +143,9 @@
 		FROM academyBoard b
 	
 		<!-- 검색조건 호출  -->
+		WHERE 1=1
 	<if test="cri.type!=null and cri.type!=''">
 	<![CDATA[	
-		WHERE
 		]]> 
 		<include refid="criteria"></include>
 	</if>
