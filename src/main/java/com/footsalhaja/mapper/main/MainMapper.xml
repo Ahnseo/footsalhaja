@@ -70,7 +70,8 @@
  		b.status,
  		b.matchType,
  		b.level,
- 		l.region
+ 		l.region,
+ 		b.teamGender
  	FROM
  		book b LEFT JOIN location l ON b.location_locationId = l.locationId
  			   LEFT JOIN member m ON b.member_userId = m.userId
@@ -86,6 +87,7 @@
 		<result column="matchType" property="matchType"/>
 		<result column="level" property="level"></result>
 		<result column="region" property="region"></result>
+		<result column="teamGender" property="teamGender"></result>
  	</resultMap>
  
 

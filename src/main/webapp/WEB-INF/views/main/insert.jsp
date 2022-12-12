@@ -72,9 +72,11 @@
 
 					<div class="mb-3">
 						<label for="" class="form-label">예약시간</label> <select id="bookTime" name="bookTime">
-							<option value="16:00 ~ 18:00">16:00 ~ 18:00</option>
-							<option value="18:00 ~ 20:00">18:00 ~ 20:00</option>
-							<option value="20:00 ~ 22:00">20:00 ~ 22:00</option>
+							<option value="6">6:00 ~ 8:00</option>
+							<option value="9">9:00 ~ 11:00</option>
+							<option value="14">14:00 ~ 16:00</option>
+							<option value="18">18:00 ~ 20:00</option>
+							<option value="21">21:00 ~ 23:00</option>
 						</select>
 					</div>
 	

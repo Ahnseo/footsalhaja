@@ -116,7 +116,41 @@
 
 .matches {
 	display: block;
-	width: 100%;s
+	width: 100%;
+}
+
+.listHover:hover {
+	background-color: #D3D3D3;
+	cursor: pointer;
+}
+
+.listStat {
+	height: 20px;
+}
+
+.ing {
+line-height: 20px;
+vertical-align: middle;
+}
+
+
+.bookTime {
+	padding-right: 10px;
+}
+
+.listDate, .timeFont {
+	font-weight: bold;
+	margin-bottom: 3px;
+}
+
+.list-match-time {
+	text-align: center;
+	margin-top: 25px;
+}
+
+.list-match-info {
+	float: right;
+	
 }
 
 
@@ -230,9 +264,118 @@
 	</div>
 </c:if>
 
+<nav id="navbar-example2" class="navbar bg-light px-3 mb-3">
+	<a class="navbar-brand" href="${listLink}">예약 리스트</a>
+	  <ul class="nav nav-pills">
+		 <li class="nav-item">
+			<a class="nav-link" href="#scrollspyHeading1">First</a>
+		</li>
+	  </ul>
+</nav>
+
+	<div id="getId" class="">
+	  <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-light p-5 rounded-2 " tabindex="0">
+		<ul class="list-group" id="idOfUl">
+			<c:forEach items="${bookList }" var="main">
+				<c:url value="/main/get" var="getLink">
+					<c:param name="bookId" value="${main.bookId}"/>
+				</c:url>
+				<li class="list-group-item d-flex justify-content-between align-items-start listHover" onclick="location.href='${getLink}'">	
+					<div class="list-match-time">
+						<p class="listDate">${main.bookDate} </p>
+							<!-- 예약 시간 -->
+							<c:if test="${main.bookTime eq 6}">
+								<p class="timeFont">6:00</p>
+							</c:if>
+							<c:if test="${main.bookTime eq 9}">
+								<p class="timeFont">9:00</p>
+							</c:if>
+							<c:if test="${main.bookTime eq 14}">
+								<p class="timeFont">14:00</p>
+							</c:if>
+							<c:if test="${main.bookTime eq 18}">
+								<p class="timeFont">18:00</p>
+							</c:if>
+							<c:if test="${main.bookTime eq 21}">
+								<p class="timeFont">21:00</p>
+							</c:if>
+					</div>
+						
+						<div class="list-match-info">
+							<!-- 성별, 매치방식, 실력 -->
+								<!-- 성별 -->
+								<div class="listGender">
+									<c:if test="${main.teamGender eq 'M' }">
+										<span class="genderFont">남자</span>
+									</c:if>
+									<c:if test="${main.teamGender eq 'W' }">
+										<span class="genderFont">여자</span>
+									</c:if>
+								</div>
+												
+								<!-- 매치방식 -->
+								<div class="listMatchType">
+									<c:if test="${main.matchType eq 3 }">
+										<span class="typeFont">3vs3</span>
+									</c:if>
+									<c:if test="${main.matchType eq 4 }">
+										<span>4vs4</span>
+									</c:if>
+									<c:if test="${main.matchType eq 5 }">
+										<span>5vs5</span>
+									</c:if>
+								</div>
+								
+								<!-- 지역 -->
+								<div class="listRegion">
+									<c:if test="${main.region eq 1}">
+										<span>서울</span>
+									</c:if>
+									<c:if test="${main.region eq 2}">
+										<span>경기</span>
+									</c:if>
+								</div>
+								
+								<!-- 레벨 -->
+								<div class="listLevel">
+									<c:if test="${main.level eq 1}">
+										<span>비기너</span>
+									</c:if>
+									<c:if test="${main.level eq 2}">
+										<span>아마추어</span>
+									</c:if>
+									<c:if test="${main.level eq 3}">
+										<span>챌린저</span>
+									</c:if>
+								</div>
+						</div>
+							${main.nickName}
+						
+							
+						<!-- 모집중, 모집완료 -->
+						<div class="listStat">
+							<c:if test="${main.status eq 0}">
+								<br>
+								<h6><button class="btn btn-danger">모집완료</button></h6>
+							</c:if>
+	
+							<c:if test="${main.status eq 1}">
+							<br>
+								<h6><button class="btn btn-primary ing">모집중</button></h6>
+							</c:if>
+						</div>
+					</li>        
+			</c:forEach>
+		</ul>
+	</div>
+</div>
+
+
+
+
 
 <!-- 게시글 목록 -->
-<div class="matches" id="body">
+<%-- <div class="matches" id="body">
 	<table class="table">
 		<thead class="table-light">
 			<tr>
@@ -301,11 +444,10 @@
 			</c:forEach>
 		</tbody>
 	</table>
-</div>
+</div> --%>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script>
 </script>
-
 </body>
 </html>

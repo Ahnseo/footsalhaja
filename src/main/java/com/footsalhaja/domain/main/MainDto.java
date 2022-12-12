@@ -18,7 +18,7 @@ public class MainDto {
 	private int status;
 	private int region;
 	private LocalDateTime insertDatetime;
-	private String teamGender;
+	private int teamGender;
 
 	private String location;
 
@@ -28,7 +28,7 @@ public class MainDto {
 	private String nickName;
 
 	private String bookDate;
-	private String bookTime;
+	private int bookTime;
 
 	private float lat;
 	private float lng;
