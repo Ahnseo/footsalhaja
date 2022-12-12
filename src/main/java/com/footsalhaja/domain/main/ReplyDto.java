@@ -18,6 +18,8 @@ public class ReplyDto {
 	private String userId;
 	private String member_userId;
 	
+	private boolean editable;
+	
 	@JsonFormat(shape = Shape.STRING)
 	private LocalDateTime insertDatetime;
 	

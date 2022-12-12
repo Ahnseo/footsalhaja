@@ -8,7 +8,7 @@
  
  	<insert id="insert">
  	INSERT INTO bookReply (replyContent, book_bookId, member_userId)
-  VALUES (#{replyContent}, #{bookId}, #{userId})
+  	VALUES (#{replyContent}, #{bookId}, #{member_userId})
  	</insert>
  	
  	
@@ -16,8 +16,9 @@
 <select id="selectReplyByBookId" resultType="com.footsalhaja.domain.main.ReplyDto">
  	SELECT 
  		replyId,
+ 		book_bookId,
 		replyContent,
-		member_userId,
+		(member_userId = #{username}) editable,
 		insertDatetime
 	FROM 
 		bookReply

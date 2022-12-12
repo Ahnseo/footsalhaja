@@ -8,7 +8,7 @@ public interface ReplyService {
 	
 	public int addReply(ReplyDto reply);
 
-	public List<ReplyDto> listReplyByBookId(int bookId);
+	public List<ReplyDto> listReplyByBookId(int bookId, String username);
 
 	public int removeById(int replyId);
 	

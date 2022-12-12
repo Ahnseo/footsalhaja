@@ -20,8 +20,8 @@ public class ReplyServiceImpl {
 		
 	}
 
-	public List<ReplyDto> listReplyByBookId(int bookId) {
-		return mapper.selectReplyByBookId(bookId);
+	public List<ReplyDto> listReplyByBookId(int bookId, String username) {
+		return mapper.selectReplyByBookId(bookId, username);
 	}
 
 	public int removeById(int replyId) {
