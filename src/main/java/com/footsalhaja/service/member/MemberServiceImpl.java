@@ -1,12 +1,15 @@
 package com.footsalhaja.service.member;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.footsalhaja.domain.academy.BoardDto;
 import com.footsalhaja.domain.member.MemberDto;
 import com.footsalhaja.domain.member.MemberPageInfo;
+import com.footsalhaja.domain.member.UserReplyDto;
 import com.footsalhaja.mapper.member.MemberMapper;
 
 @Service
@@ -83,4 +86,42 @@ public class MemberServiceImpl implements MemberService {
 		System.out.println(memberModifiedValues);
 		return cnt;
 	}
+	
+	//내글 보기 (아카데미 게시판)
+	@Override
+	public MemberDto getUserAbList(String userId) {
+		return memberMapper.getUserAbList(userId);
+	}
+	//내글 보기 (자유 게시판)
+	@Override
+	public MemberDto getUserFbList(String userId) {
+		return memberMapper.getUserFbList(userId);
+	}
+	
+	//내가 쓴 댓글 보기
+	@Override
+	public List<MemberDto> getUserReplyList(String userId) {
+		List<MemberDto> list = new ArrayList<>();
+		MemberDto userAbReplyList = memberMapper.getUserAbReplyList(userId);
+		MemberDto userFbReplyList = memberMapper.getUserFbReplyList(userId);
+		
+		list.add(userAbReplyList); 
+		list.add(userFbReplyList);
+
+		return list;
+	}
+	
+	@Override
+	public List<MemberDto> getUserLikeList(String userId) {
+		List<MemberDto> list = new ArrayList<>();
+		
+		MemberDto userAbLikeList = memberMapper.getUserAbLikeList(userId);
+		MemberDto userFbLikeList = memberMapper.getUserFbLikeList(userId);
+		
+		list.add(userAbLikeList);
+		list.add(userFbLikeList);
+		
+		return list;
+	}
+	
 }

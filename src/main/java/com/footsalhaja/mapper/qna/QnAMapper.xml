@@ -12,6 +12,13 @@
 		 VALUES 
 		 		(#{category}, #{title}, #{content}, #{userId}  );
 	 </insert>
+	 <update id="updateMyQnABoard">
+	 	UPDATE QnABoard SET
+	 		title = #{title},
+	 		content = #{content}		
+	 	WHERE
+	 		qnaId = #{qnaId}
+	 </update>
 	 
 	 <select id="myQnAList" resultType="com.footsalhaja.domain.qna.QnADto">
 	 	SELECT 
@@ -32,6 +39,38 @@
 	 		qnaId DESC 
 	 	LIMIT
 	 		#{offset}, #{records}
+	 </select>
+	 
+	 <select id="selectQnAListByStatusDone" resultType="com.footsalhaja.domain.qna.QnADto">
+	 	SELECT 
+	 		qnaId,
+	 		category,
+	 		title,
+	 		content,
+	 		status,
+	 		member_userId AS userId,
+	 		likeCount
+	 	FROM 
+	 	 	QnABoard
+	 	WHERE
+	 		status = #{status} 
+	 	AND (
+		<trim prefixOverrides="OR">
+			<if test="type == 'all' or type == 'title'">
+			OR title LIKE #{keyword}
+			</if>
+			
+			<if test="type == 'all' or type == 'content'">
+			OR content LIKE #{keyword}
+			</if>
+			
+			<if test="type == 'all' or type == 'userId'">
+			OR member_userId LIKE #{keyword}
+			</if>
+		</trim> 
+		) 	
+	 	ORDER BY qnaId DESC
+	 	LIMIT #{offset}, #{records}
 	 </select>
 	 
 	 <select id="countAllQnAByUserId" resultType="int">
@@ -64,13 +103,12 @@
 	 		q.content,
 	 		q.status,
 	 		q.insertDatetime,
-	 		m.userId
+	 		m.userId,
+	 		r.qnaReplyId
 	 	FROM 
 	 	 	QnABoard q
-	 	LEFT JOIN 
-	 		member m
-	 	ON 
-	 		q.member_userId = m.userId
+	 	LEFT JOIN member m   ON q.member_userId = m.userId
+	 	LEFT JOIN QnAReply r ON q.member_userId = r.userId
 	 	WHERE 
 	 		m.userId = #{userId} AND q.qnaId = #{qnaId}
 	 	
@@ -135,6 +173,34 @@
 		</trim> 	
 	</select>
 	
+		<select id="countAllQnAByDone" resultType="int">
+		SELECT 
+	 		COUNT(*)
+	 	FROM 
+	 	 	QnABoard 
+	 	WHERE
+	 	
+	 	
+	 		status = #{status} AND
+	 	(
+	 	
+		<trim prefixOverrides="OR">
+			<if test="type == 'all' or type == 'title'">
+			OR title LIKE #{keyword}
+			</if>
+			
+			<if test="type == 'all' or type == 'content'">
+			OR content LIKE #{keyword}
+			</if>
+			
+			<if test="type == 'all' or type == 'userId'">
+			OR member_userId LIKE #{keyword}
+			</if>
+		</trim> 	
+		)
+		
+	</select>
+	
 	<!-- 좋아요 기능추가  -->
 	<select id="selectQnABoardLikeCount" resultType="int">
 		SELECT 
@@ -158,11 +224,31 @@
 		INSERT INTO QnAReply (qnaId, userId, writer, content)
 		VALUES( #{qnaId}, #{userId}, #{writer}, #{content} )
 	</insert>
+	
+	<update id="updateAnswerByAnswerId">
+		UPDATE QnAReply SET
+		content = #{content}
+		WHERE qnaReplyId = #{answerId}
+	</update>
+	
+	<update id="updateReplyById">
+		UPDATE QnAReplyToAnswer SET
+		content = #{content}
+		WHERE qnaReplyToAnswerId = #{qnaReplyToAnswerId}
+	</update>
 	<select id="selectQnAReply" resultType="com.footsalhaja.domain.qna.QnAReplyDto">
 		<!-- //qnaReplyId,qnaId,userId,writer,content,insertDatetime -->
-		SELECT qnaReplyId,qnaId,userId,writer,content,insertDatetime
-		FROM QnAReply
-		WHERE qnaId = #{qnaId}
+		SELECT 
+			qnaReplyId,
+			qnaId,
+			userId,
+			writer,
+			content,
+			insertDatetime
+		FROM 
+			QnAReply
+		WHERE 
+			qnaId = #{qnaId}
 	</select>
 	
 	<insert id="insertQnAReplyToAnswer">
@@ -172,9 +258,49 @@
 	</insert>
 	<select id="selectQnAReplyToAnswerList" resultType="com.footsalhaja.domain.qna.QnAReplyToAnswerDto">
 		<!-- //qnaReplyToAnswerId, qnaReplyId, qnaId, writer, content, userId, insertDatetime -->
-		SELECT qnaReplyToAnswerId, qnaReplyId, qnaId, writer, content, userId, insertDatetime
-		FROM QnAReplyToAnswer
-		WHERE qnaId = #{qnaId}
+		SELECT 
+			qnaReplyToAnswerId,
+			qnaReplyId,
+			qnaId,
+			userId,
+			writer,
+			content,
+			insertDatetime
+		FROM 
+			QnAReplyToAnswer
+		WHERE 
+			qnaReplyId = #{qnaReplyId}
 	</select>
 
+	<update id="updateQnAStatus">
+		UPDATE QnABoard SET
+			status = #{status}
+		WHERE qnaId = #{qnaId} 	
+	</update>
+	
+	<delete id="deleteAnswerByAnswerId">
+		DELETE FROM QnAReply
+		WHERE qnaReplyId = #{qnaReplyId}
+	</delete>
+	
+	<delete id="deleteQnAReplyByReplyId">
+		DELETE FROM QnAReplyToAnswer
+		WHERE qnaReplyToAnswerId = #{qnaReplyToAnswerId}
+	</delete>
+	<delete id="deleteQnAReplyByAnswerId">
+		DELETE FROM QnAReplyToAnswer
+		WHERE qnaReplyId = #{qnaAnswerId}
+	</delete>
+	<delete id="deleteAllQnAReplyById">
+		DELETE FROM QnAReplyToAnswer
+		WHERE qnaId = #{qnaId}
+	</delete>
+	<delete id="deleteAnswerBYqnaId">
+		DELETE FROM QnAReply
+		WHERE qnaId = #{qnaId}
+	</delete>
+	<delete id="deleteQnA">
+		DELETE FROM QnABoard
+		WHERE qnaId = #{qnaId}
+	</delete>
  </mapper>

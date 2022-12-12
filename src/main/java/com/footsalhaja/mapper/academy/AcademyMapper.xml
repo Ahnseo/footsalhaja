@@ -6,7 +6,7 @@
  
  
 	<!-- register 등록 -->
- 	<insert id="insert">
+ 	<insert id="insert" useGeneratedKeys="true" keyProperty="ab_number">
 	INSERT INTO academyBoard (ab_title, ab_category, ab_content, member_userId)
 	VALUES ( #{ab_title}, #{ab_category},  #{ab_content}, #{member_userId})
 	
@@ -20,7 +20,7 @@
 	</select>
 	
 	<!-- get 게시물페이지  -->
-	<select id="select" resultType="com.footsalhaja.domain.academy.BoardDto">
+	<select id="select" resultMap="boardMap">
 	SELECT 
 		b.ab_number,
 		b.ab_category,
@@ -28,14 +28,33 @@
 		b.ab_content,
 		b.member_userId,
 		b.ab_insertDatetime,
+		m.nickName,
+		f.ab_fileName,
 		(SELECT COUNT(*) FROM academyBoardLike WHERE academyBoard_ab_number = b.ab_number AND member_userId = #{member_userId}) liked,
 		(SELECT COUNT(*) FROM academyBoardLike WHERE academyBoard_ab_number = b.ab_number) countLike
 
-	FROM academyBoard b 
+	FROM academyBoard b LEFT JOIN academyBoardFileAttach f ON b.ab_number = f.academyBoard_ab_number
+						LEFT JOIN member m ON b.member_userId = m.userId
 	WHERE
 		ab_number = #{ab_number}
 		
 	</select>
+	
+	<resultMap type="com.footsalhaja.domain.academy.BoardDto" id="boardMap">
+		<id column="ab_number" property="ab_number"></id>
+		<result column="ab_title" property="ab_title"/>
+		<result column="ab_category" property="ab_category"/>
+		<result column="member_userId" property="member_userId"/>
+		<result column="ab_content" property="ab_content"/>
+		<result column="ab_insertDatetime" property="ab_insertDatetime"/>
+		<result column="nickName" property="nickName"/>
+		<result column="countLike" property="countLike"/>
+		<result column="liked" property="liked"/>
+		<collection property="ab_fileName" ofType="string">
+			<result property="ab_fileName" column="ab_fileName"/>
+		</collection>
+	</resultMap>
+	
 	
 	<!-- modify 수정페이지 -->
 	<update id="modify">
@@ -57,7 +76,8 @@
 	
 	<!-- 검색 조건 -->
 	<sql id="criteria">
-		<trim prefixOverrides="OR">
+	AND 
+		<trim prefix="(" suffix=")" prefixOverrides="OR">
 			<foreach item='type' collection="cri.typeArr">
 				<trim prefix="OR">
 					<choose>
@@ -78,7 +98,6 @@
 	
 	<!-- 페이지네이션 & 검색 -->
 	<select id="getListWithPaging" resultType="com.footsalhaja.domain.academy.BoardDto">
-	<![CDATA[
 	SELECT 		
 		b.ab_number,
 		b.ab_category,
@@ -86,20 +105,28 @@
 		b.ab_content,
 		b.member_userId,
 		b.ab_insertDatetime,
-		COUNT(r.academyBoard_ab_number) replyCnt,
+		COUNT(DISTINCT r.ab_replyNumber) replyCnt,
 		COUNT(DISTINCT l.member_userId) countLike,
-		b.ab_viewCount
+		COUNT(DISTINCT f.academyBoard_ab_number) countFile,
+		b.ab_viewCount,
+		m.nickName
 		
 	FROM academyBoard b LEFT JOIN academyBoardReply r ON b.ab_number = r.academyBoard_ab_number
 						LEFT JOIN academyBoardLike l ON b.ab_number = l.academyBoard_ab_number
-	]]>
+						LEFT JOIN academyBoardFileAttach f ON b.ab_number = f.academyBoard_ab_number
+						LEFT JOIN member m ON b.member_userId = m.userId
 	
+	WHERE 1=1
 	 <if test="cri.type!=null and cri.type!=''">
 	 <![CDATA[
-		WHERE
+
 	]]>
 	<include refid="criteria"></include>
 	</if>
+	<if test ="category !=null and category != ''">
+		AND b.ab_category = #{category}
+	</if>
+	
 	<![CDATA[
 	GROUP BY b.ab_number
 	ORDER BY b.ab_number DESC
@@ -111,14 +138,14 @@
 	<!-- 전체 데이터 수 -->
 	
 	<select id="getTotalCount" resultType="int">
-	<![CDATA[	
+
 		SELECT Count(*)
 		FROM academyBoard b
-		]]> 
+	
 		<!-- 검색조건 호출  -->
+		WHERE 1=1
 	<if test="cri.type!=null and cri.type!=''">
 	<![CDATA[	
-		WHERE
 		]]> 
 		<include refid="criteria"></include>
 	</if>
@@ -149,12 +176,37 @@
 		WHERE academyBoard_ab_number = #{ab_number}
 	</select>
 	
+	<!-- 게시글 삭제 전 좋아요 삭제 -->
+		<delete id="deleteLikeByBoardId">
+		DELETE FROM academyBoardLike
+		WHERE academyBoard_ab_number = #{ab_number}
+	</delete>
+	
 	<!-- 조회수 -->
 	<update id="updateViewCount">
 		UPDATE academyBoard
 		SET ab_viewCount = ab_viewCount + 1
 		WHERE ab_number = #{ab_number}
 	</update>
+	
+	<!-- 파일 첨부 -->
+	<insert id="insertFile">
+		INSERT INTO academyBoardFileAttach (academyBoard_ab_number, ab_fileName, ab_filePath, ab_fileType)
+		VALUES (#{ab_number}, #{ab_fileName}, #{ab_filePath}, #{ab_fileType})
+	</insert>
+	
+	<!-- 게시글 삭제전 파일 삭제 -->
+	<delete id="deleteFileByBoardId">
+		DELETE FROM academyBoardFileAttach
+		WHERE academyBoard_ab_number = #{ab_number}
+	</delete>
+	
+	<!-- 파일 수정에 따른 중복파일 삭제 -->
+	<delete id="deleteByBoardIdAndFileName">
+		DELETE FROM academyBoardFileAttach
+		WHERE academyBoard_ab_number = #{ab_number} AND ab_fileName = #{originalFilename}
+	</delete>
+	
  
  </mapper>
   

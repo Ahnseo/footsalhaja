@@ -15,21 +15,38 @@
 
 <my:navbar></my:navbar>
 
-
+	
 
 	<h1>프리보드 ${board.fb_number }번 게시물</h1>
 	
 	<!-- 좋아요 -->
 	<h1>
-		<span id="likeButton">좋아요</span>
+		<span 
+			<sec:authorize access="not isAuthenticated()">
+				style="pointer-events: none;"
+			</sec:authorize>		
+		id="likeButton" >
+							
+			<c:if test="${board.liked }">
+				<i class="fa-solid fa-thumbs-up"></i>
+			</c:if>
+			<c:if test="${not board.liked }">
+			<i class="fa-regular fa-thumbs-up"></i>
+			</c:if>					
+		</span>
+		
 		<span id="likeCount">${board.fb_likeCount }</span>
 	</h1>
 	
+	<p>조회수 ${board.fb_viewCount }</p> 
 	제목 <input type="text" value="${board.fb_title }" readonly /><br>
 	카테고리 <input type="text" value="${board.fb_category }" readonly /><br>
-	본문 <textarea name="fb_content" id="fb_content" readonly>${board.fb_content }</textarea><br>
+	
+	본문 <div id="summernote" readonly>${board.fb_content }</div> <br>
+	
 	작성일시 <input type="datetime-local" value="${board.fb_insertDatetime }" readonly /><br>
 	작성자 <input type="text" value="${board.member_userId }" readonly /><br>
+	닉네임 <input type="text" value="${board.nickName }" readonly /><br>
 	
 	
 	<!-- 작성자와 authentication.name이 같아야 수정버튼 보여주기 -->
@@ -128,12 +145,18 @@ document.querySelector("#likeButton").addEventListener("click", function() {
 		headers : {
 			"Content-Type" : "application/json"
 		},
-		body : JSON.stringify({freeBoard_fb_number})
+		body : JSON.stringify({fb_number:freeBoard_fb_number})
 	})
 	.then(res => res.json())
 	.then(data => {
+		if (data.current == 'liked') {
+			document.querySelector("#likeButton").innerHTML = `<i class="fa-solid fa-thumbs-up"></i>`
+		} else {
+			document.querySelector("#likeButton").innerHTML = `<i class="fa-regular fa-thumbs-up"></i>`
+		}
+		
 		document.querySelector("#likeCount").innerText = data.count;
-	})
+	});
 });
 
 
@@ -197,7 +220,10 @@ function listReply() {
 			
 			const replyDiv = 
 				`<div>
-					\${item.fb_replyContent} : \${item.ago}
+					댓글 : \${item.fb_replyContent}
+					작성시간 : \${item.ago}
+					작성자 : \${item.member_userId}
+					닉네임 : \${item.nickName}
 					\${item.editable ? editButton : ''}
 				</div>`;
 				

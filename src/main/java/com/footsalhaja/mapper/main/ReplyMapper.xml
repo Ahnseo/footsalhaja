@@ -8,16 +8,17 @@
  
  	<insert id="insert">
  	INSERT INTO bookReply (replyContent, book_bookId, member_userId)
-  VALUES (#{replyContent}, #{bookId}, #{userId})
+  	VALUES (#{replyContent}, #{book_bookId}, #{member_userId})
  	</insert>
  	
  	
  
 <select id="selectReplyByBookId" resultType="com.footsalhaja.domain.main.ReplyDto">
  	SELECT 
+		(member_userId = #{username}) editable,
  		replyId,
+ 		book_bookId,
 		replyContent,
-		member_userId,
 		insertDatetime
 	FROM 
 		bookReply
@@ -31,12 +32,12 @@
 	WHERE replyId = #{replyId}
 	</delete>
 
- 	<select id="selectByReplyId">
+ 	<select id="selectByReplyId" resultType="com.footsalhaja.domain.main.ReplyDto">
  	SELECT 
+ 		member_userId,
  		replyId, 
  		book_bookId,
  		replyContent,
- 		member_userId,
  		insertDatetime
  	FROM bookReply
  	WHERE replyId = #{replyId}

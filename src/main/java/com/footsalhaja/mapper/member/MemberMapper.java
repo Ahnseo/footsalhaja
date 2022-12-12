@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.footsalhaja.domain.academy.AcademyReplyDto;
+import com.footsalhaja.domain.academy.BoardDto;
 import com.footsalhaja.domain.member.MemberDto;
 
 @Mapper
@@ -28,5 +30,17 @@ public interface MemberMapper {
 	//전체회원정보 검색가능하기 위해 select count(*) 
 	public int selectAllMemberCount(String type, String keyword);
 	
+	//내글보기(아카데미 게시판)
+	public MemberDto getUserAbList(String userId);
 	
+	//내글보기(자유 게시판)
+	public MemberDto getUserFbList(String userId);
+	
+	//내 댓글보기
+	public MemberDto getUserFbReplyList(String userId);
+	public MemberDto getUserAbReplyList(String userId);
+	
+	//내가 좋아요한 글 보기
+	public MemberDto getUserAbLikeList(String userId);
+	public MemberDto getUserFbLikeList(String userId);
 }

@@ -22,8 +22,8 @@ public class AcademyReplyServiceImpl implements AcademyReplyService{
 	}
 	
 	@Override
-	public List<AcademyReplyDto> listReplyByab_number(int ab_number) {
-		return mapper.selectReplyByBoardId(ab_number);
+	public List<AcademyReplyDto> listReplyByab_number(int ab_number, String username) {
+		return mapper.selectReplyByBoardId(ab_number, username);
 	}
 	
 	@Override
@@ -44,7 +44,7 @@ public class AcademyReplyServiceImpl implements AcademyReplyService{
 
 
 	@Override
-	public ReplyPageDto replyWithPaging(Criteria cri, int ab_number) {
+	public ReplyPageDto replyWithPaging(Criteria cri, int ab_number, String username) {
 		System.out.println("get ReplyList with Criteria: " +cri);
 		
 		int offset = (cri.getPageNum() -1) * cri.getAmount();
@@ -52,7 +52,7 @@ public class AcademyReplyServiceImpl implements AcademyReplyService{
 		
 		
 		//댓글 수, 댓글페이징 리턴
-		return new ReplyPageDto(mapper.getTotalReplyCount(ab_number), mapper.getReplyListWithPaging(cri, ab_number, offset, records));
+		return new ReplyPageDto(mapper.getTotalReplyCount(ab_number), mapper.getReplyListWithPaging(cri, ab_number, username, offset, records));
 	}
 
 	

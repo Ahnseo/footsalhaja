@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Insert title here</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="crossorigin="anonymous" referrerpolicy="no-referrer" />
 <!-- include libraries(jQuery, bootstrap) -->
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -23,7 +23,7 @@
 <body>
 	<h1>${board.ab_number }번 게시물 수정</h1>
 	
-	<form id="modifyForm" action="" method="post">
+	<form id="modifyForm" action="" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="ab_number" value="${board.ab_number }">
 	
 	제목 <input type="text" name="ab_title" value="${board.ab_title }"> <br>
@@ -39,7 +39,23 @@
 	
 	본문 <textarea id="summernote" name="ab_content">${board.ab_content }</textarea> <br>
 	
-	작성자 <input type ="text" value="${board.member_userId }" readonly> <br>
+	<!-- 파일 -->
+	<div>
+		<c:forEach items="${board.ab_fileName }" var="fileName">
+			<div>
+				<i class="fa-solid fa-paperclip"></i>
+				<c:out value="${fileName.substring(36)}" />
+				삭제 <input type="checkbox" name ="removeFiles" value="${fileName}" >
+				<br>
+			</div>
+		</c:forEach>
+	</div>
+	
+		<div class="mb-3">
+			<input multiple type="file" class="form-control" name="files">
+		</div>
+	
+	닉네임 <input type ="text" value="${board.nickName }" readonly> <br>
 	작성일시 <input type = "datetime-local" value = "${board.ab_insertDatetime }" readonly>
 	</form>
 	
@@ -150,7 +166,7 @@
 				processData : false,
 				success : function(data) {
 	            	//항상 업로드된 파일의 url이 있어야 한다. ('insertImage', url, filename)
-					$(editor).summernote('insertImage', data.url, data.ab_fileName);
+					$(editor).summernote('insertImage', data.url, data.ab_image);
 	            	/* //이미지가 업로드 되면, 하위에 테스트 확인차 추가하도록 해놓은 부분
 					$('#imageBoard > ul').append('<li><img src="'+url+'" width="480" height="auto"/></li>'); */
 				}

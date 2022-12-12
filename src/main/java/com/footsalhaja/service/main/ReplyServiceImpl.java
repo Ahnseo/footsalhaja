@@ -10,25 +10,26 @@ import com.footsalhaja.domain.main.ReplyDto;
 import com.footsalhaja.mapper.main.ReplyMapper;
 
 @Service
-public class ReplyServiceImpl {
+public class ReplyServiceImpl implements ReplyService{
 	
 	@Autowired
 	private ReplyMapper mapper;
 	
+	@Override
 	public int addReply(ReplyDto reply) {
 		return mapper.insert(reply);
 		
 	}
-
-	public List<ReplyDto> listReplyByBookId(int bookId) {
-		return mapper.selectReplyByBookId(bookId);
+	@Override
+	public List<ReplyDto> listReplyByBookId(int bookId, String username) {
+		return mapper.selectReplyByBookId(bookId, username);
 	}
-
+	@Override
 	public int removeById(int replyId) {
 		return mapper.deleteById(replyId);
 		
 	}
-
+	@Override
 	public ReplyDto getByReplyId(int replyId) {
 		return mapper.selectByReplyId(replyId);
 	}

@@ -19,6 +19,9 @@ public class BoardDto {
 	private int fb_replyCount;
 	private int fb_viewCount;
 	
+	private String nickName;
+	private boolean liked;
+	
 	// 게시물 입력시간 변경
 	public String getAgo() {
 		LocalDateTime now = LocalDateTime.now(); // 현재시간

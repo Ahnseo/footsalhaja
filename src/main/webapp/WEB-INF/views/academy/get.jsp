@@ -48,19 +48,35 @@
 
 	제목 <input type ="text" value="${board.ab_title }" readonly> <br>
 	말머리 <input type ="text" value="${board.ab_category }" readonly> <br>
-	본문 <div id="summernote" readonly>${board.ab_content }</div> <br>
-	작성자 <input type ="text" value="${board.member_userId }" readonly> <br>
+	본문 <div id="summernote">${board.ab_content }</div> <br>
+	닉네임 <input type ="text" value="${board.nickName }" readonly> <br>
 	작성일시 <input type = "datetime-local" value = "${board.ab_insertDatetime }" readonly>
+
+<!-- 파일 -->
+	<c:set var="ctx" value="${pageContext.request.contextPath}" />;
+	<div>
+		<c:forEach items="${board.ab_fileName }" var="fileName">
+			<div>
+				<i class="fa-solid fa-paperclip"></i>
+				<a href="${ctx }/academy/download/${board.ab_number}/${fileName}">
+				<c:out value="${fileName.substring(36)}" /></a>
+				
+				<br>
+			</div>
+		</c:forEach>
+	</div>
 	
-	<c:url value="/academy/modify" var="modifyLink">
-		<c:param name="ab_number" value="${board.ab_number }"></c:param>
-	</c:url>
-	
+<!-- 작성자와 authentication.name이 같아야 수정버튼 보여주기 -->
 	<sec:authentication property="name" var="username" />
 
 	<c:if test="${board.member_userId == username}">
+		<c:url value="/academy/modify" var="modifyLink">
+			<c:param name="ab_number" value="${board.ab_number }"></c:param>
+		</c:url>
 		<a class="btn btn-warning" href="${modifyLink }">수정</a>
 	</c:if>
+	
+	<hr />
 
 
 
@@ -86,8 +102,17 @@
 				<!-- 참조키 (ab_number, member_userId) 값_ -->
 				<input type="hidden" id="ab_number" value="${board.ab_number }">
 				<input type="hidden" id="member_userId" value="${board.member_userId }">
-				<input type="text" id="replyInput">
-				<button id="replySendButton">댓글쓰기</button>
+
+				<!-- 로그인 했을때-->
+				<sec:authorize access="isAuthenticated()">
+				댓글 <input type="text" id="replyInput">
+					<button id="replySendButton">댓글쓰기</button>
+				</sec:authorize>
+
+				<!-- 로그인 안했을때 -->
+				<sec:authorize access="not isAuthenticated()">
+				댓글을 작성하시려면 로그인하세요.
+				</sec:authorize>
 			</div>
 		</div>
 		
@@ -188,33 +213,34 @@
 			
 			/* 댓글 출력 */
 			for (const item of list[0].list) {
+				
+				console.log(item);
+				
 				const modifyReplyButtonId = `modifyReplyButton\${item.ab_replyNumber}`;
 
 				const removeReplyButtonId = `removeReplyButton\${item.ab_replyNumber}`;
 				
+				const editButton = `<button data-bs-toggle="modal" data-bs-target="#replyModifyModal" data-reply-id="\${item.ab_replyNumber}" id="\${modifyReplyButtonId}"> <i class="fa-solid fa-pen"></i></button>
+									<button data-bs-toggle="modal" data-bs-target="#replyDeleteModal" data-reply-id="\${item.ab_replyNumber}" id="\${removeReplyButtonId}"> <i class="fa-solid fa-x"></i></button>`
 				
-				const replyDiv = `<div>\${item.ab_replyContent} : \${item.ab_replyInsertDatetime}
-								<button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#modifyReplyFormModal" data-reply-id="\${item.ab_replyNumber}" id="\${modifyReplyButtonId}">
-									<i class="fa-solid fa-pen"></i>
-								</button>
-								<button data-bs-toggle="modal" data-bs-target="#removeReplyConfirmModal" data-reply-id="\${item.ab_replyNumber}" id="\${removeReplyButtonId}">
-									<i class="fa-solid fa-x"></i>
-								</button>
+				const replyDiv = `<div><b> \${item.nickName}</b> \${item.ab_replyContent} : \${item.ago} \${item.editable ? editButton : ''}
 								</div>`;
 				
 				replyListContainer.insertAdjacentHTML("beforeend", replyDiv);
 				
-				// 수정 폼 모달에 댓글 내용 넣기
-				document.querySelector("#" + modifyReplyButtonId).addEventListener("click", function() {
-						document.querySelector("#modifyFormModalSubmitButton").setAttribute("data-reply-id", this.dataset.replyId);
-						readReplyAndSetModalForm(this.dataset.replyId);
-					}); 
-				
-				document.querySelector("#" + removeReplyButtonId)
-				.addEventListener("click", function() {
-					//모달 삭제버튼에 전달 할 삭제할 댓글의 삭제버튼의replyID를 setAttribute를 이용해 부여
-					document.querySelector("#removeConfirmModalSubmitButton").setAttribute("data-reply-id", this.dataset.replyId);
-				});
+				if (item.editable) {
+					// 수정 폼 모달에 댓글 내용 넣기
+					document.querySelector("#" + modifyReplyButtonId).addEventListener("click", function() {
+							document.querySelector("#modifyFormModalSubmitButton").setAttribute("data-reply-id", this.dataset.replyId);
+							readReplyAndSetModalForm(this.dataset.replyId);
+						}); 
+					
+					document.querySelector("#" + removeReplyButtonId)
+					.addEventListener("click", function() {
+						//모달 삭제버튼에 전달 할 삭제할 댓글의 삭제버튼의replyID를 setAttribute를 이용해 부여
+						document.querySelector("#removeConfirmModalSubmitButton").setAttribute("data-reply-id", this.dataset.replyId);
+					});
+				}
 			} showReplyPage(replyCnt);
 			/* 댓글 페이징 버튼 이동 */
 			let pageButtons = document.querySelectorAll(".page-item span")

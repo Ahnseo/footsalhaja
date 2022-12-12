@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,8 +32,16 @@ public class AcademyReplyController {
 
 	@GetMapping("list/{ab_number}/{page}")
 	@ResponseBody 
-	public List<Object> list(@PathVariable("ab_number") int ab_number, @PathVariable("page")int page) {
+	public List<Object> list(@PathVariable("ab_number") int ab_number, @PathVariable("page")int page, Authentication auth) {
 		System.out.println(ab_number);
+		
+		
+		String username = "";
+		
+		// 로그인 상태면
+		if(auth != null) {
+			username = auth.getName(); // 로그인한 아이디 얻어오기
+		}
 		
 		//@GetMapping(value = "/list/{ab_number}/{page}"의 'page'값은 Criteria를 생성해서 직접 처리해야 함
 		Criteria cri = new Criteria(page, 10);
@@ -40,7 +49,7 @@ public class AcademyReplyController {
 		
 		List<Object> replyList = new ArrayList<>();
 		
-		ReplyPageDto replyWithPaging = service.replyWithPaging(cri, ab_number);
+		ReplyPageDto replyWithPaging = service.replyWithPaging(cri, ab_number, username);
 		
 		replyList.add(replyWithPaging);
 		System.out.println(replyList);
@@ -52,8 +61,10 @@ public class AcademyReplyController {
 	@PostMapping("add")
 	@PreAuthorize("isAuthenticated()") // 로그인 여부
 	@ResponseBody
-	public Map<String, Object> add(@RequestBody AcademyReplyDto reply) {
+	public Map<String, Object> add(@RequestBody AcademyReplyDto reply, Authentication authentication) {
 
+		reply.setMember_userId(authentication.getName());
+		
 		Map<String, Object> map = new HashMap<>();
 		
 		int cnt = service.addReply(reply);

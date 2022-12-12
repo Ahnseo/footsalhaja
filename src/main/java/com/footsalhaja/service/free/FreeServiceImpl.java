@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.footsalhaja.domain.free.BoardDto;
+import com.footsalhaja.domain.free.FreeReplyDto;
 import com.footsalhaja.domain.free.PageInfo;
 import com.footsalhaja.mapper.free.FreeMapper;
 import com.footsalhaja.mapper.free.FreeReplyMapper;
@@ -67,8 +68,13 @@ public class FreeServiceImpl implements FreeService{
 	 
 	// 게시물 보기
 	@Override
+	public BoardDto get(int fb_number, String member_userId) {
+		return freeMapper.select(fb_number, member_userId);
+	} 
+	
+	@Override
 	public BoardDto get(int fb_number) {
-		return freeMapper.select(fb_number);
+		return get(fb_number, null);
 	}
 	 
 	@Override
@@ -83,31 +89,45 @@ public class FreeServiceImpl implements FreeService{
 		// 게시물의 댓글 지우기
 		replyMapper.deleteByBoardId(fb_number);
 		
+		// 좋아요 지우기
+		freeMapper.deleteLikeByBoardId(fb_number);
+		 
 		// 게시물 지우기
 		return freeMapper.delete(fb_number);
 	}
 	
 	// 좋아요
-	public Map<String, Object> updateLike(String freeBoard_fb_number, String member_userId) {
+	@Override
+	public Map<String, Object> updateLike(String fb_number, String member_userId) {
+		// System.out.println(fb_number);
+		
 		Map<String, Object> map = new HashMap<>();
 		
 		// freeBoard_fb_number랑 member_userId으로 좋아요 테이블에서 검색
-		int cnt = freeMapper.getLikeByBoardNumberAndUserId(freeBoard_fb_number, member_userId);
+		int cnt = freeMapper.getLikeByBoardNumberAndUserId(fb_number, member_userId);
+		// System.out.println(cnt);
 		if (cnt == 1) {
 			// 있으면 취소
-			freeMapper.deleteLike(freeBoard_fb_number, member_userId);
-			map.put("currrent", "not liked");			
+			freeMapper.deleteLike(fb_number, member_userId);
+			map.put("current", "not liked");			
 		} else { 
 			// 없으면 추가
-			freeMapper.insertLike(freeBoard_fb_number, member_userId);
-			map.put("currrent", "liked");			
+			int a = freeMapper.insertLike(fb_number, member_userId);
+			// System.out.println(a);
+			map.put("current", "liked");			
 		}
 		
 		// 현재 몇개인지
-		int countAll = freeMapper.countLikeByBoardNumber(freeBoard_fb_number);
+		int countAll = freeMapper.countLikeByBoardNumber(fb_number);
 		map.put("count", countAll);
 		
 		return map;
+	}
+	
+	// 조회수
+	@Override
+	public int updateViewCount(int fb_number) {
+		return freeMapper.updateViewCount(fb_number);
 	}
 	
 }

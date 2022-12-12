@@ -8,7 +8,7 @@ import lombok.Data;
 public class QnADto {
 
 	// id, category ,content, userId, status, qnaReply(x replyDto만들), insertDatetime  
-	// qnaId category title status userId insertDatetime
+	// qnaId category title status userId insertDatetime qnaReplyId
 	private int qnaId;
 	private String category;
 	private String title;
@@ -18,5 +18,8 @@ public class QnADto {
 
 	private LocalDateTime insertDatetime;
 	private LocalDateTime deleteDatetime;
+	
+	//게시물의 답변 id ( LEFT JOIN )
+	private int qnaReplyId;
 	
 }

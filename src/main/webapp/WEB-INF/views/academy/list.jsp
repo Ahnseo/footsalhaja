@@ -41,7 +41,7 @@
 							<th>말머리</th>
 							<th>좋아요</th>
 							<th>제목</th>
-							<th>작성자</th>
+							<th>닉네임</th>
 							<th>작성시간</th>
 							<th>조회수</th>
 						</tr>
@@ -55,9 +55,6 @@
 								<td>
  									<c:url value="/academy/get" var="getLink">
 										<c:param name="ab_number" value="${board.ab_number}"></c:param>
-										<c:param name="pageNum" value="${pageMaker.cri.pageNum }"></c:param>
-										<c:param name="amount" value="${pageMaker.cri.amount }"></c:param>
-										
 									</c:url>
 									<a class= 'move' href="${getLink }">
 										${board.ab_title}
@@ -72,15 +69,15 @@
 									</c:if>
 									
 									<!-- 파일 수 출력 -->
-									<%-- <c:if test="${board.countFile > 0 }">
+									<c:if test="${board.countFile > 0 }">
 										<span class="badge rounded-pill text-bg-light">
 											<i class="fa-regular fa-file"></i>
 											${board.countFile }
 										</span>
-									</c:if> --%>
+									</c:if>
 								</td>
-								<td>${board.member_userId }</td>
-								<td>${board.ab_insertDatetime }</td>
+								<td>${board.nickName }</td>
+								<td>${board.ago }</td>
 								<td>${board.ab_viewCount }</td>
 							</tr>
 						</c:forEach> 
@@ -112,6 +109,13 @@
 								value='<c:out value="${pageMaker.cri.amount }"/>'>
 								
 							<button class='btn btn-default'>Search</button>
+							
+							<!-- 카테고리 -->
+							<button class='btn btn-default' name = "category" value = "레슨">레슨</button>
+							<button class='btn btn-default' name = "category" value = "꿀팁">꿀팁</button>
+							<button class='btn btn-default' name = "category" value = "팀원모집">팀원모집</button>
+							<button class='btn btn-default' name = "category" value = "질문/답변">질문/답변</button>
+							
 						</form>
 					</div>
 				</div>
@@ -152,6 +156,7 @@
 				</div>
 			</div>
 		</div>
+	</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 
 <script type="text/javascript">

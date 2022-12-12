@@ -24,11 +24,26 @@ public interface QnAService {
 	public Map<String, String> updateLikeCount(String qnaId, String loggedinId);
 
 	public int insertQnAReply(QnAReplyDto qnaReply);
-	public List<QnAReplyDto> selectQnAReply(QnAReplyDto qnaReply);
+	public QnAReplyDto selectQnAReply(QnAReplyDto qnaReply);
 
 	public int insertQnAReplyToAnswer(QnAReplyToAnswerDto qnaReplyToAnswer);
 
-	public List<QnAReplyToAnswerDto> selectQnAReplyToAnswerList(QnAReplyToAnswerDto qnaReplyToAnswer);
+	public List<QnAReplyToAnswerDto> selectQnAReplyToAnswerList(int qnaReplyId);
+
+	public int deleteAnswerByAnswerId(QnAReplyDto qnaReply);
+
+	public int deleteQnAReplyByReplyId(int qnaReplyToAnswerId);
+	
+	public int deleteQnA(int qnaId);
+
+	public int updateMyQnABoard(QnADto modifiedQnA);
+
+	public List<QnADto> selectQnAListByStatusDone(int page, QnAPageInfo qnaPageInfo, String type, String keyword);
+
+	public int updateAnswerByAnswerId(int answerId, String content);
+
+	public int updateReplyById(int qnaReplyToAnswerId, String content);
+	
 
 
 	

@@ -47,7 +47,7 @@
 </style>
 </head>
 <body>
-
+	<sec:authentication property="name" var="username"/>
 	<my:navbar></my:navbar>
 
 

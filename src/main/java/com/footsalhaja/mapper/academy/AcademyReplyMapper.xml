@@ -5,20 +5,23 @@
  <mapper namespace="com.footsalhaja.mapper.academy.AcademyReplyMapper">
  
  <!-- 게시글 별 댓글리스트 -->
- 	<select id="selectReplyByBoardId" resultType="com.footsalhaja.domain.academy.AcademyReplyDto">
+<!--  	<select id="selectReplyByBoardId" resultType="com.footsalhaja.domain.academy.AcademyReplyDto">
 	SELECT 
-		ab_replyNumber,
-		ab_replyContent,
-		ab_replyInsertDatetime,
-		academyBoard_ab_number as ab_number,
-		member_userId
+		r.ab_replyNumber,
+		r.ab_replyContent,
+		r.academyBoard_ab_number as ab_number,
+		r.member_userId,
+		(r.member_userId = #{username}) editable,
+		r.ab_replyInsertDatetime,
+		m.nickName
+		
 	FROM
-		academyBoardReply
+		academyBoardReply r LEFT JOIN member m ON r.member_userId = m.userId
 	WHERE
 		academyBoard_ab_number = #{ab_number}
 	ORDER BY
 		academyBoard_ab_number DESC
-	</select>
+	</select> -->
 
 <!-- 댓글 입력 -->
 	<insert id="insert">
@@ -61,12 +64,15 @@
 	<!-- 페이지네이션-->
 	<select id="getReplyListWithPaging" resultType="com.footsalhaja.domain.academy.AcademyReplyDto">
 	
-	SELECT ab_replyNumber,
-		ab_replyContent,
-		ab_replyInsertDatetime,
-		academyBoard_ab_number as ab_number,
-		member_userId
-	FROM academyBoardReply
+	SELECT r.ab_replyNumber,
+		r.ab_replyContent,
+		r.academyBoard_ab_number as ab_number,
+		r.member_userId,
+		(r.member_userId = #{username}) editable,
+		r.ab_replyInsertDatetime,
+		m.nickName
+		
+	FROM academyBoardReply r LEFT JOIN member m ON r.member_userId = m.userId
 	WHERE academyBoard_ab_number = #{ab_number}
 	LIMIT #{offset}, #{records}
 	
@@ -76,7 +82,7 @@
 	<!-- 댓글 수 -->
 	
 	<select id="getTotalReplyCount" resultType="int">
-		SELECT Count(ab_replyNumber)
+		SELECT Count(*)
 		FROM academyBoardReply
 		WHERE academyBoard_ab_number= #{ab_number}
 	</select>		

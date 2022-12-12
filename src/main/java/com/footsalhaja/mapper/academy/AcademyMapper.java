@@ -21,7 +21,7 @@ public interface AcademyMapper {
 	public List<BoardDto> list();
 	
 	//페이지 네이션
-	public List<BoardDto> getListWithPaging(Criteria cri, int offset, int records);
+	public List<BoardDto> getListWithPaging(Criteria cri, int offset, int records, String category);
 	
 	public int getTotalCount(Criteria cri, int ab_number);
 	
@@ -40,6 +40,16 @@ public interface AcademyMapper {
 	}
 	//조회수
 	public int updateViewCount(int ab_number);
+
+	//파일
+	public void insertFile(int ab_number, String ab_fileName, String ab_filePath, int ab_fileType);
+
+	public void deleteFileByBoardId(int ab_number);
+
+	public void deleteByBoardIdAndFileName(int ab_number, String originalFilename);
+
+	public void deleteLikeByBoardId(int ab_number);
+	
 	
 	
 }

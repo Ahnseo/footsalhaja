@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.net.*"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
 <!DOCTYPE html>
@@ -48,12 +50,18 @@
 
 				<h1>no.${main.bookId }</h1> 
 				
-				<c:url value="/main/modify" var="modifyLink">
-					<c:param name="bookId" value="${main.bookId }"></c:param>
-				</c:url>
-				<a href="${modifyLink }">
-					<button id="modifyButton" type="button">수정하기</button>				
-				</a>
+				작성자<input type="text" value="${main.userId }" readonly> <br>
+				
+				<sec:authentication property="name" var="username" />
+				
+				<c:if test="${main.userId == username }">
+					<c:url value="/main/modify" var="modifyLink">
+						<c:param name="bookId" value="${main.bookId }"></c:param>
+					</c:url>
+					<a href="${modifyLink }">
+						<button id="modifyButton" type="button">수정하기</button>				
+					</a>				
+				</c:if>
 				
 				<div class="form-floating mb-3">
 
@@ -67,7 +75,8 @@
 					<textarea class="form-control" style="resize: none; height: 100px" readonly>${main.content}</textarea>
 					<label for="floatingInput">본문</label>
 				</div>
-        
+        		
+        		<h3>${main.ago }</h3>
 		</div>
 	</div>
 </div>
@@ -78,16 +87,23 @@
 
 <div id="replyMessage">
 </div>
-
-<div class="container-md">
-	<div class="row">
-		<div class="col">
-			<input type="hidden" id="bookId" value="${main.bookId }">
-			<input type="hidden" id="userId" value="${main.userId }">
-			<input type="text" id="replyInput">
-			<button id="replySendButton">댓글 작성</button>
-		</div>
-	</div>
+	
+	<input type="hidden" id="bookId" value="${main.bookId }">
+	<!-- 로그인 했을 떄 -->
+	<sec:authorize access="isAuthenticated()"> 
+	<!-- 댓글입력 -->
+	<%-- 댓글컨트롤러에서 Authentication으로 아이디 받음
+		작성자 
+		
+	<input type="hidden" id="userId" value="${main.userId }">  --%>
+			
+		댓글<input type="text" id="replyInput">
+		<button id="replySendButton">댓글 작성</button>
+	</sec:authorize>	
+	
+	<sec:authorize access="not isAuthenticated()">
+		댓글을 작성하시려면 로그인하세요.
+	</sec:authorize>
 	
 	<div class="row">
 		<div class="col">
@@ -97,7 +113,7 @@
 		</div>
 	</div>
 	
-</div>
+
 
 <%-- 댓글 삭제 확인 모달 --%>
 	<!-- Modal -->
@@ -112,7 +128,7 @@
 	        댓글을 삭제하시겠습니까?
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
 	        <button type="button" data-bs-dismiss="modal" id="removeConfirmModalSubmitButton" class="btn btn-danger">삭제</button>
 	      </div>
 	    </div>
@@ -128,37 +144,43 @@ listReply();
 document.querySelector("#removeConfirmModalSubmitButton").addEventListener("click", function() {
 	removeReply(this.dataset.replyId);
 });
-
+/* 댓글 리스트*/
 function listReply(){
 	const bookId = document.querySelector("#bookId").value;
+	
 	fetch(`\${ctx}/mainReply/list/\${bookId}`)
 	.then(res => res.json())
 	.then(list => {
 		const replyListContainer = document.querySelector("#replyListContainer");
 		replyListContainer.innerHTML = "";
 		
-for(const item of list){
-
-const removeReplyButtonId = `removeReplyButton\${item.replyId}`;
-			
-			const replyDiv = `
+	for(const item of list){
+	
+	const removeReplyButtonId = `removeReplyButton\${item.replyId}`;
+	
+	const removeButton = `<button data-bs-toggle="modal" data-bs-target="#removeReplyConfirmModal" data-reply-id="\${item.replyId}" id="\${removeReplyButtonId}">삭제</button>`
+		
+	const replyDiv = `
 				<div>
-					\${item.replyId}: \${item.member_userId} : \${item.replyContent}
-					<button data-bs-toggle="modal" data-bs-target="#removeReplyConfirmModal" data-reply-id="\${item.replyId}" id="\${removeReplyButtonId}">삭제</button>
+					\${item.replyId} : \${item.replyContent} :\${item.ago}
+					\${item.editable ? removeButton : '' }		
 				</div>`;
 			replyListContainer.insertAdjacentHTML("beforeend", replyDiv);
 			
-			//삭제 확인 버튼에 replyId 옮기기000
-			document.querySelector("#"+ removeReplyButtonId)
-					.addEventListener("click", function(){
-						document.querySelector("#removeConfirmModalSubmitButton").setAttribute("data-reply-id", this.dataset.replyId);
-						// removeReply(this.dataset.replyId);
-					});
+			
+				//삭제 확인 버튼에 replyId 옮기기
+				document.querySelector("#"+ removeReplyButtonId)
+						.addEventListener("click", function(){
+							document.querySelector("#removeConfirmModalSubmitButton").setAttribute("data-reply-id", this.dataset.replyId)
+							// removeReply(this.dataset.replyId);
+						});
+				
+		
 			
 		}
 	});
 }
-
+/* 댓글 삭제 */
 function removeReply(replyId){
 	fetch(ctx + "/mainReply/remove/" + replyId, {
 		method : "delete"
@@ -168,17 +190,17 @@ function removeReply(replyId){
 } 
 
 
-
+/*댓글 입력*/
 document.querySelector("#replySendButton").addEventListener("click", function(){
-	const bookId = document.querySelector("#bookId").value;
-	const userId = document.querySelector("#userId").value;
+	const book_bookId = document.querySelector("#bookId").value;
 	const replyContent = document.querySelector("#replyInput").value;
+	//const userId = document.querySelector("#userId").value;
 	
 	const data = {
-			bookId,
-			userId,
+			book_bookId,
 			replyContent
-	};
+			//userId
+	}
 	
 	fetch(`\${ctx}/mainReply/add`, {
 		method : "post",

@@ -5,7 +5,9 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+
 import org.springframework.security.core.Authentication;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -85,17 +87,16 @@ public class MainController {
 		  model.addAttribute("bookList", list); 
 	}
 	 
-	
+	@PreAuthorize("@mainSecurity.checkWriter(authentication.name,#bookId)")
 	@GetMapping("modify")
 	public void modify(int bookId, Model model) {
-		MainDto main = service.get(bookId);
-		
+		MainDto main = service.get(bookId);		
 		model.addAttribute("main", main);
 
 	}
 
-	
-	 @RequestMapping("modify") 
+	@PreAuthorize("@mainSecurity.checkWriter(authentication.name,#main.bookId)")
+	 @PostMapping("modify") 
 	 public String modify(MainDto main) {
 		 service.update(main);
 	 
@@ -104,7 +105,7 @@ public class MainController {
 	 
 	}
 
-	 
+	 @PreAuthorize("@mainSecurity.checkWriter(authentication.name,#bookId)")
 	 @PostMapping("remove")
 	 public String remove(int bookId) {
 		 service.remove(bookId);
