@@ -162,7 +162,7 @@ function listReply(){
 		
 	const replyDiv = `
 				<div>
-					\${item.replyId} : \${item.replyContent} :\${item.ago} : \${item.member_userId}
+					\${item.replyId} : \${item.replyContent} :\${item.ago}
 					\${item.editable ? removeButton : '' }		
 				</div>`;
 			replyListContainer.insertAdjacentHTML("beforeend", replyDiv);
@@ -192,13 +192,13 @@ function removeReply(replyId){
 
 /*댓글 입력*/
 document.querySelector("#replySendButton").addEventListener("click", function(){
-	const bookId = document.querySelector("#bookId").value;
+	const book_bookId = document.querySelector("#bookId").value;
 	const replyContent = document.querySelector("#replyInput").value;
-//	const userId = document.querySelector("#userId").value;
+	//const userId = document.querySelector("#userId").value;
 	
 	const data = {
-			bookId,
-			replyContent,
+			book_bookId,
+			replyContent
 			//userId
 	}
 	

@@ -17,6 +17,7 @@ public class ReplyDto {
 	private int bookId;
 	private String userId;
 	private String member_userId;
+	private int book_bookId;
 	
 	private boolean editable;
 	
