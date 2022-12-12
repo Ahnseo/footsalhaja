@@ -87,8 +87,37 @@ public class MemberServiceImpl implements MemberService {
 	
 	//내글 보기 (아카데미 게시판)
 	@Override
-	public MemberDto getUserAbList(String userId) {
-		return memberMapper.getUserAbList(userId);
+	public MemberDto getUserAbList(String userId, int page, MemberPageInfo pageInfo) {
+		int records = 10;
+		int offset = (page - 1) * records;
+		
+		int countAll = memberMapper.countAllAblist(); 
+		int lastPage = (countAll - 1) / records + 1;
+		
+		int leftPageNumber = (page - 1) / 10 * 10 + 1;
+		int rightPageNumber = leftPageNumber + 9;
+		rightPageNumber = Math.min(rightPageNumber, lastPage);
+		
+		// 이전버튼 유무
+		boolean hasPrevButton = page > 10;
+		// 다음버튼 유무
+		boolean hasNextButton = page <= ((lastPage - 1) / 10 * 10);
+		
+		// 이전버튼 눌렀을 때 가는 페이지 번호
+		int jumpPrevPageNumber = (page - 1) / 10 * 10 - 9;
+		int jumpNextPageNumber = (page - 1) / 10 * 10 + 11; 
+		
+		pageInfo.setHasPrevButton(hasPrevButton);
+		pageInfo.setHasNextButton(hasNextButton);
+		pageInfo.setJumpPrevPageNumber(jumpPrevPageNumber);
+		pageInfo.setJumpNextPageNumber(jumpNextPageNumber);
+		pageInfo.setCurrentPageNumber(page);
+		pageInfo.setLeftPageNumber(leftPageNumber);
+		pageInfo.setRightPageNumber(rightPageNumber);
+		pageInfo.setLastPageNumber(lastPage);
+		
+		
+		return memberMapper.getUserAbList(userId, offset, records);
 	}
 	//내글 보기 (자유 게시판)
 	@Override

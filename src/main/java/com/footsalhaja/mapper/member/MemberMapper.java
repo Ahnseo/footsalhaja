@@ -31,7 +31,7 @@ public interface MemberMapper {
 	public int selectAllMemberCount(String type, String keyword);
 	
 	//내글보기(아카데미 게시판)
-	public MemberDto getUserAbList(String userId);
+	public MemberDto getUserAbList(String userId, int offset, int records);
 	
 	//내글보기(자유 게시판)
 	public MemberDto getUserFbList(String userId);
@@ -46,4 +46,6 @@ public interface MemberMapper {
 	//내가 좋아요한 글 보기
 	public MemberDto getUserAbLikeList(String userId);
 	public MemberDto getUserFbLikeList(String userId);
+
+	public int countAllAblist();
 }

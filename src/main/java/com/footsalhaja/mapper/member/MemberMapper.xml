@@ -144,7 +144,7 @@
 		FROM member m LEFT JOIN academyBoard a ON m.userId = a.member_userId
 	    WHERE m.userId = #{userId}
 	    ORDER BY a.ab_number DESC
- 	
+ 		LIMIT #{offset}, #{records}
  	</select>
  	
  	<resultMap type="com.footsalhaja.domain.member.MemberDto" id="userAbMap">
@@ -161,6 +161,10 @@
 		<result column="ab_viewCount" property="ab_viewCount"/>
  	</resultMap>
  	
+ 	<select id="countAllAblist" resultType="int">
+	SELECT Count(*)
+	FROM member m LEFT JOIN academyBoard a ON m.userId = a.member_userId;
+	</select>
  	
  	 <!-- 내글 보기(자유 게시판) -->
  	<select id="getUserFbList" resultMap="userFbMap">
