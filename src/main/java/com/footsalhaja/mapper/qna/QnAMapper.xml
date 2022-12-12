@@ -173,6 +173,34 @@
 		</trim> 	
 	</select>
 	
+		<select id="countAllQnAByDone" resultType="int">
+		SELECT 
+	 		COUNT(*)
+	 	FROM 
+	 	 	QnABoard 
+	 	WHERE
+	 	
+	 	
+	 		status = #{status} AND
+	 	(
+	 	
+		<trim prefixOverrides="OR">
+			<if test="type == 'all' or type == 'title'">
+			OR title LIKE #{keyword}
+			</if>
+			
+			<if test="type == 'all' or type == 'content'">
+			OR content LIKE #{keyword}
+			</if>
+			
+			<if test="type == 'all' or type == 'userId'">
+			OR member_userId LIKE #{keyword}
+			</if>
+		</trim> 	
+		)
+		
+	</select>
+	
 	<!-- 좋아요 기능추가  -->
 	<select id="selectQnABoardLikeCount" resultType="int">
 		SELECT 
@@ -196,6 +224,18 @@
 		INSERT INTO QnAReply (qnaId, userId, writer, content)
 		VALUES( #{qnaId}, #{userId}, #{writer}, #{content} )
 	</insert>
+	
+	<update id="updateAnswerByAnswerId">
+		UPDATE QnAReply SET
+		content = #{content}
+		WHERE qnaReplyId = #{answerId}
+	</update>
+	
+	<update id="updateReplyById">
+		UPDATE QnAReplyToAnswer SET
+		content = #{content}
+		WHERE qnaReplyToAnswerId = #{qnaReplyToAnswerId}
+	</update>
 	<select id="selectQnAReply" resultType="com.footsalhaja.domain.qna.QnAReplyDto">
 		<!-- //qnaReplyId,qnaId,userId,writer,content,insertDatetime -->
 		SELECT 

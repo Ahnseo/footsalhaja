@@ -7,6 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,7 +40,16 @@ public class QnAReplyController {
 		//System.out.println(referer);
 		return referer; // 이전 페이지로 이동하기 위한 값 
 	}
-	
+	@PostMapping("qnaAnswerModify")
+	@ResponseBody
+	public String updateQnAAnswer(@RequestBody QnAReplyDto modifiedAnswer, HttpServletRequest request ) {
+		int answerId = modifiedAnswer.getQnaReplyId();
+		String content = modifiedAnswer.getContent();
+		qnaService.updateAnswerByAnswerId(answerId, content);
+		
+		String referer = request.getHeader("Referer");
+		return referer;
+	}
 	@PutMapping("addToAnswer")
 	@ResponseBody
 	private String qnaReplyToAnswer(@RequestBody QnAReplyToAnswerDto qnaReplyToAnswer, Authentication authentication, Model model, HttpServletRequest request) {
@@ -72,6 +82,12 @@ public class QnAReplyController {
 		String referer = request.getHeader("Referer"); // 헤더에서 이전 페이지를 읽는다.
 		
 		return referer; // 이전 페이지로 이동하기 위한 값 
+	}
+	@PostMapping("modifyReply")
+	@ResponseBody
+	public void modifyReply(@RequestBody QnAReplyToAnswerDto reply) {
+		qnaService.updateReplyById(reply.getQnaReplyToAnswerId(), reply.getContent());
+
 	}
 
 	@DeleteMapping("deleteQnA")

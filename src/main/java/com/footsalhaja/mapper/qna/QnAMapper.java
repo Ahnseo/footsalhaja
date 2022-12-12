@@ -31,7 +31,8 @@ public interface QnAMapper {
 	int updateMyQnABoard(QnADto qna);
 	//답변완료된 모든 리스트 불러오기
 	List<QnADto> selectQnAListByStatusDone(int offset, int records, String keyword, String type, String status);
-	
+	//qnaMainBoard lastpage 만들기 위해 count 
+	int countAllQnAByDone(String type, String keyword, String status);
 	//####################################################################################
 	//QnA Id와 로그인된 Id로 좋아요기능 추가
 	int selectQnABoardLikeCount(String qnaId, String loggedinId);
@@ -53,6 +54,8 @@ public interface QnAMapper {
 	//####################################################################################
 	//QnA 답변에 대한 댓글쓰기 (모든 회원이용 가능)
 	int insertQnAReplyToAnswer(QnAReplyToAnswerDto qnaReplyToAnswer);
+	//QnA 답변 수정
+	int updateAnswerByAnswerId(int answerId, String content);
 	//QnA 답변에 대한 댓글리스트 모두 가져오기 (모든 회원이용 가능)
 	List<QnAReplyToAnswerDto> selectQnAReplyToAnswerList(int qnaReplyId);
 	//QnA 댓글 삭제 버튼으로 하나의 댓글 삭제  
@@ -61,12 +64,17 @@ public interface QnAMapper {
 	int deleteQnAReplyByAnswerId(int qnaAnswerId);
 	
 	//####################################################################################
+	//댓글 수정 
+	int updateReplyById(int qnaReplyToAnswerId, String content);
 	//문의 게시물 id로 모든 댓글들을  삭제 
 	int deleteAllQnAReplyById(int qnaId);
 	//문의 삭제을 위한 답변삭제 
 	int deleteAnswerBYqnaId(int qnaId);
 	//문의 삭제 
 	int deleteQnA(int qnaId);
+	
+	
+	
 	
 	
 	

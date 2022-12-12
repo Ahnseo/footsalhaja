@@ -42,7 +42,7 @@
 				<div class="row d-flex">
 					<div class="col-md-4">
 						<label for="formControlInput5" class="form-label"><i class="fa-solid fa-user"></i></label>
-						<input id="formControlInput5" class="form-control" type="hidden" name="userId" value="" readonly >
+						<input id="formControlInput5" class="form-control" type="hidden" name="" value="" readonly >
 						<span class="badge bg-primary rounded-pill">${qna.userId}</span>
 					</div>
 					<div class="col-md-4">

@@ -105,7 +105,7 @@
 								     
 								     	<c:param name="page" value="1"/>
 								     	<c:param name="q" value=""/>
-								     	<c:param name="t" value=""/>
+								     	<c:param name="t" value="all"/>
 								      </c:url>	
 								      <a class="page-link" href="${firstPageLink}" aria-label="First">
 								        맨앞
@@ -119,7 +119,7 @@
 								     	
 								     	<c:param name="page" value="${jumpPrevPageNumber}"/>
 								     	<c:param name="q" value=""/>
-								     	<c:param name="t" value=""/>
+								     	<c:param name="t" value="all"/>
 								      </c:url>	
 								      <a class="page-link" href="${previousPageLink}" aria-label="Previous">
 								        이전
@@ -131,12 +131,12 @@
 							    <c:forEach begin="${qnaPageInfo.leftPageNumber}" end="${qnaPageInfo.rightPageNumber}" var="pageNumber">
 							    	<li class="page-item">
 								    	<c:url value="/qna/qnaMainBoard" var="pageLink" >
-									    	
+				
 									    	<c:param name="page" value="${pageNumber}"/>
 									    	<c:param name="q" value=""/>
-									     	<c:param name="t" value=""/>
+									     	<c:param name="t" value="all"/>
 								    	</c:url>
-								    	<a class="page-link" href="${pageLink}">
+								    	<a class="page-link ${qnaPageInfo.currentPageNumber eq pageNumber ? 'active' : ''}" href="${pageLink}">
 								    		${pageNumber}
 								    	</a>
 								    </li>
@@ -149,7 +149,7 @@
 								     
 								     	<c:param name="page" value="${qnaPageInfo.jumpNextPageNumber}"/>
 								     	<c:param name="q" value=""/>
-								     	<c:param name="t" value=""/>
+								     	<c:param name="t" value="all"/>
 								      </c:url>	
 								      <a class="page-link" href="${nextPageLink}" aria-label="Previous">
 								        다음
@@ -158,15 +158,18 @@
 							    </c:if>
 							    
 							    <!-- 마지막 페이지 -->
-							    <li class="page-item">
-							      <c:url value="/qna/qnaMainBoard" var="lastPageLink">  
-							        <c:param name="userId" value="${userIdValue}"/>
-							        <c:param name="page" value="${qnaPageInfo.lastPageNumber}"/>
-							      </c:url>	
-							      <a class="page-link" href="${lastPageLink}" aria-label="Last">
-							      	맨마지막
-							      </a>
-							    </li>
+							    <c:if test="${qnaPageInfo.currentPageNumber ne qnaPageInfo.lastPageNumber}">	    
+								    <li class="page-item">
+								      <c:url value="/qna/qnaMainBoard" var="lastPageLink">  
+								        <c:param name="page" value="${qnaPageInfo.lastPageNumber}"/>
+								        <c:param name="q" value=""/>
+								     	<c:param name="t" value="all"/>
+								      </c:url>	
+								      <a class="page-link" href="${lastPageLink}" aria-label="Last">
+								      	맨마지막
+								      </a>
+								    </li>
+							    </c:if>
 							  </ul>
 							</nav>
 							<div class="d-flex flex-row-reverse">	

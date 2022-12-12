@@ -39,6 +39,10 @@ public interface QnAService {
 	public int updateMyQnABoard(QnADto modifiedQnA);
 
 	public List<QnADto> selectQnAListByStatusDone(int page, QnAPageInfo qnaPageInfo, String type, String keyword);
+
+	public int updateAnswerByAnswerId(int answerId, String content);
+
+	public int updateReplyById(int qnaReplyToAnswerId, String content);
 	
 
 

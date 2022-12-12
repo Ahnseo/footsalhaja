@@ -46,6 +46,7 @@ public class QnAController {
 		
 		model.addAttribute("FAQList", FAQList);
 		model.addAttribute("allQnAListByDone", allQnAListByDone);
+		model.addAttribute("qnaPageInfo", qnaPageInfo);
 	}
 
 	// insert
@@ -112,9 +113,10 @@ public class QnAController {
 		//업데이트 하고,select 해서 model에 넣고 -> 페이지 이동 해서 보여주기 
 		//System.out.println("myQnAModify qna " + modifiedQnA);
 		qnaService.updateMyQnABoard(modifiedQnA);
-		
-		return "redirect:/qna/qnaMainBoard";
+		System.out.println("con_userId="+modifiedQnA.getUserId());
+		return "redirect:/qna/myQnAGet?userId="+modifiedQnA.getUserId()+"&qnaId="+modifiedQnA.getQnaId();
 	}
+	
 	
 	@PutMapping("likeCount")
 	@ResponseBody

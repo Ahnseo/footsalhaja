@@ -95,6 +95,7 @@
 						</c:if>
 					</div>
 				</form>	
+				
 				<!-- 답변 작성하기 -->
 				<sec:authorize access="hasAuthority('admin')">		
 					<div class="collapse" id="qnaReplyCollapseAnswer">
@@ -137,7 +138,7 @@
 											<button id="qnaAnswerDeleteBtn" class="btn btn-outline-danger" type="button" >삭제</button>
 										</div>
 										<div>
-											<button class="btn btn-outline-warning"  type="button" id="" >수정</button>
+											<button class="btn btn-outline-warning"  type="button"  data-bs-toggle="modal" data-bs-target="#modifyAnswerInputModal" >수정</button>
 										</div>
 										<%-- </c:if> --%>
 										<sec:authorize access="isAuthenticated()">
@@ -151,6 +152,26 @@
 						</div>
 					</div> 
 				</c:if>
+				<!--답변 수정 Modal by 답변Id  -->
+		    	<div class="modal fade" id="modifyAnswerInputModal" tabindex="-1" aria-labelledby="modifyAnswerInputModalLabel" aria-hidden="true">
+		    	  <div class="modal-dialog">
+		    	    <div class="modal-content">
+		    	      <div class="modal-header">
+		    	        <h1 class="modal-title fs-5" id="modifyAnswerInputModalLabel">답변수정</h1>
+		    	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		    	      </div>
+		    	      <div class="modal-body">
+		    	      	<!-- //qnaReplyId,qnaId,userId,writer,content,insertDatetime -->
+		    	      	<input type="hidden" id="qnaAnswerId" value="${qna.qnaReplyId}" readonly>
+						수정할 답변 내용<textarea id="qnaAnswerContentModify" cols="40" rows="5"></textarea>
+		    	      </div>
+		    	      <div class="modal-footer">
+		    	        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">취소</button>
+		    	        <button id="modifyAnswerSubmitBtn" type="button" class="btn btn-outline-success">수정</button>
+		    	      </div>
+		    	    </div>
+		    	  </div>
+		    	</div>
 		    	<!-- 댓글작성 Modal by 답변Id  -->
 		    	<div class="modal fade" id="replyInputModal" tabindex="-1" aria-labelledby="replyInputModalLabel" aria-hidden="true">
 		    	  <div class="modal-dialog">
@@ -185,6 +206,7 @@
 			    			<div class="col-md-11">
 					    		<div class="card">
 					    		  <div class="card-header d-flex">
+					    		  	<input type="text" id="qnaReplyToAnswerIdValue" value="${qnaReplyToAnswer.qnaReplyToAnswerId}">
 					    		  	<span class="p-1"><i class="fas fa-comments"></i></span>
 					    		  	<span class="p-1"><i class="fa-solid fa-user"></i>${qnaReplyToAnswer.userId}</span>
 					    		  	<span class="p-1"><i class="fa-regular fa-clock"></i>${qnaReplyToAnswer.insertDatetime}</span>
@@ -193,22 +215,38 @@
 					    		    <p class="card-text">${qnaReplyToAnswer.content}</p>
 					    		    <div class="d-flex flex-row-reverse">
 					    		    	<%-- 로그인=> ${userIdValue} / 작성자=> ${qnaReplyToAnswer.userId} --%>
-					    		    	<c:if test="${qnaReplyToAnswer.userId == userIdValue}">
-						    		    	<div>
-							    		    	<input id="qnaReplyToAnswerIdValue" type="hidden" value="${qnaReplyToAnswer.qnaReplyToAnswerId}">
-						    		    		<button id="qnaReplyDeleteBtn${qnaReplyToAnswer.qnaReplyToAnswerId}" onclick="deleteReply()" class="btn btn-outline-danger" type="button">삭제</button>
-						    		    	</div>
-						    		    	<div>
-							    		    	<a href="#" class="btn btn-outline-warning">수정</a>
-							    		    </div> 
-							    		</c:if>
+					    		    	<div>
+					    		    		<button id="" onclick="deleteReply()" class="btn btn-outline-danger" type="button">삭제</button>
+					    		    		<button class="btn btn-outline-warning"  type="button"  data-bs-toggle="modal" data-bs-target="#modifyReplyInputModal" >수정</button>
+						    		    </div> 		
 					    		    </div>
 					    		  </div>
 					    		</div>
-				    		</div>
+				    		</div>	
 			    		</div>
 					</div>			
-				</c:forEach>
+		    	</c:forEach>
+		    	<!-- 댓글 수정 Modal by 답변Id  -->
+		    	<div class="modal fade" id="modifyReplyInputModal" tabindex="-1" aria-labelledby="modifyReplyInputModalLabel" aria-hidden="true">
+		    	  <div class="modal-dialog">
+		    	    <div class="modal-content">
+		    	      <div class="modal-header">
+		    	        <h1 class="modal-title fs-5" id="modifyReplyInputModalLabel">댓글수정</h1>
+		    	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		    	      </div>
+		    	      <div class="modal-body">
+		    	      	<!-- //qnaReplyId,qnaId,userId,writer,content,insertDatetime -->
+		    	      	
+		    	      	<input id="qnaReplyIdValue" type="text" value="${qnaReplyToAnswer.qnaReplyToAnswerId}" >
+						수정할 댓글 내용<textarea id="qnaAnswerContentModify" cols="40" rows="3"></textarea>
+		    	      </div>
+		    	      <div class="modal-footer">
+		    	        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">취소</button>
+		    	        <button id="modifyReplySumbitBtn" type="button" onclick="modifyReply()" class="btn btn-outline-success">수정</button>
+		    	      </div>
+		    	    </div>
+		    	  </div>
+		    	</div>  
 			</div>
 		</div>
 	</div>
@@ -241,6 +279,19 @@ if(qnaReplyBtn != null) {
 		.then(redirectPath => location.href = redirectPath)
 	});
 }	
+<!-- 답변 수정 모달 기능 (관리자만 작성가능)-->
+document.querySelector("#modifyAnswerSubmitBtn").addEventListener("click", function() {
+	const qnaReplyId = document.querySelector("#qnaAnswerId").value;
+	const content = document.querySelector("#qnaAnswerContentModify").value;
+	const data = {qnaReplyId, content};
+	fetch(ctx + "/qnaReply/qnaAnswerModify", { method : "post",
+								    headers : { "Content-Type" : "application/json" },
+								    body : JSON.stringify(data)
+	})
+	.then(res => res.text())
+	.then(redirectPath => location.href = redirectPath)
+	
+});
 	<!-- 답변 삭제  -->
 	function deleteAnswer() {
 		document.querySelector("#qnaAnswerDeleteBtn").addEventListener("click", function() {
@@ -276,6 +327,21 @@ if(qnaReplyBtn != null) {
 		.then(res => res.text())
 		.then(redirectPath => location.href = redirectPath)
 	});
+	<!-- 댓글 수정 -->
+	function modifyReply() {
+		document.querySelector("#modifyReplySumbitBtn").addEventListener("click", function() {
+			const qnaReplyToAnswerId = document.querySelector("#qnaReplyToAnswerIdValue").value;
+			const content = document.querySelector("#qnaAnswerContentModify").value;
+			const data = {qnaReplyToAnswerId, content};
+			fetch(ctx + "/qnaReply/modifyReply", 
+					{ method : "post",
+			    	headers : { "Content-Type" : "application/json" },
+			    	body : JSON.stringify(data)
+			})
+			
+			
+		});
+	}
 
 	
 	<!-- function() 댓글 삭제  qnaReplyToAnswerId, qnaReplyId, qnaId, writer, content, userId, insertDatetime -->

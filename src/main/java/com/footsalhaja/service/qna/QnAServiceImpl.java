@@ -34,16 +34,13 @@ public class QnAServiceImpl implements QnAService {
 		// 페이지네이션 추가
 		int records = 10; // 10 rows 씩 목록에 나타냅니다  
 		int offset = (page - 1) * records; //page=2 : 11~20 rows ,  page=3 : 21~30 rows 나타냄 
-		
-		int countAllQnA = qnaMapper.countAllQnA(type, keyword);
-		System.out.println("userId의 문의 갯수 : " + countAllQnA + "개");
-		int lastPageNumber = (countAllQnA - 1) / records + 1;
-		//                50 - 1 = 49 / 10 = 4.9 = 4 + 1 = 5 
+		String status = "답변완료";
+		int countAllQnAByDone = qnaMapper.countAllQnAByDone(type, keyword, status);
+		System.out.println("done 문의 갯수 : " + countAllQnAByDone + "개");
+		int lastPageNumber = (countAllQnAByDone - 1) / records + 1;
+		System.out.println("lastPageNumber:"+lastPageNumber);
 
-		int leftPageNumber = (page - 1) / 10 * 10 + 1;
-					// 2 - 1 = 1 /10 =0  *10 =0 + 1 => 1
-					// 10 - 1 = 9/10 =0  *10 =0 + 1 => 1
-					// 11 - 1 = 11/10=1  *10 =10 + 1 => 11	
+		int leftPageNumber = (page - 1) / 10 * 10 + 1;	
 		System.out.println("leftPageNumber : " + leftPageNumber);
 		int rightPageNumber = leftPageNumber + 9;
 		rightPageNumber = Math.min(rightPageNumber, lastPageNumber);
@@ -71,7 +68,7 @@ public class QnAServiceImpl implements QnAService {
 		qnaPageInfo.setHasPrevButton(hasPrevButton);	
 		qnaPageInfo.setHasNextButton(hasNextButton);
 		
-		String status = "답변완료";
+		
 		
 		return qnaMapper.selectQnAListByStatusDone(offset,records, "%"+keyword+"%", type, status);
 	}
@@ -186,6 +183,12 @@ public class QnAServiceImpl implements QnAService {
 		}
 		return cnt;
 	}
+	//QnA 답변 수정 
+	@Override
+	public int updateAnswerByAnswerId(int answerId, String content) {
+		int cnt = qnaMapper.updateAnswerByAnswerId(answerId, content);
+		return cnt;
+	}
 	//QnA 답변 삭제 
 	@Override
 	public int deleteAnswerByAnswerId(QnAReplyDto qnaReply) {
@@ -214,6 +217,11 @@ public class QnAServiceImpl implements QnAService {
 	@Override
 	public int insertQnAReplyToAnswer(QnAReplyToAnswerDto qnaReplyToAnswer) {
 		int cnt = qnaMapper.insertQnAReplyToAnswer(qnaReplyToAnswer);
+		return cnt;
+	}
+	@Override
+	public int updateReplyById(int qnaReplyToAnswerId, String content) {
+		int cnt = qnaMapper.updateReplyById(qnaReplyToAnswerId, content);
 		return cnt;
 	}
 	//QnA답변에 대한 댓글 리스트 가져오기
