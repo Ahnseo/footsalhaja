@@ -86,6 +86,17 @@ public class MypageContorller {
 		
 	}
 	
+	@GetMapping("myMainDocumentList")
+	public void getMyMainDocumnetList(@RequestParam("userId") String userId, Model model) {
+
+		MemberDto MaindoucumentListByUserId = memberService.getUserMainList(userId);
+		System.out.println("메인에 작성한 글 리스트: " + MaindoucumentListByUserId);
+
+		model.addAttribute("list", MaindoucumentListByUserId);
+		
+	}
+	
+	
 	@GetMapping("myReplyList")
 	public void getMyReplyList(@RequestParam("userId") String userId, Model model) {
 		

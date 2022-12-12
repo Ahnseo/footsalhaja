@@ -192,6 +192,47 @@
 		<result column="fb_viewCount" property="fb_viewCount"/>
  	</resultMap>
  	
+ 	<!-- 내글 보기 (메인) -->
+ 	<select id="getUserMainList" resultMap="userMainMap">
+ 		SELECT
+	 		m.userId,
+			m.nickName,
+	        b.bookId,
+	        b.title,
+	        b.matchType,
+            b.level,
+            b.status,
+            b.bookDate,
+            b.bookTime,
+            b.teamGender,
+	        b.location_locationId,
+	        l.stadiumName
+		FROM member m LEFT JOIN book b ON m.userId = b.member_userId
+						LEFT JOIN location l ON b.location_locationId = l.locationId
+	    WHERE m.userId = #{userId}
+	    ORDER BY b.bookId DESC
+ 	
+ 	</select>
+ 	
+ 	<resultMap type="com.footsalhaja.domain.member.MemberDto" id="userMainMap">
+ 		<id column="userId" property="userId"></id>
+ 		<result column="nickName" property="nickName" />
+ 		<collection property="userMainList" resultMap="userMainList"></collection>
+ 	</resultMap>
+ 	
+ 	<resultMap type="com.footsalhaja.domain.main.BookDto" id="userMainList">
+ 		<result column="bookId" property="bookId" />
+		<result column="title" property="title"/>
+ 		<result column="matchType" property="matchType"/>
+		<result column="level" property="level"/>
+		<result column="status" property="status"/>
+		<result column="bookDate" property="bookDate"/>
+		<result column="bookTime" property="bookTime"/>
+		<result column="teamGender" property="teamGender"/>
+		<result column="stadiumName" property="stadiumName"/>
+		
+ 	</resultMap>
+ 
  	<!-- 내가 쓴 댓글보기 (자유게시판)-->
  	<select id="getUserFbReplyList" resultMap="userFbReplyMap">
 	 	SELECT 

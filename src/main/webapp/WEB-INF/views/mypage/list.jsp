@@ -71,6 +71,12 @@
 	</c:url>
 	<a class="btn btn-outline-primary" href="${listLink }" role="button">
 		자유 게시판에 쓴 글 글 목록</a>
+<br>
+	<c:url value="/mypage/myMainDocumentList" var="listLink">
+		<c:param name="userId" value="${myInfo.userId}"></c:param>
+	</c:url>
+	<a class="btn btn-outline-primary" href="${listLink }" role="button">
+		예약 글 목록</a>
 
 <br>
 	<c:url value="/mypage/myReplyList" var="listLink">

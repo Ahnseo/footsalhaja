@@ -36,6 +36,9 @@ public interface MemberMapper {
 	//내글보기(자유 게시판)
 	public MemberDto getUserFbList(String userId);
 	
+	//내글 보기(메인)
+	public MemberDto getUserMainList(String userId);
+	
 	//내 댓글보기
 	public MemberDto getUserFbReplyList(String userId);
 	public MemberDto getUserAbReplyList(String userId);

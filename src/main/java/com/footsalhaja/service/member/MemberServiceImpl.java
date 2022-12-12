@@ -96,6 +96,12 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.getUserFbList(userId);
 	}
 	
+	//내글 보기 (메인)
+	@Override
+	public MemberDto getUserMainList(String userId) {
+		return memberMapper.getUserMainList(userId);
+	}
+	
 	//내가 쓴 댓글 보기
 	@Override
 	public List<MemberDto> getUserReplyList(String userId) {
@@ -121,5 +127,6 @@ public class MemberServiceImpl implements MemberService {
 		
 		return list;
 	}
+	
 	
 }
