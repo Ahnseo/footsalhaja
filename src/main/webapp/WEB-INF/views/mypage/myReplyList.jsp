@@ -53,7 +53,7 @@
 								</c:url> 
 								<a class='move' href="${getLink }">${replyFbList.fb_replyContent} </a>
 							</td> 
-						 	<td>${replyFbList.fb_inserDatetime}</td>					 	
+						 	<td>${replyFbList.fb_insertDatetime}</td>					 	
 					 	</tr>
 					</c:forEach>
 				</tbody>

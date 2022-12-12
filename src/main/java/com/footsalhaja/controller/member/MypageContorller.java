@@ -1,9 +1,7 @@
 package com.footsalhaja.controller.member;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +15,6 @@ import com.footsalhaja.domain.academy.AcademyReplyDto;
 import com.footsalhaja.domain.academy.BoardDto;
 import com.footsalhaja.domain.free.FreeReplyDto;
 import com.footsalhaja.domain.member.MemberDto;
-import com.footsalhaja.domain.member.UserReplyDto;
 import com.footsalhaja.service.member.MemberService;
 
 @Controller

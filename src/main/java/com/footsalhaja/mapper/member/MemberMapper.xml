@@ -199,7 +199,7 @@
 		    m.nickName,
 		    fr.freeBoard_fb_number,
 		    fr.fb_replyContent,
-		    fr.fb_inserDatetime
+		    fr.fb_insertDatetime
 		FROM member m LEFT JOIN freeBoardReply fr ON m.userId = fr.member_userId
 		WHERE m.userId = #{userId}
  	</select>
@@ -213,7 +213,7 @@
  	<resultMap type="com.footsalhaja.domain.free.FreeReplyDto" id="userFbReplyList">
  		<result column="fb_replyContent" property="fb_replyContent"/>
  		<result column="freeBoard_fb_number" property="freeBoard_fb_number"/>
-		<result column="fb_inserDatetime" property="fb_inserDatetime"/>
+		<result column="fb_insertDatetime" property="fb_insertDatetime"/>
  	</resultMap>
 
  	<!-- 내가 쓴 댓글보기 (아카데미게시판)-->

@@ -6,10 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.footsalhaja.domain.academy.BoardDto;
 import com.footsalhaja.domain.member.MemberDto;
 import com.footsalhaja.domain.member.MemberPageInfo;
-import com.footsalhaja.domain.member.UserReplyDto;
 import com.footsalhaja.mapper.member.MemberMapper;
 
 @Service
