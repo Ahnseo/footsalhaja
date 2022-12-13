@@ -64,9 +64,9 @@ public class AdminServiceImpl implements AdminService {
 	}
 	
 	@Override
-	public List<BookDto> selectBookedListToday() {
+	public List<BookDto> selectBookedListLimit() {
 		int status = 0; //예약됨 = 0값 으로 설정되어있음 
-		return adminMapper.selectBookedListToday(status);
+		return adminMapper.selectBookedListLimit(status);
 	}
 	@Override
 	public int selectTodayVisitCount() {

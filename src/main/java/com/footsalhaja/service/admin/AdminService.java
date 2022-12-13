@@ -15,7 +15,7 @@ public interface AdminService {
 	public List<QnADto> selectWatingQnAList();
 	
 	//관리자가 볼수있는 예약된 리스트 
-	public List<BookDto> selectBookedListToday();
+	public List<BookDto> selectBookedListLimit();
 	
 	public List<BookDto> selectBookedListAll();
 

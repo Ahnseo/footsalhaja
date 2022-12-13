@@ -25,11 +25,13 @@
 				<table class="table">
 					<h3>${userIdValue} 님의 문의내역</h3>
 					<thead>
-						<th>번호</th>
-						<th>카테고리</th>
-						<th>제목</th>
-						<th>내용</th>
-						<th>문의상태</th>
+						<tr>	
+							<th>번호</th>
+							<th>카테고리</th>
+							<th>제목</th>
+							<th>내용</th>
+							<th>문의상태</th>
+						</tr>
 					</thead>
 					 <tbody>
 						 <c:forEach items="${myQnAList}" var="myQnAList"  >

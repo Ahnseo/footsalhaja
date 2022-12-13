@@ -12,7 +12,7 @@ public interface AdminMapper {
 
 	List<QnADto> selectWatingQnAList(String status);
 
-	List<BookDto> selectBookedListToday(int status);
+	List<BookDto> selectBookedListLimit(int status);
 	
 	List<BookDto> selectBookedListAll(int status);
 

@@ -39,12 +39,14 @@
 		<div class="col">
 			<table class="table">
 				<thead>
-					<th>번호</th>
-					<th>카테고리</th>
-					<th>제목</th>
-					<th>내용</th>
-					<th>작성자</th>
-					<th>문의상태</th>
+					<tr>
+						<th>번호</th>
+						<th>카테고리</th>
+						<th>제목</th>
+						<th>내용</th>
+						<th>작성자</th>
+						<th>문의상태</th>
+					</tr>
 				</thead>
 				<tbody>
 					 <c:forEach items="${allQnAList}" var="allQnAList"  >

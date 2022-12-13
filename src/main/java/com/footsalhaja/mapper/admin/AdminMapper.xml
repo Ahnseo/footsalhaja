@@ -37,7 +37,7 @@
  		ORDER BY b.insertDatetime DESC
  	</select>
  	
- 	<select id="selectBookedListToday" resultType="com.footsalhaja.domain.main.BookDto">
+ 	<select id="selectBookedListLimit" resultType="com.footsalhaja.domain.main.BookDto">
  		SELECT 
  			b.bookId,
  			b.title,
@@ -57,7 +57,7 @@
  		LEFT JOIN member m ON b.member_userId = m.userId
  		LEFT JOIN location l ON b.location_locationId = l.locationId
  		WHERE b.status = #{status}
- 			AND b.bookDate = CURRENT_DATE
+ 		AND (b.bookDate >= CURRENT_DATE)
  		ORDER BY b.insertDatetime DESC
  	</select>
  	
@@ -74,7 +74,7 @@
  		SELECT COUNT(*)
  		FROM book
  		WHERE status = 0 
- 			AND bookDate = CURRENT_DATE
+ 		AND (bookDate >= CURRENT_DATE)
  	</select>
  	<select id="selectTodayWaitingQnACount" resultType="int">
  		SELECT COUNT(*)

@@ -56,8 +56,8 @@
 		     		<div class="top p-2">
 		     			1.오늘의 할일
 		     			<br>
-		     			오늘방문자수<span class="badge bg-danger rounded-pill mr10px">${todayVisitCount}</span>
-		     			오늘예약<span class="badge bg-danger rounded-pill mr10px">${todaybookedCount}</span> 
+		     			오늘방문자<span class="badge bg-danger rounded-pill mr10px">${todayVisitCount}</span>
+		     			예약된 매치<span class="badge bg-danger rounded-pill mr10px">${todaybookedCount}</span> 
 		     			QnA<span class="badge bg-danger rounded-pill mr10px">${todayWaitingQnACount}</span> 
 		     			 
 		     		</div>
@@ -71,10 +71,12 @@
 				        <div data-bs-spy="scroll" data-bs-target="#navbar-example1" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-light p-3 rounded-2" tabindex="0">
 				        	<table class="table">
 								<thead>
-									<th>날짜</th>
-									<th>예약</th>		
-									<th>방문자</th>
-									<th>문의</th>
+									<tr>
+										<th>날짜</th>
+										<th>예약</th>		
+										<th>방문자</th>
+										<th>문의</th>
+									</tr>
 								</thead>
 								<tbody>	
 									<tr>
@@ -180,7 +182,7 @@
 								            </div>
 								            ${waitingQnA.userId}
 								        </div>
-								        <span>${waitingQnA.insertDatetime} </span>
+								        ${waitingQnA.ago}
 							            <span class="badge bg-danger rounded-pill">${waitingQnA.status}</span>   
 						            </li>           
 						        </c:forEach>

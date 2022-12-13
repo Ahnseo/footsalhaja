@@ -35,7 +35,8 @@ public class AdminController {
 		List <QnADto> waitingQnAList = adminService.selectWatingQnAList();
 		model.addAttribute("waitingQnAList", waitingQnAList);
 		
-		List<BookDto> bookedList = adminService.selectBookedListToday();
+		//예약된 매치리스트 >= 오늘 포함, 다음 날짜들 까지 . (지나간 날은 제외 )
+		List<BookDto> bookedList = adminService.selectBookedListLimit();
 		//System.out.println(bookedList);
 		model.addAttribute("bookedList", bookedList);
 		
