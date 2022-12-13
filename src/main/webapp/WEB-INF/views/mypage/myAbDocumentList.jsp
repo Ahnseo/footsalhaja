@@ -7,13 +7,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Insert title here</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+<title>내가 아카데미 게시판에 쓴 글</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-<meta charset="UTF-8">
-<title>내가 아카데미 게시판에 쓴 글</title>
 </head>
 <body>
 <myInfo:navbar active="myInfopageLink"></myInfo:navbar>
@@ -21,13 +20,13 @@
 	<div class="row">
 		<div class="col">
 			<h3>${list.userId}님이 아카데미 게시판에 쓴 글 리스트 입니다.</h3> 
-			<table class="table">
+			<table class="table table-hover">
 				<thead>		
-					<th>글번호</th>
-					<th>말머리</th>
-					<th>제목</th>
-					<th>작성시간</th>
-					<th>조회수</th>
+					<th scope="row">글번호</th>
+					<th scope="row">말머리</th>
+					<th scope="row">제목</th>
+					<th scope="row">작성시간</th>
+					<th scope="row">조회수</th>
 				</thead>
 				<tbody>
 					<c:forEach items="${list.userAbList}" var="ablist">
