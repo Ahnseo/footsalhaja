@@ -68,13 +68,13 @@ public class MypageContorller {
 	}
 	
 	@GetMapping("myAbDocumentList")
-	public void getMyAbDocumnetList(@RequestParam(name= "page", defaultValue = "1") int page, @RequestParam("userId") String userId, Model model, MemberPageInfo pageInfo) {
+	public void getMyAbDocumnetList(@RequestParam("userId") String userId, @RequestParam(name= "page", defaultValue = "1") int page,  MemberPageInfo pageInfo, Model model) {
 
 		MemberDto AbdoucumentListByUserId = memberService.getUserAbList(userId,page,pageInfo);
 		System.out.println("아카데미 게시판에 작성한 글 리스트: " + AbdoucumentListByUserId);
-
-		model.addAttribute("list", AbdoucumentListByUserId);
 		
+		model.addAttribute("list", AbdoucumentListByUserId);
+		model.addAttribute("pageInfo", pageInfo);
 	}
 	
 	@GetMapping("myFbDocumentList")

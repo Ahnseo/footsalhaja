@@ -53,6 +53,5 @@ public class MemberDto {
 	private List<BoardDto> userAbLikeList;
 	private List<com.footsalhaja.domain.free.BoardDto> userFbLikeList;
 
-
 }
 

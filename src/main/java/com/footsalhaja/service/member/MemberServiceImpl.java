@@ -88,24 +88,28 @@ public class MemberServiceImpl implements MemberService {
 	//내글 보기 (아카데미 게시판)
 	@Override
 	public MemberDto getUserAbList(String userId, int page, MemberPageInfo pageInfo) {
+		
 		int records = 10;
 		int offset = (page - 1) * records;
 		
-		int countAll = memberMapper.countAllAblist(); 
-		int lastPage = (countAll - 1) / records + 1;
+		int countAll = memberMapper.countAllAblist(userId);
+
+		int lastPage = (countAll - 1) / records + 1; // 마지막 페이지
 		
-		int leftPageNumber = (page - 1) / 10 * 10 + 1;
-		int rightPageNumber = leftPageNumber + 9;
+		// 5페이지씩 보이게
+		int leftPageNumber = (page - 1) / 5 * 5 + 1;
+		int rightPageNumber = leftPageNumber + 4;
 		rightPageNumber = Math.min(rightPageNumber, lastPage);
 		
-		// 이전버튼 유무
-		boolean hasPrevButton = page > 10;
-		// 다음버튼 유무
-		boolean hasNextButton = page <= ((lastPage - 1) / 10 * 10);
+		// 이전 버튼 유무
+		boolean hasPrevButton = page > 5;
+		// 다음 버튼 유무
+		boolean hasNextButton = page <= ((lastPage - 1) / 5 * 5);
 		
 		// 이전버튼 눌렀을 때 가는 페이지 번호
-		int jumpPrevPageNumber = (page - 1) / 10 * 10 - 9;
-		int jumpNextPageNumber = (page - 1) / 10 * 10 + 11; 
+		int jumpPrevPageNumber = (page - 1) / 5 * 5 - 4;
+		// 다음버튼 눌렀을 때 가는 페이지 번호
+		int jumpNextPageNumber = (page - 1) / 5 * 5 + 6; 
 		
 		pageInfo.setHasPrevButton(hasPrevButton);
 		pageInfo.setHasNextButton(hasNextButton);
@@ -115,7 +119,6 @@ public class MemberServiceImpl implements MemberService {
 		pageInfo.setLeftPageNumber(leftPageNumber);
 		pageInfo.setRightPageNumber(rightPageNumber);
 		pageInfo.setLastPageNumber(lastPage);
-		
 		
 		return memberMapper.getUserAbList(userId, offset, records);
 	}

@@ -163,7 +163,8 @@
  	
  	<select id="countAllAblist" resultType="int">
 	SELECT Count(*)
-	FROM member m LEFT JOIN academyBoard a ON m.userId = a.member_userId;
+	FROM member m LEFT JOIN academyBoard a ON m.userId = a.member_userId 
+	WHERE m.userId = #{userId}
 	</select>
  	
  	 <!-- 내글 보기(자유 게시판) -->

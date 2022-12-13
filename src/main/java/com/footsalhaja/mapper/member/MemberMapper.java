@@ -47,5 +47,5 @@ public interface MemberMapper {
 	public MemberDto getUserAbLikeList(String userId);
 	public MemberDto getUserFbLikeList(String userId);
 
-	public int countAllAblist();
+	public int countAllAblist(String userId);
 }
