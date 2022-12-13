@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.footsalhaja.domain.admin.adminColChartDto;
 import com.footsalhaja.domain.main.BookDto;
 import com.footsalhaja.domain.qna.QnADto;
 
@@ -23,6 +24,10 @@ public interface AdminMapper {
 	int selectTodaybookedCount();
 	
 	int selectTodayWaitingQnACount(String status);
+
+	List<adminColChartDto> chartListByDate();
+
+
 
 	
 	

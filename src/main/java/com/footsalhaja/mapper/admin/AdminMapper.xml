@@ -82,4 +82,19 @@
  		WHERE status = #{status}
  	</select>
  	
+ 	<!-- 관리자 날짜별 방문자수, 예약수, 문의수 테이블의 COUNT ..  -->
+ 	<select id="chartListByDate" resultType="com.footsalhaja.domain.admin.adminColChartDto">
+		SELECT 
+			v.visitDate AS date,
+		    COUNT(distinct v.visitId) AS visitCount,
+			COUNT(distinct b.bookId) AS bookedCount,
+			COUNT(distinct q.qnaId) AS qnaCount
+		FROM Visit v
+		LEFT JOIN book b ON DATE(b.insertDatetime) = v.visitDate
+		LEFT JOIN QnABoard q ON DATE(q.insertDatetime) = v.visitDate
+		GROUP BY v.visitDate
+ 	</select>
+
+ 	
+ 	
  </mapper>

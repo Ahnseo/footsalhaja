@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.footsalhaja.domain.admin.adminColChartDto;
 import com.footsalhaja.domain.main.BookDto;
 import com.footsalhaja.domain.qna.QnADto;
 import com.footsalhaja.domain.qna.QnAPageInfo;
@@ -81,6 +82,11 @@ public class AdminServiceImpl implements AdminService {
 		String status = "답변대기";
 		return adminMapper.selectTodayWaitingQnACount(status);
 	}
+	@Override
+	public List<adminColChartDto> chartListByDate() {
+		return adminMapper.chartListByDate();
+	}
+
 	
 	
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.footsalhaja.domain.admin.adminColChartDto;
 import com.footsalhaja.domain.main.BookDto;
 import com.footsalhaja.domain.member.MemberDto;
 import com.footsalhaja.domain.member.MemberPageInfo;
@@ -50,6 +51,14 @@ public class AdminController {
 		//오늘의 문의건수 
 		int todayWaitingQnACount = adminService.selectTodayWaitingQnACount();
 		model.addAttribute("todayWaitingQnACount", todayWaitingQnACount);
+		
+		List<adminColChartDto> chartList = adminService.chartListByDate();
+		
+		System.out.println(chartList);
+		
+		model.addAttribute("chartList", chartList);
+		
+		
 	}
 	
 	@GetMapping("admin")

@@ -82,7 +82,7 @@
 							</button>
 						</div>
 						<c:if test="${qnaAnswer == null}">
-							<sec:authorize access="hasAuthority('admin')">
+							
 								<div class = "d-flex flex-row-reverse">
 									<div>
 										<!-- 답변하기 fetch -> post -> controller -->
@@ -91,7 +91,7 @@
 										</button>
 									</div>
 								</div>
-							</sec:authorize>
+							
 						</c:if>
 					</div>
 				</form>	
@@ -263,7 +263,7 @@
 //		})
 //	});
 	
-if(qnaReplyBtn != null) {
+
 	<!-- 답변 저장기능 (관리자만 작성가능)-->
 	document.querySelector("#qnaReplyBtn").addEventListener("click", function() {
 		const qnaId = document.querySelector("#qnaReplyQnAId").value;
@@ -278,7 +278,7 @@ if(qnaReplyBtn != null) {
 		.then(res => res.text())
 		.then(redirectPath => location.href = redirectPath)
 	});
-}	
+
 <!-- 답변 수정 모달 기능 (관리자만 작성가능)-->
 document.querySelector("#modifyAnswerSubmitBtn").addEventListener("click", function() {
 	const qnaReplyId = document.querySelector("#qnaAnswerId").value;
