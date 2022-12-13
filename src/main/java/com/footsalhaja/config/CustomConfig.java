@@ -65,6 +65,7 @@ public class CustomConfig {
 	// 로그인 성공 실패 
 	@Bean
 	public org.springframework.security.web.SecurityFilterChain SecurityFilterChain(HttpSecurity http) throws Exception {
+		http.authorizeHttpRequests().antMatchers("/css/**", "/js/**", "/images/**").permitAll();
 		http.formLogin().loginPage("/member/login").defaultSuccessUrl("/main/list", true);// 로그인 성공하면  메인 리스트로. 
 		http.logout().logoutUrl("/member/logout").logoutSuccessUrl("/main/list");
 		http.csrf().disable(); // 원래는 이러면 안됌, 모든 페이지에 csrf공격 보안적용을 해제중!!!!!!  
