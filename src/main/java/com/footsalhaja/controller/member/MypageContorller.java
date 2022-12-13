@@ -88,13 +88,13 @@ public class MypageContorller {
 	}
 	
 	@GetMapping("myMainDocumentList")
-	public void getMyMainDocumnetList(@RequestParam("userId") String userId, Model model) {
+	public void getMyMainDocumnetList(@RequestParam("userId") String userId, @RequestParam(name= "page", defaultValue = "1") int page,  MemberPageInfo pageInfo, Model model) {
 
-		MemberDto MaindoucumentListByUserId = memberService.getUserMainList(userId);
+		MemberDto MaindoucumentListByUserId = memberService.getUserMainList(userId,page,pageInfo);
 		System.out.println("메인에 작성한 글 리스트: " + MaindoucumentListByUserId);
 
 		model.addAttribute("list", MaindoucumentListByUserId);
-		
+		model.addAttribute("pageInfo", pageInfo);
 	}
 	
 	

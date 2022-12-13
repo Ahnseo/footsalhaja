@@ -162,9 +162,9 @@
  	</resultMap>
  	
  	<select id="countAllAblist" resultType="int">
-	SELECT Count(*)
-	FROM member m LEFT JOIN academyBoard a ON m.userId = a.member_userId 
-	WHERE m.userId = #{userId}
+		SELECT Count(*)
+		FROM member m LEFT JOIN academyBoard a ON m.userId = a.member_userId 
+		WHERE m.userId = #{userId}
 	</select>
  	
  	 <!-- 내글 보기(자유 게시판) -->
@@ -198,9 +198,9 @@
  	</resultMap>
  	
  	<select id="countAllFblist" resultType="int">
-	SELECT Count(*)
-	FROM member m LEFT JOIN freeBoard f ON m.userId = f.member_userId 
-	WHERE m.userId = #{userId}
+		SELECT Count(*)
+		FROM member m LEFT JOIN freeBoard f ON m.userId = f.member_userId 
+		WHERE m.userId = #{userId}
 	</select>
  	
  	<!-- 내글 보기 (메인) -->
@@ -222,7 +222,7 @@
 						LEFT JOIN location l ON b.location_locationId = l.locationId
 	    WHERE m.userId = #{userId}
 	    ORDER BY b.bookId DESC
- 	
+ 		LIMIT #{offset}, #{records}
  	</select>
  	
  	<resultMap type="com.footsalhaja.domain.member.MemberDto" id="userMainMap">
@@ -243,6 +243,13 @@
 		<result column="stadiumName" property="stadiumName"/>
 		
  	</resultMap>
+ 	
+ 	 <select id="countAllMainlist" resultType="int">
+		SELECT Count(*)
+		FROM member m LEFT JOIN book b ON m.userId = b.member_userId
+						LEFT JOIN location l ON b.location_locationId = l.locationId
+		WHERE m.userId = #{userId}
+	</select>
  
  	<!-- 내가 쓴 댓글보기 (자유게시판)-->
  	<select id="getUserFbReplyList" resultMap="userFbReplyMap">

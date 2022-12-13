@@ -39,7 +39,8 @@ public interface MemberMapper {
 	public int countAllFblist(String userId);
 	
 	//내글 보기(메인)
-	public MemberDto getUserMainList(String userId);
+	public MemberDto getUserMainList(String userId, int offset, int records);
+	public int countAllMainlist(String userId);
 	
 	//내 댓글보기
 	public MemberDto getUserFbReplyList(String userId);

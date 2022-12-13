@@ -22,7 +22,7 @@ public interface MemberService {
 	
 	MemberDto getUserFbList(String userId, int page, MemberPageInfo pageInfo);
 	
-	MemberDto getUserMainList(String userId);
+	MemberDto getUserMainList(String userId, int page, MemberPageInfo pageInfo);
 	
 	List<MemberDto> getUserReplyList(String userId);
 	
