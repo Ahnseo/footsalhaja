@@ -21,7 +21,7 @@
 	<div class="row">
 		<div class="col">
 			<h3>${userId}님이 작성한 댓글목록 입니다.</h3>
-				<a class ="btn btn-default" href="#Main">아카데미</a>
+				<a class ="btn btn-default" href="#Main">예약</a>
 				<a class ="btn btn-default" href="#academy">아카데미</a>
 				<a class ="btn btn-default" href="#freeBoard">자유게시판</a>
 				
