@@ -78,13 +78,13 @@ public class MypageContorller {
 	}
 	
 	@GetMapping("myFbDocumentList")
-	public void getMyFbDocumnetList(@RequestParam("userId") String userId, Model model) {
+	public void getMyFbDocumnetList(@RequestParam("userId") String userId, @RequestParam(name= "page", defaultValue = "1") int page,  MemberPageInfo pageInfo, Model model) {
 
-		MemberDto FbdoucumentListByUserId = memberService.getUserFbList(userId);
+		MemberDto FbdoucumentListByUserId = memberService.getUserFbList(userId,page,pageInfo);
 		System.out.println("자유 게시판에 작성한 글 리스트: " + FbdoucumentListByUserId);
 
 		model.addAttribute("list", FbdoucumentListByUserId);
-		
+		model.addAttribute("pageInfo", pageInfo);
 	}
 	
 	@GetMapping("myMainDocumentList")

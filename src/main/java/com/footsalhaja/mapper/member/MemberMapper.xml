@@ -180,7 +180,7 @@
 		FROM member m LEFT JOIN freeBoard f ON m.userId = f.member_userId
 	    WHERE m.userId = #{userId}
 	    ORDER BY f.fb_number DESC
- 	
+ 		LIMIT #{offset}, #{records}
  	</select>
  	
  	<resultMap type="com.footsalhaja.domain.member.MemberDto" id="userFbMap">
@@ -196,6 +196,12 @@
 		<result column="fb_insertDatetime" property="fb_insertDatetime"/>
 		<result column="fb_viewCount" property="fb_viewCount"/>
  	</resultMap>
+ 	
+ 	<select id="countAllFblist" resultType="int">
+	SELECT Count(*)
+	FROM member m LEFT JOIN freeBoard f ON m.userId = f.member_userId 
+	WHERE m.userId = #{userId}
+	</select>
  	
  	<!-- 내글 보기 (메인) -->
  	<select id="getUserMainList" resultMap="userMainMap">

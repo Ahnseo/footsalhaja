@@ -20,7 +20,7 @@ public interface MemberService {
 	
 	MemberDto getUserAbList(String userId, int page, MemberPageInfo pageInfo);
 	
-	MemberDto getUserFbList(String userId);
+	MemberDto getUserFbList(String userId, int page, MemberPageInfo pageInfo);
 	
 	MemberDto getUserMainList(String userId);
 	
