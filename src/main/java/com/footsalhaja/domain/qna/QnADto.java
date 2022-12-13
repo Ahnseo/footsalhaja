@@ -17,6 +17,8 @@ public class QnADto {
 	private String content;
 	private String status; // 0= 처리중 / 1=처리완료
 	private String userId;
+	private int likeCount;
+	
 	private LocalDateTime insertDatetime;
 	public String getAgo() {
 		LocalDateTime now = LocalDateTime.now();

@@ -43,15 +43,16 @@
 	 
 	 <select id="selectQnAListByStatusDone" resultType="com.footsalhaja.domain.qna.QnADto">
 	 	SELECT 
-	 		qnaId,
-	 		category,
-	 		title,
-	 		content,
-	 		status,
-	 		member_userId AS userId,
-	 		likeCount
+	 		q.qnaId,
+	 		q.category,
+	 		q.title,
+	 		q.content,
+	 		q.status,
+	 		q.member_userId AS userId,
+	 		COUNT(distinct l.qnaLikeId) AS likeCount
 	 	FROM 
-	 	 	QnABoard
+	 	 	QnABoard q
+	 	LEFT JOIN QnABoardLike l ON q.qnaId = l.qnaId
 	 	WHERE
 	 		status = #{status} 
 	 	AND (
@@ -86,13 +87,21 @@
 	 
 	<select id="selectMyQnAListByUserId" resultType="com.footsalhaja.domain.qna.QnADto">
 	 	SELECT 
-	 		qnaId, category, title, content, status, member_userId, member_nickName
+	 		q.qnaId,
+	 		q.category,
+	 		q.title,
+	 		q.content,q.
+	 		q.status,
+	 		m.userId AS member_userId,
+	 		m.nickName AS member_nickName
 	 	FROM 
-	 	 	QnABoard
+	 	 	QnABoard q
+	 	LEFT JOIN QnABoardLike l ON q.qnaId = l.qnaId
+	 	LEFT JOIN member m ON q.member_userId = m.userId
 	 	WHERE 
-	 		member_userId = #{userId} 
+	 		m.userId = #{userId} 
 	 	ORDER BY 
-	 		qnaId DESC 
+	 		q.qnaId DESC 
 	</select>
 
 	<select id="selectMyQnAGetByQnAIdAndUserId" resultType="com.footsalhaja.domain.qna.QnADto">
@@ -104,11 +113,13 @@
 	 		q.status,
 	 		q.insertDatetime,
 	 		m.userId,
-	 		r.qnaReplyId
+	 		r.qnaReplyId,
+	 		COUNT(DISTINCT l.qnaLikeId) AS likeCount
 	 	FROM 
 	 	 	QnABoard q
 	 	LEFT JOIN member m   ON q.member_userId = m.userId
 	 	LEFT JOIN QnAReply r ON q.member_userId = r.userId
+	 	LEFT JOIN QnABoardLike l ON q.qnaId = l.qnaId
 	 	WHERE 
 	 		m.userId = #{userId} AND q.qnaId = #{qnaId}
 	 	
@@ -126,15 +137,16 @@
 	
 	<select id="selectAllQnAList" resultType="com.footsalhaja.domain.qna.QnADto">
 		SELECT 
-	 		qnaId,
-	 		category,
-	 		title,
-	 		content,
-	 		status,
-	 		member_userId AS userId,
-	 		likeCount
+	 		q.qnaId,
+	 		q.category,
+	 		q.title,
+	 		q.content,
+	 		q.status,
+	 		q.member_userId AS userId,
+	 		COUNT(l.qnaLikeId) AS likeCount
 	 	FROM 
-	 	 	QnABoard
+	 	 	QnABoard q
+	 	LEFT JOIN QnABoardLike l ON q.qnaId = l.qnaId 	
 	 	WHERE
 		<trim prefixOverrides="OR">
 			<if test="type == 'all' or type == 'title'">
@@ -152,6 +164,7 @@
 	 	ORDER BY qnaId DESC
 	 	LIMIT #{offset}, #{records}
 	</select>
+	
 	<select id="countAllQnA" resultType="int">
 		SELECT 
 	 		COUNT(*)
@@ -179,8 +192,6 @@
 	 	FROM 
 	 	 	QnABoard 
 	 	WHERE
-	 	
-	 	
 	 		status = #{status} AND
 	 	(
 	 	
@@ -210,6 +221,7 @@
 		WHERE 
 			qnaId = #{qnaId} AND userId = #{loggedinId}
 	</select>
+	
 	<insert id="insertQnABoardLikeCount">
 		INSERT INTO QnABoardLike (qnaId, userId)
 		VALUES (#{qnaId}, #{loggedinId})

@@ -40,17 +40,21 @@
 					</div>
 				</div>
 				<div class="row d-flex">
-					<div class="col-md-4">
+					<div class="col-md-2">
 						<label for="formControlInput5" class="form-label"><i class="fa-solid fa-user"></i></label>
 						<input id="formControlInput5" class="form-control" type="hidden" name="" value="" readonly >
 						<span class="badge bg-primary rounded-pill">${qna.userId}</span>
+					</div>
+					<div class="col-md-4">
+						<label for="formControlInput5" class="form-label">좋아요</label>
+						<span class="badge bg-primary rounded-pill">${qna.likeCount}</span>
 					</div>
 					<div class="col-md-4">
 						<label for="formControlInput6" class="form-label"><i class="fa-regular fa-clock"></i></label>						
 						<input id="formControlInput6" class="form-control" type="hidden" name="insertDatetime" value="">						
 						<span class="badge bg-primary rounded-pill">${qna.insertDatetime}</span>
 					</div>
-					<div class="col-md-4">
+					<div class="col-md-2">
 						<label for="formControlInput7" class="form-label">처리상태</label>	
 						<input id="formControlInput7" class="form-control" type="hidden" name="status" value="${qna.status} " readonly >
 						<c:if test="${qna.status == '답변대기'}">

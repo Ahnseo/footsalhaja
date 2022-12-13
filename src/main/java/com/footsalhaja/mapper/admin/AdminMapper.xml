@@ -28,8 +28,7 @@
  			b.teamGender,
  			l.locationId,
  			l.stadiumName,
- 			m.userId
- 			
+ 			m.userId		
  		FROM book b
  		LEFT JOIN member m ON b.member_userId = m.userId
  		LEFT JOIN location l ON b.location_locationId = l.locationId
@@ -51,8 +50,7 @@
  			b.teamGender,
  			l.locationId,
  			l.stadiumName,
- 			m.userId
- 			
+ 			m.userId	
  		FROM book b
  		LEFT JOIN member m ON b.member_userId = m.userId
  		LEFT JOIN location l ON b.location_locationId = l.locationId
@@ -82,7 +80,7 @@
  		WHERE status = #{status}
  	</select>
  	
- 	<!-- 관리자 날짜별 방문자수, 예약수, 문의수 테이블의 COUNT ..  -->
+ 	<!-- 관리자 대시보드_ 이달의 방문자수, 예약수, 문의수 테이블의 COUNT ..  -->
  	<select id="chartListByDate" resultType="com.footsalhaja.domain.admin.adminColChartDto">
 		SELECT 
 			v.visitDate AS date,
@@ -92,6 +90,7 @@
 		FROM Visit v
 		LEFT JOIN book b ON DATE(b.insertDatetime) = v.visitDate
 		LEFT JOIN QnABoard q ON DATE(q.insertDatetime) = v.visitDate
+		WHERE MONTH(v.visitDate) = MONTH(CURRENT_DATE)
 		GROUP BY v.visitDate
  	</select>
 

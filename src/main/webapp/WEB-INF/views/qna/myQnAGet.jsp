@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>      
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>      
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>
@@ -34,24 +33,25 @@
 						</div>
 						<div class="col-md-2">
 							<label for="formControlInput2" class="form-label">카테고리</label>
-							<input id="formControlInput2" class="form-control" type="hidden" name="category" value="${qna.category}" readonly >
 							<span class="badge bg-primary rounded-pill">${qna.category}</span>
 						</div>
 					</div>
 					<div class="row d-flex">
-						<div class="col-md-4">
+						<div class="col-md-2">
 							<label for="formControlInput5" class="form-label"><i class="fa-solid fa-user"></i></label>
 							<input id="formControlInput5" class="form-control" type="hidden" name="userId" id="userIdVal" value="${qna.userId}" readonly >
 							<span class="badge bg-primary rounded-pill">${qna.userId}</span>
 						</div>
 						<div class="col-md-4">
-							<label for="formControlInput6" class="form-label"><i class="fa-regular fa-clock"></i></label>						
-							<input id="formControlInput6" class="form-control" type="hidden" name="insertDatetime" value="${qna.insertDatetime} " readonly >						
-							<span class="badge bg-primary rounded-pill">${qna.insertDatetime}</span>
+							<label for="formControlInput5" class="form-label">좋아요</label>
+							<span class="badge bg-primary rounded-pill">${qna.likeCount}</span>
 						</div>
 						<div class="col-md-4">
+							<label for="formControlInput6" class="form-label"><i class="fa-regular fa-clock"></i></label>														
+							<span class="badge bg-primary rounded-pill">${qna.insertDatetime}</span>
+						</div>
+						<div class="col-md-2">
 							<label for="formControlInput7" class="form-label">처리상태</label>	
-							<input id="formControlInput7" class="form-control" type="hidden" name="status" value="${qna.status} " readonly >
 							<c:if test="${qna.status == '답변대기'}">
 								<span class="badge bg-danger rounded-pill">${qna.status}</span>
 							</c:if>

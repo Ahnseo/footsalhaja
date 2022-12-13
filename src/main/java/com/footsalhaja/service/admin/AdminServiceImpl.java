@@ -84,6 +84,7 @@ public class AdminServiceImpl implements AdminService {
 	}
 	@Override
 	public List<adminColChartDto> chartListByDate() {
+		
 		return adminMapper.chartListByDate();
 	}
 

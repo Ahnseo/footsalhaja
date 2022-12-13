@@ -29,7 +29,8 @@
 							<th>번호</th>
 							<th>카테고리</th>
 							<th>제목</th>
-							<th>내용</th>
+							<th>작성자</th>
+							<th>좋아요</th>
 							<th>문의상태</th>
 						</tr>
 					</thead>
@@ -43,8 +44,16 @@
 							 		<c:param name="qnaId" value="${myQnAList.qnaId}"/>
 							 	</c:url>
 							 	<td><a href="${myQnAGetLink}">${myQnAList.title}</a></td>
-							 	<td>${myQnAList.content}</td>
-							 	<td>${myQnAList.status}</td>
+							 	<td>${myQnAList.userId}</td>
+							 	<td>${myQnAList.likeCount}</td>
+							 	<td>
+							 	 	<c:if test="${myQnAList.status == '답변완료'}">  
+							        	<span class="badge bg-success rounded-pill">${myQnAList.status}</span>   								        	
+							        </c:if>
+							        <c:if test="${myQnAList.status == '답변대기'}">  
+							        	<span class="badge bg-danger rounded-pill">${myQnAList.status}</span>   								        	
+							        </c:if>
+							    </td>
 						 	</tr>
 					 	</c:forEach>
 					 </tbody>

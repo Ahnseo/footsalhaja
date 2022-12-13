@@ -18,16 +18,7 @@
 	google.charts.setOnLoadCallback(drawChart);
 	
 	function drawChart() {
-		
-	var chartArr = [];
-	
-	
-		
-	
-	console.log(chartArr);
-
 		<!-- javaScript forEach 문으로  -->
-	  
 		var data = google.visualization.arrayToDataTable([
 		      ['days', '방문자', '예약', '문의'],	  
 		      <c:forEach items="${chartList}" var="chart">
@@ -36,8 +27,7 @@
 				<c:if test="${not empty chartList.size() }">
 					,
 				</c:if>	
-			</c:forEach>
-		    	  
+			</c:forEach>  
 		    ]);
 	
 	  var options = {
@@ -46,9 +36,7 @@
 	      subtitle: '방문자, 예약, 문의 7일 차트',
 	    }
 	  };
-	
 	  var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
-
 	  chart.draw(data, google.charts.Bar.convertOptions(options));
 	}
 
@@ -97,14 +85,13 @@
 			<div class="col">	
 		     	<div class="mainBoard">
 		     		<div class="top p-2">
-		     			1.오늘의 할일
-		     			<br>
-		     			오늘방문자<span class="badge bg-danger rounded-pill mr10px">${todayVisitCount}</span>
-		     			예약된 매치<span class="badge bg-danger rounded-pill mr10px">${todaybookedCount}</span> 
-		     			QnA<span class="badge bg-danger rounded-pill mr10px">${todayWaitingQnACount}</span>  
+		     			1.오늘의 할일<br>
+		     			<span class="mr10px">오늘방문자</span><span class="badge bg-danger rounded-pill mr10px">${todayVisitCount}</span>
+		     			<span class="mr10px">예약된 매치</span><span class="badge bg-danger rounded-pill mr10px">${todaybookedCount}</span> 
+		     			<span class="mr10px">QnA</span><span class="badge bg-danger rounded-pill mr10px">${todayWaitingQnACount}</span>  
 		     		</div>
 			        <div class="left p-2">
-			        	<div id="columnchart_material" style="width: 600px; height: 400px;"></div>
+			        	<div id="columnchart_material" style="width: 620px; height: 450px;"></div>
 			        </div>
 			        <div class="right p-2">
 			        	<nav id="navbar-example1" class="navbar bg-light px-3 mb-3">
@@ -226,7 +213,7 @@
 								            </div>
 								            ${waitingQnA.userId}
 								        </div>
-								        ${waitingQnA.ago}
+								        <span class="mr10px">${waitingQnA.ago} </span> 
 							            <span class="badge bg-danger rounded-pill">${waitingQnA.status}</span>   
 						            </li>           
 						        </c:forEach>

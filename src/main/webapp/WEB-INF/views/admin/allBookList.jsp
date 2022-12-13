@@ -51,7 +51,14 @@
 						 	<td>${booked.level}</td>					 	
 						 	<td>${booked.teamGender}</td>
 						 	<td>${booked.userId}</td>
-						 	<td>${booked.status}</td>
+						 	<td>
+							    <c:if test="${booked.status == 0}">  
+						        	<span class="badge bg-success rounded-pill">모집완료</span>   								        	
+						        </c:if>
+						        <c:if test="${booked.status == 1}">  
+						        	<span class="badge bg-danger rounded-pill">모집중</span>   								        	
+						        </c:if>
+					        </td>
 					 	</tr>
 				 	</c:forEach>
 				 </tbody>
