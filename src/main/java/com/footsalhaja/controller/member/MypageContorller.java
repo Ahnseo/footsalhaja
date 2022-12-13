@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.footsalhaja.domain.academy.AcademyReplyDto;
 import com.footsalhaja.domain.academy.BoardDto;
 import com.footsalhaja.domain.free.FreeReplyDto;
+import com.footsalhaja.domain.main.ReplyDto;
 import com.footsalhaja.domain.member.MemberDto;
 import com.footsalhaja.domain.member.MemberPageInfo;
 import com.footsalhaja.service.member.MemberService;
@@ -108,17 +109,20 @@ public class MypageContorller {
 		
 		String userId1 = ReplylistByUserId.get(0).getUserId();
 		
-		System.out.println(userId1);
 		List<AcademyReplyDto> AbReply = ReplylistByUserId.get(0).getUserAbReplyList();
 		
 		System.out.println(AbReply);
 		List<FreeReplyDto> FbReply = ReplylistByUserId.get(1).getUserFbReplyList();
 		
 		System.out.println(FbReply);
+		
+		List<ReplyDto> MainReply = ReplylistByUserId.get(2).getUserMainReplyList();
+		
 		/* model.addAttribute("replyList", ReplylistByUserId); */
 		model.addAttribute("userId", userId1);
 		model.addAttribute("userAbReplyList", AbReply);
 		model.addAttribute("userFbReplyList", FbReply);
+		model.addAttribute("userMainReplyList",MainReply);
 		
 	}
 	

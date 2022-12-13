@@ -8,6 +8,7 @@ import com.footsalhaja.domain.academy.BoardDto;
 import com.footsalhaja.domain.free.FreeReplyDto;
 import com.footsalhaja.domain.main.BookDto;
 import com.footsalhaja.domain.main.MainDto;
+import com.footsalhaja.domain.main.ReplyDto;
 
 import lombok.Data;
 
@@ -48,6 +49,7 @@ public class MemberDto {
 	//마이페이지 내가 쓴 댓글 보기 (List<AcademyReplyDto, FreeReplyDto> 가 안되서 따로 dto 생성해서 해봄.. 어떻게 해야 따로 dto생성없이 할 수 있나?
 	private List<AcademyReplyDto> userAbReplyList;
 	private List<FreeReplyDto> userFbReplyList;
+	private List<ReplyDto> userMainReplyList;
 	
 	//마이페이지 내가 좋아요한 글 보기
 	private List<BoardDto> userAbLikeList;

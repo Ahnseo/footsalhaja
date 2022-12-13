@@ -299,6 +299,31 @@
 		<result column="ab_replyInsertDatetime" property="ab_replyInsertDatetime"/>
  	</resultMap>
  	
+ 	<!-- 내가 쓴 댓글보기 (예약) -->
+ 	 	 <select id="getUserMainReplyList" resultMap="userMainReplyMap">
+	 	SELECT 
+			m.userId,
+		    m.nickName,
+		    br.book_bookId,
+			br.replyContent,
+		    br.insertDatetime
+		FROM member m LEFT JOIN bookReply br ON m.userId = br.member_userId
+		WHERE m.userId = #{userId}
+ 	</select>
+ 	
+ 	 <resultMap type="com.footsalhaja.domain.member.MemberDto" id="userMainReplyMap">
+ 		<id column="userId" property="userId"></id>
+ 		<result column="nickName" property="nickName" />
+ 		<collection property="userMainReplyList" resultMap="userMainReplyList"></collection>
+ 	</resultMap>
+ 	
+ 	 <resultMap type="com.footsalhaja.domain.main.ReplyDto" id="userMainReplyList">
+ 		<result column="book_bookId" property="book_bookId"/>
+ 		<result column="replyContent" property="replyContent"/>
+		<result column="insertDatetime" property="insertDatetime"/>
+ 	</resultMap>
+ 	
+ 	
  	<!-- 내가 좋아요한 글 목록 -->
  	<select id="getUserAbLikeList" resultMap="userAbLikeMap">
  		SELECT m.userId,

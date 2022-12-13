@@ -202,10 +202,12 @@ public class MemberServiceImpl implements MemberService {
 		List<MemberDto> list = new ArrayList<>();
 		MemberDto userAbReplyList = memberMapper.getUserAbReplyList(userId);
 		MemberDto userFbReplyList = memberMapper.getUserFbReplyList(userId);
+		MemberDto userMainReplyList = memberMapper.getUserMainReplyList(userId);
 		
 		list.add(userAbReplyList); 
 		list.add(userFbReplyList);
-
+		list.add(userMainReplyList);
+		
 		return list;
 	}
 	
