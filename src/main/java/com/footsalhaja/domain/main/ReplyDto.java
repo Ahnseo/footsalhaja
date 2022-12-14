@@ -20,7 +20,11 @@ public class ReplyDto {
 	private int book_bookId;
 	
 	private boolean editable;
-	
+
+	 private String reparent;
+	 private String redepth;
+	 private Integer reorder;
+	 
 	@JsonFormat(shape = Shape.STRING)
 	private LocalDateTime insertDatetime;
 	

@@ -15,13 +15,14 @@
  
 <select id="selectReplyByBookId" resultType="com.footsalhaja.domain.main.ReplyDto">
  	SELECT 
-		(member_userId = #{username}) editable,
- 		replyId,
- 		book_bookId,
-		replyContent,
-		insertDatetime
+		(r.member_userId = #{username}) editable,
+ 		r.replyId,
+ 		r.book_bookId,
+		r.replyContent,
+		r.insertDatetime,
+		m.nickName
 	FROM 
-		bookReply
+		bookReply r LEFT JOIN member m ON r.member_userId = m.userId
 	WHERE book_bookId = #{bookId}
 	ORDER BY 
 		replyId DESC
@@ -38,6 +39,7 @@
  		replyId, 
  		book_bookId,
  		replyContent,
+ 		member_userId,
  		insertDatetime
  	FROM bookReply
  	WHERE replyId = #{replyId}

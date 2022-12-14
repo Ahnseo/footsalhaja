@@ -1,5 +1,6 @@
 package com.footsalhaja.domain.main;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.temporal.ChronoUnit;
@@ -14,17 +15,13 @@ public class MainDto {
 	private int bookId;
 	private String title;
 	private String content;
-  private int matchType;
+	private int matchType;
 	private int level;
 	private int status;
 	private int region;
-	private LocalDateTime insertDatetime;
-	private int teamGender;
+	private String teamGender;
 
-
-	
-
-	private String location;
+	private String locationId;
 
 	private String location_locationId;
 	private String userId;
