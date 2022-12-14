@@ -67,7 +67,6 @@ public class FreeController {
 		// 좋아요 순위
 		List<BoardDto> rank = service.likeRank(board); 
 		model.addAttribute("likeRank", rank);
-		System.out.println(rank);
 	}
 
 
