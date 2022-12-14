@@ -33,6 +33,7 @@
  		b.bookTime,
  		b.insertDatetime,
  		b.teamGender,
+ 		l.locationId,
  		l.lat,
  		l.lng
  	FROM
@@ -54,6 +55,7 @@
 		<result column="bookTime" property="bookTime"></result>
 		<result column="insertDatetime" property="insertDatetime"/>
 		<result column="teamGender" property="teamGender"></result>
+		<result column="locationId" property="locationId"></result>
 		<result column="lat" property="lat"></result>
 		<result column="lng" property="lng"></result>
  	</resultMap>	
@@ -99,8 +101,9 @@
 		content = #{content},
 		matchType = #{matchType},
 		level = #{level},
+		location_locationId = #{locationId}
 		status = #{status},
-    bookDate = #{bookDate},
+  	  bookDate = #{bookDate},
 		bookTime = #{bookTime}, 
 		teamGender = #{teamGender}
 	WHERE 

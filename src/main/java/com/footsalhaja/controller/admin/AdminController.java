@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.footsalhaja.domain.admin.adminColChartDto;
+import com.footsalhaja.domain.main.BookDto;
 import com.footsalhaja.domain.member.MemberDto;
 import com.footsalhaja.domain.member.MemberPageInfo;
 import com.footsalhaja.domain.qna.QnADto;
@@ -26,12 +28,35 @@ public class AdminController {
 	@Autowired
 	private MemberService memberService;
 	
+	
 	@GetMapping("dashboard")
 	public void dashboard(Model model) {
 		
 		//날짜별 최신순으로 문의 리스트 가져오기 
 		List <QnADto> waitingQnAList = adminService.selectWatingQnAList();
 		model.addAttribute("waitingQnAList", waitingQnAList);
+		
+		//예약된 매치리스트 >= 오늘 포함, 다음 날짜들 까지 . (지나간 날은 제외 )
+		List<BookDto> bookedList = adminService.selectBookedListLimit();
+		//System.out.println(bookedList);
+		model.addAttribute("bookedList", bookedList);
+		
+		
+		//오늘의 방문자수 
+		int todayVisitCount = adminService.selectTodayVisitCount();
+		model.addAttribute("todayVisitCount", todayVisitCount);
+		//오늘의 예약건수 
+		int todaybookedCount = adminService.selectTodaybookedCount();
+		model.addAttribute("todaybookedCount", todaybookedCount);
+		//오늘의 문의건수 
+		int todayWaitingQnACount = adminService.selectTodayWaitingQnACount();
+		model.addAttribute("todayWaitingQnACount", todayWaitingQnACount);
+		
+		List<adminColChartDto> chartList = adminService.chartListByDate();
+		
+		System.out.println(chartList);
+		
+		model.addAttribute("chartList", chartList);
 		
 		
 	}
@@ -42,7 +67,9 @@ public class AdminController {
     }
 	
 	@GetMapping("allBookList")
-	public void allBookList() {
+	public void allBookList(Model model) {
+		List<BookDto> allBookedList = adminService.selectBookedListAll();
+		model.addAttribute("allBookedList", allBookedList);
 		
 	}
 	
@@ -71,6 +98,8 @@ public class AdminController {
 		model.addAttribute("memberPageInfo", memberPageInfo);
 		
 	}
+	
+	
 	
 	@GetMapping("stadiumManagement")
 	public void stadiumManagement() {

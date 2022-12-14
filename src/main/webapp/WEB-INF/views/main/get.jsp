@@ -10,13 +10,72 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+.box {	 
+	 display: flex;
+	 justify-content: center;
+	 height: 200px;
+	 padding:auto; 
+	 
+}
+
+.container1 {
+	border: 2px solid #5F7161;
+	border-radius: 10px;
+	font-color: black;
+	width: 600px;
+	font-size: 20px;
+	border-radius: 10px;
+	margin: 10px 10px;
+	padding: 5px 10px;
+}
+
+.container2 {
+	border: 2px solid #5F7161;
+	border-radius: 10px;
+	font-color: black;
+	width: 400px;
+	font-size: 20px;
+	margin: 10px 10px;
+	padding: 5px 10px;
+}
+.contentBox{
+	text-align: center;
+}
+.content{
+	border: 2px solid #5F7161;
+	border-radius: 10px;
+	font-color: black;
+	margin: auto;
+	width: 1000px;
+	height: 100px;
+	padding: 10px;
+	text-align: justify;
+	
+}
+.modi {
+	justify-align: right;
+}
+#replyListContainer{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+#reply {
+	display: flex;
+	border: 2px solid #5F7161;
+	border-radius: 10px;
+	width: 1000px;
+	height: 50px;
+	margin: 5px 0px 5px 452px;
+	padding: 2.5px 10px;
+}
 </style>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
 <my:navbar></my:navbar>
-<div id="map" style="width:800px;height:400px;margin:30px auto;"></div>
+<div id="map" style="width:1000px;height:450px;margin:30px auto;"></div>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=17df836d167348dc7ea95e69cb597603"></script>
 	<script>
 	var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
@@ -48,35 +107,187 @@
 	<div class="row">
 		<div class="col">
 
-				<h1>no.${main.bookId }</h1> 
-				
-				작성자<input type="text" value="${main.userId }" readonly> <br>
-				
+			<!-- <h3>no.${main.bookId }</h3>  -->
 				<sec:authentication property="name" var="username" />
 				
-				<c:if test="${main.userId == username }">
-					<c:url value="/main/modify" var="modifyLink">
-						<c:param name="bookId" value="${main.bookId }"></c:param>
-					</c:url>
-					<a href="${modifyLink }">
-						<button id="modifyButton" type="button">수정하기</button>				
-					</a>				
-				</c:if>
+				<div class="box">
+					<div class="container1">
+					<h2><i class="fa-solid fa-futbol"></i> 매치 포인트 </h2>
+						
+						<div id="level">
+						<i class="fa-solid fa-ranking-star"></i>
+							<c:choose>
+							<c:when test="${main.level == '1' }">
+								비기너
+							</c:when>
+							<c:when test="${main.level == '2' }">
+								아마추어
+							</c:when>
+							<c:when test="${main.level == '3' }">
+								챌린저
+							</c:when>
+							</c:choose>
+						</div>
+					
+					<div id="matchType">
+					<i class="fa-solid fa-flag-checkered"></i>
+						<c:choose>
+							<c:when test="${main.matchType == '3' }">
+								3 vs 3
+							</c:when>
+							<c:when test="${main.matchType == '4' }">
+								4 vs 4
+							</c:when>
+							<c:when test="${main.matchType == '5' }">
+								5 vs 5
+							</c:when>
+							</c:choose>
+					</div>
+					<div id="teamGender">
+					<i class="fa-solid fa-venus-mars"></i>
+						<c:choose>
+							<c:when test="${main.teamGender == 'F' }">
+								여자만
+							</c:when>
+							<c:when test="${main.teamGender == 'M' }">
+								남자만
+							</c:when>
+							</c:choose>
+					</div>
+					
+					<div id="shoes">
+					<i class="fa-solid fa-shoe-prints"></i>
+					<c:choose>
+					<c:when test="${main.locationId == '1' }">
+						풋살화,운동화
+					</c:when>
+					<c:when test="${main.locationId == '2' }">
+						실내풋살화
+					</c:when>
+					<c:when test="${main.locationId == '3' }">
+						풋살화
+					</c:when>
+					<c:when test="${main.locationId == '4' }">
+						풋살화,운동화
+					</c:when>
+					<c:when test="${main.locationId == '5' }">
+						풋살화
+					</c:when>
+					<c:when test="${main.locationId == '6' }">
+						실내풋살화, 운동화
+					</c:when>
+					<c:when test="${main.locationId == '7' }">
+						실내풋살화
+					</c:when>
+					<c:when test="${main.locationId == '8' }">
+						풋살화, 운동화
+					</c:when>
+					<c:when test="${main.locationId == '9' }">
+						풋살화
+					</c:when>
+					<c:when test="${main.locationId == '10' }">
+						풋살화
+					</c:when>
+					</c:choose>
+					</div>
+					</div>
+					
+					<input type="hidden" id="bookDate1" value="${main.bookDate }">
+					
+					<div class="container2">
+						<div id="bookDate">
+						${main.bookDate } 
+						</div>
+						<div id="day">
+						<script type="text/javascript">
+						document.write(getDateStr(bookDate1));
+						</script>
+						</div>
+						
+						<div id="bookTime">
+						<c:choose>
+						<c:when test="${main.bookTime == '1' }">
+							6:00 ~ 8:00
+						</c:when>
+						<c:when test="${main.bookTime == '2' }">
+							9:00 ~ 11:00	
+						</c:when>
+						<c:when test="${main.bookTime == '3' }">
+							14:00 ~ 16:00	
+						</c:when>
+						<c:when test="${main.bookTime == '4' }">
+							18:00 ~ 20:00	
+						</c:when>
+						<c:when test="${main.bookTime == '5' }">
+							21:00 ~ 23:00	
+						</c:when>
+						</c:choose>	
+						</div>
+						
+						<div>
+						<c:choose>
+						<c:when test="${main.locationId == '1' }">
+							천마 풋살파크
+						</c:when>
+						<c:when test="${main.locationId == '2' }">
+							아디다스 더베이스
+						</c:when>
+						<c:when test="${main.locationId == '3' }">
+							도봉 루다 풋살장
+						</c:when>
+						<c:when test="${main.locationId == '4' }">
+							영등포 SKY 풋살파크 A구장
+						</c:when>
+						<c:when test="${main.locationId == '5' }">
+							은평 롯데몰 A구장
+						</c:when>
+						<c:when test="${main.locationId == '6' }">
+							피치 부천 이마트 부천점
+						</c:when>
+						<c:when test="${main.locationId == '7' }">
+							용인 기흥 낫소 풋살파크
+						</c:when>
+						<c:when test="${main.locationId == '8' }">
+							칼라힐 풋살파크 B구장
+						</c:when>
+						<c:when test="${main.locationId == '9' }">
+							인천 더 베스트 풋볼파크 구월점
+						</c:when>
+						<c:when test="${main.locationId == '10' }">
+							하남 감일 장수천 풋살파크
+						</c:when>
+						</c:choose>
+						</div>
+						
+						<div id="nickName">
+						작성자 ${main.nickName }
+						</div>
+					</div>								
+				</div>
+					
+					<div class="contentBox">
+						<div class="content">
+							${main.content }
+						</div>									
+					</div>
 				
-				<div class="form-floating mb-3">
+	        		<div style="font-size:10px;">
+	        		${main.ago }
+	        		</div>
+				
+				
 
-					<input id="matchInfo" type="text" class="form-control" value=" ${main.title} ${main.bookDate } ${main.bookTime} ${main.location_locationId } ${main.nickName } ${main.matchType } ${main.teamGender }" readonly>
-
-
-					<label for="floatingInput">경기정보</label>
+				
+				<div id="modi">
+					<c:if test="${main.userId == username }">
+						<c:url value="/main/modify" var="modifyLink">
+							<c:param name="bookId" value="${main.bookId }"></c:param>
+						</c:url>
+						<a href="${modifyLink }">
+							<button id="modifyButton" type="button" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button>				
+						</a>				
+					</c:if>
 				</div>
-			
-				<div class="form-floating mb-3">
-					<textarea class="form-control" style="resize: none; height: 100px" readonly>${main.content}</textarea>
-					<label for="floatingInput">본문</label>
-				</div>
-        		
-        		<h3>${main.ago }</h3>
 		</div>
 	</div>
 </div>
@@ -84,9 +295,6 @@
 <!-- 댓글 작성 -->
 
 <hr>
-
-<div id="replyMessage">
-</div>
 	
 	<input type="hidden" id="bookId" value="${main.bookId }">
 	<!-- 로그인 했을 떄 -->
@@ -97,12 +305,23 @@
 		
 	<input type="hidden" id="userId" value="${main.userId }">  --%>
 			
-		댓글<input type="text" id="replyInput">
-		<button id="replySendButton">댓글 작성</button>
+		
+	<div class="container-md" style="padding: 20px 160px;">
+		<div class="input-group mb-3" style=" width:1000px;">
+			 <input type="text" id="replyInput" class="form-control" placeholder="댓글쓰기" aria-describedby="replySendButton">
+			 <button class="btn btn-outline-secondary" type="button" id="replySendButton">작성</button>
+		</div>
+	</div>
+
 	</sec:authorize>	
 	
 	<sec:authorize access="not isAuthenticated()">
-		댓글을 작성하시려면 로그인하세요.
+	<div class="container-md" style="padding: 20px 160px;">
+		<div class="input-group mb-3" style=" width:1000px;">
+		    <input type="text" id="replyInputBlocked" class="form-control" placeholder="댓글을 작성하시려면 로그인하세요." readonly>
+		</div>
+	</div>
+	
 	</sec:authorize>
 	
 	<div class="row">
@@ -139,6 +358,23 @@
 <script>
 const ctx = "${pageContext.request.contextPath}";
 
+function getDateStr(){
+	  const bookDate1 = document.querySelector("#bookDate1").value;
+	  var yyyyMMdd = String(bookDate1);
+	  var sYear = yyyyMMdd.substring(0,4);
+	  var sMonth = yyyyMMdd.substring(5,7);
+	  var sDate = yyyyMMdd.substring(8,10);
+	  var date = new Date(Number(sYear), Number(sMonth)-1, Number(sDate));
+		
+	  var week = ['일', '월', '화', '수', '목', '금', '토'];
+	  return  '(' + week[date.getDay()] + ')';
+	}
+
+	var result = getDateStr(bookDate1);
+	getDateStr(bookDate1);
+	
+	document.getElementById("day").innerHTML+= result
+	
 listReply();
 
 document.querySelector("#removeConfirmModalSubmitButton").addEventListener("click", function() {
@@ -158,22 +394,35 @@ function listReply(){
 	
 	const removeReplyButtonId = `removeReplyButton\${item.replyId}`;
 	
-	const removeButton = `<button data-bs-toggle="modal" data-bs-target="#removeReplyConfirmModal" data-reply-id="\${item.replyId}" id="\${removeReplyButtonId}">삭제</button>`
+	const removeButton = `<button data-bs-toggle="modal" data-bs-target="#removeReplyConfirmModal" data-reply-id="\${item.replyId}" id="\${removeReplyButtonId}" style="background-color: white; border-color:white; font-size: 5px;">삭제</button>`
 		
 	const replyDiv = `
-				<div>
-					\${item.replyId} : \${item.replyContent} :\${item.ago}
+	
+	
+				<div id="reply">  
+					<div>
+					\${item.nickName} 
+					</div>
+					<div>
+					\${item.replyContent} 
+					</div>
+					<div>
+					\${item.ago}
+					</div>
+					<div style="justify-content: space-between;">
 					\${item.editable ? removeButton : '' }		
+					</div>
 				</div>`;
 			replyListContainer.insertAdjacentHTML("beforeend", replyDiv);
 			
-			
-				//삭제 확인 버튼에 replyId 옮기기
-				document.querySelector("#"+ removeReplyButtonId)
-						.addEventListener("click", function(){
-							document.querySelector("#removeConfirmModalSubmitButton").setAttribute("data-reply-id", this.dataset.replyId)
-							// removeReply(this.dataset.replyId);
-						});
+				if(item.editable){
+					//삭제 확인 버튼에 replyId 옮기기
+					document.querySelector("#"+ removeReplyButtonId).addEventListener("click", function(){
+								document.querySelector("#removeConfirmModalSubmitButton").setAttribute("data-reply-id", this.dataset.replyId)
+								// removeReply(this.dataset.replyId);
+							});
+					
+				}
 				
 		
 			
@@ -184,8 +433,9 @@ function listReply(){
 function removeReply(replyId){
 	fetch(ctx + "/mainReply/remove/" + replyId, {
 		method : "delete"
-	}) 
-	.then(res => res.json())
+	})
+	//받은 게 없어서 코드 지우기
+	//.then(res => res.json())
 	.then(() => listReply());
 } 
 

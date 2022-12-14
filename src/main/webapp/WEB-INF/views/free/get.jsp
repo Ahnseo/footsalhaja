@@ -8,58 +8,183 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+@font-face {
+ font-family: 'NanumBarunGothic';
+ font-style: normal;
+ font-weight: 400;
+ src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot');
+ src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.ttf') format('truetype');
+}
+
+@font-face {
+ font-family: 'NanumBarunGothic';
+ font-style: normal;
+ font-weight: 700;
+ src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot');
+ src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.ttf') format('truetype')
+}
+
+@font-face {
+ font-family: 'NanumBarunGothic';
+ font-style: normal;
+ font-weight: 300;
+ src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot');
+ src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.ttf') format('truetype');
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+ul {
+   list-style:none;
+  }
+
+.container-sm { 
+	font-family: 'NanumBarunGothic';
+	letter-spacing: -1px;
+	font-size: 16px;
+}
+
+.post_wrap {
+	border: 1px solid #ced4da;
+	border-radius: 10px;
+	margin: 0 0 30px 0;
+}
+
+/* 상단 버튼부분 */
+.topbtnBox {
+	margin: 30px 0 15px 0;
+	position: relative;
+}
+.topbtnBox .modifyBtn {
+	text-align: right;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+/* 상단 제목부분 */
+.post_top {
+}
+.post_top .top_category {
+	border: 1px solid #ddd;
+ 	vertical-align: middle;
+ 	display: inline-block;
+ 	margin: 20px 20px 0;
+ 	padding: 0 4px;
+ 	
+ 	color: #666;
+ 	font-size: 14px;
+ 	font-weight: normal;
+}
+.post_top .top_title {
+	font-size: 20px;
+	font-weight: bold;
+	margin: 10px 20px;
+}
+.post_top ul {
+	text-align: left;
+	padding-left:0;
+}
+.post_top ul li {
+	display: inline-block;
+	margin-left: 20px;
+	font-size: 13px;
+}
+
+.post_wrap .top_content {
+	margin: 40px 20px;
+}
+
+.post_wrap .likeBox {
+	text-align: center;
+}
+
+.likeBox .likeIcon {
+	font-size: 26px;
+	color: green;
+}
+.likeBox .likeCount1 {
+	font-size: 14px;
+	margin-top: -20px;
+	color: #333;
+}
+.likeBox .likeCount2 {
+	font-size: 14px;
+	margin-top: -15px;
+	font-weight: bold;
+	color: #333;
+	
+}
+</style>
 </head>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
+
 <body>
 
 <my:navbar></my:navbar>
+<input type="hidden" value="${board.fb_number }" />
+<input type="hidden" value="${board.member_userId }"  />
 
-	
-
-	<h1>프리보드 ${board.fb_number }번 게시물</h1>
-	
-	<!-- 좋아요 -->
-	<h1>
-		<span 
-			<sec:authorize access="not isAuthenticated()">
-				style="pointer-events: none;"
-			</sec:authorize>		
-		id="likeButton" >
-							
-			<c:if test="${board.liked }">
-				<i class="fa-solid fa-thumbs-up"></i>
-			</c:if>
-			<c:if test="${not board.liked }">
-			<i class="fa-regular fa-thumbs-up"></i>
-			</c:if>					
-		</span>
+<!-- 전체 컨테이너 -->
+<div class="container-sm" >
+	<!-- 전체글/수정버튼 -->
+	<div class="topbtnBox">
+		<button type="button" class="btn btn-outline-success">전체게시글가는 링크달기</button>
+		<!-- 작성자와 authentication.name이 같아야 수정버튼 보여주기 -->
+		<sec:authentication property="name" var="userIdValue" />
 		
-		<span id="likeCount">${board.fb_likeCount }</span>
-	</h1>
+		<c:if test="${board.member_userId == userIdValue}" >
+			<c:url value="/free/modify" var="modifyLink">
+				<c:param name="number" value="${board.fb_number }"></c:param>
+			</c:url>
+			<a class="btn btn-outline-success modifyBtn" href="${modifyLink }">수정</a>
+		</c:if>
+	</div>
 	
-	<p>조회수 ${board.fb_viewCount }</p> 
-	제목 <input type="text" value="${board.fb_title }" readonly /><br>
-	카테고리 <input type="text" value="${board.fb_category }" readonly /><br>
+	<!-- 본문 -->
+	<div class="post_wrap">
+		<div class="post_top">
+			<p class="top_category">${board.fb_category }</p>
+			<p class="top_title">${board.fb_title }</p>
+			<ul>
+				<li class="top_nickName">${board.nickName }</li>
+				<li class="top_insertDatetime">${board.ago }</li>
+				<li class="top_likeCount">좋아요 ${board.fb_likeCount }</li>
+				<li class="top_insertDatetime">조회 ${board.fb_viewCount }</li>
+			</ul>
+		</div>
+		<div id="summernote" class="top_content">${board.fb_content }</div>
+		
+		<!-- 좋아요 -->
+		<div class="likeBox">
+			<p 
+				<sec:authorize access="not isAuthenticated()">
+					style="pointer-events: none;"
+				</sec:authorize>		
+			id="likeButton" class="likeIcon">
+								
+				<c:if test="${board.liked }">
+					<i class="fa-solid fa-heart"></i>
+				</c:if>
+				<c:if test="${not board.liked }">
+				<i class="fa-regular fa-heart"></i>
+				</c:if>					
+			</p>
+			<p class="likeCount1">좋아요</p>
+			<p id="likeCount" class="likeCount2">${board.fb_likeCount }</p>
+		</div>
+		
+	</div><!-- 본문끝 -->
 	
-	본문 <div id="summernote" readonly>${board.fb_content }</div> <br>
-	
-	작성일시 <input type="datetime-local" value="${board.fb_insertDatetime }" readonly /><br>
-	작성자 <input type="text" value="${board.member_userId }" readonly /><br>
-	닉네임 <input type="text" value="${board.nickName }" readonly /><br>
-	
-	
-	<!-- 작성자와 authentication.name이 같아야 수정버튼 보여주기 -->
-	<sec:authentication property="name" var="userIdValue" />
-	
-	<c:if test="${board.member_userId == userIdValue}" >
-		<c:url value="/free/modify" var="modifyLink">
-			<c:param name="number" value="${board.fb_number }"></c:param>
-		</c:url>
-		<a class="btn btn-warning" href="${modifyLink }">수정</a>
-	</c:if>
-	
-	
+		
+		
 	<hr />
 	
 	<!-- 댓글입력 알림 -->
@@ -92,6 +217,8 @@
 				</div>
 			</div>
 		</div>
+		
+</div> <!-- 전체 컨테이너 -->
 	
 	<!-- 댓글 삭제 확인 모달 -->
 	<div class="modal fade" id="replyDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -132,6 +259,7 @@
 	</div>
 
 	
+	
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script>
 const ctx = "${pageContext.request.contextPath}";
@@ -150,9 +278,9 @@ document.querySelector("#likeButton").addEventListener("click", function() {
 	.then(res => res.json())
 	.then(data => {
 		if (data.current == 'liked') {
-			document.querySelector("#likeButton").innerHTML = `<i class="fa-solid fa-thumbs-up"></i>`
+			document.querySelector("#likeButton").innerHTML = `<i class="fa-solid fa-heart"></i>`
 		} else {
-			document.querySelector("#likeButton").innerHTML = `<i class="fa-regular fa-thumbs-up"></i>`
+			document.querySelector("#likeButton").innerHTML = `<i class="fa-regular fa-heart"></i>`
 		}
 		
 		document.querySelector("#likeCount").innerText = data.count;
@@ -197,6 +325,8 @@ function readReplyAndSetModalForm(fb_replyNumber) {
 	})
 }
 
+
+
 /* 댓글 리스트 */
 function listReply() {
 	const freeBoard_fb_number = document.querySelector("#freeBoard_fb_number").value;
@@ -214,10 +344,17 @@ function listReply() {
 			
 			const modifyReplyButtonId = `modifyReplyButton\${item.fb_replyNumber}`;
 			const removeReplyButtonId = `removeReplyButton\${item.fb_replyNumber}`;
+			const rereplyButtonId = `rereplyButton\${item.fb_replyNumber}`;
+			
 			/* 수정 삭제버튼 */
 			const editButton = `<button data-bs-toggle="modal" data-bs-target="#replyModifyModal" data-reply-id="\${item.fb_replyNumber}" id="\${modifyReplyButtonId}"> 수정</button>
 								<button data-bs-toggle="modal" data-bs-target="#replyDeleteModal" data-reply-id="\${item.fb_replyNumber}" id="\${removeReplyButtonId}"> 삭제</button>`
-			
+			/* <button data-reply-id="\${item.fb_replyNumber}" id="\${rereplyButtonId}"> 대댓글</button>
+			<div id="rereplyForm">
+					<input id="rereplyContent" name="rereplyContent" type="text">
+					<button id="rereButton">대댓글입력</button>
+				</div>`*/
+								
 			const replyDiv = 
 				`<div>
 					댓글 : \${item.fb_replyContent}
@@ -244,10 +381,10 @@ function listReply() {
 					// removeReply(this.dataset.replyId);
 				});
 			}
-			
 		}
 	});
 }
+
 
 /* 댓글 삭제 */
 function removeReply(replyId) {
@@ -260,6 +397,32 @@ function removeReply(replyId) {
 }
 
 
+
+/* 대댓글입력 */
+/* document.querySelector("#rereButton").addEventListener("click", function() {
+	const freeBoard_fb_number = document.querySelector("#freeBoard_fb_number").value; 
+	const rereplyContent = document.querySelector("#rereplyContent").value;
+	
+	const data = {
+		freeBoard_fb_number,
+		rereplyContent,
+		
+	}
+	
+	fetch(`\${ctx}/freeReply/rereAdd`, {
+		method : "post",
+		headers : {
+			"Content-Type" : "application/json"
+		},
+		body : JSON.stringify(data)
+	})
+	.then(res => res.json())
+	.then(data => {
+		document.querySelector("#rereplyContent").value = "";
+	})
+	.then(() => listReply());
+});
+ */
 
 /* 댓글 입력 */
 document.querySelector("#replyButton1").addEventListener("click", function() {

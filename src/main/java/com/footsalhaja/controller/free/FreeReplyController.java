@@ -30,7 +30,7 @@ public class FreeReplyController {
 	@Autowired
 	private FreeReplyService service;
 	
-	
+	// 댓글입력
 	@PostMapping("add")
 	@ResponseBody
 	@PreAuthorize("isAuthenticated()") // 로그인 여부
@@ -49,6 +49,9 @@ public class FreeReplyController {
 		
 		return map;
 	}
+	
+	//대댓글 입력
+
 	
 	@GetMapping("list/{freeBoard_fb_number}")
 	@ResponseBody

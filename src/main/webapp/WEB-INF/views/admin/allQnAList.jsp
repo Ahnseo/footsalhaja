@@ -39,12 +39,15 @@
 		<div class="col">
 			<table class="table">
 				<thead>
-					<th>번호</th>
-					<th>카테고리</th>
-					<th>제목</th>
-					<th>내용</th>
-					<th>작성자</th>
-					<th>문의상태</th>
+					<tr>
+						<th>번호</th>
+						<th>카테고리</th>
+						<th>제목</th>
+						<th>내용</th>
+						<th>작성자</th>
+						<th>좋아요</th>
+						<th>문의상태</th>
+					</tr>
 				</thead>
 				<tbody>
 					 <c:forEach items="${allQnAList}" var="allQnAList"  >
@@ -59,7 +62,15 @@
 						 	<td><a href="${myQnAGetLink}">${allQnAList.title}</a></td>
 						 	<td>${allQnAList.content}</td>
 						 	<td>${allQnAList.userId}</td>
-						 	<td>${allQnAList.status}</td>
+						 	<td>${allQnAList.likeCount}</td>
+						 	<td>
+						 	 	<c:if test="${allQnAList.status == '답변완료'}">  
+						        	<span class="badge bg-success rounded-pill">${allQnAList.status}</span>   								        	
+						        </c:if>
+						        <c:if test="${allQnAList.status == '답변대기'}">  
+						        	<span class="badge bg-danger rounded-pill">${allQnAList.status}</span>   								        	
+						        </c:if>
+						    </td>
 						 	
 					 	</tr>
 				 	</c:forEach>

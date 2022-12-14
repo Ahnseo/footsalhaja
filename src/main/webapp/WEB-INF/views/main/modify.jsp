@@ -41,22 +41,22 @@
 				<div class="mb-3">
 					<select name="bookTime">
 						<option value="">기존 예약 시간 : ${main.bookTime }</option>
-						<option value="10-12시">10-12시</option>
+						<option value="1">10-12시</option>
 					</select>
 				</div>
 				<div class="mb-3">
 					<label for="">구장 지역</label>
 					<select id="region" name="region">
-						<option value="서울" selected="selected">서울</option>
-						<option value="경기">경기</option>
+						<option value="1" selected="selected">서울</option>
+						<option value="2">경기</option>
 					</select>
 			</div>
 			
 			<div class="mb-3">
 			   <label for="" class="form-label">예약장소</label>
 			   <select id="region" name="region">
-			      <option value="서울">서울</option>
-			      <option value="경기">경기</option>
+			      <option value="1">서울</option>
+			      <option value="2">경기</option>
 			   </select>
 			   <select name="location_locationId" id="location">
 			      <option value="1">천마 풋살파크</option>

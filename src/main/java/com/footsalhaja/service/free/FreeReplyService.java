@@ -17,4 +17,5 @@ public interface FreeReplyService {
 	public int modify(FreeReplyDto reply);
 
 
+
 }

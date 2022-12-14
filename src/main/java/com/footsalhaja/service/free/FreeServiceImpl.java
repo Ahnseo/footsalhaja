@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.footsalhaja.domain.free.BoardDto;
-import com.footsalhaja.domain.free.FreeReplyDto;
 import com.footsalhaja.domain.free.PageInfo;
 import com.footsalhaja.mapper.free.FreeMapper;
 import com.footsalhaja.mapper.free.FreeReplyMapper;
@@ -32,7 +31,8 @@ public class FreeServiceImpl implements FreeService{
 
 
 	@Override
-	public List<BoardDto> listBoard(int page, String type, String keyword, PageInfo pageInfo) {
+	public List<BoardDto> listBoard(int page, String type, String keyword, PageInfo pageInfo, String category) {
+		
 		int records = 10; // 게시글 갯수
 		int offset = (page - 1) * records; // 어디서부터
 		
@@ -63,7 +63,8 @@ public class FreeServiceImpl implements FreeService{
 		pageInfo.setRightPageNumber(rightPageNumber);
 		pageInfo.setLastPageNumber(lastPage);
 		
-		return freeMapper.list(offset, records, type,  "%" + keyword + "%");
+	
+		return freeMapper.list(offset, records, type,  "%" + keyword + "%", category);
 	}
 	 
 	// 게시물 보기
@@ -128,6 +129,11 @@ public class FreeServiceImpl implements FreeService{
 	@Override
 	public int updateViewCount(int fb_number) {
 		return freeMapper.updateViewCount(fb_number);
+	}
+	
+	// 좋아요 순위
+	public List<BoardDto> likeRank(BoardDto board) {
+		return freeMapper.likeRank(board);
 	}
 	
 }
