@@ -274,6 +274,12 @@
  		<result column="freeBoard_fb_number" property="freeBoard_fb_number"/>
 		<result column="fb_insertDatetime" property="fb_insertDatetime"/>
  	</resultMap>
+ 	
+ 	<select id="countFbReplyList" resultType="int">
+		SELECT Count(*)
+		FROM member m LEFT JOIN freeBoardReply fr ON m.userId = fr.member_userId
+		WHERE m.userId = #{userId}
+	</select>
 
  	<!-- 내가 쓴 댓글보기 (아카데미게시판)-->
  	 <select id="getUserAbReplyList" resultMap="userAbReplyMap">
@@ -299,6 +305,12 @@
 		<result column="ab_replyInsertDatetime" property="ab_replyInsertDatetime"/>
  	</resultMap>
  	
+ 	 <select id="countAbReplyList" resultType="int">
+		SELECT Count(*)
+		FROM member m LEFT JOIN academyBoardReply ar ON m.userId = ar.member_userId
+		WHERE m.userId = #{userId}
+	</select>
+ 	
  	<!-- 내가 쓴 댓글보기 (예약) -->
  	 	 <select id="getUserMainReplyList" resultMap="userMainReplyMap">
 	 	SELECT 
@@ -323,6 +335,11 @@
 		<result column="insertDatetime" property="insertDatetime"/>
  	</resultMap>
  	
+ 	 <select id="countMainReplyList" resultType="int">
+		SELECT Count(*)
+		FROM member m LEFT JOIN bookReply br ON m.userId = br.member_userId
+		WHERE m.userId = #{userId}
+	</select>
  	
  	<!-- 내가 좋아요한 글 목록 -->
  	<select id="getUserAbLikeList" resultMap="userAbLikeMap">
@@ -346,7 +363,14 @@
  		<result column="ab_insertDatetime" property="ab_insertDatetime"/>
  	</resultMap>
  	
- 	 	<select id="getUserFbLikeList" resultMap="userFbLikeMap">
+ 	 <select id="countUserAbLike" resultType="int">
+		SELECT Count(*)
+		FROM member m LEFT JOIN academyBoardLike al ON m.userId = al.member_userId
+		WHERE m.userId = #{userId}
+	</select>
+ 	
+ 	
+ 	<select id="getUserFbLikeList" resultMap="userFbLikeMap">
  		SELECT m.userId,
 	    	m.nickName,
 	    	(SELECT f.fb_number FROM freeBoard f WHERE freeBoard_fb_number = f.fb_number) fb_number,
@@ -366,5 +390,11 @@
  		<result column="fb_title" property="fb_title"/>
  		<result column="fb_insertDatetime" property="fb_insertDatetime"/>
  	</resultMap>
+ 	
+ 	<select id="countUserFbLike" resultType="int">
+		SELECT Count(*)
+		FROM member m LEFT JOIN freeBoardLike fl ON m.userId = fl.member_userId
+		WHERE m.userId = #{userId}
+	</select>
  	
  </mapper>

@@ -12,7 +12,7 @@ public interface MemberService {
 
 	List<MemberDto> selectMemberList(int page, MemberPageInfo memberPageInfo, String keyword, String type);
 
-	MemberDto selectMemberInfoByUserId(String userId);
+	List<Object> selectMemberInfoByUserId(String userId);
 
 	int deleteMemberInfoByUserId(String userId);
 

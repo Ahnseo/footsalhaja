@@ -1,7 +1,9 @@
 package com.footsalhaja.service.member;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -62,9 +64,35 @@ public class MemberServiceImpl implements MemberService {
 	
 	//userId로 회원정보 가져오기 
 	@Override
-	public MemberDto selectMemberInfoByUserId(String userId) {
+	public List<Object> selectMemberInfoByUserId(String userId) {
+		List<Object> list = new ArrayList<>();
 		
-		return memberMapper.selectMemberInfoByUserId(userId);
+		MemberDto memberInfo = memberMapper.selectMemberInfoByUserId(userId);
+		
+		Map<String, Integer> countActivity = new HashMap<>();
+		
+		int countAllAblist = memberMapper.countAllAblist(userId);
+		int countAllFblist = memberMapper.countAllFblist(userId);
+		int countAllMainlist = memberMapper.countAllMainlist(userId);
+		int countAbReplyList = memberMapper.countAbReplyList(userId);
+		int countFbReplyList = memberMapper.countFbReplyList(userId);
+		int countMainReplyList = memberMapper.countMainReplyList(userId);
+		int countUserAbLike = memberMapper.countUserAbLike(userId);
+		int countUserFbLike = memberMapper.countUserFbLike(userId);
+		
+		countActivity.put("countAllAblist", countAllAblist);
+		countActivity.put("countAllFblist", countAllFblist);
+		countActivity.put("countAllMainlist", countAllMainlist);
+		countActivity.put("countAbReplyList", countAbReplyList);
+		countActivity.put("countFbReplyList", countFbReplyList);
+		countActivity.put("countMainReplyList", countMainReplyList);
+		countActivity.put("countUserAbLike", countUserAbLike);
+		countActivity.put("countUserFbLike", countUserFbLike);
+		
+		list.add(memberInfo);
+		list.add(countActivity);
+		
+		return list;
 	}
 	
 	// userId로 회원정보 삭제하기 (modify.jsp 와 delete에 사용할 것 )

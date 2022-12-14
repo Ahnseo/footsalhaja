@@ -47,8 +47,15 @@ public interface MemberMapper {
 	public MemberDto getUserAbReplyList(String userId);
 	public MemberDto getUserMainReplyList(String userId);
 	
+	public int countFbReplyList(String userId);
+	public int countAbReplyList(String userId);
+	public int countMainReplyList(String userId);
+	
 	//내가 좋아요한 글 보기
 	public MemberDto getUserAbLikeList(String userId);
 	public MemberDto getUserFbLikeList(String userId);
+	
+	public int countUserAbLike(String userId);
+	public int countUserFbLike(String userId);
 
 }

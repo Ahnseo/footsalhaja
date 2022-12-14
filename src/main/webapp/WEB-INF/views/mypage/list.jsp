@@ -6,92 +6,120 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Insert title here</title>
+<style>
+@font-face {
+ font-family: 'NanumBarunGothic';
+ font-style: normal;
+ font-weight: 400;
+ src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot');
+ src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.ttf') format('truetype');
+}
+
+@font-face {
+ font-family: 'NanumBarunGothic';
+ font-style: normal;
+ font-weight: 700;
+ src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot');
+ src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.ttf') format('truetype')
+}
+
+@font-face {
+ font-family: 'NanumBarunGothic';
+ font-style: normal;
+ font-weight: 300;
+ src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot');
+ src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.ttf') format('truetype');
+}
+
+.nanumbarungothic * {
+ font-family: 'NanumBarunGothic', sans-serif;
+}
+
+li {
+   list-style:none;
+  }
+  
+.container-sm { 
+	font-family: 'NanumBarunGothic';
+	letter-spacing: -1px;
+}
+
+#userTitle h3 {
+	text-align: center;
+	padding: 60px;
+ }
+
+.list {
+	padding: 60px;
+}
+
+.list span {
+	padding: 0.75em;
+}
+
+</style>
+</head>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-</head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
 <body>
-<meta charset="UTF-8">
-<title>회원목록</title>
-</head>
-<body>
-<!--현재 myInfo테이블 의 컬럼들 ( userId, name, password, nickName, email, birthYY, birthMM, birthDD, activityArea, phone, personalGender, permission ) -->
 <myInfo:navbar active="myInfopageLink"></myInfo:navbar>
-<div class="container">
-	<div class="row">
-		<div class="col">
-			<h3>${myInfo.userId}님의 마이페이지 입니다.</h3>
-			<table class="table">
-				<thead>		
-					<th>userId</th>
-					<th>Password</th>
-					<th>성별</th>
-					<th>이름</th>
-					<th>닉네임</th>
-					<th>Email</th>
-					<th>생년월일</th>
-					<th>활동지역</th>
-					<th>전화번호</th>
-					<th>회원권한(개인/팀)</th>
-				</thead>
-				<tbody>
-					<c:url value="/mypage/get" var="myInfoGetLink">
-						<c:param name="userId" value="${myInfo.userId}"/>
-					</c:url>
-					<tr>	
-					 	<td>
-					 		<a href="${myInfoGetLink}">${myInfo.userId}</a>
-					 	</td>
-					 	<td>${myInfo.password}</td>
-					 	<td>${myInfo.personalGender}</td>
-					 	<td>${myInfo.name}</td>
-					 	<td>${myInfo.nickName}</td>
-					 	<td>${myInfo.email}</td>
-					 	<td>${myInfo.birthYY}-${myInfo.birthMM}-${myInfo.birthDD}</td>
-					 	<td>${myInfo.activityArea}</td>
-					 	<td>${myInfo.phone}</td>
-					 	<td>${myInfo.permission}</td>
-				 	</tr>
-				</tbody>
-			</table>
+<div class="container-sm">
+		<div id="userTitle">
+			<h3>${myInfo.userId}님의 마이페이지</h3>
 		</div>
+		<div>
+			<c:url value="/mypage/get" var="myInfoGetLink">
+				<c:param name="userId" value="${myInfo.userId}"/>
+			</c:url>
+				<a href="${myInfoGetLink}"><button type="button" class="btn btn-outline-success">회원정보 확인</button></a>
+		</div>
+
+<div class = "list">
+
+	<ul class="list-group">
+	  <li class="list-group-item d-flex justify-content-between align-items-center">
+	   	<c:url value="/mypage/myAbDocumentList" var="listLink">
+			<c:param name="userId" value="${myInfo.userId}"></c:param>
+		</c:url>
+		<a href="${listLink }">아카데미 게시판에 쓴 글 목록</a>
+	    <span class="badge bg-primary rounded-pill">${countActivity.countAllAblist}</span>
+	  </li>
+	  <li class="list-group-item d-flex justify-content-between align-items-center">
+	    	<c:url value="/mypage/myFbDocumentList" var="listLink">
+			<c:param name="userId" value="${myInfo.userId}"></c:param>
+		</c:url>
+		<a href="${listLink }" > 자유 게시판에 쓴 글 글 목록</a>
+	    <span class="badge bg-primary rounded-pill">${countActivity.countAllFblist}</span>
+	  </li>
+	  <li class="list-group-item d-flex justify-content-between align-items-center">
+	    	<c:url value="/mypage/myMainDocumentList" var="listLink">
+			<c:param name="userId" value="${myInfo.userId}"></c:param>
+		</c:url>
+		<a href="${listLink }" >예약 글 목록</a>
+	    <span class="badge bg-primary rounded-pill">${countActivity.countAllMainlist}</span>
+	  </li>
+	    <li class="list-group-item d-flex justify-content-between align-items-center">
+		<c:url value="/mypage/myReplyList" var="listLink">
+			<c:param name="userId" value="${myInfo.userId}"></c:param>
+		</c:url>
+		<a href="${listLink }">작성 댓글 목록</a>
+	    <span class="badge bg-primary rounded-pill">${countActivity.countAbReplyList + countActivity.countFbReplyList + countActivity.countMainReplyList} </span>
+	  </li>
+	      <li class="list-group-item d-flex justify-content-between align-items-center">
+			<c:url value="/mypage/myLikeList" var="listLink">
+			<c:param name="userId" value="${myInfo.userId}"></c:param>
+		</c:url>
+		<a href="${listLink }" > 좋아요한 글 목록</a>
+	    <span class="badge bg-primary rounded-pill">${countActivity.countUserAbLike + countActivity.countUserFbLike} </span>
+	  </li>
+	</ul>
+	
 	</div>
-</div>
 
-	<!-- 글 목록버튼 -->
-	<c:url value="/mypage/myAbDocumentList" var="listLink">
-		<c:param name="userId" value="${myInfo.userId}"></c:param>
-	</c:url>
-	<a class="btn btn-outline-primary" href="${listLink }" role="button">
-		아카데미 게시판에 쓴 글 목록</a>
-<br>
-	<c:url value="/mypage/myFbDocumentList" var="listLink">
-		<c:param name="userId" value="${myInfo.userId}"></c:param>
-	</c:url>
-	<a class="btn btn-outline-primary" href="${listLink }" role="button">
-		자유 게시판에 쓴 글 글 목록</a>
-<br>
-	<c:url value="/mypage/myMainDocumentList" var="listLink">
-		<c:param name="userId" value="${myInfo.userId}"></c:param>
-	</c:url>
-	<a class="btn btn-outline-primary" href="${listLink }" role="button">
-		예약 글 목록</a>
 
-<br>
-	<c:url value="/mypage/myReplyList" var="listLink">
-		<c:param name="userId" value="${myInfo.userId}"></c:param>
-	</c:url>
-	<a class="btn btn-outline-primary" href="${listLink }" role="button">
-		작성 댓글 목록</a>
-
-<br>
-	<c:url value="/mypage/myLikeList" var="listLink">
-		<c:param name="userId" value="${myInfo.userId}"></c:param>
-	</c:url>
-	<a class="btn btn-outline-primary" href="${listLink }" role="button">
-		좋아요한 글 목록</a>
-		
+</div>		
 		
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </body>

@@ -1,7 +1,7 @@
 package com.footsalhaja.controller.member;
 
 import java.util.List;
-
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,9 +30,14 @@ public class MypageContorller {
 	
 	@GetMapping("list")
 	public void mypageList(String userId, Model model){
-		// list에서 기본 정보를 히든 input으로 넣어둘까 ?
-		MemberDto myInfo = memberService.selectMemberInfoByUserId(userId);
+		
+		MemberDto myInfo = (MemberDto) memberService.selectMemberInfoByUserId(userId).get(0);
 		model.addAttribute("myInfo", myInfo);
+		System.out.println(myInfo);
+		
+		Map<String, Integer> countActivity = (Map<String, Integer>) memberService.selectMemberInfoByUserId(userId).get(1);
+		model.addAttribute("countActivity", countActivity);
+		System.out.println(countActivity);
 		
 	}
 	@PostMapping("list")
@@ -44,7 +49,7 @@ public class MypageContorller {
 	public void myGetAndModify(@RequestParam(name="userId") String userId, Model model){
 		//RequestParam 으로 member/get?userId= 아이디값 가져와서 db 요청 -> MemberDto 타입 member ->  addAttribute "member" 넣음 . 
 		//System.out.println(userId);
-		MemberDto memberInfoByUserId = memberService.selectMemberInfoByUserId(userId);
+		MemberDto memberInfoByUserId = (MemberDto) memberService.selectMemberInfoByUserId(userId).get(0);
 		System.out.println(memberInfoByUserId);
 		model.addAttribute("member", memberInfoByUserId);
 		
