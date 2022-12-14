@@ -100,30 +100,6 @@ li {
  	padding: 15px;
  }
 
-/* 검색 페이징 글작성버튼 */
-#bottomBox{
-	margin: 30px 0;
-	text-align: center;
-	position: relative;
-	
-}
-#bottomBox .searchBox{
-	display: inline-block;
-	position: absolute;
-	top: 0;
-	left: 0;
-}
-#bottomBox .paginationBox{
-	display: inline-block;
-	margin-top: 60px;
-}
-#bottomBox .insertBox{
-	display: inline-block;
-	position: absolute;
-	top: 0;
-	right: 0;
-}
-
 
 
 </style>

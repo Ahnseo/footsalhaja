@@ -254,6 +254,7 @@ li {
 		<div id="categoryBox" class="d-grid gap-2 ">
 			<c:url value="/academy/list" var="listLink"></c:url>
 			<form action="${listLink }">
+				<button class='btn btn-default' name="category" value="">전체</button>
 				<button class='btn btn-default' name="category" value="레슨">레슨</button>
 				<button class='btn btn-default' name="category" value="꿀팁">꿀팁</button>
 				<button class='btn btn-default' name="category" value="팀원모집">팀원모집</button>
@@ -265,7 +266,7 @@ li {
 		<table class="table table-hover container">
 			<thead>
 				<tr scope="row">
-					<th>번호</th>
+					<th>No</th>
 					<th>말머리</th>
 					<th>좋아요</th>
 					<th>제목</th>
@@ -317,12 +318,12 @@ li {
 	<!-- 검색창 -->
 	   	<div class="searchBox">
 			<c:url value="/academy/list" var="listLink"></c:url>
-			<form id='searchForm' action="/academy/list" method='get'>
+			<form id='searchForm' action="/academy/list" method='get' class="d-flex" >
 				<select class="searchSelect" name='type'>
 					<option value=""
 						<c:out value="${pageMaker.cri.type == null?'selected':''}"/>>--</option>
 					<option value="TWC"
-						<c:out value="${pageMaker.cri.type eq 'TWC'?'selected':''}"/>>전체 검색</option>
+						<c:out value="${pageMaker.cri.type eq 'TWC'?'selected':''}"/>>전체</option>
 					<option value="T"
 						<c:out value="${pageMaker.cri.type eq 'T'?'selected':''}"/>>제목</option>
 					<option value="C"
