@@ -21,6 +21,7 @@ public class BoardDto {
 	
 	private String nickName;
 	private boolean liked;
+	private int ranking;
 	
 	// 게시물 입력시간 변경
 	public String getAgo() {

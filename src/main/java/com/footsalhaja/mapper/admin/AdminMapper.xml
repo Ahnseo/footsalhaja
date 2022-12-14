@@ -12,5 +12,88 @@
  		WHERE status = #{status}
  		ORDER BY insertDatetime DESC
  	</select>
- 
+ 	<!-- bookId, title, content, matchType, level, status, 
+ 	bookDate, bookTime, insertDatetime, teamGender, location_locationId, member_userId -->
+ 	<select id="selectBookedListAll" resultType="com.footsalhaja.domain.main.BookDto">
+ 		SELECT 
+ 			b.bookId,
+ 			b.title,
+ 			b.content,
+ 			b.matchType,
+ 			b.level,
+ 			b.status, 
+ 			b.bookDate,
+ 			b.bookTime,
+ 			b.insertDatetime,
+ 			b.teamGender,
+ 			l.locationId,
+ 			l.stadiumName,
+ 			m.userId		
+ 		FROM book b
+ 		LEFT JOIN member m ON b.member_userId = m.userId
+ 		LEFT JOIN location l ON b.location_locationId = l.locationId
+ 		WHERE b.status = #{status}
+ 		ORDER BY b.insertDatetime DESC
+ 	</select>
+ 	
+ 	<select id="selectBookedListLimit" resultType="com.footsalhaja.domain.main.BookDto">
+ 		SELECT 
+ 			b.bookId,
+ 			b.title,
+ 			b.content,
+ 			b.matchType,
+ 			b.level,
+ 			b.status, 
+ 			b.bookDate,
+ 			b.bookTime,
+ 			b.insertDatetime,
+ 			b.teamGender,
+ 			l.locationId,
+ 			l.stadiumName,
+ 			m.userId	
+ 		FROM book b
+ 		LEFT JOIN member m ON b.member_userId = m.userId
+ 		LEFT JOIN location l ON b.location_locationId = l.locationId
+ 		WHERE b.status = #{status}
+ 		AND (b.bookDate >= CURRENT_DATE)
+ 		ORDER BY b.insertDatetime DESC
+ 	</select>
+ 	
+ 	<insert id="insertVisitCount">
+ 		INSERT INTO Visit (visitDate) 
+ 		VALUES (now())
+ 	</insert>
+ 	<select id="selectTodayVisitCount" resultType="int">
+ 		SELECT COUNT(visitDate)
+ 		FROM Visit
+ 		WHERE visitDate = CURRENT_DATE()
+ 	</select>
+ 	<select id="selectTodaybookedCount" resultType="int">
+ 		SELECT COUNT(*)
+ 		FROM book
+ 		WHERE status = 0 
+ 		AND (bookDate >= CURRENT_DATE)
+ 	</select>
+ 	<select id="selectTodayWaitingQnACount" resultType="int">
+ 		SELECT COUNT(*)
+ 		FROM QnABoard
+ 		WHERE status = #{status}
+ 	</select>
+ 	
+ 	<!-- 관리자 대시보드_ 이달의 방문자수, 예약수, 문의수 테이블의 COUNT ..  -->
+ 	<select id="chartListByDate" resultType="com.footsalhaja.domain.admin.adminColChartDto">
+		SELECT 
+			v.visitDate AS date,
+		    COUNT(distinct v.visitId) AS visitCount,
+			COUNT(distinct b.bookId) AS bookedCount,
+			COUNT(distinct q.qnaId) AS qnaCount
+		FROM Visit v
+		LEFT JOIN book b ON DATE(b.insertDatetime) = v.visitDate
+		LEFT JOIN QnABoard q ON DATE(q.insertDatetime) = v.visitDate
+		WHERE MONTH(v.visitDate) = MONTH(CURRENT_DATE)
+		GROUP BY v.visitDate
+ 	</select>
+
+ 	
+ 	
  </mapper>

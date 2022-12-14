@@ -68,12 +68,15 @@
 						<div class="col">
 							<table class="table">
 								<thead>
-									<th>번호</th>
-									<th>카테고리</th>
-									<th>제목</th>
-									
-									<th>작성자</th>
-									<th>문의상태</th>
+									<tr>
+										<th>번호</th>
+										<th>카테고리</th>
+										<th>제목</th>
+										<th>작성자</th>
+										<th>좋아요</th>
+										<th>문의상태</th>
+										<!-- <th>조회수</th> --> 
+									</tr>
 								</thead>
 								 <tbody>
 									 <c:forEach items="${allQnAListByDone}" var="allQnA" varStatus="st" >
@@ -90,7 +93,16 @@
 										 	</td>
 	
 										 	<td>${allQnA.userId}</td>
-										 	<td>${allQnA.status}</td>
+											<td>${allQnA.likeCount}</td>
+											
+										 	<td>
+										 	 	<c:if test="${allQnA.status == '답변완료'}">  
+										        	<span class="badge bg-success rounded-pill">${allQnA.status}</span>   								        	
+										        </c:if>
+										        <c:if test="${allQnA.status == '답변대기'}">  
+										        	<span class="badge bg-danger rounded-pill">${allQnA.status}</span>   								        	
+										        </c:if>
+										    </td>
 									 	</tr>
 								 	</c:forEach>
 								 </tbody>
@@ -189,8 +201,6 @@
 						</div>
 					</div>
 				</div>
-				
-				
 				
 				<hr>
 				

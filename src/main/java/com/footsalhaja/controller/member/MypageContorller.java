@@ -16,7 +16,9 @@ import com.footsalhaja.domain.academy.BoardDto;
 import com.footsalhaja.domain.free.FreeReplyDto;
 import com.footsalhaja.domain.main.ReplyDto;
 import com.footsalhaja.domain.member.MemberDto;
+
 import com.footsalhaja.domain.member.MemberPageInfo;
+
 import com.footsalhaja.service.member.MemberService;
 
 @Controller

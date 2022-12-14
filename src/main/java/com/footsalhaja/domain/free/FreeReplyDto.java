@@ -20,6 +20,7 @@ public class FreeReplyDto {
 	private String nickName;
 	
 	private boolean editable; // 로그인한 아이디가 댓글작성자인지
+	private int p_num; // 부모댓글번호
 	
 	@JsonFormat(shape = Shape.STRING)
 	private LocalDateTime fb_insertDatetime; //댓글작성시간

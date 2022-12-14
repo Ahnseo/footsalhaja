@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.footsalhaja.domain.admin.adminColChartDto;
+import com.footsalhaja.domain.main.BookDto;
 import com.footsalhaja.domain.qna.QnADto;
 import com.footsalhaja.domain.qna.QnAPageInfo;
 import com.footsalhaja.mapper.admin.AdminMapper;
@@ -51,9 +53,41 @@ public class AdminServiceImpl implements AdminService {
 	}
 	
 	@Override
+	public List<BookDto> selectBookedListAll() {
+		int status = 0; //예약된 매칭만 리스트로 가져오기  -> allBookList.jsp 테이블로 보여주기 
+		return adminMapper.selectBookedListAll(status);
+	}
+	
+	@Override
 	public List<QnADto> selectWatingQnAList() {
 		String status = "답변대기";
 		return adminMapper.selectWatingQnAList(status);
 	}
+	
+	@Override
+	public List<BookDto> selectBookedListLimit() {
+		int status = 0; //예약됨 = 0값 으로 설정되어있음 
+		return adminMapper.selectBookedListLimit(status);
+	}
+	@Override
+	public int selectTodayVisitCount() {
+		return adminMapper.selectTodayVisitCount();
+	}
+	@Override
+	public int selectTodaybookedCount() {
+		return adminMapper.selectTodaybookedCount();
+	}
+	@Override
+	public int selectTodayWaitingQnACount() {
+		String status = "답변대기";
+		return adminMapper.selectTodayWaitingQnACount(status);
+	}
+	@Override
+	public List<adminColChartDto> chartListByDate() {
+		
+		return adminMapper.chartListByDate();
+	}
+
+	
 	
 }
