@@ -50,7 +50,7 @@ public class MainController {
 	@GetMapping("insert")
 	public void insert(@RequestParam(name="userId") String userId,
 			Model model) {
-		MemberDto member = memberService.selectMemberInfoByUserId(userId);
+		MemberDto member = (MemberDto) memberService.selectMemberInfoByUserId(userId).get(0);
 		model.addAttribute("member", member);
 		
 		

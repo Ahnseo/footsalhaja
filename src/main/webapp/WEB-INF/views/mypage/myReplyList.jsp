@@ -138,11 +138,13 @@ li {
 		<h3>${userId}님이 작성한 댓글 <i class="fa-regular fa-comment-dots"></i></h3>
 	</div>
 	<div id="categoryBox" >
-		<a id ="bookBtn" href="#book"><button type="button" class="btn btn-outline-success">예약</button></a>
-		<a id ="academyBtn" href="#academy"><button type="button" class="btn btn-outline-success">아카데미</button></a>
-		<a id ="freeBtn" href="#freeBoard"><button type="button" class="btn btn-outline-success">자유게시판</button></a>
+		<a id ="bookBtn" href="#book"><button type="button" class="btn btn-outline-success">예약 (${countActivity.countMainReplyList})</button></a>
+		<a id ="academyBtn" href="#academy"><button type="button" class="btn btn-outline-success">아카데미 (${countActivity.countAbReplyList})</button></a>
+		<a id ="freeBtn" href="#freeBoard"><button type="button" class="btn btn-outline-success">자유게시판 (${countActivity.countFbReplyList})</button></a>
 	</div>		
 <!-- 글목록 -->
+
+
 	<div id="listBox" >
 		<div id="book">
 			<table class="table table-hover container">

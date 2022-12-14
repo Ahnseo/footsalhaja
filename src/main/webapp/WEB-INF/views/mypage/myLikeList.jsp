@@ -135,11 +135,11 @@ li {
 <myInfo:navbar active="myInfopageLink"></myInfo:navbar>
 <div class="container-sm">
 	<div id="userLikeTitle">
-		<h3>${userId}님의 <i class="fa-solid fa-heart"></i> 글 목록</h3>
+		<h3>${userId}님의 <i class="fa-solid fa-heart"></i> 글 리스트</h3>
 	</div>
 	<div id="categoryBox" >
-		<a id ="academyBtn" href="#academy"><button type="button" class="btn btn-outline-success">아카데미</button></a>
-		<a id ="freeBtn" href="#freeBoard"><button type="button" class="btn btn-outline-success">자유게시판</button></a>
+		<a id ="academyBtn" href="#academy"><button type="button" class="btn btn-outline-success">아카데미 (${countActivity.countUserAbLike})</button></a>
+		<a id ="freeBtn" href="#freeBoard"><button type="button" class="btn btn-outline-success">자유게시판 (${countActivity.countUserFbLike})</button></a>
 	</div>
 	<!-- 글목록 -->
 	<div id="listBox" >

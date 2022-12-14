@@ -125,11 +125,13 @@ public class MypageContorller {
 		
 		List<ReplyDto> MainReply = ReplylistByUserId.get(2).getUserMainReplyList();
 		
-		/* model.addAttribute("replyList", ReplylistByUserId); */
+		Map<String, Integer> countActivity = (Map<String, Integer>) memberService.selectMemberInfoByUserId(userId).get(1);
+		
 		model.addAttribute("userId", userId1);
 		model.addAttribute("userAbReplyList", AbReply);
 		model.addAttribute("userFbReplyList", FbReply);
 		model.addAttribute("userMainReplyList",MainReply);
+		model.addAttribute("countActivity", countActivity);
 		
 	}
 	
@@ -142,13 +144,12 @@ public class MypageContorller {
 		List<BoardDto> AbLike = LikelistByUserId.get(0).getUserAbLikeList();
 		List<com.footsalhaja.domain.free.BoardDto> FbLike = LikelistByUserId.get(1).getUserFbLikeList();
 		
+		Map<String, Integer> countActivity = (Map<String, Integer>) memberService.selectMemberInfoByUserId(userId).get(1);
+		
 		model.addAttribute("userId", userId2);
 		model.addAttribute("userFbLikeList", FbLike);
 		model.addAttribute("usrAbLikeList", AbLike);
-		
-		
-		System.out.println(FbLike);
-		System.out.println(AbLike);
+		model.addAttribute("countActivity", countActivity);
 	}
 	
 }

@@ -20,7 +20,7 @@
 <div class="container">
 	<div class="row">
 		<div class="col">
-			<h3>${list.userId}님이 예약 리스트 입니다.</h3> 
+			<h3>${list.userId}님의 예약 리스트 </h3> 
 			<table class="table">
 				<thead>		
 					<th>예약 날짜</th>

@@ -135,7 +135,7 @@ li {
 <myInfo:navbar active="myInfopageLink"></myInfo:navbar>
 <div class="container-sm">
 	<div id="userAcademyTitle">
-		<h3>${list.userId}님이 아카데미 게시판에 쓴 글 리스트 입니다.</h3>
+		<h3>${list.userId}님이 아카데미 게시판에 쓴 글 리스트</h3>
 	</div>
 		<div id="listBox" >
 			<table class="table table-hover container">
