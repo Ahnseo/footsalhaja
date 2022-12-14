@@ -101,30 +101,19 @@ public class FreeController {
 	
 	@PostMapping("modify")
 	@PreAuthorize("@boardSecurity.checkWriter(authentication.name, #board.fb_number)")
-	public String modify(BoardDto board, RedirectAttributes rttr) {
-		int cnt = service.update(board);
+	public String modify(BoardDto board) {
+		service.update(board);
+		System.out.println(board);
+		int num = board.getFb_number();
 		
-		if (cnt == 1) {
-			rttr.addFlashAttribute("message", "새 게시물이 수정되었습니다.");
-		} else {
-			rttr.addFlashAttribute("message", "새 게시물이 수정되지 않았습니다.");			
-		}
-		
-		return "redirect:/free/list";
+		return "redirect:/free/get?number=" + num;
 	}
 
 	@PostMapping("remove")
 	@PreAuthorize("@boardSecurity.checkWriter(authentication.name, #fb_number)")
 	public String remove(
-			@RequestParam(name = "number") int fb_number,
-			RedirectAttributes rttr) {
-		int cnt = service.remove(fb_number);
-		
-		if (cnt == 1) {
-			rttr.addFlashAttribute("message", "새 게시물이 삭제되었습니다.");
-		} else {
-			rttr.addFlashAttribute("message", "새 게시물이 삭제되지 않았습니다.");			
-		}
+			@RequestParam(name = "number") int fb_number) {
+		service.remove(fb_number);
 		
 		return "redirect:/free/list";
 	}

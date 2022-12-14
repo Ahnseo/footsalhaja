@@ -65,7 +65,7 @@ public class FreeReplyController {
 		
 		return service.listReplyByBoardId(freeBoard_fb_number, username);
 	}
-	
+	 
 	@DeleteMapping("delete/{fb_replyNumber}")
 	@ResponseBody
 	@PreAuthorize("@replySecurity.checkWriter(authentication.name, #fb_replyNumber)")

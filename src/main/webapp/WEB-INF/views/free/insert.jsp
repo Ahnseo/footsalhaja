@@ -136,7 +136,7 @@
 			<textarea id="summernote" name="fb_content" ></textarea>
 		</div>
 		<div>
-			<input class="form-control" type="file" name="fb_fileName"/><br>
+			<input class="form-control" type="file" name="fb_fileName"/>
 		</div>
 	<input
 		value="${userIdValue }"

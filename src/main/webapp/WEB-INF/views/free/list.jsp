@@ -56,7 +56,7 @@ li {
 #likeBestRankBox {
 	border-radius: 15px;
 	border: 1px solid #ddd;
-	margin: 0 0 30px 0;
+	margin-left: 30px;
  }
  
 #likeBestRankBox p {
@@ -64,7 +64,7 @@ li {
 	font-weight: bold;
 	letter-spacing: -1px;
 	
-	margin: 15px 30px;
+	margin: 15px 0  10px 30px;
 }
 
 #likeBestRankBox span {
@@ -117,7 +117,7 @@ li {
 }
 
 #categoryBox .cateBtn:hover {
-	color: green;
+	color: #1cb99e;
 	font-weight: bold;
 	text-decoration: underline;
 }
@@ -228,10 +228,10 @@ li {
 	<!-- 좋아요 베스트 -->
 	<div id="likeBestRankBox" >
 		<p><span>HOT</span> 자유게시판 이번주 인기 글 </p>
-		<table id="bestTable" class="table">
+		<table id="bestTable" class="table table-sm">
 			<c:forEach items="${likeRank }" var="rank" >
 			<tr>
-				<td class="first"  width="100">
+				<td class="first"  width="100" >
 					<p>${rank.fb_category }</p>
 				</td>
 				<td class="title">
@@ -411,7 +411,7 @@ li {
 		</sec:authorize>
 		<!-- 로그인 안 했을때 -->
 		<sec:authorize access="not isAuthenticated()">
-			<button data-bs-toggle="modal" data-bs-target="#nonMemberModal" id="nonMemberInsertButton">글쓰기</button>
+			<button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#nonMemberModal" id="nonMemberInsertButton">글쓰기</button>
 		</sec:authorize>	
 		</div>
 	</div>
