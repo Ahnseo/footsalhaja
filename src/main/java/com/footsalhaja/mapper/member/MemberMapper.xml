@@ -86,20 +86,21 @@
  	<!-- userId 로 하나의 회원정보 가져오기 -->
  	<select id="selectMemberInfoByUserId" resultMap="memberMap">
 	SELECT 
-		userId,
-		name,
-		password,
-		nickName,
-		email,
-		birthYY,
-		birthMM,
-		birthDD,
-		activityArea,
-		phone,
-		personalGender,
-		auth
+		m.userId,
+		m.name,
+		m.password,
+		m.nickName,
+		m.email,
+		m.birthYY,
+		m.birthMM,
+		m.birthDD,
+		m.activityArea,
+		m.phone,
+		m.personalGender,
+		m.auth,
+		p.profileImage_file profileImg
 	FROM
-		member
+		member m LEFT JOIN profileImage p ON m.userId = p.member_userId
 	WHERE
 		userId = #{userId}
 	</select>
@@ -396,5 +397,22 @@
 		FROM member m LEFT JOIN freeBoardLike fl ON m.userId = fl.member_userId
 		WHERE m.userId = #{userId}
 	</select>
- 	
+	
+	<!-- 프로필 이미지 등록 -->
+	<insert id="insertprofileImg">
+		INSERT INTO profileImage (member_userId, profileImage_file)
+		VALUES (#{userId}, #{profileImg})
+	</insert>
+	
+	<!-- 프로필 이미지 삭제 -->
+	<delete id="deleteProfileImgByUserId">
+		DELETE FROM profileImage
+		WHERE member_userId = #{userId}
+	</delete>
+	
+	<!-- 중복 프로필 이름 덮어씌우기 -->
+ 	<delete id="deleteProfileImgByUserIdAndPrifileImg">
+	DELETE FROM profileImage
+	WHERE member_userId = #{userId} AND profileImage_file = #{originalFilename}
+	</delete>
  </mapper>

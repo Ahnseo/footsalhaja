@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.footsalhaja.domain.academy.AcademyReplyDto;
 import com.footsalhaja.domain.academy.BoardDto;
@@ -57,10 +58,10 @@ public class MypageContorller {
 	
 	//회원정보 수정
 	@PostMapping("modify")
-	public String memberInfoModify(MemberDto memberModifiedValues) {
+	public String memberInfoModify(MemberDto memberModifiedValues, @RequestParam("file") MultipartFile File) {
 		//수정은 DB 삭제하고 -> 새로 저장 하기.
 		
-		memberService.updateMemberInfoByUserId(memberModifiedValues);
+		memberService.updateMemberInfoByUserId(memberModifiedValues, File);
 		//memberService.deleteMemberInfoByUserId(userId);
 		//memberService.insertMember(memberModifiedValues);
 		

@@ -47,7 +47,16 @@
 						<c:param name="userId" value="${member.userId}" />
 					</c:url>
 					
-					<form action="${modifyLink}" method="get" id="contactForm" data-sb-form-api-token="API_TOKEN">
+					<form action="${modifyLink}" method="get" id="contactForm" data-sb-form-api-token="API_TOKEN" enctype="multipart/form-data">
+							<%-- 이미지 출력 --%>
+							<div>
+								<c:forEach items="${member.profileImg }" var="name">
+									<div>
+										<img src="/image/${member.userId }/${name}" alt="">
+									</div>
+								</c:forEach>		
+							</div>
+							
 							<!-- ID -->
 							<div class="form-floating mb-3">
 								<input class="form-control" id="userId" type="text"

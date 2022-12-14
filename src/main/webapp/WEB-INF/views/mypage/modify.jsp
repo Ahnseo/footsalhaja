@@ -43,8 +43,22 @@
                 <!-- Contact Section Form-->
                 <div class="row justify-content-center">
                     <div class="col-lg-8 col-xl-7">
-                        <form action="/mypage/modify" method="post" id="contactForm" data-sb-form-api-token="API_TOKEN">
-                            <!-- ID -->
+                        <form action="/mypage/modify" method="post" id="contactForm" data-sb-form-api-token="API_TOKEN" enctype="multipart/form-data">
+						<%-- 이미지 출력 --%>
+					<div>
+						<c:forEach items="${member.profileImg }" var="name">
+							<div>
+								<img src="/image/${member.userId }/${name}" alt="">
+							</div>
+						</c:forEach>		
+					</div>
+					
+						<div class="form-floating mb-3"">
+							<input type="file" accept="image/*" class="form-control" name="file">
+						</div>
+
+
+						<!-- ID -->
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="userId" type="text" name ="userId" value="${member.userId}" data-sb-validations="required" readonly/>
                                 <label for="userId">ID</label>

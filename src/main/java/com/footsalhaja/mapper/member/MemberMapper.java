@@ -58,4 +58,11 @@ public interface MemberMapper {
 	public int countUserAbLike(String userId);
 	public int countUserFbLike(String userId);
 
+	//프로필 이미지 넣기
+	public int insertprofileImg(String userId, String profileImg);
+	
+	//프로필 이미지 삭제
+	public int deleteProfileImgByUserId(String userId);
+
+	public void deleteProfileImgByUserIdAndPrifileImg(String userId, String originalFilename);
 }
