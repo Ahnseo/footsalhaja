@@ -34,5 +34,8 @@ public interface AcademyService {
 	//파일 등록
 	public int insertFile(BoardDto board, MultipartFile[] files);
 	
+	// 좋아요 순위
+	public List<BoardDto> likeRank(BoardDto board);
+	
 	
 }

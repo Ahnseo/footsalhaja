@@ -24,6 +24,7 @@ public class BoardDto {
 	private List<String> ab_fileName;
 	private int countFile;
 	private String nickName;
+	private int ranking;
 	
 	public String getAgo() {
 		LocalDateTime now = LocalDateTime.now();
