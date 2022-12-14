@@ -24,12 +24,15 @@ import com.footsalhaja.domain.qna.QnAReplyDto;
 import com.footsalhaja.domain.qna.QnAReplyToAnswerDto;
 import com.footsalhaja.service.qna.QnAService;
 
+import lombok.AllArgsConstructor;
+
 @Controller
 @RequestMapping("qna")
+@AllArgsConstructor
 public class QnAController {
 	
-	@Autowired
-	private QnAService qnaService;
+//	@Autowired
+	private final QnAService qnaService;
 
 	// main
 	@GetMapping("qnaMainBoard")
@@ -85,7 +88,7 @@ public class QnAController {
 	public void myQnAGet(String userId, int qnaId, Model model, QnAReplyDto qnaReply) {
 		QnADto qna = qnaService.selectMyQnAGetByQnAIdAndUserId(userId, qnaId);
 		model.addAttribute("qna", qna);
-		System.out.println("qna 정보 : "+ qna);
+		//System.out.println("qna 정보 : "+ qna);
 		
 		QnAReplyDto qnaAnswer = qnaService.selectQnAReply(qnaReply);
 		System.out.println("qnaAnswer :"+qnaAnswer);
@@ -121,15 +124,17 @@ public class QnAController {
 	@PutMapping("likeCount")
 	@ResponseBody
 	@PreAuthorize("isAuthenticated()")
-	private Map<String, String> insertlikeCount(@RequestBody Map<String, String> req, Authentication authentication) {
+	private Map<String, Object> updatelikeCount(@RequestBody Map<String, String> req, Authentication authentication) {
 		String qnaId = req.get("qnaId");
-		String loggedinId = authentication.getName();
-		
+		String loggedinId = authentication.getName();		
 		System.out.println("qnaId : " + qnaId );
 		System.out.println("loggedinId : " + loggedinId);
 		
-		//클릭하면 저장, 다시클릭하면 삭제되는 좋아요 DB	
-		return qnaService.updateLikeCount(qnaId, loggedinId);
+		//클릭하면 저장, 다시클릭하면 삭제되는 좋아요 DB
+		Map<String, Object> result = qnaService.updateLikeCount(qnaId, loggedinId);
+		
+		return result;
+		
 	}
 	
 	

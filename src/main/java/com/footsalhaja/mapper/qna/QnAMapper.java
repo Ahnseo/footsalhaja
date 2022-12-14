@@ -38,6 +38,7 @@ public interface QnAMapper {
 	int selectQnABoardLikeCount(String qnaId, String loggedinId);
 	int insertQnABoardLikeCount(String qnaId, String loggedinId);
 	int deleteQnABoardLikeCount(String qnaId, String loggedinId);
+	int countAllLikeByQnAId(String qnaId);
 	
 	//####################################################################################
 	//QnA 답변 등록하기 (관리자/매니저)
@@ -72,6 +73,7 @@ public interface QnAMapper {
 	int deleteAnswerBYqnaId(int qnaId);
 	//문의 삭제 
 	int deleteQnA(int qnaId);
+	
 	
 	
 	

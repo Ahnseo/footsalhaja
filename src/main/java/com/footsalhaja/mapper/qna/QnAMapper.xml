@@ -211,17 +211,24 @@
 		)
 		
 	</select>
-	
+<!-- ###################################################################### -->
 	<!-- 좋아요 기능추가  -->
 	<select id="selectQnABoardLikeCount" resultType="int">
 		SELECT 
-			COUNT(*)
+			COUNT(*) likeCount
 		FROM 
 			QnABoardLike
 		WHERE 
 			qnaId = #{qnaId} AND userId = #{loggedinId}
 	</select>
-	
+	<select id="countAllLikeByQnAId" resultType="int">
+		SELECT 
+			COUNT(qnaLikeId) likeCount
+		FROM 
+			QnABoardLike
+		WHERE 
+			qnaId = #{qnaId}
+	</select>
 	<insert id="insertQnABoardLikeCount">
 		INSERT INTO QnABoardLike (qnaId, userId)
 		VALUES (#{qnaId}, #{loggedinId})
@@ -230,7 +237,7 @@
 		DELETE FROM QnABoardLike
 		WHERE qnaId = #{qnaId} AND userId = #{loggedinId}
 	</delete>
-	
+<!-- ###################################################################### -->
 	<insert id="insertQnAReply">
 		<!-- //qnaReplyId,qnaId,userId,writer,content,insertDatetime -->
 		INSERT INTO QnAReply (qnaId, userId, writer, content)

@@ -18,6 +18,8 @@
 <body>
 	<my:navbar active="getMyQnA"></my:navbar>
 	<sec:authentication property="name" var="userIdValue"/>	
+	<input class="form-control" type="text" name="qnaId" id="qnaIdVal" value="${qna.qnaId}" readonly>	
+	<input class="form-control" type="text" name="userId" id="userIdVal" value="${qna.userId}" readonly >
 	<div class="container mt-3 mb-3">
 		<div class="d-flex">
 			<div class="mr-auto p-2"><h1>문의내용</h1></div> 
@@ -28,7 +30,7 @@
 					<div class="row d-flex">
 						<div class="col-md-2">
 							<label for="formControlInput1" class="form-label">문의번호</label>
-							<input id="formControlInput1" class="form-control" type="hidden" name="qnaId" id="qnaIdVal" value="${qna.qnaId}">						
+												
 							<span class="badge bg-primary rounded-pill">${qna.qnaId}</span>
 						</div>
 						<div class="col-md-2">
@@ -38,13 +40,22 @@
 					</div>
 					<div class="row d-flex">
 						<div class="col-md-2">
-							<label for="formControlInput5" class="form-label"><i class="fa-solid fa-user"></i></label>
-							<input id="formControlInput5" class="form-control" type="hidden" name="userId" id="userIdVal" value="${qna.userId}" readonly >
+							<label for="formControlInput5" class="form-label"><i class="fa-solid fa-user"></i></label>					
 							<span class="badge bg-primary rounded-pill">${qna.userId}</span>
 						</div>
 						<div class="col-md-4">
-							<label for="formControlInput5" class="form-label">좋아요</label>
-							<span class="badge bg-primary rounded-pill">${qna.likeCount}</span>
+							<div class="likeBox">
+								<label for="formControlInput5" class="form-label">좋아요</label>
+								
+									<c:if test="${qna.likeCount != 0}">
+										<i class="fa-solid fa-heart"></i>
+									</c:if>
+									<c:if test="${qna.likeCount == 0 }">
+										<i class="fa-regular fa-heart"></i>
+									</c:if>
+								
+								<span class="badge bg-primary rounded-pill">${qna.likeCount}</span>
+							</div>
 						</div>
 						<div class="col-md-4">
 							<label for="formControlInput6" class="form-label"><i class="fa-regular fa-clock"></i></label>														
@@ -76,9 +87,14 @@
 						</c:url>
 						<button onclick="location.href='${myQnAModifyLink}'" class="btn btn-outline-warning" type="button">수정</button>		
 						<div>
-							<button class="btn btn-outline-success" type="button" id="likeBtn1">
+							<button class="btn btn-outline-success" type="button" id="likeBtn">
 								<!-- 문의내용 좋아요 버튼 -->
-								<i class="fa-regular fa-thumbs-up"></i>
+								<c:if test="${qna.likeCount != 0}">
+									<i class="fa-solid fa-heart"></i>
+								</c:if>
+								<c:if test="${qna.likeCount == 0 }">
+									<i class="fa-regular fa-heart"></i>
+								</c:if>
 							</button>
 						</div>
 						<c:if test="${qnaAnswer == null}">
@@ -97,7 +113,7 @@
 				</form>	
 				
 				<!-- 답변 작성하기 -->
-				<sec:authorize access="hasAuthority('admin')">		
+<sec:authorize access="hasAuthority('admin')">
 					<div class="collapse" id="qnaReplyCollapseAnswer">
 						<div class="card card-body">
 							<div class="mb-3">
@@ -114,7 +130,7 @@
 							</sec:authorize>
 						</div>
 					</div>
-				</sec:authorize>
+</sec:authorize>
 				<!-- 답변 가져오기  -->
 				<!-- //qnaReplyId,qnaId,userId,writer,content,insertDatetime -->
 				<c:if test="${qnaAnswer != null}">
@@ -253,15 +269,17 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script>
 	const ctx = "${pageContext.request.contextPath}";
-//	<!-- 좋아요 기능 -->
-//	document.querySelector("#likeBtn1").addEventListener("click", function(){
-//		const qnaId = document.querySelector("#qnaId").value;
-//		fetch(ctx + "/qna/likeCount", { 
-//			method : "put",
-//			headers : { "Content-Type" : "application/json" },
-//			body : JSON.stringify({qnaId : qnaId})
-//		})
-//	});
+	
+	<!-- 좋아요 기능 -->
+	document.querySelector("#likeBtn").addEventListener("click", function(){
+		const qnaId = document.querySelector("#qnaIdVal").value;
+		
+		fetch(ctx + "/qna/likeCount", { 
+			method : "put",
+			headers : { "Content-Type" : "application/json" },
+			body : JSON.stringify({qnaId : qnaId})
+		})
+	});
 	
 
 	<!-- 답변 저장기능 (관리자만 작성가능)-->
