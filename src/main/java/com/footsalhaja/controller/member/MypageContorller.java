@@ -41,6 +41,10 @@ public class MypageContorller {
 	@GetMapping("list")
 	public void mypageList(String userId, Model model){
 		
+		MemberDto memberInfoByUserId =  (MemberDto) memberService.selectMemberInfoByUserId(userId).get(0);
+		System.out.println("멤버인포 :"+memberInfoByUserId);
+		model.addAttribute("member", memberInfoByUserId);
+		
 		MemberDto myInfo = (MemberDto) memberService.selectMemberInfoByUserId(userId).get(0);
 		model.addAttribute("myInfo", myInfo);
 		System.out.println(myInfo);
@@ -55,20 +59,33 @@ public class MypageContorller {
 		//form post로 무엇을 할까 ?
 	}
 	
-	@GetMapping(value ={"get", "modify", "/{profileImg}"}, produces = MediaType.IMAGE_JPEG_VALUE)
-	public ResponseEntity<byte[]> myGetAndModify(@PathVariable("profileImg") String profileImg, @RequestParam(name="userId") String userId, Model model) throws Exception {
-		//프로필 이미지 보이기
-		InputStream imageStream = new FileInputStream("C:\\Users\\lnh1017\\Desktop\\study\\project\\footsalhaja\\user_profile\\"+ userId +"\\" +profileImg);
-		byte[] imageByteArray = IOUtils.toByteArray(imageStream);
-		imageStream.close();
+	
+	
+	@GetMapping({"get", "modify"})
+	public void myGetAndModify(@RequestParam(name="userId") String userId, Model model){
+		//RequestParam 으로 member/get?userId= 아이디값 가져와서 db 요청 -> MemberDto 타입 member ->  addAttribute "member" 넣음 . 
+		//System.out.println(userId);
+		MemberDto memberInfoByUserId =  (MemberDto) memberService.selectMemberInfoByUserId(userId).get(0);
+		System.out.println("멤버인포 :"+memberInfoByUserId);
+		model.addAttribute("member", memberInfoByUserId);
+	}
+	
+	@GetMapping(value ="{userId}/profileImg", produces = MediaType.IMAGE_JPEG_VALUE)
+	public ResponseEntity<byte[]> myGetAndModifyWithProFile(@PathVariable(name="userId") String userId) throws Exception {
 		
 		
 		//RequestParam 으로 member/get?userId= 아이디값 가져와서 db 요청 -> MemberDto 타입 member ->  addAttribute "member" 넣음 . 
 		//System.out.println(userId);
 		MemberDto memberInfoByUserId = (MemberDto) memberService.selectMemberInfoByUserId(userId).get(0);
-		System.out.println("멤버인포"+memberInfoByUserId);
-		model.addAttribute("member", memberInfoByUserId);
+		
+		//프로필 이미지 보이기
+		InputStream imageStream = new FileInputStream("C:\\Users\\lnh1017\\Desktop\\study\\project\\footsalhaja\\user_profile\\"+ userId +"\\" + memberInfoByUserId.getProfileImg());
+		byte[] imageByteArray = IOUtils.toByteArray(imageStream);
+		imageStream.close();
+		
+		System.out.println("이미지 "+imageByteArray);
 		return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
+		
 	}
 	
 	//회원정보 수정

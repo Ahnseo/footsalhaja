@@ -44,14 +44,14 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-8 col-xl-7">
                         <form action="/mypage/modify" method="post" id="contactForm" data-sb-form-api-token="API_TOKEN" enctype="multipart/form-data">
-						<%-- 이미지 출력 --%>
-					<div>
-						<c:forEach items="${member.profileImg }" var="name">
-							<div>
-								<img src="'C:\Users\lnh1017\Desktop\study\project\footsalhaja\user_profile\' + ${member.userId } + '\'+ ${name}" alt="/footsalhaja/기본프로필.png">
-							</div>
-						</c:forEach>		
-					</div>
+						<%-- 프로필 이미지 출력 --%>
+						<div style="text-align : center;">
+							<c:forEach items="${member.profileImg }" var="name">
+								<object data="${pageContext.request.contextPath}/기본프로필.png" type="image/png">
+									<img src="${pageContext.request.contextPath}/user_profile/${member.userId }/${name}">
+								</object>
+							</c:forEach>		
+						</div>	
 					
 						<div class="form-floating mb-3"">
 							<input type="file" accept="image/*" class="form-control" name="file">

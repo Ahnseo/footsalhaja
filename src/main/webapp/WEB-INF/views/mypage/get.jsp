@@ -46,18 +46,18 @@
 					<c:url value="/mypage/modify" var="modifyLink">
 						<c:param name="userId" value="${member.userId}" />
 					</c:url>
-					
+
 					<form action="${modifyLink}" method="get" id="contactForm" data-sb-form-api-token="API_TOKEN" enctype="multipart/form-data">
 							<%-- 프로필 이미지 출력 --%>
-							<div>
-						<c:forEach items="${member.profileImg }" var="name">
-							<div>
-							<object data="/footsalhaja/user_profile/기본프로필.png" type="image/png">
-								<img src="/footsalhaja/user_profile/${member.userId }/${name}">
-							</object>
-							</div>
-						</c:forEach>		
-							</div>	
+						<div style="text-align : center;">
+							<c:forEach items="${member.profileImg }" var="name">
+								<div class= >
+								<object data="${pageContext.request.contextPath}/기본프로필.png" type="image/png">
+									<img src="${pageContext.request.contextPath}/user_profile/${member.userId }/${name}">
+								</object>
+								</div>
+							</c:forEach>		
+						</div>	
 							
 							<!-- ID -->
 							<div class="form-floating mb-3">

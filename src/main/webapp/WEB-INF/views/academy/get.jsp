@@ -2,93 +2,192 @@
 <%@ page import="java.net.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Insert title here</title>
+<style>
+@font-face {
+ font-family: 'NanumBarunGothic';
+ font-style: normal;
+ font-weight: 400;
+ src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot');
+ src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.ttf') format('truetype');
+}
+@font-face {
+ font-family: 'NanumBarunGothic';
+ font-style: normal;
+ font-weight: 700;
+ src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot');
+ src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.ttf') format('truetype')
+}
+@font-face {
+ font-family: 'NanumBarunGothic';
+ font-style: normal;
+ font-weight: 300;
+ src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot');
+ src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.ttf') format('truetype');
+}
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+ul {
+   list-style:none;
+  }
+.container-sm { 
+	font-family: 'NanumBarunGothic';
+	letter-spacing: -1px;
+	font-size: 16px;
+}
+.post_wrap {
+	border: 1px solid #ced4da;
+	border-radius: 10px;
+	margin: 0 0 30px 0;
+}
+/* 상단 버튼부분 */
+.topbtnBox {
+	margin: 30px 0 15px 0;
+	position: relative;
+}
+.topbtnBox .modifyBtn {
+	text-align: right;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+/* 상단 제목부분 */
+.post_top {
+}
+.post_top .top_category {
+	border: 1px solid #ddd;
+ 	vertical-align: middle;
+ 	display: inline-block;
+ 	margin: 20px 20px 0;
+ 	padding: 0 4px;
+ 	
+ 	color: #666;
+ 	font-size: 14px;
+ 	font-weight: normal;
+}
+.post_top .top_title {
+	font-size: 20px;
+	font-weight: bold;
+	margin: 10px 20px;
+}
+.post_top ul {
+	text-align: left;
+	padding-left:0;
+}
+.post_top ul li {
+	display: inline-block;
+	margin-left: 20px;
+	font-size: 13px;
+}
+.post_wrap .top_content {
+	margin: 40px 20px;
+}
+.post_wrap .likeBox {
+	text-align: center;
+}
+.likeBox .likeIcon {
+	font-size: 26px;
+	color: green;
+}
+.likeBox .likeCount1 {
+	font-size: 14px;
+	margin-top: -20px;
+	color: #333;
+}
+.likeBox .likeCount2 {
+	font-size: 14px;
+	margin-top: -15px;
+	font-weight: bold;
+	color: #333;
+	
+}
+</style>
 </head>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
+
 <body>
 <my:navbar></my:navbar>
 
-
-	<div class="d-flex">
-		<h1 class="me-auto">${board.ab_number }번페이지</h1>
-		<h1>
-			<span
-
-			<sec:authorize access="not isAuthenticated()">
-				style="pointer-events: none;"
-			</sec:authorize>
-
-			id="likeButton" class="btn btn-light"
-			>
-				<c:if test="${board.liked }">
-					<i class="fa-solid fa-thumbs-up"></i>
-				</c:if> 
-				<c:if test="${not board.liked }">
-					<i class="fa-regular fa-thumbs-up"></i>
-				</c:if>
-
-			</span> 
-			
-			<span id="likeCount">
-				${board.countLike } </span>
-		</h1>
-
-	</div>
+<!-- 전체 컨테이너 -->
+<div class="container-sm" >
+	<!-- 전체글/수정버튼 -->
 	
-	<c:url value="/academy/modify" var="modifyLink">
-		<c:param name="ab_number" value="${board.ab_number }"></c:param>
-	</c:url>
-
-	제목 <input type ="text" value="${board.ab_title }" readonly> <br>
-	말머리 <input type ="text" value="${board.ab_category }" readonly> <br>
-	본문 <div id="summernote">${board.ab_content }</div> <br>
-	닉네임 <input type ="text" value="${board.nickName }" readonly> <br>
-	작성일시 <input type = "datetime-local" value = "${board.ab_insertDatetime }" readonly>
-
-<!-- 파일 -->
-	<c:set var="ctx" value="${pageContext.request.contextPath}" />;
-	<div>
-		<c:forEach items="${board.ab_fileName }" var="fileName">
-			<div>
-				<i class="fa-solid fa-paperclip"></i>
-				<a href="${ctx }/academy/download/${board.ab_number}/${fileName}">
-				<c:out value="${fileName.substring(36)}" /></a>
-				
-				<br>
-			</div>
-		</c:forEach>
-	</div>
 	
-<!-- 작성자와 authentication.name이 같아야 수정버튼 보여주기 -->
-	<sec:authentication property="name" var="username" />
-
-	<c:if test="${board.member_userId == username}">
-		<c:url value="/academy/modify" var="modifyLink">
-			<c:param name="ab_number" value="${board.ab_number }"></c:param>
-		</c:url>
-		<a class="btn btn-warning" href="${modifyLink }">수정</a>
-	</c:if>
-	
-	<hr />
-
-
-
-	<!-- 글 목록버튼 -->
-	<div class="d-flex flex-row-reverse">
+	<div class="topbtnBox">
 		<c:url value="/academy/list" var="listLink" >
 			<c:param name="pageNum" value='${cri.pageNum }'></c:param>
 			<c:param name="amount" value='${cri.amount }'></c:param>
 		</c:url>
-		<a class="btn btn-outline-primary" href="${listLink }"
-			role="button">목록</a>
+		<a type="button" href="${listLink }" class="btn btn-outline-success" role="button">목록</a>
+		<!-- 작성자와 authentication.name이 같아야 수정버튼 보여주기 -->
+		<sec:authentication property="name" var="userIdValue" />
+		
+		<c:if test="${board.member_userId == userIdValue}" >
+			<c:url value="/academy/modify" var="modifyLink">
+				<c:param name="ab_number" value="${board.ab_number }"></c:param>
+			</c:url>
+			<a class="btn btn-outline-success modifyBtn" href="${modifyLink }">수정</a>
+		</c:if>
 	</div>
+	
+
+	<div class="post_wrap">
+		<div class="post_top">
+			<p class="top_category">${board.ab_category }</p>
+			<p class="top_title">${board.ab_title }</p>
+			<ul>
+				<li class="top_nickName">${board.nickName }</li>
+				<li class="top_insertDatetime">${board.ab_insertDatetime }</li>
+				<li class="top_likeCount">좋아요 ${board.countLike }</li>
+				<li class="top_insertDatetime">조회 ${board.ab_viewCount }</li>
+			</ul>
+		</div>
+		<div id="summernote" class="top_content">${board.ab_content }</div>
+		
+	<!-- 좋아요 -->
+		<div class="likeBox">
+			<p 
+				<sec:authorize access="not isAuthenticated()">
+					style="pointer-events: none;"
+				</sec:authorize>		
+			id="likeButton" class="likeIcon">
+								
+				<c:if test="${board.liked }">
+					<i class="fa-solid fa-heart"></i>
+				</c:if>
+				<c:if test="${not board.liked }">
+				<i class="fa-regular fa-heart"></i>
+				</c:if>					
+			</p>
+	<!-- 파일 -->
+		<c:set var="ctx" value="${pageContext.request.contextPath}" />;
+		<div>
+			<c:forEach items="${board.ab_fileName }" var="fileName">
+				<div>
+					<i class="fa-solid fa-paperclip"></i>
+					<a href="${ctx }/academy/download/${board.ab_number}/${fileName}">
+					<c:out value="${fileName.substring(36)}" /></a>
+					
+					<br>
+				</div>
+			</c:forEach>
+		</div>
+			<p class="likeCount1">좋아요</p>
+			<p id="likeCount" class="likeCount2">${board.countLike }</p>
+		</div>
+		
+		<hr />
+
 
 
 	<!-- 댓글 창 -->

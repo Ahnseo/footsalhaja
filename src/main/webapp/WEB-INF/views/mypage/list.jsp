@@ -69,11 +69,18 @@ li {
 		<div id="userTitle">
 			<h3>${myInfo.userId}님의 마이페이지</h3>
 		</div>
-		<div>
-			<c:url value="/mypage/get" var="myInfoGetLink">
-				<c:param name="userId" value="${myInfo.userId}"/>
-			</c:url>
-				<a href="${myInfoGetLink}"><button type="button" class="btn btn-outline-success">회원정보 확인</button></a>
+		<div style="text-align : center;">
+			<c:forEach items="${member.profileImg }" var="name">
+				<object data="${pageContext.request.contextPath}/기본프로필.png" type="image/png">
+					<img src="${pageContext.request.contextPath}/user_profile/${member.userId }/${name}">
+				</object>
+			</c:forEach>		
+			<div>
+				<c:url value="/mypage/get" var="myInfoGetLink">
+					<c:param name="userId" value="${myInfo.userId}"/>
+				</c:url>
+					<a href="${myInfoGetLink}"><button type="button" class="btn btn-outline-success">회원정보 확인</button></a>
+			</div>
 		</div>
 
 <div class = "list">
