@@ -1,15 +1,24 @@
 package com.footsalhaja.controller.member;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.footsalhaja.domain.academy.AcademyReplyDto;
@@ -46,14 +55,20 @@ public class MypageContorller {
 		//form post로 무엇을 할까 ?
 	}
 	
-	@GetMapping({"get", "modify"})
-	public void myGetAndModify(@RequestParam(name="userId") String userId, Model model){
+	@GetMapping(value ={"get", "modify", "/{profileImg}"}, produces = MediaType.IMAGE_JPEG_VALUE)
+	public ResponseEntity<byte[]> myGetAndModify(@PathVariable("profileImg") String profileImg, @RequestParam(name="userId") String userId, Model model) throws Exception {
+		//프로필 이미지 보이기
+		InputStream imageStream = new FileInputStream("C:\\Users\\lnh1017\\Desktop\\study\\project\\footsalhaja\\user_profile\\"+ userId +"\\" +profileImg);
+		byte[] imageByteArray = IOUtils.toByteArray(imageStream);
+		imageStream.close();
+		
+		
 		//RequestParam 으로 member/get?userId= 아이디값 가져와서 db 요청 -> MemberDto 타입 member ->  addAttribute "member" 넣음 . 
 		//System.out.println(userId);
 		MemberDto memberInfoByUserId = (MemberDto) memberService.selectMemberInfoByUserId(userId).get(0);
-		System.out.println(memberInfoByUserId);
+		System.out.println("멤버인포"+memberInfoByUserId);
 		model.addAttribute("member", memberInfoByUserId);
-		
+		return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
 	}
 	
 	//회원정보 수정

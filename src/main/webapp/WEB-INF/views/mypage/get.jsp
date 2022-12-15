@@ -48,14 +48,16 @@
 					</c:url>
 					
 					<form action="${modifyLink}" method="get" id="contactForm" data-sb-form-api-token="API_TOKEN" enctype="multipart/form-data">
-							<%-- 이미지 출력 --%>
+							<%-- 프로필 이미지 출력 --%>
 							<div>
-								<c:forEach items="${member.profileImg }" var="name">
-									<div>
-										<img src="/image/${member.userId }/${name}" alt="">
-									</div>
-								</c:forEach>		
+						<c:forEach items="${member.profileImg }" var="name">
+							<div>
+							<object data="/footsalhaja/user_profile/기본프로필.png" type="image/png">
+								<img src="/footsalhaja/user_profile/${member.userId }/${name}">
+							</object>
 							</div>
+						</c:forEach>		
+							</div>	
 							
 							<!-- ID -->
 							<div class="form-floating mb-3">
@@ -93,14 +95,6 @@
 									data-sb-validations="required" readonly/> <label for="nickName">닉네임</label>
 							</div>
 
-							<!-- 개인ID/팀ID -->
-							<div class="form-floating mb-3">
-								<input class="form-control" id="permission" type="text"
-									name="permission" value="${member.permission}"
-									data-sb-validations="required" readonly /> <label
-									for="permission">개인ID/팀ID</label>
-							</div>
-
 							<!-- 이메일 -->
 							<div class="form-floating mb-3">
 								<input class="form-control" id="email" type="email" name="email"
@@ -108,26 +102,42 @@
 								<label for="email">메일주소</label>
 							</div>
 
-							<div class="form-floating mb-3">
+						<!-- 회원권한 -->
+						<input type="hidden" name="auth" value="${member.auth}" readonly>
+						<div class="form-floating mb-3">
+							<c:if test="${member.auth.get(0) eq 'user'}">
 								<input class="form-control" id="permission" type="text"
-									name="permission" value="${member.permission}"
-									data-sb-validations="required" readonly /> <label
-									for="permission">개인ID/팀ID</label>
-							</div>
-							<div class="form-floating mb-3">
-								<input class="form-control" type="text" name="birthYY"
-									value="${member.birthYY}" readonly /> <label for="birthYY">년</label>
-							</div>
-							<div class="form-floating mb-3">
-								<input class="form-control" type="text" name="birthMM"
-									value="${member.birthMM}" readonly /> <label for="birthMM">월</label>
-							</div>
-							<div class="form-floating mb-3">
-								<input class="form-control" type="text" name="birthDD"
-									value="${member.birthDD}" readonly /> <label for="birthDD">일</label>
-							</div>
+									name="permission" value="일반회원" data-sb-validations="required"
+									readonly />
+							</c:if>
+							<c:if test="${member.auth.get(0) eq 'manager'}">
+								<input class="form-control" id="permission" type="text"
+									name="permission" value="매니저" data-sb-validations="required"
+									readonly />
+							</c:if>
+							<c:if test="${member.auth.get(0) eq 'admin'}">
+								<input class="form-control" id="permission" type="text"
+									name="permission" value="관리자" data-sb-validations="required"
+									readonly />
+							</c:if>
+							<label for="permission">회원권한</label>
+						</div>
+						<!-- 생년월일 -->
+						<div class="form-floating mb-3">
+							<c:if test="${member.birthMM < 10}">
+								<c:set var="zeroMM" value="0" />
+							</c:if>
+							<c:if test="${member.birthDD < 10}">
+								<c:set var="zeroDD" value="0" />
+							</c:if>
 
-							<div class="form-floating mb-3">
+							<input class="form-control" type="text" id="birthYYMMDD"
+								name="birthYY"
+								value="${member.birthYY}${zeroMM}${member.birthMM}${zeroDD}${member.birthDD}"
+								readonly /> <label for="birthYYMMDD">생년월일</label>
+						</div>
+
+						<div class="form-floating mb-3">
 								<input class="form-control" type="text" name="activityArea"
 									value="${member.activityArea}" readonly /> <label
 									for="activityArea">활동지역</label>

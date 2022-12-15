@@ -116,6 +116,7 @@
  		<result column="activityArea" property="activityArea" />
  		<result column="phone" property="phone" />
  		<result column="personalGender" property="personalGender" />
+ 		<result column="profileImg" property="profileImg" />
  		<collection ofType="string" property="auth">
  			<result column="auth" property="auth"/>
  		</collection>
