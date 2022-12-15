@@ -137,7 +137,14 @@ li {
 #listBox .table .listTitle {
 	text-align: left;
 }
+#listBox .table .trtr {
+	cursor: pointer;
+}
 
+#listBox .table .trtr:hover .listTitle {
+ 	font-weight: bold;
+ }
+ 
 #listBox .table tr td {
 	height: 60px;
 	vertical-align: middle;
@@ -149,10 +156,6 @@ li {
  	padding: 15px;
  }
  
- #listBox .table tr td a:hover {
- 	text-decoration: underline;
- 	font-weight: bold;
- }
 
 /* 검색 페이징 글작성버튼 */
 #bottomBox{
@@ -285,13 +288,13 @@ li {
 		</thead>
 		<tbody>
 			<c:forEach items="${boardList }" var="board">
-				<tr>
+				<c:url value="/free/get" var="getLink">
+					<c:param name="number" value="${board.fb_number }"></c:param>
+				</c:url>
+				<tr onclick="location.href='${getLink}'" class="trtr">
 					<td>${board.fb_number }</td>
 					<td>${board.fb_category }</td>
 					<td class="listTitle col-sm-6">
-						<c:url value="/free/get" var="getLink">
-							<c:param name="number" value="${board.fb_number }"></c:param>
-						</c:url>
 						<a href="${getLink}">
 							${board.fb_title }
 						</a>
