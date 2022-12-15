@@ -131,14 +131,11 @@ public class AcademyServiceImpl implements AcademyService{
 		File[] listFiles = folder.listFiles();
 
 		if (listFiles != null) {
-				for (File file : listFiles) {
-					file.delete();
-				}
+			for (File file : listFiles) {
+				file.delete();
 			}
-		
-		for (File file: listFiles) {
-			file.delete();
 		}
+		
 		folder.delete();
 		
 		//파일 지우기

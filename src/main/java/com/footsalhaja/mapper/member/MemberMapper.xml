@@ -144,7 +144,7 @@
 		FROM member m LEFT JOIN academyBoard a ON m.userId = a.member_userId
 	    WHERE m.userId = #{userId}
 	    ORDER BY a.ab_number DESC
- 	
+ 		LIMIT #{offset}, #{records}
  	</select>
  	
  	<resultMap type="com.footsalhaja.domain.member.MemberDto" id="userAbMap">
@@ -161,6 +161,11 @@
 		<result column="ab_viewCount" property="ab_viewCount"/>
  	</resultMap>
  	
+ 	<select id="countAllAblist" resultType="int">
+		SELECT Count(*)
+		FROM member m LEFT JOIN academyBoard a ON m.userId = a.member_userId 
+		WHERE m.userId = #{userId}
+	</select>
  	
  	 <!-- 내글 보기(자유 게시판) -->
  	<select id="getUserFbList" resultMap="userFbMap">
@@ -175,7 +180,7 @@
 		FROM member m LEFT JOIN freeBoard f ON m.userId = f.member_userId
 	    WHERE m.userId = #{userId}
 	    ORDER BY f.fb_number DESC
- 	
+ 		LIMIT #{offset}, #{records}
  	</select>
  	
  	<resultMap type="com.footsalhaja.domain.member.MemberDto" id="userFbMap">
@@ -192,6 +197,60 @@
 		<result column="fb_viewCount" property="fb_viewCount"/>
  	</resultMap>
  	
+ 	<select id="countAllFblist" resultType="int">
+		SELECT Count(*)
+		FROM member m LEFT JOIN freeBoard f ON m.userId = f.member_userId 
+		WHERE m.userId = #{userId}
+	</select>
+ 	
+ 	<!-- 내글 보기 (메인) -->
+ 	<select id="getUserMainList" resultMap="userMainMap">
+ 		SELECT
+	 		m.userId,
+			m.nickName,
+	        b.bookId,
+	        b.title,
+	        b.matchType,
+            b.level,
+            b.status,
+            b.bookDate,
+            b.bookTime,
+            b.teamGender,
+	        b.location_locationId,
+	        l.stadiumName
+		FROM member m LEFT JOIN book b ON m.userId = b.member_userId
+						LEFT JOIN location l ON b.location_locationId = l.locationId
+	    WHERE m.userId = #{userId}
+	    ORDER BY b.bookId DESC
+ 		LIMIT #{offset}, #{records}
+ 	</select>
+ 	
+ 	<resultMap type="com.footsalhaja.domain.member.MemberDto" id="userMainMap">
+ 		<id column="userId" property="userId"></id>
+ 		<result column="nickName" property="nickName" />
+ 		<collection property="userMainList" resultMap="userMainList"></collection>
+ 	</resultMap>
+ 	
+ 	<resultMap type="com.footsalhaja.domain.main.BookDto" id="userMainList">
+ 		<result column="bookId" property="bookId" />
+		<result column="title" property="title"/>
+ 		<result column="matchType" property="matchType"/>
+		<result column="level" property="level"/>
+		<result column="status" property="status"/>
+		<result column="bookDate" property="bookDate"/>
+		<result column="bookTime" property="bookTime"/>
+		<result column="teamGender" property="teamGender"/>
+		<result column="stadiumName" property="stadiumName"/>
+		
+ 	</resultMap>
+ 	
+ 	 <select id="countAllMainlist" resultType="int">
+		SELECT Count(*)
+		FROM member m LEFT JOIN book b ON m.userId = b.member_userId
+						LEFT JOIN location l ON b.location_locationId = l.locationId
+		WHERE m.userId = #{userId}
+	</select>
+ 
  	<!-- 내가 쓴 댓글보기 (자유게시판)-->
  	<select id="getUserFbReplyList" resultMap="userFbReplyMap">
 	 	SELECT 
@@ -239,6 +298,31 @@
  		<result column="academyBoard_ab_number" property="ab_number"/>
 		<result column="ab_replyInsertDatetime" property="ab_replyInsertDatetime"/>
  	</resultMap>
+ 	
+ 	<!-- 내가 쓴 댓글보기 (예약) -->
+ 	 	 <select id="getUserMainReplyList" resultMap="userMainReplyMap">
+	 	SELECT 
+			m.userId,
+		    m.nickName,
+		    br.book_bookId,
+			br.replyContent,
+		    br.insertDatetime
+		FROM member m LEFT JOIN bookReply br ON m.userId = br.member_userId
+		WHERE m.userId = #{userId}
+ 	</select>
+ 	
+ 	 <resultMap type="com.footsalhaja.domain.member.MemberDto" id="userMainReplyMap">
+ 		<id column="userId" property="userId"></id>
+ 		<result column="nickName" property="nickName" />
+ 		<collection property="userMainReplyList" resultMap="userMainReplyList"></collection>
+ 	</resultMap>
+ 	
+ 	 <resultMap type="com.footsalhaja.domain.main.ReplyDto" id="userMainReplyList">
+ 		<result column="book_bookId" property="book_bookId"/>
+ 		<result column="replyContent" property="replyContent"/>
+		<result column="insertDatetime" property="insertDatetime"/>
+ 	</resultMap>
+ 	
  	
  	<!-- 내가 좋아요한 글 목록 -->
  	<select id="getUserAbLikeList" resultMap="userAbLikeMap">

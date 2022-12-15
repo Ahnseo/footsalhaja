@@ -21,48 +21,91 @@
 	<div class="row">
 		<div class="col">
 			<h3>${userId}님이 작성한 댓글목록 입니다.</h3>
-			<table class="table">
-				<thead>		
-					<th>아카데미 게시판 댓글내용</th>
-					<th>아카데미 게시판 댓글 작성날짜</th>
-				</thead>
-				<tbody>
-					<c:forEach items="${userAbReplyList}" var="replyAbList">
-						<tr>	
- 						 	<td>
-								<c:url value="/academy/get" var="getLink">
-									<c:param name="ab_number" value="${replyAbList.ab_number}"></c:param>
-								</c:url> 
-								<a class='move' href="${getLink }">${replyAbList.ab_replyContent} </a>
-							</td> 
-						 	<td>${replyAbList.ab_replyInsertDatetime}</td>					 	
-					</c:forEach>
-				</tbody>
-			</table>
-			<table class="table">
-				<thead>	
-					<th>자유게시판 댓글내용</th>
-					<th>자유게시판 댓글 작성날짜</th>
-				</thead>
-				<tbody>
-					<c:forEach items="${userFbReplyList}" var="replyFbList">
-						<tr>
- 						 	<td>
-								<c:url value="/free/get" var="getLink">
-									<c:param name="number" value="${replyFbList.freeBoard_fb_number}"></c:param>
-								</c:url> 
-								<a class='move' href="${getLink }">${replyFbList.fb_replyContent} </a>
-							</td> 
-						 	<td>${replyFbList.fb_insertDatetime}</td>					 	
-					 	</tr>
-					</c:forEach>
-				</tbody>
-			</table>
+				<a class ="btn btn-default" href="#Main">예약</a>
+				<a class ="btn btn-default" href="#academy">아카데미</a>
+				<a class ="btn btn-default" href="#freeBoard">자유게시판</a>
+				
+				<div id="Main">
+				<table class="table">
+					<thead>	
+						<th>예약게시판 댓글내용</th>
+						<th>예약게시판 댓글 작성날짜</th>
+					</thead>
+					<tbody>
+						<c:forEach items="${userMainReplyList}" var="replyMainList">
+							<tr>
+	 						 	<td>
+									<c:url value="/main/get" var="getLink">
+										<c:param name="bookId" value="${replyMainList.book_bookId}"></c:param>
+									</c:url> 
+									<a class='move' href="${getLink }">${replyMainList.replyContent} </a>
+								</td> 
+							 	<td>${replyMainList.insertDatetime}</td>					 	
+						 	</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+				
+				<div id="academy">
+						<table class="table">
+						<thead>		
+							<th>아카데미 게시판 댓글내용</th>
+							<th>아카데미 게시판 댓글 작성날짜</th>
+						</thead>
+						<tbody>
+							<c:forEach items="${userAbReplyList}" var="replyAbList">
+								<tr>	
+		 						 	<td>
+										<c:url value="/academy/get" var="getLink">
+											<c:param name="ab_number" value="${replyAbList.ab_number}"></c:param>
+										</c:url> 
+										<a class='move' href="${getLink }">${replyAbList.ab_replyContent} </a>
+									</td> 
+								 	<td>${replyAbList.ab_replyInsertDatetime}</td>					 	
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
+			<div id="freeBoard">
+				<table class="table">
+					<thead>	
+						<th>자유게시판 댓글내용</th>
+						<th>자유게시판 댓글 작성날짜</th>
+					</thead>
+					<tbody>
+						<c:forEach items="${userFbReplyList}" var="replyFbList">
+							<tr>
+	 						 	<td>
+									<c:url value="/free/get" var="getLink">
+										<c:param name="number" value="${replyFbList.freeBoard_fb_number}"></c:param>
+									</c:url> 
+									<a class='move' href="${getLink }">${replyFbList.fb_replyContent} </a>
+								</td> 
+							 	<td>${replyFbList.fb_insertDatetime}</td>					 	
+						 	</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			
+			</div>	
+
 		</div>
 	</div>
 </div>
 		
 		
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+		<script type="text/javascript">
+			$(".btn btn-default").click(function(event){
+				event.preventDefault();
+				x = $(this).attr("href");
+				$("html, body").stop().animate({ scrollTop : $(x).offset().top}, 1000, "easeInOutExpo");
+			});
+		
+		
+		</script>
+
+
+
 </body>
 </html>

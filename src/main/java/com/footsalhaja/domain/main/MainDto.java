@@ -21,12 +21,9 @@ public class MainDto {
 	private int region;
 	private String teamGender;
 
+	private int locationId;
 
-	
-
-	private String location;
-
-	private String location_locationId;
+	private int location_locationId;
 	private String userId;
 	private String member_userId;
 	private String nickName; 

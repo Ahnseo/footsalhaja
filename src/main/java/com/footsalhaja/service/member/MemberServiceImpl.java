@@ -87,13 +87,113 @@ public class MemberServiceImpl implements MemberService {
 	
 	//내글 보기 (아카데미 게시판)
 	@Override
-	public MemberDto getUserAbList(String userId) {
-		return memberMapper.getUserAbList(userId);
+	public MemberDto getUserAbList(String userId, int page, MemberPageInfo pageInfo) {
+		
+		int records = 10;
+		int offset = (page - 1) * records;
+		
+		int countAll = memberMapper.countAllAblist(userId);
+
+		int lastPage = (countAll - 1) / records + 1; // 마지막 페이지
+		
+		// 5페이지씩 보이게
+		int leftPageNumber = (page - 1) / 5 * 5 + 1;
+		int rightPageNumber = leftPageNumber + 4;
+		rightPageNumber = Math.min(rightPageNumber, lastPage);
+		
+		// 이전 버튼 유무
+		boolean hasPrevButton = page > 5;
+		// 다음 버튼 유무
+		boolean hasNextButton = page <= ((lastPage - 1) / 5 * 5);
+		
+		// 이전버튼 눌렀을 때 가는 페이지 번호
+		int jumpPrevPageNumber = (page - 1) / 5 * 5 - 4;
+		// 다음버튼 눌렀을 때 가는 페이지 번호
+		int jumpNextPageNumber = (page - 1) / 5 * 5 + 6; 
+		
+		pageInfo.setHasPrevButton(hasPrevButton);
+		pageInfo.setHasNextButton(hasNextButton);
+		pageInfo.setJumpPrevPageNumber(jumpPrevPageNumber);
+		pageInfo.setJumpNextPageNumber(jumpNextPageNumber);
+		pageInfo.setCurrentPageNumber(page);
+		pageInfo.setLeftPageNumber(leftPageNumber);
+		pageInfo.setRightPageNumber(rightPageNumber);
+		pageInfo.setLastPageNumber(lastPage);
+		
+		return memberMapper.getUserAbList(userId, offset, records);
 	}
 	//내글 보기 (자유 게시판)
 	@Override
-	public MemberDto getUserFbList(String userId) {
-		return memberMapper.getUserFbList(userId);
+	public MemberDto getUserFbList(String userId, int page, MemberPageInfo pageInfo) {
+		int records = 10;
+		int offset = (page - 1) * records;
+		
+		int countAll = memberMapper.countAllFblist(userId);
+
+		int lastPage = (countAll - 1) / records + 1; // 마지막 페이지
+		
+		// 5페이지씩 보이게
+		int leftPageNumber = (page - 1) / 5 * 5 + 1;
+		int rightPageNumber = leftPageNumber + 4;
+		rightPageNumber = Math.min(rightPageNumber, lastPage);
+		
+		// 이전 버튼 유무
+		boolean hasPrevButton = page > 5;
+		// 다음 버튼 유무
+		boolean hasNextButton = page <= ((lastPage - 1) / 5 * 5);
+		
+		// 이전버튼 눌렀을 때 가는 페이지 번호
+		int jumpPrevPageNumber = (page - 1) / 5 * 5 - 4;
+		// 다음버튼 눌렀을 때 가는 페이지 번호
+		int jumpNextPageNumber = (page - 1) / 5 * 5 + 6; 
+		
+		pageInfo.setHasPrevButton(hasPrevButton);
+		pageInfo.setHasNextButton(hasNextButton);
+		pageInfo.setJumpPrevPageNumber(jumpPrevPageNumber);
+		pageInfo.setJumpNextPageNumber(jumpNextPageNumber);
+		pageInfo.setCurrentPageNumber(page);
+		pageInfo.setLeftPageNumber(leftPageNumber);
+		pageInfo.setRightPageNumber(rightPageNumber);
+		pageInfo.setLastPageNumber(lastPage);
+		
+		return memberMapper.getUserFbList(userId, offset, records);
+	}
+	
+	//내글 보기 (메인)
+	@Override
+	public MemberDto getUserMainList(String userId, int page, MemberPageInfo pageInfo) {
+		int records = 10;
+		int offset = (page - 1) * records;
+		
+		int countAll = memberMapper.countAllMainlist(userId);
+
+		int lastPage = (countAll - 1) / records + 1; // 마지막 페이지
+		
+		// 5페이지씩 보이게
+		int leftPageNumber = (page - 1) / 5 * 5 + 1;
+		int rightPageNumber = leftPageNumber + 4;
+		rightPageNumber = Math.min(rightPageNumber, lastPage);
+		
+		// 이전 버튼 유무
+		boolean hasPrevButton = page > 5;
+		// 다음 버튼 유무
+		boolean hasNextButton = page <= ((lastPage - 1) / 5 * 5);
+		
+		// 이전버튼 눌렀을 때 가는 페이지 번호
+		int jumpPrevPageNumber = (page - 1) / 5 * 5 - 4;
+		// 다음버튼 눌렀을 때 가는 페이지 번호
+		int jumpNextPageNumber = (page - 1) / 5 * 5 + 6; 
+		
+		pageInfo.setHasPrevButton(hasPrevButton);
+		pageInfo.setHasNextButton(hasNextButton);
+		pageInfo.setJumpPrevPageNumber(jumpPrevPageNumber);
+		pageInfo.setJumpNextPageNumber(jumpNextPageNumber);
+		pageInfo.setCurrentPageNumber(page);
+		pageInfo.setLeftPageNumber(leftPageNumber);
+		pageInfo.setRightPageNumber(rightPageNumber);
+		pageInfo.setLastPageNumber(lastPage);
+		
+		return memberMapper.getUserMainList(userId, offset, records);
 	}
 	
 	//내가 쓴 댓글 보기
@@ -102,10 +202,12 @@ public class MemberServiceImpl implements MemberService {
 		List<MemberDto> list = new ArrayList<>();
 		MemberDto userAbReplyList = memberMapper.getUserAbReplyList(userId);
 		MemberDto userFbReplyList = memberMapper.getUserFbReplyList(userId);
+		MemberDto userMainReplyList = memberMapper.getUserMainReplyList(userId);
 		
 		list.add(userAbReplyList); 
 		list.add(userFbReplyList);
-
+		list.add(userMainReplyList);
+		
 		return list;
 	}
 	
@@ -121,5 +223,6 @@ public class MemberServiceImpl implements MemberService {
 		
 		return list;
 	}
+	
 	
 }

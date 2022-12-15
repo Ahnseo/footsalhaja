@@ -96,7 +96,7 @@
 		</trim>
 	</sql>
 	
-	<!-- 페이지네이션 & 검색 -->
+	<!-- 페이지네이션 & 검색  & 카테고리 필터링-->
 	<select id="getListWithPaging" resultType="com.footsalhaja.domain.academy.BoardDto">
 	SELECT 		
 		b.ab_number,
@@ -117,21 +117,19 @@
 						LEFT JOIN member m ON b.member_userId = m.userId
 	
 	WHERE 1=1
+	<!-- 검색조건 -->
 	 <if test="cri.type!=null and cri.type!=''">
-	 <![CDATA[
-
-	]]>
-	<include refid="criteria"></include>
+		<include refid="criteria"></include>
 	</if>
+	<!-- 카테고리 필터링 -->
 	<if test ="category !=null and category != ''">
 		AND b.ab_category = #{category}
 	</if>
 	
-	<![CDATA[
 	GROUP BY b.ab_number
 	ORDER BY b.ab_number DESC
 	LIMIT #{offset}, #{records}
- 	]]> 
+	
 	</select>
 	
 	

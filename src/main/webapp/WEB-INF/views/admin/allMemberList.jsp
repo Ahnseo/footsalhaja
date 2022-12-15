@@ -38,17 +38,19 @@
 		<div class="col">		
 			<table class="table">
 				<thead>
-					<th>#</th>
-					<th>userId</th>
-					<th>Password</th>
-					<th>성별</th>
-					<th>이름</th>
-					<th>닉네임</th>
-					<th>Email</th>
-					<th>생년월일</th>
-					<th>활동지역</th>
-					<th>전화번호</th>
-					<th>회원권한</th>
+					<tr>
+						<th>#</th>
+						<th>userId</th>
+						<th>Password</th>
+						<th>성별</th>
+						<th>이름</th>
+						<th>닉네임</th>
+						<th>Email</th>
+						<th>생년월일</th>
+						<th>활동지역</th>
+						<th>전화번호</th>
+						<th>회원권한</th>
+					</tr>
 				</thead>
 				<tbody>
 					 <c:forEach items="${allMemberList}" var="member" varStatus="st">

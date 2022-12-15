@@ -20,9 +20,10 @@ public class FreeReplyDto {
 	private String nickName;
 	
 	private boolean editable; // 로그인한 아이디가 댓글작성자인지
+	private int p_num; // 부모댓글번호
 	
 	@JsonFormat(shape = Shape.STRING)
-	private LocalDateTime fb_inserDatetime; //댓글작성시간
+	private LocalDateTime fb_insertDatetime; //댓글작성시간
 	
 	// 댓글 입력시간 변경
 	public String getAgo() {
@@ -34,22 +35,22 @@ public class FreeReplyDto {
 		
 		// 댓글작성시간과 현재시간이
 		// 하루 차이일 경우 시간출력
-		if(oneDayBefore.isBefore(fb_inserDatetime)) {
-			result = fb_inserDatetime.toLocalTime().toString();
+		if(oneDayBefore.isBefore(fb_insertDatetime)) {
+			result = fb_insertDatetime.toLocalTime().toString();
 			
 		// 1달 이내면 n일전
-		} else if (oneMonthBefore.isBefore(fb_inserDatetime)){
-			result = Period.between(fb_inserDatetime.toLocalDate(), now.toLocalDate())
+		} else if (oneMonthBefore.isBefore(fb_insertDatetime)){
+			result = Period.between(fb_insertDatetime.toLocalDate(), now.toLocalDate())
 					.getDays() + "일 전";
 			
 		// 1년 이내면 n달전
-		}else if (oneYearBefore.isBefore(fb_inserDatetime)){
-			result = Period.between(fb_inserDatetime.toLocalDate(), now.toLocalDate())
+		}else if (oneYearBefore.isBefore(fb_insertDatetime)){
+			result = Period.between(fb_insertDatetime.toLocalDate(), now.toLocalDate())
 					.get(ChronoUnit.MONTHS) + "달 전";
 			
 		// n년전
 		}else {
-			result = Period.between(fb_inserDatetime.toLocalDate(), now.toLocalDate())
+			result = Period.between(fb_insertDatetime.toLocalDate(), now.toLocalDate())
 					.getYears() + "년 전";
 		}
 		

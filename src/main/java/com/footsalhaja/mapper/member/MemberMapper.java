@@ -31,16 +31,24 @@ public interface MemberMapper {
 	public int selectAllMemberCount(String type, String keyword);
 	
 	//내글보기(아카데미 게시판)
-	public MemberDto getUserAbList(String userId);
+	public MemberDto getUserAbList(String userId, int offset, int records);
+	public int countAllAblist(String userId);
 	
 	//내글보기(자유 게시판)
-	public MemberDto getUserFbList(String userId);
+	public MemberDto getUserFbList(String userId, int offset, int records);
+	public int countAllFblist(String userId);
+	
+	//내글 보기(메인)
+	public MemberDto getUserMainList(String userId, int offset, int records);
+	public int countAllMainlist(String userId);
 	
 	//내 댓글보기
 	public MemberDto getUserFbReplyList(String userId);
 	public MemberDto getUserAbReplyList(String userId);
+	public MemberDto getUserMainReplyList(String userId);
 	
 	//내가 좋아요한 글 보기
 	public MemberDto getUserAbLikeList(String userId);
 	public MemberDto getUserFbLikeList(String userId);
+
 }

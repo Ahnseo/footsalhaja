@@ -87,7 +87,6 @@
 			    <li><a class="dropdown-item" href="${dashboardLink }">대시보드</a></li>
 			    <li><a class="dropdown-item" href="${allMemberListLink }">회원관리</a></li>
 			    <li><a class="dropdown-item" href="${allBookListLink }">예약정보</a></li>
-			    <li><a class="dropdown-item" href="${stadiumManagementLink }">시설관리</a></li>
 			    <li><a class="dropdown-item" href="${allQnAListLink }">전체문의</a></li>
 		    </ul>
 	    </li>

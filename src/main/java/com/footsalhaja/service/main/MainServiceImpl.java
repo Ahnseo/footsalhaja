@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.footsalhaja.domain.main.BookDto;
 import com.footsalhaja.domain.main.MainDto;
+import com.footsalhaja.mapper.admin.AdminMapper;
 import com.footsalhaja.mapper.main.MainMapper;
 import com.footsalhaja.mapper.main.ReplyMapper;
 
@@ -25,6 +25,9 @@ public class MainServiceImpl implements MainService {
 	
 	@Autowired
 	private ReplyMapper replyMapper;
+	
+	@Autowired
+	private AdminMapper adminMapper;
 	
 	@Override
 	public int insert(MainDto book) {
@@ -68,6 +71,12 @@ public class MainServiceImpl implements MainService {
 		replyMapper.deleteByBookId(bookId);
 		
 		return bookMapper.delete(bookId);
+		
+	}
+
+
+	public int insertVisitCount() {
+		return adminMapper.insertVisitCount();
 		
 	}
 

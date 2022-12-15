@@ -18,9 +18,11 @@ public interface MemberService {
 
 	int updateMemberInfoByUserId(MemberDto memberModifiedValues);
 	
-	MemberDto getUserAbList(String userId);
+	MemberDto getUserAbList(String userId, int page, MemberPageInfo pageInfo);
 	
-	MemberDto getUserFbList(String userId);
+	MemberDto getUserFbList(String userId, int page, MemberPageInfo pageInfo);
+	
+	MemberDto getUserMainList(String userId, int page, MemberPageInfo pageInfo);
 	
 	List<MemberDto> getUserReplyList(String userId);
 	

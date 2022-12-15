@@ -20,6 +20,49 @@
 <div class="container">
 	<div class="row">
 		<div class="col">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>번호</th>
+						<th>제목</th>
+						<th>예약날짜</th>
+						<th>예약시간</th>
+						<th>구장</th>
+						<th>매치타입</th>
+						<th>Level</th>
+						<th>성별</th>
+						<th>작성자</th>
+						<th>모집상태</th>
+					</tr>
+				</thead>
+				<tbody>
+					 <c:forEach items="${allBookedList}" var="booked"  >
+						<tr>
+						 	<td>${booked.bookId}</td>
+						 	<c:url value="/main/get" var="getBookedLink">
+						 		
+						 		<c:param name="bookId" value="${booked.bookId}"/>
+						 	</c:url>
+						 	<td><a href="${getBookedLink}">${booked.title}</a></td>
+						 	<td>${booked.bookDate}</td>
+						 	<td>${booked.bookTime}</td>
+						 	<td>${booked.stadiumName}</td>
+						 	<td>${booked.matchType}</td>
+						 	<td>${booked.level}</td>					 	
+						 	<td>${booked.teamGender}</td>
+						 	<td>${booked.userId}</td>
+						 	<td>
+							    <c:if test="${booked.status == 0}">  
+						        	<span class="badge bg-success rounded-pill">모집완료</span>   								        	
+						        </c:if>
+						        <c:if test="${booked.status == 1}">  
+						        	<span class="badge bg-danger rounded-pill">모집중</span>   								        	
+						        </c:if>
+					        </td>
+					 	</tr>
+				 	</c:forEach>
+				 </tbody>
+			</table>
 		</div>
 	</div>
 </div>

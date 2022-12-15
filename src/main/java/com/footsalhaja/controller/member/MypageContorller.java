@@ -14,7 +14,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.footsalhaja.domain.academy.AcademyReplyDto;
 import com.footsalhaja.domain.academy.BoardDto;
 import com.footsalhaja.domain.free.FreeReplyDto;
+import com.footsalhaja.domain.main.ReplyDto;
 import com.footsalhaja.domain.member.MemberDto;
+
+import com.footsalhaja.domain.member.MemberPageInfo;
+
 import com.footsalhaja.service.member.MemberService;
 
 @Controller
@@ -67,24 +71,35 @@ public class MypageContorller {
 	}
 	
 	@GetMapping("myAbDocumentList")
-	public void getMyAbDocumnetList(@RequestParam("userId") String userId, Model model) {
+	public void getMyAbDocumnetList(@RequestParam("userId") String userId, @RequestParam(name= "page", defaultValue = "1") int page,  MemberPageInfo pageInfo, Model model) {
 
-		MemberDto AbdoucumentListByUserId = memberService.getUserAbList(userId);
+		MemberDto AbdoucumentListByUserId = memberService.getUserAbList(userId,page,pageInfo);
 		System.out.println("아카데미 게시판에 작성한 글 리스트: " + AbdoucumentListByUserId);
-
-		model.addAttribute("list", AbdoucumentListByUserId);
 		
+		model.addAttribute("list", AbdoucumentListByUserId);
+		model.addAttribute("pageInfo", pageInfo);
 	}
 	
 	@GetMapping("myFbDocumentList")
-	public void getMyFbDocumnetList(@RequestParam("userId") String userId, Model model) {
+	public void getMyFbDocumnetList(@RequestParam("userId") String userId, @RequestParam(name= "page", defaultValue = "1") int page,  MemberPageInfo pageInfo, Model model) {
 
-		MemberDto FbdoucumentListByUserId = memberService.getUserFbList(userId);
+		MemberDto FbdoucumentListByUserId = memberService.getUserFbList(userId,page,pageInfo);
 		System.out.println("자유 게시판에 작성한 글 리스트: " + FbdoucumentListByUserId);
 
 		model.addAttribute("list", FbdoucumentListByUserId);
-		
+		model.addAttribute("pageInfo", pageInfo);
 	}
+	
+	@GetMapping("myMainDocumentList")
+	public void getMyMainDocumnetList(@RequestParam("userId") String userId, @RequestParam(name= "page", defaultValue = "1") int page,  MemberPageInfo pageInfo, Model model) {
+
+		MemberDto MaindoucumentListByUserId = memberService.getUserMainList(userId,page,pageInfo);
+		System.out.println("메인에 작성한 글 리스트: " + MaindoucumentListByUserId);
+
+		model.addAttribute("list", MaindoucumentListByUserId);
+		model.addAttribute("pageInfo", pageInfo);
+	}
+	
 	
 	@GetMapping("myReplyList")
 	public void getMyReplyList(@RequestParam("userId") String userId, Model model) {
@@ -96,17 +111,20 @@ public class MypageContorller {
 		
 		String userId1 = ReplylistByUserId.get(0).getUserId();
 		
-		System.out.println(userId1);
 		List<AcademyReplyDto> AbReply = ReplylistByUserId.get(0).getUserAbReplyList();
 		
 		System.out.println(AbReply);
 		List<FreeReplyDto> FbReply = ReplylistByUserId.get(1).getUserFbReplyList();
 		
 		System.out.println(FbReply);
+		
+		List<ReplyDto> MainReply = ReplylistByUserId.get(2).getUserMainReplyList();
+		
 		/* model.addAttribute("replyList", ReplylistByUserId); */
 		model.addAttribute("userId", userId1);
 		model.addAttribute("userAbReplyList", AbReply);
 		model.addAttribute("userFbReplyList", FbReply);
+		model.addAttribute("userMainReplyList",MainReply);
 		
 	}
 	
