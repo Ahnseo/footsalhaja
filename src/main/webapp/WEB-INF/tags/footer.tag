@@ -1,6 +1,26 @@
 <%@ tag language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%-- c커스텀 태그 사용하기 위해 --%>
 <%@ attribute name="active" required="false" %> <%-- narvar active 초기값 false --%>
+<style>
+ul{
+list-style: none;
+}
+#footerWhole {
+	position: relative;
+	display: flex;
+	padding: 20px;
+	color: 	#C0C0C0; 		
+}
+#footerWhole > a{
+	color: black; 
+}
+
+hr {
+    background:#F8F8F8;
+    height:2px;
+    border:0;
+}
+</style>
 <footer>
 
 	<hr>
@@ -54,5 +74,5 @@
 		    </ul>   
 	       </div>        
 	</div>
-</div> 	
+ 	
 </footer>
