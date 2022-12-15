@@ -46,7 +46,7 @@ ul {
 .post_wrap {
 	border: 1px solid #ced4da;
 	border-radius: 10px;
-	margin: 0 0 30px 0;
+	margin-bottom: 10px;
 }
 /* 상단 버튼부분 */
 .topbtnBox {
@@ -54,10 +54,14 @@ ul {
 	position: relative;
 }
 .topbtnBox .modifyBtn {
-	text-align: right;
 	position: absolute;
 	top: 0;
 	right: 0;
+}
+.topbtnBox .removeBtn {
+	position: absolute;
+	top: 0;
+	right: 60px;
 }
 /* 상단 제목부분 */
 .post_top {
@@ -93,6 +97,9 @@ ul {
 .post_wrap .likeBox {
 	text-align: center;
 }
+.post_wrap .likeBox i {
+	color: #1cb99e;
+}
 .likeBox .likeIcon {
 	font-size: 26px;
 	color: green;
@@ -107,7 +114,74 @@ ul {
 	margin-top: -15px;
 	font-weight: bold;
 	color: #333;
-	
+}
+/* 댓글 */
+.replyBox  {
+	border: 1px solid #ced4da;
+	border-radius: 10px;
+	margin-bottom: 30px;
+	height: 130px;
+	position: relative;
+}
+.replyBox .row {
+	padding-left: 30px;	
+}
+.replyBox .replyContentInput {
+	border: 0;
+	height: 80px;
+	margin-top: 10px;
+	padding-left: 20px;
+}
+.replyBox .replyBnt {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+}
+.notLogin {
+	text-align: center;
+	margin-top: 55px;
+}
+/* 댓글 리스트 */
+.reply_list {
+	margin-bottom: 10px; 
+	padding: 0 20px;
+}
+.reply_list span {
+	height: 1px;
+	background: #ced4da;
+	margin-bottom: 20px; 
+}
+.reply_list .replylist_top {
+	text-align: left;
+	position: relative;
+}
+.reply_list .replylist_top p {
+	display: inline-block;
+	font-size: 14px;
+}
+.reply_list .replylist_top .ago {
+	display: inline-block;
+	font-size: 12px;
+	color: #666;
+	margin-left: 10px;
+}
+.reply_list .replylist_top .btn {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+.reply_list .replylist_top .b1 {
+	position: absolute;
+	top: 0;
+	right: 45px;
+}
+/* 파일 */
+.fileBox {
+	margin-top: 100px;
+	margin-left: 40px;
+}
+.fileBox a {
+	color: #666;
 }
 </style>
 </head>
@@ -123,12 +197,13 @@ ul {
 	<!-- 전체글/수정버튼 -->
 	
 	
+	<!-- 게시글로 돌아가기 버튼 -->
 	<div class="topbtnBox">
-		<c:url value="/academy/list" var="listLink" >
-			<c:param name="pageNum" value='${cri.pageNum }'></c:param>
-			<c:param name="amount" value='${cri.amount }'></c:param>
-		</c:url>
-		<a type="button" href="${listLink }" class="btn btn-outline-success" role="button">목록</a>
+		<c:url value="/academy/list" var="listLink"></c:url>
+		<a href="${listLink }">
+			<button type="button" class="btn btn-outline-success">게시글 목록</button>
+		</a>
+		
 		<!-- 작성자와 authentication.name이 같아야 수정버튼 보여주기 -->
 		<sec:authentication property="name" var="userIdValue" />
 		
@@ -153,6 +228,18 @@ ul {
 			</ul>
 		</div>
 		<div id="summernote" class="top_content">${board.ab_content }</div>
+	
+	<!-- 파일 -->
+	<c:set var="ctx" value="${pageContext.request.contextPath}" />
+	<div class="fileBox">
+		<c:forEach items="${board.ab_fileName }" var="fileName">
+			<div class="fileText">
+				<i class="fa-solid fa-paperclip"></i>
+				<a href="${ctx }/academy/download/${board.ab_number}/${fileName}">
+				<c:out value="${fileName.substring(36)}" /></a>
+			</div>
+		</c:forEach>
+	</div>
 		
 	<!-- 좋아요 -->
 		<div class="likeBox">
@@ -169,28 +256,53 @@ ul {
 				<i class="fa-regular fa-heart"></i>
 				</c:if>					
 			</p>
-	<!-- 파일 -->
-		<c:set var="ctx" value="${pageContext.request.contextPath}" />;
-		<div>
-			<c:forEach items="${board.ab_fileName }" var="fileName">
-				<div>
-					<i class="fa-solid fa-paperclip"></i>
-					<a href="${ctx }/academy/download/${board.ab_number}/${fileName}">
-					<c:out value="${fileName.substring(36)}" /></a>
-					
-					<br>
-				</div>
-			</c:forEach>
-		</div>
+
 			<p class="likeCount1">좋아요</p>
 			<p id="likeCount" class="likeCount2">${board.countLike }</p>
 		</div>
 		
-		<hr />
 
+	</div><!-- 본문끝 -->
 
+<!-- 댓글 부분 -->
+	<div class="replyBox container">
+		<!-- 참조키 (ab_number, member_userId) 값_ -->
+		<input type="hidden" id="ab_number" value="${board.ab_number }">
+		<input type="hidden" id="member_userId" value="${board.member_userId }">
+			<!-- 로그인 했을때-->
+			<sec:authorize access="isAuthenticated()">
+			<!-- 댓글입력  -->
 
-	<!-- 댓글 창 -->
+			 	<div class="row">
+				<input class="row replyContentInput" type="text" id="ab_replyContent"
+					placeholder="댓글을 입력해주세요."/><br>
+			 	</div>
+						
+				<button id="replyButton1" class="replyBnt btn btn-success" >댓글 등록</button>
+			</sec:authorize>
+			
+			<!-- 로그인 안했을때 -->
+			<div class="notLogin">
+				<sec:authorize access="not isAuthenticated()">
+					댓글을 작성하시려면 로그인하세요.
+				</sec:authorize>
+			</div>
+		</div>
+		<!-- 댓글 리스트 -->
+		<div class="row">
+			<div class="col">
+				<div id="replyListContainer">
+					<!-- 댓글 나오는 부분 -->
+				</div>
+			<!-- 댓글 페이지 출력란 -->
+			<div id="replyPageFooter">
+			</div>
+		</div>
+	</div>
+</div>
+	
+	
+<%-- 	<!-- 구 댓글 -->
 	
 	<div id="replyMessage">
 	</div>
@@ -226,7 +338,7 @@ ul {
 				
 			</div>
 		</div>
-	</div>
+	</div> --%>
 	
 	
 	
