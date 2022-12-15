@@ -101,9 +101,9 @@
 		content = #{content},
 		matchType = #{matchType},
 		level = #{level},
-		location_locationId = #{locationId}
+		location_locationId = #{locationId},
 		status = #{status},
-  	  bookDate = #{bookDate},
+  	  	bookDate = #{bookDate},
 		bookTime = #{bookTime}, 
 		teamGender = #{teamGender}
 	WHERE 

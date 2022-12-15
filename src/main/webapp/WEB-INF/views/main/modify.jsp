@@ -7,10 +7,52 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+@font-face {
+ font-family: 'NanumBarunGothic';
+ font-style: normal;
+ font-weight: 400;
+ src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot');
+ src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.ttf') format('truetype');
+}
+
+@font-face {
+ font-family: 'NanumBarunGothic';
+ font-style: normal;
+ font-weight: 700;
+ src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot');
+ src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.ttf') format('truetype')
+}
+
+@font-face {
+ font-family: 'NanumBarunGothic';
+ font-style: normal;
+ font-weight: 300;
+ src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot');
+ src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.ttf') format('truetype');
+}
+
+.nanumbarungothic * {
+ font-family: 'NanumBarunGothic', sans-serif;
+}
+#area{
+	font-family: 'NanumBarunGothic';
+	letter-spacing: -1px;
+	position: relative;
+}
+#modi{
+	position: absolute; 
+	bottom:0px; 
+	right: 20px;
+}
+</style>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
 </head>
 <body>
+
+<div id="area">
 <my:navbar></my:navbar>
 
 
@@ -18,84 +60,175 @@
 	<div class="row">
 		<div class="col">
 		
-			<h1>no.${main.bookId } 수정</h1>
+			<div style="text-align: center; font-size:30px;">${main.nickName }님 예약 변경</div>
+			<input type="hidden" value="${main.member_userId }" readonly>
 	
-			<form id="modifyForm" action="" method="post">
+			<form id="modifyForm" action="" method="post" > 
 				<input type="hidden" name="bookId" value="${main.bookId }">
+				
+				<div class="form-floating mb-3" >
+					<input type="Date" class="form-control" name="bookDate" value="${main.bookDate }" >
+					<label for="floatingInput">경기일정</label>
+				</div>
+
+				<div class="row g-2" >
+ 				 <div class="col-md">
+					<div class="form-floating">
+						<select class="form-select" id="region" name="region">
+							<option selected value="1">서울</option>
+							<option value="2">경기</option>
+						</select> 
+						<label for="region">활동 지역</label>
+					</div>
+				</div>
+					<div class="col-md">
+						<div class="form-floating">
+							<select class="form-select"  name="locationId" id="locationId">
+								<option value="1">천마 풋살파크</option>
+			     				<option value="2">아디다스 더베이스</option>
+			      				<option value="3">도봉 루다 풋살장</option>
+			    				<option value="4">영등포 SKY 풋살파크 A구장</option>
+			      				<option value="5">은평 롯데몰 A구장</option>
+							</select> 
+							<label for="location">예약장소</label>
+							</div>
+						</div>
+					</div>
+ 				
+ 				<div class="form-floating" style="margin: 18px 0;">
+				  <select class="form-select" id="floatingSelect" name="bookTime" >
+				    <option selected value="${main.bookTime }">
+				    기존 예약 시간 : 
+				 	 <c:choose>
+				 	 <c:when test="${main.bookTime == 1 }">
+				 	 	<c:out value="06:00 ~ 8:00"/>
+				 	 </c:when>
+				 	 <c:when test="${main.bookTime == 2 }">
+				 	 	<c:out value="09:00 ~ 11:00"/>
+				 	 </c:when>
+				 	 <c:when test="${main.bookTime == 3 }">
+				 	 	<c:out value="14:00 ~ 16:00"/>
+				 	 </c:when>
+				 	 <c:when test="${main.bookTime == 4 }">
+				 	 	<c:out value="18:00 ~ 20:00"/>
+				 	 </c:when>
+				 	 <c:when test="${main.bookTime == 5 }">
+				 	 	<c:out value="21:00 ~ 23:00"/>
+				 	 </c:when>
+				 	 </c:choose> 
+				    </option>
+				     <option value="1">06:00 ~ 8:00</option>
+					  <option value="2">09:00 ~ 11:00</option>
+					  <option value="3">14:00 ~ 16:00</option>
+					  <option value="4">18:00 ~ 20:00</option>
+					  <option value="5">21:00 ~ 23:00</option>
+				  </select>
+				  <label for="floatingSelect">구장이용시간</label>
+				</div>		
+				
+				<div class="row g-2"  style="margin: 18 0;" >
+ 				 <div class="col-md">
+				<div class="form-floating" >
+				  <select class="form-select" id="floatingSelect" name="level" >
+				    <option selected value="${main.level }">
+				    기존 모집 레벨 : 
+				 	 <c:choose>
+				 	 <c:when test="${main.level == 1 }">
+				 	 	하
+				 	 </c:when>
+				 	 <c:when test="${main.level == 2 }">
+				 	 	중
+				 	 </c:when>
+				 	 <c:when test="${main.level == 3 }">
+				 	 	상
+				 	 </c:when>
+				 	 </c:choose> 
+				    </option>
+				     <option value="3">상</option>
+					  <option value="2">중</option>
+					  <option value="1">하</option>
+				  </select>
+				  <label for="floatingSelect">모집 레벨</label>
+				</div>
+				</div>
+					
+				
+				<div class="col-md">
+				<div class="form-floating" >
+				  <select class="form-select" id="floatingSelect" name="matchType" >
+				    <option selected value="${main.matchType }">
+				    기존 경기 인원: 
+				 	 <c:choose>
+				 	 <c:when test="${main.matchType == 3 }">
+				 	 	3 vs 3
+				 	 </c:when>
+				 	 <c:when test="${main.matchType == 4 }">
+				 	 	4 vs 4
+				 	 </c:when>
+				 	 <c:when test="${main.matchType == 5 }">
+				 	 	5 vs 5
+				 	 </c:when>
+				 	 </c:choose> 
+				    </option>
+				     <option value="3">3 vs 3</option>
+					  <option value="4">4 vs 4</option>
+					  <option value="5">5 vs 5</option>
+				  </select>
+				  <label for="floatingSelect">경기 인원</label>
+				</div>
+			</div>
+			<div class="col-md">
+				<div class="form-floating" >
+				  <select class="form-select" id="floatingSelect" name="teamGender" >
+				    <option selected value="${main.teamGender }">
+				 	 기존 선택 성별:
+				 	 <c:choose>
+				 	 <c:when test="${main.teamGender == 'F' }">
+				 	 	여자만
+				 	 </c:when>
+				 	 <c:when test="${main.teamGender == 'M' }">
+				 	 	남자만
+				 	 </c:when>
+				 	 </c:choose> 
+				    </option>
+				     <option value="F">여자만</option>
+					  <option value="M">남자만</option>
+				  </select>
+				  <label for="floatingSelect">경기 성별</label>
+				</div>
+			</div>
+			</div>
+			
+			
+			<div class="form-floating"  style="margin: 18px 0;">
+				  <select class="form-select" id="floatingSelect" name="status" >
+				     <option value="0">모집완료</option>
+					  <option value="1">모집중</option>
+				  </select>
+				  <label for="floatingSelect">모집상태</label>
+				</div>
+				
 				<div class="form-floating mb-3">
 					<input type="text" class="form-control" name="title" value=" ${main.title }">		
 					<label for="floatingInput">제목</label>
 				</div>
-				<h2>작성자</h2>
-				<input type="text" value="${main.member_userId }" readonly>
 				
 				<div class="form-floating mb-3">
-					<textarea class="form-control" name="content" style="resize: none; height: 100px" >${main.content}</textarea>
+					<textarea class="form-control" name="content" style="resize: none; height: 150px" >${main.content}</textarea>
 					<label for="floatingTextarea2">본문</label>
 				</div>
-				
-				<div class="form-floating mb-3">
-					<input type="Date" class="form-control" name="bookDate" value="${main.bookDate }">
-					<label for="floatingInput">경기일정</label>
-				</div>
-				<div class="mb-3">
-					<select name="bookTime">
-						<option value="">기존 예약 시간 : ${main.bookTime }</option>
-						<option value="1">10-12시</option>
-					</select>
-				</div>
-				<div class="mb-3">
-					<label for="">구장 지역</label>
-					<select id="region" name="region">
-						<option value="1" selected="selected">서울</option>
-						<option value="2">경기</option>
-					</select>
-			</div>
-			
-			<div class="mb-3">
-			   <label for="" class="form-label">예약장소</label>
-			   <select id="region" name="region">
-			      <option value="1">서울</option>
-			      <option value="2">경기</option>
-			   </select>
-			   <select name="location_locationId" id="location">
-			      <option value="1">천마 풋살파크</option>
-			      <option value="2">아디다스 더베이스</option>
-			      <option value="3">도봉 루다 풋살장</option>
-			      <option value="4">영등포 SKY 풋살파크 A구장</option>
-			      <option value="5">은평 롯데몰 A구장</option>
-			   </select>
-  			 </div>
-			
-				
-				<div class="form-floating mb-3">
-					<input type="text" name="matchType" class="form-control"  placeholder="matchType" value="${main.matchType }">
-					<label for="floatingInput">경기인원</label>
-				</div>
-		
-				<div class="form-floating mb-3">
-					<input type="text" name="level" class="form-control"  placeholder="level" value="${main.level }">
-					<label for="floatingInput">수준</label>
-				</div>
-		
-				<div class="form-floating mb-3">
-					<input type="text" name="teamGender" class="form-control"  placeholder="teamGender" value="${main.teamGender }">
-					<label for="floatingInput">성별</label>
-				</div>
-		
-				<div class="form-floating mb-3">
-					<input type="text" name="status"class="form-control"  placeholder="status" value="${main.status }">
-					<label for="floatingInput">모집상태</label>
-				</div>
 			</form>
-		
-			<input type="submit" value="수정" data-bs-toggle="modal" data-bs-target="#modifyModal">
 			
+		
+			
+			<div id="modi">
+			<input type="submit" value="수정" data-bs-toggle="modal" data-bs-target="#modifyModal" style="background-color: #6D8B74; border-radius:5px; border-color:#6D8B74; color:white; width: 60px; height: 30px;">
+			</div>
 			<c:url value="/main/remove" var="removeLink"/>
 			<form id="removeForm" action="${removeLink }" method="post">
 			<input type="hidden" name="bookId" value="${main.bookId }">
 			</form>
-			<input type="submit" value="삭제" data-bs-toggle="modal" data-bs-target="#removeModal">
+			<input type="submit" value="삭제" data-bs-toggle="modal" data-bs-target="#removeModal" style="background-color: #FFFFFF; border-color:#FFFFFF; color:black; width: 60px; height: 30px; text-decoration: underline;">
 					
 				
 			</div>
@@ -140,7 +273,7 @@
 	    </div>
 	  </div>
 	</div>
-
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
@@ -162,6 +295,8 @@
                option += '<option value="6">피치 부천 이마트 부천점</option>';
                option += '<option value="7">용인 기흥 낫소 풋살파크</option>';
                option += '<option value="8">칼라힐 풋살파크 B구장</option>';
+               option += '<option value="9">인천 더 베스트 풋볼파크 구월점</option>';
+               option += '<option value="10">하남 감일 장수천 풋살파크</option>';
             }
             $('#location').empty().append(option);
          });

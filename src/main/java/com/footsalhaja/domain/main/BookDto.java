@@ -20,7 +20,7 @@ public class BookDto { // 리스트 화면에서 보일 element
 	private String teamGender;
 	
 	private int bookTime;
-	private LocalDate bookDate;
+	private String bookDate;
 	
 	
 	
