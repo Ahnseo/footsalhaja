@@ -39,12 +39,26 @@
 	font-family: 'NanumBarunGothic';
 	letter-spacing: -1px;
 	position: relative;
+	
 }
 #modi{
 	position: absolute; 
-	bottom:0px; 
-	right: 20px;
+	bottom: 0px; 
+	left: 1350px;
 }
+
+#modiCancel{
+	position: absolute; 
+	bottom: 0px; 
+	left: 1300px;
+	backgroung-color: gray;
+	width: 
+}
+#wide{
+	max-width: 928px;
+	margin: 5px 0 0 500px;
+}
+
 </style>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -55,6 +69,7 @@
 <div id="area">
 <my:navbar></my:navbar>
 
+<div id="wide">
 
 <div class="container-md">
 	<div class="row">
@@ -68,7 +83,7 @@
 				
 				<div class="form-floating mb-3" >
 					<input type="Date" class="form-control" name="bookDate" value="${main.bookDate }" >
-					<label for="floatingInput">경기일정</label>
+					<label for="floatingInput">매칭 일정</label>
 				</div>
 
 				<div class="row g-2" >
@@ -76,7 +91,7 @@
 					<div class="form-floating">
 						<select class="form-select" id="region" name="region">
 							<option selected value="1">서울</option>
-							<option value="2">경기</option>
+							<option value="2">매칭</option>
 						</select> 
 						<label for="region">활동 지역</label>
 					</div>
@@ -90,7 +105,7 @@
 			    				<option value="4">영등포 SKY 풋살파크 A구장</option>
 			      				<option value="5">은평 롯데몰 A구장</option>
 							</select> 
-							<label for="location">예약장소</label>
+							<label for="locationId">예약 장소</label>
 							</div>
 						</div>
 					</div>
@@ -131,22 +146,22 @@
 				<div class="form-floating" >
 				  <select class="form-select" id="floatingSelect" name="level" >
 				    <option selected value="${main.level }">
-				    기존 모집 레벨 : 
+				    기존 선택 레벨 : 
 				 	 <c:choose>
 				 	 <c:when test="${main.level == 1 }">
-				 	 	하
+				 	 	비기너
 				 	 </c:when>
 				 	 <c:when test="${main.level == 2 }">
-				 	 	중
+				 	 	아마추어
 				 	 </c:when>
 				 	 <c:when test="${main.level == 3 }">
-				 	 	상
+				 	 	챌린저
 				 	 </c:when>
 				 	 </c:choose> 
 				    </option>
-				     <option value="3">상</option>
-					  <option value="2">중</option>
-					  <option value="1">하</option>
+				     <option value="3">비기너</option>
+					  <option value="2">아마추어</option>
+					  <option value="1">챌린저</option>
 				  </select>
 				  <label for="floatingSelect">모집 레벨</label>
 				</div>
@@ -157,7 +172,7 @@
 				<div class="form-floating" >
 				  <select class="form-select" id="floatingSelect" name="matchType" >
 				    <option selected value="${main.matchType }">
-				    기존 경기 인원: 
+				    기존 선택 인원: 
 				 	 <c:choose>
 				 	 <c:when test="${main.matchType == 3 }">
 				 	 	3 vs 3
@@ -174,7 +189,7 @@
 					  <option value="4">4 vs 4</option>
 					  <option value="5">5 vs 5</option>
 				  </select>
-				  <label for="floatingSelect">경기 인원</label>
+				  <label for="floatingSelect">매칭 인원</label>
 				</div>
 			</div>
 			<div class="col-md">
@@ -194,7 +209,7 @@
 				     <option value="F">여자만</option>
 					  <option value="M">남자만</option>
 				  </select>
-				  <label for="floatingSelect">경기 성별</label>
+				  <label for="floatingSelect">매칭 성별</label>
 				</div>
 			</div>
 			</div>
@@ -214,12 +229,12 @@
 				</div>
 				
 				<div class="form-floating mb-3">
-					<textarea class="form-control" name="content" style="resize: none; height: 150px" >${main.content}</textarea>
+					<textarea class="form-control" name="content" style="resize: none; height: 150px;" >${main.content}</textarea>
 					<label for="floatingTextarea2">본문</label>
 				</div>
 			</form>
 			
-		
+</div>		
 			
 			<div id="modi">
 			<input type="submit" value="수정" data-bs-toggle="modal" data-bs-target="#modifyModal" style="background-color: #6D8B74; border-radius:5px; border-color:#6D8B74; color:white; width: 60px; height: 30px;">
@@ -229,6 +244,10 @@
 			<input type="hidden" name="bookId" value="${main.bookId }">
 			</form>
 			<input type="submit" value="삭제" data-bs-toggle="modal" data-bs-target="#removeModal" style="background-color: #FFFFFF; border-color:#FFFFFF; color:black; width: 60px; height: 30px; text-decoration: underline;">
+			
+			<button class="btn btn-secondary" id="modiCancel"  style="width: 60px; height: 30px;">
+				<a href="/main/list"style="color: white;">취소</a>
+			</button>
 					
 				
 			</div>
@@ -282,7 +301,7 @@
             var res = $('#region option:selected').val();
             var option = '';
             console.log(res);
-            if (res == '서울') {
+            if (res == '1') {
                console.log("1");
                option += '<option value="1">천마 풋살파크</option>';
                option += '<option value="2">아디다스 더베이스</option>';
@@ -298,7 +317,7 @@
                option += '<option value="9">인천 더 베스트 풋볼파크 구월점</option>';
                option += '<option value="10">하남 감일 장수천 풋살파크</option>';
             }
-            $('#location').empty().append(option);
+            $('#locationId').empty().append(option);
          });
       });
 
