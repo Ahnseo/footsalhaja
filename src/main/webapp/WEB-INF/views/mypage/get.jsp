@@ -53,6 +53,7 @@
 							<c:forEach items="${member.profileImg }" var="name">
 								<div class= >
 								<object data="${pageContext.request.contextPath}/기본프로필.png" type="image/png">
+								<div>"${pageContext.request.contextPath}/user_profile/${member.userId }/${name}"</div>
 									<img src="${pageContext.request.contextPath}/user_profile/${member.userId }/${name}">
 								</object>
 								</div>

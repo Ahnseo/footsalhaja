@@ -48,6 +48,7 @@
 						<div style="text-align : center;">
 							<c:forEach items="${member.profileImg }" var="name">
 								<object data="${pageContext.request.contextPath}/기본프로필.png" type="image/png">
+								<textarea value = "${pageContext.request.contextPath}/user_profile/${member.userId }/${name}"></textarea>
 									<img src="${pageContext.request.contextPath}/user_profile/${member.userId }/${name}">
 								</object>
 							</c:forEach>		
