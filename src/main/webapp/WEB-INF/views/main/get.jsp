@@ -100,6 +100,7 @@
 	margin: 5px 0px 5px 55px;
 	padding: 2.5px 10px;
 }
+
 #modi {
 	position: absolute; 
 	bottom:300px; 
