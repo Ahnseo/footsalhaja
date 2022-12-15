@@ -9,7 +9,7 @@ public interface FreeMapper {
 
 	int insert(BoardDto board);
 
-	BoardDto select(int fb_number, String member_userId);
+	public BoardDto select(int fb_number, String member_userId);
 	
 	default BoardDto select(int fb_number) {
 		return select(fb_number, null);
@@ -37,4 +37,10 @@ public interface FreeMapper {
 
 	List<BoardDto> likeRank(BoardDto board);
 	
+	public void insertFile(int fb_number, String fb_fileName, String fb_filePath, int fb_fileType);
+
+	public void deleteFileByBoardId(int fb_number);
+
+	public void deleteByBoardIdAndFileName(int fb_number, String originalFilename);
+
 }

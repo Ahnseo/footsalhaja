@@ -119,7 +119,7 @@
 <!-- 전체 컨테이너 -->
 <div class="container-sm" >
 
-	<form id="modifyForm" action="" method="post">
+	<form id="modifyForm" action="" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="fb_number" value="${board.fb_number}"/>
 		<div class="categorySelectBox">
 			<p>카테고리</p>
@@ -136,7 +136,15 @@
 			<textarea id="summernote" name="fb_content">${board.fb_content }</textarea>
 		</div>
 		<div>
-			<input class="form-control" type="file" name="fb_fileName"/>
+			<c:forEach items="${board.fb_fileName }" var="fileName">
+				<div>
+					<i class="fa-solid fa-paperclip"></i>
+					<c:out value="${fileName.substring(36)}" />
+					삭제 <input type="checkbox" name ="removeFiles" value="${fileName}" >
+					<br>
+				</div>
+			</c:forEach>
+			<input class="form-control" multiple="multiple" type="file" name="files"/>
 		</div>
 	</form>
 			
@@ -186,8 +194,7 @@
 		        maxHeight: null,
 		        focus: true, 
 		        lang : "ko-KR",
-		        placeholder: '내용을 입력해주세요.',	//placeholder 설정
-			callbacks: {	//여기 부분이 이미지를 첨부하는 부분
+				callbacks: {	//여기 부분이 이미지를 첨부하는 부분
 				onImageUpload: function(files, editor) {
 		            for (var i = files.length - 1; i >= 0; i--) {
 		            	uploadSummernoteImageFile(files[i], this);
@@ -210,7 +217,7 @@
 				processData : false,
 				success : function(data) {
 	            	//항상 업로드된 파일의 url이 있어야 한다. ('insertImage', url, filename)
-					$(editor).summernote('insertImage', data.url, data.fb_fileName);
+					$(editor).summernote('insertImage', data.url, data.fb_image);
 	            	/* //이미지가 업로드 되면, 하위에 테스트 확인차 추가하도록 해놓은 부분
 					$('#imageBoard > ul').append('<li><img src="'+url+'" width="480" height="auto"/></li>'); */
 				}

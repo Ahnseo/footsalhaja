@@ -77,11 +77,10 @@ li {
  	border: 0;
  }
  
- #bestTable tr td.title:hover{
-	text-decoration:underline;
-	/* cursor: pointer; */
+ #bestTable .title:hover{
+ 	text-decoration: underline;
  }
- 
+  
  #bestTable tr td a {
  	text-decoration: none;
  	color: #333;
@@ -148,6 +147,11 @@ li {
  	text-decoration: none;
  	color: #333;
  	padding: 15px;
+ }
+ 
+ #listBox .table tr td a:hover {
+ 	text-decoration: underline;
+ 	font-weight: bold;
  }
 
 /* 검색 페이징 글작성버튼 */
@@ -242,7 +246,7 @@ li {
 						${rank.fb_title }
 					</a>
 					<c:if test="${rank.fb_replyCount > 0 }">
-						<i class="fa-regular fa-comment"></i>${rank.fb_replyCount }
+						&nbsp;&nbsp;<i class="fa-regular fa-comment"></i> ${rank.fb_replyCount }
 					</c:if>
 				</td>
 				<td width="70"><i class="fa-regular fa-heart"></i> ${rank.fb_likeCount }</td>
@@ -291,8 +295,13 @@ li {
 						<a href="${getLink}">
 							${board.fb_title }
 						</a>
+						<!-- 댓글 수 출력 -->
 						<c:if test="${board.fb_replyCount > 0 }">
-							<i class="fa-regular fa-comment"></i>${board.fb_replyCount }
+							<i class="fa-regular fa-comment"></i> ${board.fb_replyCount }
+						</c:if>
+						<!-- 파일 수 출력 -->
+						<c:if test="${board.countFile > 0 }">
+								<i class="fa-regular fa-file"></i> ${board.countFile }
 						</c:if>
 					</td>
 					<td>${board.nickName }</td>

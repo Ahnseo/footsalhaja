@@ -152,6 +152,11 @@ ul {
 	right: 0;
 }
 
+.notLogin {
+	text-align: center;
+	margin-top: 55px;
+}
+
 /* 댓글 리스트 */
 .reply_list {
 	margin-bottom: 10px; 
@@ -189,6 +194,17 @@ ul {
 	top: 0;
 	right: 45px;
 }
+
+/* 파일 */
+.fileBox {
+	margin-top: 100px;
+	margin-left: 40px;
+}
+
+.fileBox a {
+	color: #666;
+}
+
 
 
 
@@ -246,6 +262,18 @@ ul {
 		</div>
 		<div id="summernote" class="top_content">${board.fb_content }</div>
 		
+	<!-- 파일 -->
+	<c:set var="ctx" value="${pageContext.request.contextPath}" />
+	<div class="fileBox">
+		<c:forEach items="${board.fb_fileName }" var="fileName">
+			<div class="fileText">
+				<i class="fa-solid fa-paperclip"></i>
+				<a href="${ctx }/free/download/${board.fb_number}/${fileName}">
+				<c:out value="${fileName.substring(36)}" /></a>
+			</div>
+		</c:forEach>
+	</div>
+		
 		<!-- 좋아요 -->
 		<div class="likeBox">
 			<p 
@@ -291,9 +319,11 @@ ul {
 			</sec:authorize>
 			
 			<!-- 로그인 안했을때 -->
-			<sec:authorize access="not isAuthenticated()">
-				댓글을 작성하시려면 로그인하세요.
-			</sec:authorize>
+			<div class="notLogin">
+				<sec:authorize access="not isAuthenticated()">
+					댓글을 작성하시려면 로그인하세요.
+				</sec:authorize>
+			</div>
 		</div>
 	
 	<!-- 댓글 리스트 -->
