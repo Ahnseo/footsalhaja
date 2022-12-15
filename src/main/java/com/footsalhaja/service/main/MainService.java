@@ -1,5 +1,7 @@
 package com.footsalhaja.service.main;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import com.footsalhaja.domain.main.BookDto;
@@ -14,7 +16,7 @@ public interface MainService {
 	public int update(MainDto main);
 
 
-	public List<BookDto> listBook();
+	public List<BookDto> listBook(Date datepickerSday, Date datepickerEday);
 
 	
 	public int remove(int bookId);

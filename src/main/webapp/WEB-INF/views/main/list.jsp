@@ -12,8 +12,15 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
 <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link rel="stylesheet" href="collapzion.min.css">
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&display=swap" rel="stylesheet">
 <style>
+/* 글씨폰트 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&display=swap');
+
+
+
 /* 플로팅 버튼 */
 .fab-container {
 	position: fixed;
@@ -101,6 +108,17 @@
 	display: block;
 	width: 100%;
 	background-color: #faf5f5;
+	letter-spacing: -1px;
+}
+
+#idOfUl {
+	margin: 0 auto;
+	width: 1000px;
+	text-align: center;
+}
+
+#idOfUl li {
+	margin: 0;
 }
 
 /* 게시글 body */
@@ -125,12 +143,14 @@
 }
 
 .listStat {
-	height: 20px;
+	display: table-cell;
+	vertical-align: middle;
 }
 
-.ing {
-line-height: 20px;
-vertical-align: middle;
+
+.ing1, .ing2, .list-match-time {
+	display: inline-block;
+	width:100px; 
 }
 
 
@@ -139,19 +159,91 @@ vertical-align: middle;
 }
 
 .listDate, .timeFont {
-	font-weight: bold;
+	font-family: 'Noto Sans KR', sans-serif;
+	font-weight: 500;
 	margin-bottom: 3px;
-}
-
-.list-match-time {
 	text-align: center;
-	margin-top: 25px;
+	font-size: 14px;
+	margin: auto;
 }
 
 .list-match-info {
-	float: right;
+	width: 60%;
+	height: 30px;
+	text-align: left;
+}
+
+.listGender, .listMatchType, .listRegion, .listLevel {
+	display: inline-block;
+	font-size: 10px;
+}
+
+.list-group li {
+	display: table;
+	text-align: center;
+}
+
+.datepick_wrap {
+	position:relative;
+	display: inline-block;
 	
 }
+
+.stadiumName {
+	text-align: left;
+	font-family: 'Noto Sans KR', sans-serif;
+	font-size: 15px;
+	font-weight: 500;
+	
+}
+
+.btn-ing1 {
+	background-color: #0c70f2;
+	color: #fff;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	border: 1px solid #0c70f2;
+	width: 90px;
+	height: 45px;
+}
+
+.btn-ing2 {
+	background-color: #D30000;
+	color: #fff;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	border: 1px solid #D30000;
+	width: 90px;
+	height: 45px;
+}
+
+.writer {
+	text-align: center;
+	width: 50px;
+	height: 25px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	font-family: 'Noto Sans KR', sans-serif;
+	font-size: 13px;
+	
+}
+
+.listGender::before {
+	content: "|";
+}
+
+.listMatchType::before {
+	content: "|";
+}
+
+.listLevel::before {
+	content: "|";
+}
+
 
 
 </style>
@@ -264,17 +356,36 @@ vertical-align: middle;
 	</div>
 </c:if>
 
-<nav id="navbar-example2" class="navbar bg-light px-3 mb-3">
+
+<!-- 데이트 피커 -->
+<!-- <input type="text" name="sdate" id="sdate" value="">
+<input type="text" name="edate" id="edate" value=""> -->
+
+
+
+<div class="opt">
+<span class="labelStr">기간</span>
+<div class="datepick_wrap"><input type="text" class="datepicker" placeholder="날짜 선택" id="datepickerSday"></div>
+<span class="waveStr">~</span>
+<div class="datepick_wrap"><input type="text" class="datepicker" placeholder="날짜 선택" id="datepickerEday"></div>
+</div>
+
+<%-- <nav id="navbar-example2" class="navbar bg-light px-3 mb-3">
 	<a class="navbar-brand" href="${listLink}">예약 리스트</a>
 	  <ul class="nav nav-pills">
 		 <li class="nav-item">
 			<a class="nav-link" href="#scrollspyHeading1">First</a>
 		</li>
 	  </ul>
-</nav>
+</nav> --%>
+
+
+            
 
 	<div id="getId" class="">
-	  <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-light p-5 rounded-2 " tabindex="0">
+	  <div data-bs-spy="scroll" data-bs-target="#navbar-example2"  data-bs-smooth-scroll="true" class="scrollspy-example bg-light p-5 rounded-2 " tabindex="0">
+		<div class="row">
+		
 		<ul class="list-group" id="idOfUl">
 			<c:forEach items="${bookList }" var="main">
 				<c:url value="/main/get" var="getLink">
@@ -285,10 +396,10 @@ vertical-align: middle;
 						<p class="listDate">${main.bookDate} </p>
 							<!-- 예약 시간 -->
 							<c:if test="${main.bookTime eq 6}">
-								<p class="timeFont">6:00</p>
+								<p class="timeFont">06:00</p>
 							</c:if>
 							<c:if test="${main.bookTime eq 9}">
-								<p class="timeFont">9:00</p>
+								<p class="timeFont">09:00</p>
 							</c:if>
 							<c:if test="${main.bookTime eq 14}">
 								<p class="timeFont">14:00</p>
@@ -301,18 +412,55 @@ vertical-align: middle;
 							</c:if>
 					</div>
 						
+							
+						
 						<div class="list-match-info">
-							<!-- 성별, 매치방식, 실력 -->
-								<!-- 성별 -->
-								<div class="listGender">
-									<c:if test="${main.teamGender eq 'M' }">
-										<span class="genderFont">남자</span>
+							<div class="stadiumName">
+							<!-- 구장이름, 성별, 매치방식, 실력 -->
+								<c:choose>
+									<c:when test="${main.locationId eq 1 }">
+									 	천마 풋살파크
+									</c:when>
+									<c:when test="${main.locationId eq 2 }">
+									 	아디다스 더베이스
+									</c:when>
+									<c:when test="${main.locationId eq 3 }">
+									 	도봉 루다 풋살장
+									</c:when>
+									<c:when test="${main.locationId eq 4 }">
+									 	영등포 SKY 풋살파크 A구장
+									</c:when>
+									<c:when test="${main.locationId eq 5 }">
+									 	은평 롯데몰 A구장
+									</c:when>
+									<c:when test="${main.locationId eq 6 }">
+									 	피치 부천 이마트 부천점
+									</c:when>
+									<c:when test="${main.locationId eq 7 }">
+									 	용인 기흥 낫소 풋살파크
+									</c:when>
+									<c:when test="${main.locationId eq 8 }">
+									 	칼라힐 풋살파크 B구장
+									</c:when>
+									<c:when test="${main.locationId eq 9 }">
+									 	인천 더 베스트 풋볼파크 구월점
+									</c:when>
+									<c:when test="${main.locationId eq 10 }">
+									 	하남 감일 장수천 풋살파크
+									</c:when>
+								</c:choose>
+							</div>
+							
+								<!-- 지역 -->
+								<div class="listRegion">
+									<c:if test="${main.region eq 1}">
+										<span>서울</span>
 									</c:if>
-									<c:if test="${main.teamGender eq 'W' }">
-										<span class="genderFont">여자</span>
+									<c:if test="${main.region eq 2}">
+										<span>경기</span>
 									</c:if>
 								</div>
-												
+								
 								<!-- 매치방식 -->
 								<div class="listMatchType">
 									<c:if test="${main.matchType eq 3 }">
@@ -325,17 +473,17 @@ vertical-align: middle;
 										<span>5vs5</span>
 									</c:if>
 								</div>
-								
-								<!-- 지역 -->
-								<div class="listRegion">
-									<c:if test="${main.region eq 1}">
-										<span>서울</span>
+							
+								<!-- 성별 -->
+								<div class="listGender">
+									<c:if test="${main.teamGender eq 'M' }">
+										<span class="genderFont">남자</span>
 									</c:if>
-									<c:if test="${main.region eq 2}">
-										<span>경기</span>
+									<c:if test="${main.teamGender eq 'F' }">
+										<span class="genderFont">여자</span>
 									</c:if>
 								</div>
-								
+												
 								<!-- 레벨 -->
 								<div class="listLevel">
 									<c:if test="${main.level eq 1}">
@@ -349,105 +497,100 @@ vertical-align: middle;
 									</c:if>
 								</div>
 						</div>
+						
+						<div class="writer">
 							${main.nickName}
+						</div>
+						
+						
 						
 							
 						<!-- 모집중, 모집완료 -->
 						<div class="listStat">
 							<c:if test="${main.status eq 0}">
-								<br>
-								<h6><button class="btn btn-danger">모집완료</button></h6>
+								<button class="btn-ing2 ">모집완료</button>
 							</c:if>
 	
 							<c:if test="${main.status eq 1}">
-							<br>
-								<h6><button class="btn btn-primary ing">모집중</button></h6>
+								<button class="btn-ing1">모집중</button>
 							</c:if>
 						</div>
 					</li>        
 			</c:forEach>
 		</ul>
+		</div>
 	</div>
 </div>
-
-
-
-
-
-<!-- 게시글 목록 -->
-<%-- <div class="matches" id="body">
-	<table class="table">
-		<thead class="table-light">
-			<tr>
-				<th>#</th>
-				<th>제목</th>
-				<th>예약날짜</th>
-				<th>예약시간</th>
-				<th>구장이름</th>
-				<th>작성자</th>
-				<th>모집상태</th>
-				<th>매치방식</th>
-				<th>실력</th>
-				<th>지역</th>
-			</tr>
-		</thead>
-		<tbody>
-			 <c:forEach items="${bookList }" var="main">
-				<tr>
-					<td>${main.bookId }</td>
-					<td>
-					<c:url value="/main/get" var="getLink">
-						<c:param name="bookId" value="${main.bookId }"></c:param>
-					</c:url>
-						<a href="${getLink }">
-							${main.title }
-						</a>
-					</td>
-					<td>${main.bookDate }</td>			
-					<td>${main.bookTime }</td>			
-					<td>${main.stadiumName }</td>			
-					<td>${main.nickName }</td>
-					
-					<!-- 모집중, 모집완료 버튼 -->
-					<c:if test="${main.status == 0}">
-						<td><button class="btn btn-danger" disabled="disabled">모집완료</button></td>
-					</c:if>				
-
-					<c:if test="${main.status == 1}">
-						<td><button class="btn btn-primary" disabled="disabled">모집중</button></td>
-					</c:if>				
-					
-					<!-- 매치타입 -->
-					<c:if test="${main.matchType == 3 }">
-						<td>3 vs 3</td>			
-					</c:if>
-					<c:if test="${main.matchType == 4 }">
-						<td>4 vs 4</td>			
-					</c:if>
-					<c:if test="${main.matchType == 5 }">
-						<td>5 vs 5</td>			
-					</c:if>
-					
-					<!-- 실력 -->
-					<c:if test="${main.level == 1 }">
-						<td>비기너</td>			
-					</c:if>
-					<c:if test="${main.level == 2 }">
-						<td>아마추어</td>			
-					</c:if>
-					<c:if test="${main.level == 3 }">
-						<td>챌린저</td>			
-					</c:if>
-					
-					<td>${main.region }</td>			
-				</tr>
-			</c:forEach>
-		</tbody>
-	</table>
-</div> --%>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 <script>
+$(function(){
+	   $("input[id^='datepicker']").each(function() {
+	      var date_id = "#" + this.id;
+	      
+	      $(date_id).datepicker({
+	         dateFormat: 'yy-mm-dd',         
+	         monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	         dayNamesShort: ['일','월','화','수','목','금','토'],
+	         dayNamesMin: ['일','월','화','수','목','금','토'],
+	         showMonthAfterYear: true,
+	         yearSuffix: '.',         
+	         showOn:'both',
+	         minDate: 0,
+	         maxDate: "+3M" 
+	      });
+	      
+	      var now = new Date();
+	      firstDate = new Date(now.getFullYear(),now.getMonth());  
+	      $(date_id).val($.datepicker.formatDate('yy-mm-dd', now));      
+	   })   
+	});
+
+/* $(document).ready(function(){
+    $('#datepickerSday').datepicker({ onSelect: function(dateText, inst) { alert("Working"); } });
+}); */
+
+
+/* $(function() {
+	$("#datepickerSday").datepicker({
+		onSelect: function() {
+			var date1 = $.datepickerSday.formatDate("yy-mm-dd", $("#datepickerSday").datepicker("getDate"));
+			
+			date1 = $("#datepickerSday").val();
+			
+			console.log(date1);
+		
+		}
+	});
+}); */
+	
+	
+/* $(document).ready(function() {
+	init_date()
+})
+
+function init_date() {
+	var $datepickerSday = $("#datepickerSday");
+	var $datepickerEday = $("#datepickerEday");
+	$datepickerSday.datepicker({
+		
+	})
+} */
+
+/* $('#datepickerSday').datepicker({
+	dateFormat: 'yy-mm-dd',
+	onSelect: function(dateString, inst) {
+		var date1 = $(this).val();
+		console.log(date1);
+		
+		
+	}
+}); */
+
+
+
 </script>
 </body>
 </html>

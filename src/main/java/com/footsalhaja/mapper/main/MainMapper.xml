@@ -71,11 +71,14 @@
  		b.matchType,
  		b.level,
  		l.region,
- 		b.teamGender
+ 		b.teamGender,
+ 		l.locationId
  	FROM
  		book b LEFT JOIN location l ON b.location_locationId = l.locationId
- 			   LEFT JOIN member m ON b.member_userId = m.userId
- 	ORDER BY bookId DESC
+         	   LEFT JOIN member m ON b.member_userId = m.userId      
+ 			   WHERE bookDate BETWEEN STR_TO_DATE('20221201', '%Y%m%d') 
+ 			   AND STR_TO_DATE('20230313', '%Y%m%d')  
+    		   ORDER BY bookId DESC
  	</select>
  	<resultMap type="com.footsalhaja.domain.main.BookDto" id="getBookList">
  		<id column="bookId" property="bookId"></id>
@@ -88,6 +91,11 @@
 		<result column="level" property="level"></result>
 		<result column="region" property="region"></result>
 		<result column="teamGender" property="teamGender"></result>
+		<result column="datepickerSday" property="datepickerSday"></result>
+		<result column="datepickerEday" property="datepickerEday"></result>
+		<result column="locationId" property="locationId"></result>
+		
+		
  	</resultMap>
  
 
@@ -109,12 +117,13 @@
 	</update>
 
 	<!-- 예약날짜 가져오기 -->
-	<select id="list">
-		select * from book 
+	<select id="getBookDate">
+		SELECT * FROM book 
 		<if test = "bookDate != null" >
-			where bookDate = #{bookDate}
+			WHERE bookDate = #{bookDate}
 		</if>
 	</select>
+	
 
 	<!--게시물 지우기  -->
 	<delete id="delete">

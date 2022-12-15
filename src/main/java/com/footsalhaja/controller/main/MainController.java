@@ -1,5 +1,7 @@
 package com.footsalhaja.controller.main;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -80,9 +82,10 @@ public class MainController {
 	
 	
 	  @GetMapping("list")
-	  public void list(Model model) {
+	  public void list(Model model, @RequestParam(name="datepickerSday", required = false)Date datepickerSday,
+			  						@RequestParam(name="datepickerEday", required = false)Date datepickerEday) {
 	  
-		  List<BookDto> list = service.listBook();
+		  List<BookDto> list = service.listBook(datepickerSday, datepickerEday);
 		  
 		  model.addAttribute("bookList", list); 
 	}
