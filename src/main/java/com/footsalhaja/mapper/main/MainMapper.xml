@@ -10,7 +10,7 @@
  	INSERT INTO book
 		(title, content, matchType, level, status, bookDate, teamGender, location_locationId, member_userId, bookTime)
 	VALUES
-		(#{title}, #{content}, #{matchType}, #{level}, #{status}, #{bookDate}, #{teamGender}, #{location_locationId}, #{userId}, #{bookTime})
+		(#{title}, #{content}, #{matchType}, #{level}, '1', STR_TO_DATE(#{bookDate}, '%Y-%m-%d'), #{teamGender}, #{location_locationId}, #{userId}, #{bookTime})
  	</insert>
  
 	<select id="selectNick" resultType="java.lang.String">
@@ -78,9 +78,9 @@
  	FROM
  		book b LEFT JOIN location l ON b.location_locationId = l.locationId
          	   LEFT JOIN member m ON b.member_userId = m.userId      
- 			   WHERE bookDate BETWEEN STR_TO_DATE('20221201', '%Y%m%d') 
- 			   AND STR_TO_DATE('20230313', '%Y%m%d')  
-    		   ORDER BY bookId DESC
+ 			   WHERE bookDate BETWEEN STR_TO_DATE(#{datepickerSday}, '%Y-%m-%d') 
+ 			   AND STR_TO_DATE(#{datepickerEday}, '%Y-%m-%d')  
+    		   ORDER BY bookDate DESC
  	</select>
  	<resultMap type="com.footsalhaja.domain.main.BookDto" id="getBookList">
  		<id column="bookId" property="bookId"></id>
@@ -93,11 +93,9 @@
 		<result column="level" property="level"></result>
 		<result column="region" property="region"></result>
 		<result column="teamGender" property="teamGender"></result>
+		<result column="locationId" property="locationId"></result>
 		<result column="datepickerSday" property="datepickerSday"></result>
 		<result column="datepickerEday" property="datepickerEday"></result>
-		<result column="locationId" property="locationId"></result>
-		
-		
  	</resultMap>
  
 
@@ -111,7 +109,7 @@
 		level = #{level},
 		location_locationId = #{locationId},
 		status = #{status},
-  	  	bookDate = #{bookDate},
+  	  	bookDate = STR_TO_DATE(#{bookDate}, '%Y-%m-%d'),
 		bookTime = #{bookTime}, 
 		teamGender = #{teamGender}
 	WHERE 

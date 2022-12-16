@@ -34,7 +34,7 @@
 	width: 50px;
 	height: 50px;
 	border-radius: 100%;
-	background: #016fb9;
+	background: #6D8B74;
 	
 	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
 }
@@ -56,7 +56,7 @@
 .fab {
 	width: 60px;
 	height: 60px;
-	background: #193f80;
+	background: #5F7161;
 }
 
 .fab-options {
@@ -102,6 +102,7 @@
 	max-width: 928px;
 	margin: 0 auto;
 	background-color: #faf5f5;
+	
 }
 
 #wrapper {
@@ -109,6 +110,7 @@
 	width: 100%;
 	background-color: #faf5f5;
 	letter-spacing: -1px;
+	font-family: 'Noto Sans KR', sans-serif;
 }
 
 #idOfUl {
@@ -192,7 +194,7 @@
 .stadiumName {
 	text-align: left;
 	font-family: 'Noto Sans KR', sans-serif;
-	font-size: 15px;
+	font-size: 16px;
 	font-weight: 500;
 	
 }
@@ -228,7 +230,7 @@
 	padding-top: 10px;
 	padding-bottom: 10px;
 	font-family: 'Noto Sans KR', sans-serif;
-	font-size: 13px;
+	font-size: 14px;
 	
 }
 
@@ -244,7 +246,132 @@
 	content: "|";
 }
 
+.opt {
+	text-align: center;
+	padding-bottom: 20px;
+}
 
+/* 달력 디자인 */
+ .ui-widget-header { border: 0px solid #dddddd; background: #fff; } 
+
+ .ui-datepicker-calendar>thead>tr>th { font-size: 14px !important; } 
+
+ .ui-datepicker .ui-datepicker-header { position: relative; padding: 10px 0; } 
+
+ .ui-state-default,
+ .ui-widget-content .ui-state-default,
+ .ui-widget-header .ui-state-default,
+ .ui-button,
+ html .ui-button.ui-state-disabled:hover,
+ html .ui-button.ui-state-disabled:active { border: 0px solid #c5c5c5; background-color: transparent; font-weight: normal; color: #454545; text-align: center; } 
+
+ .ui-datepicker .ui-datepicker-title { margin: 0 0em; line-height: 16px; text-align: center; font-size: 14px; padding: 0px; font-weight: bold; } 
+
+ .ui-datepicker { display: none; background-color: #fff; border-radius: 4px; margin-top: 10px; margin-left: 0px; margin-right: 0px; padding: 20px; padding-bottom: 10px; width: 300px; box-shadow: 10px 10px 40px rgba(0, 0, 0, 0.1); z-index: 9999 !important;} 
+
+ .ui-widget.ui-widget-content { border: 1px solid #eee; } 
+
+ #datepicker:focus>.ui-datepicker { display: block; } 
+
+ .ui-datepicker-prev,
+ .ui-datepicker-next { cursor: pointer; } 
+
+ .ui-datepicker-next { float: right; } 
+
+ .ui-state-disabled { cursor: auto; color: hsla(0, 0%, 80%, 1); } 
+
+ .ui-datepicker-title { text-align: center; padding: 10px; font-weight: 100; font-size: 20px; } 
+
+ .ui-datepicker-calendar { width: 100%; } 
+
+ .ui-datepicker-calendar>thead>tr>th { padding: 5px; font-size: 20px; font-weight: 400; } 
+
+ .ui-datepicker-calendar>tbody>tr>td>a { color: #000; font-size: 12px !important; font-weight: bold !important; text-decoration: none;}
+
+ .ui-datepicker-calendar>tbody>tr>.ui-state-disabled:hover { cursor: auto; background-color: #fff; } 
+
+ .ui-datepicker-calendar>tbody>tr>td { border-radius: 100%; width: 44px; height: 30px; cursor: pointer; padding: 5px; font-weight: 100; text-align: center; font-size: 12px; } 
+
+ .ui-datepicker-calendar>tbody>tr>td:hover { background-color: transparent; opacity: 0.6; } 
+
+ .ui-state-hover,
+ .ui-widget-content .ui-state-hover,
+ .ui-widget-header .ui-state-hover,
+ .ui-state-focus,
+ .ui-widget-content .ui-state-focus,
+ .ui-widget-header .ui-state-focus,
+ .ui-button:hover,
+ .ui-button:focus { border: 0px solid #cccccc; background-color: transparent; font-weight: normal; color: #2b2b2b; } 
+
+ .ui-widget-header .ui-icon { background-image: url("${pageContext.request.contextPath}/btns.png"); } 
+
+ .ui-icon-circle-triangle-e { background-position: -20px 0px; background-size: 36px; } 
+
+ .ui-icon-circle-triangle-w { background-position: -0px -0px; background-size: 36px; } 
+
+ .ui-datepicker-calendar>tbody>tr>td:first-child a { color: red !important; } 
+
+ .ui-datepicker-calendar>tbody>tr>td:last-child a { color: #0099ff !important; } 
+
+ .ui-datepicker-calendar>thead>tr>th:first-child { color: red !important; } 
+
+ .ui-datepicker-calendar>thead>tr>th:last-child { color: #0099ff !important; } 
+
+ .ui-state-highlight,
+ .ui-widget-content .ui-state-highlight,
+ .ui-widget-header .ui-state-highlight { border: 0px; background: #f1f1f1; border-radius: 50%; padding-top: 10px; padding-bottom: 10px; } 
+
+ .inp { padding: 10px 10px; background-color: #f1f1f1; border-radius: 4px; border: 0px; } 
+
+ .inp:focus { outline: none; background-color: #eee; }
+ 
+ .btnSearch {
+ 	background-color: #6D8B74;
+	border-radius: 5px;
+	border-color: #6D8B74;
+	color: #fff;
+	width: 60px;
+	height: 30px;
+ }
+
+/* .ui-datepicker {
+	width: 17em;
+	padding: .2em .2em 0;
+	display: none;
+    background:#4F6828;
+    margin-left: 0px;
+    z-index: 9999 !important;
+}
+.ui-datepicker .ui-datepicker-title {
+	margin: 0 2.3em;
+	line-height: 1.8em;
+	text-align: center;
+    color:#FFFFFF;
+    background:#4F6828;  
+}
+.ui-datepicker table {
+	width: 100%;
+	font-size: .7em;
+	border-collapse: collapse;
+    font-family:verdana;
+	margin: 0 0 .4em;
+    color:#000000;
+    background:#DCEAC8;    
+}
+.ui-datepicker td {
+
+	border: 0;
+	padding: 1px;
+
+    
+}
+.ui-datepicker td span,
+.ui-datepicker td a {
+	display: block;
+	padding: .8em;
+	text-align: right;
+	text-decoration: none;
+} */
 
 </style>
 </head>
@@ -256,11 +383,14 @@
 <c:url value="/main/insert" var="insertLink" >
 	<c:param name="userId" value="${userIdValue }"></c:param>
 </c:url>
+<c:url value="/mypage/list" var="mypageLink" >
+	<c:param name="userId" value="${userIdValue }"></c:param>
+</c:url>
 <c:url value="/member/login" var="loginLink"></c:url>
 
 
-<div id="wrapper">
 	<my:navbar></my:navbar>
+<div id="wrapper">
 	
 	<!-- carousel slide -->
 	<div id="body" class="container">
@@ -268,12 +398,9 @@
             <div class="col">
                 <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
                     <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
-                            class="active" aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                            aria-label="Slide 2"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                            aria-label="Slide 3"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
                     </div>
                     <div class="carousel-inner" style="border-radius: 5%">
                         <div class="carousel-item active">
@@ -329,20 +456,20 @@
 			</div>
 		</li>
 		<li>
-			<span class="fab-label">지역</span>
-			<div class="fab-icon-holder">
-				<i class="fa-solid fa-location-dot"></i>
+			<span class="fab-label">문의하기</span>
+			<div onclick="location.href" class="fab-icon-holder">
+				<i class="fa-solid fa-headset"></i>
 			</div>
 		</li>
-		<li>
+		<!-- <li>
 			<span class="fab-label">달력</span>
 			<div class="fab-icon-holder">
 				<i class="fa-solid fa-calendar-week"></i>
 			</div>
-		</li>
+		</li> -->
 		<li>
 			<span class="fab-label">마이페이지</span>
-			<div class="fab-icon-holder">
+			<div onclick="location.href='${mypageLink}'" class="fab-icon-holder">
 				<i class="fa-solid fa-circle-user"></i>
 			</div>
 		</li>
@@ -363,12 +490,6 @@
 
 
 
-<div class="opt">
-<span class="labelStr">기간</span>
-<div class="datepick_wrap"><input type="text" class="datepicker" placeholder="날짜 선택" id="datepickerSday"></div>
-<span class="waveStr">~</span>
-<div class="datepick_wrap"><input type="text" class="datepicker" placeholder="날짜 선택" id="datepickerEday"></div>
-</div>
 
 <%-- <nav id="navbar-example2" class="navbar bg-light px-3 mb-3">
 	<a class="navbar-brand" href="${listLink}">예약 리스트</a>
@@ -385,7 +506,16 @@
 	<div id="getId" class="">
 	  <div data-bs-spy="scroll" data-bs-target="#navbar-example2"  data-bs-smooth-scroll="true" class="scrollspy-example bg-light p-5 rounded-2 " tabindex="0">
 		<div class="row">
-		
+			<form name="searchForm">
+			<div class="opt">
+				<label for="" style="margin-right: 5px;">달력 조회</label>
+				<div class="datepick_wrap"><input style="width: 120px;" type="text" class="datepicker" placeholder="날짜 선택" value="${datepickerSday}" id="datepickerSday" name="datepickerSday"></div>
+				<span class="waveStr">~</span>
+				<div class="datepick_wrap"><input style="width: 120px;" type="text" class="datepicker" placeholder="날짜 선택" value="${datepickerEday}"id="datepickerEday" name="datepickerEday"></div>
+				<input class="btnSearch" type="button" id="btnSearch" value="조회">
+			</div>
+			</form>
+			
 		<ul class="list-group" id="idOfUl">
 			<c:forEach items="${bookList }" var="main">
 				<c:url value="/main/get" var="getLink">
@@ -537,57 +667,29 @@ $(function(){
 	         dayNamesMin: ['일','월','화','수','목','금','토'],
 	         showMonthAfterYear: true,
 	         yearSuffix: '.',         
-	         showOn:'both',
 	         minDate: 0,
-	         maxDate: "+3M" 
+	         maxDate: "+3M"
 	      });
 	      
 	      var now = new Date();
 	      firstDate = new Date(now.getFullYear(),now.getMonth());  
-	      $(date_id).val($.datepicker.formatDate('yy-mm-dd', now));      
-	   })   
+	      //$(date_id).val($.datepicker.formatDate('yy-mm-dd', now));      
+	   }) 
+	   
 	});
 
-/* $(document).ready(function(){
-    $('#datepickerSday').datepicker({ onSelect: function(dateText, inst) { alert("Working"); } });
-}); */
+$(document).ready(function(){
+	$('#btnSearch').on('click', function(){
+	   var startDate = $('#datepickerSday').val();
+	   var endDate = $('#datepickerEday').val();
 
-
-/* $(function() {
-	$("#datepickerSday").datepicker({
-		onSelect: function() {
-			var date1 = $.datepickerSday.formatDate("yy-mm-dd", $("#datepickerSday").datepicker("getDate"));
-			
-			date1 = $("#datepickerSday").val();
-			
-			console.log(date1);
-		
-		}
+		console.log("startDate : " + startDate + " / endDate : " + endDate );
+		var frm = document.searchForm;
+		frm.method = "Get";
+		frm.action ="list";
+		frm.submit();
 	});
-}); */
-	
-	
-/* $(document).ready(function() {
-	init_date()
-})
-
-function init_date() {
-	var $datepickerSday = $("#datepickerSday");
-	var $datepickerEday = $("#datepickerEday");
-	$datepickerSday.datepicker({
-		
-	})
-} */
-
-/* $('#datepickerSday').datepicker({
-	dateFormat: 'yy-mm-dd',
-	onSelect: function(dateString, inst) {
-		var date1 = $(this).val();
-		console.log(date1);
-		
-		
-	}
-}); */
+});
 
 
 

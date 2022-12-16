@@ -16,7 +16,7 @@ public interface MainService {
 	public int update(MainDto main);
 
 
-	public List<BookDto> listBook(Date datepickerSday, Date datepickerEday);
+	public List<BookDto> listBook(String datepickerSday, String datepickerEday);
 
 	
 	public int remove(int bookId);

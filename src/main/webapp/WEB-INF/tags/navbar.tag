@@ -1,4 +1,5 @@
 
+<%@tag import="java.time.LocalDate"%>
 <%@ tag language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%-- c커스텀 태그 사용하기 위해 --%>
 <%@ attribute name="active" required="false" %> <%-- narvar active 초기값 false --%>
@@ -7,11 +8,35 @@
 <%--  아랫줄 부터 작성하세요 . navbar 코드를 복붙해오기  --%>
 <%-- 시큐리티 로그인된 userId = userIdValue -> ${userIdValue } 으로 사용하겠습니다.--%>
 <sec:authentication property="name" var="userIdValue"/>
-
 <c:url value="/main/list" var="listLink" />
+<style>
+.bg1 {
+	position: relative;
+}
 
+.nav_img {
+	width: 30px;
+	position: absolute;
+	top: 10px;
+	left: 10px;
+}
 
-<nav class="navbar navbar-expand-md navbar-dark sticky-top" style="background: linear-gradient(to right, #5F7161, #6D8B74);">
+.userName {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+.bg2 {
+	margin-top: -10px;
+}
+
+#navbar {
+	padding: 0;
+}
+</style>
+
+<nav class="navbar navbar-expand-md navbar-dark sticky-top" style="background: linear-gradient(to right, #5F7161, #6D8B74); padding: 0;">
   <!-- One of the primary actions on mobile is to call a business - This displays a phone button on mobile only -->
   <div class="navbar-toggler-right" style="color: #fff;">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -19,20 +44,23 @@
     </button>
   </div>
 
-  <div class="collapse navbar-collapse flex-column " id="navbar">
-    <ul class="navbar-nav  w-100 px-3 justify-content-center" >
+  <div class="collapse navbar-collapse flex-column" id="navbar">
+    <ul class="navbar-nav  w-100 px-3 justify-content-center bg1" >
       <li class="nav-item active" >
-        <a class="nav-link" href="${listLink }">풋살하자<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="${listLink }">
+        <img class="nav_img" alt="" src="${pageContext.request.contextPath}/logo.png">
+        	<p>풋살하자</p>
+        <!-- <span class="sr-only">(current)</span> --></a>
       </li> 
-      <li class="nav-item active">
+      <li class="nav-item active userName">
          <a class="nav-link" href="" ><span style="font-weight:bold; ">${userIdValue } 님 환영합니다.</span></a>
       </li>
     </ul>
 
-    <ul class="navbar-nav w-100 px-3 justify-content-end" style="background: #5F7161;">
+    <ul class="navbar-nav w-100 px-3 justify-content-end bg2" style="background: #5F7161;">
 
 	<li class="nav-item active">
-        	<a class="nav-link" href="#">공지사항<span class="sr-only">(current)</span></a>
+        	<a class="nav-link" href="#">공지사항<!-- <span class="sr-only">(current)</span> --></a>
     </li>
 
      <li class="nav-item dropdown">

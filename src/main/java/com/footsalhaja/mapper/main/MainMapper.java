@@ -1,7 +1,5 @@
 package com.footsalhaja.mapper.main;
 
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 import com.footsalhaja.domain.main.BookDto;
@@ -21,7 +19,7 @@ public interface MainMapper {
 	  
 	String selectNick(String userId) ;
 
-	List<BookDto> listBook(Date datepickerSday, Date datepickerEday);
+	List<BookDto> listBook(String datepickerSday, String datepickerEday);
 	
 	BookDto select(int bookId, String nickName);
 

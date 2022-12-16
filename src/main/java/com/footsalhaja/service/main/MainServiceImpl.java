@@ -62,7 +62,7 @@ public class MainServiceImpl implements MainService {
 
 	//@Override
 	// 메인리스트 불러오기
-	public List<BookDto> listBook(Date datepickerSday, Date datepickerEday) {
+	public List<BookDto> listBook(String datepickerSday, String datepickerEday) {
 		return bookMapper.listBook(datepickerSday, datepickerEday);
 	}
 
