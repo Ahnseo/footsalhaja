@@ -55,11 +55,16 @@ li {
 }
 
 .list span {
-	padding: 0.75em;
+	padding: 1.0em;
+}
+
+.list .badge {
+	font-weight: bold;
+	font-size: 14px;
 }
 
 .list a {
-	text
+	font-size: 20px;
 }
 
 

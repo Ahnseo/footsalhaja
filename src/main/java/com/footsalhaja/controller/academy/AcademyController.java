@@ -103,12 +103,12 @@ public class AcademyController {
 	//썸머노트 이미지 업로드
 	  @PostMapping(value="/uploadSummernoteImageFile", produces = "application/json")
 	  
-	  @ResponseBody public HashMap<String, String> uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile) {
+	  @ResponseBody public HashMap<String, String> uploadSummernoteImageFile(BoardDto board,@RequestParam("file") MultipartFile multipartFile) {
 	  
 	  HashMap<String, String> jsonObject = new HashMap<>();
 	  
 	  
-	  String ab_filePath = "C:\\Users\\lnh1017\\Desktop\\study\\project\\footsalhaja\\sn_img\\"; //저장될 외부 파일 경로 String
+	  String ab_filePath = "academy/" + board.getAb_number(); //저장될 외부 파일 경로 String
 	  String originalFileName = multipartFile.getOriginalFilename(); //오리지날 파일명 String
 	  
 	  String ab_image = UUID.randomUUID() + originalFileName; //랜덤 UUID+파일이름으로 저장될 파일 새 이름
@@ -199,7 +199,7 @@ public class AcademyController {
 								@PathVariable String filename, HttpServletResponse response) throws Exception {
 		
 		//다운받을 파일 경로 지정
-		File downloadFile =  new File("C:\\Users\\lnh1017\\Desktop\\study\\project"+ab_number+"\\"+filename);
+		File downloadFile =  new File("academy/"+ab_number+"/"+filename);
 		
 		//파일을 byte 배열로 변환
 		byte fileByte[] = FileUtils.readFileToByteArray(downloadFile);
