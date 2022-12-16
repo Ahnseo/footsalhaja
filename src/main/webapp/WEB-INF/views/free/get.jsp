@@ -52,7 +52,7 @@ ul {
 .post_wrap {
 	border: 1px solid #ced4da;
 	border-radius: 10px;
-	margin: 0 0 30px 0;
+	margin-bottom: 10px;
 }
 
 /* 상단 버튼부분 */
@@ -61,10 +61,14 @@ ul {
 	position: relative;
 }
 .topbtnBox .modifyBtn {
-	text-align: right;
 	position: absolute;
 	top: 0;
 	right: 0;
+}
+.topbtnBox .removeBtn {
+	position: absolute;
+	top: 0;
+	right: 60px;
 }
 
 /* 상단 제목부분 */
@@ -103,6 +107,9 @@ ul {
 .post_wrap .likeBox {
 	text-align: center;
 }
+.post_wrap .likeBox i {
+	color: #1cb99e;
+}
 
 .likeBox .likeIcon {
 	font-size: 26px;
@@ -118,8 +125,89 @@ ul {
 	margin-top: -15px;
 	font-weight: bold;
 	color: #333;
-	
 }
+
+/* 댓글 */
+.replyBox  {
+	border: 1px solid #ced4da;
+	border-radius: 10px;
+	margin-bottom: 30px;
+	height: 130px;
+	position: relative;
+}
+
+.replyBox .row {
+	padding-left: 30px;	
+}
+
+.replyBox .replyContentInput {
+	border: 0;
+	height: 80px;
+	margin-top: 10px;
+	padding-left: 20px;
+}
+.replyBox .replyBnt {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+}
+
+.notLogin {
+	text-align: center;
+	margin-top: 55px;
+}
+
+/* 댓글 리스트 */
+.reply_list {
+	margin-bottom: 10px; 
+	padding: 0 20px;
+}
+.reply_list span {
+	height: 1px;
+	background: #ced4da;
+	margin-bottom: 20px; 
+}
+
+.reply_list .replylist_top {
+	text-align: left;
+	position: relative;
+}
+
+.reply_list .replylist_top p {
+	display: inline-block;
+	font-size: 14px;
+}
+.reply_list .replylist_top .ago {
+	display: inline-block;
+	font-size: 12px;
+	color: #666;
+	margin-left: 10px;
+}
+
+.reply_list .replylist_top .btn {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+.reply_list .replylist_top .b1 {
+	position: absolute;
+	top: 0;
+	right: 45px;
+}
+
+/* 파일 */
+.fileBox {
+	margin-top: 100px;
+	margin-left: 40px;
+}
+
+.fileBox a {
+	color: #666;
+}
+
+
+
+
 </style>
 </head>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
@@ -131,16 +219,28 @@ ul {
 <my:navbar></my:navbar>
 <input type="hidden" value="${board.fb_number }" />
 <input type="hidden" value="${board.member_userId }"  />
+<input type="hidden" id="freeBoard_fb_number" value="${board.fb_number }" readonly/>
 
 <!-- 전체 컨테이너 -->
 <div class="container-sm" >
-	<!-- 전체글/수정버튼 -->
+
+	<!-- 게시글로 돌아가기 버튼 -->
 	<div class="topbtnBox">
-		<button type="button" class="btn btn-outline-success">전체게시글가는 링크달기</button>
-		<!-- 작성자와 authentication.name이 같아야 수정버튼 보여주기 -->
-		<sec:authentication property="name" var="userIdValue" />
+		<c:url value="/free/list" var="listLink"></c:url>
+		<a href="${listLink }">
+			<button type="button" class="btn btn-outline-success">게시글 목록</button>
+		</a>
 		
+		<!-- 작성자와 authentication.name이 같아야 버튼 보여주기 -->
+		<sec:authentication property="name" var="userIdValue" />
 		<c:if test="${board.member_userId == userIdValue}" >
+		<!-- 삭제버튼 -->
+			<c:url value="/free/remove" var="removeLink"></c:url>
+			<form id="removeForm" action="${removeLink }" method="post">
+				<input type="hidden" name="number" value="${board.fb_number }"/>
+			</form>
+			<input class="btn btn-outline-success removeBtn" type="submit" value="삭제" data-bs-toggle="modal" data-bs-target="#removeModal"/>
+			<!-- 수정버튼 -->
 			<c:url value="/free/modify" var="modifyLink">
 				<c:param name="number" value="${board.fb_number }"></c:param>
 			</c:url>
@@ -161,6 +261,18 @@ ul {
 			</ul>
 		</div>
 		<div id="summernote" class="top_content">${board.fb_content }</div>
+		
+	<!-- 파일 -->
+	<c:set var="ctx" value="${pageContext.request.contextPath}" />
+	<div class="fileBox">
+		<c:forEach items="${board.fb_fileName }" var="fileName">
+			<div class="fileText">
+				<i class="fa-solid fa-paperclip"></i>
+				<a href="${ctx }/free/download/${board.fb_number}/${fileName}">
+				<c:out value="${fileName.substring(36)}" /></a>
+			</div>
+		</c:forEach>
+	</div>
 		
 		<!-- 좋아요 -->
 		<div class="likeBox">
@@ -183,31 +295,36 @@ ul {
 		
 	</div><!-- 본문끝 -->
 	
-		
-		
-	<hr />
-	
+			
 	<!-- 댓글입력 알림 -->
-	<div id="replyMessage1"></div>
+	<!-- <div id="replyMessage1"></div> -->
 	
-	게시글번호 <input type="text" id="freeBoard_fb_number" value="${board.fb_number }" readonly/><br>
-	<!-- 로그인 했을때-->
-	<sec:authorize access="isAuthenticated()">
-	<!-- 댓글입력  -->
-		<%-- 댓글컨트롤러에서 Authentication으로 아이디 받음
-		작성자 <input
-				value="${userIdValue }" id="member_userId"
-		 		readonly type="text" name="member_userId"/><br> --%>
-		댓글 <input type="text" id="fb_replyContent" /><br>
-				
-		<button id="replyButton1">댓글쓰기</button>
-	</sec:authorize>
 	
-	<!-- 로그인 안했을때 -->
-	<sec:authorize access="not isAuthenticated()">
-		댓글을 작성하시려면 로그인하세요.
-	</sec:authorize>
 	
+	<!-- 댓글 부분 -->
+	<div class="replyBox container">
+			<!-- 로그인 했을때-->
+			<sec:authorize access="isAuthenticated()">
+			<!-- 댓글입력  -->
+			<%-- 댓글컨트롤러에서 Authentication으로 아이디 받음
+			작성자 <input
+					value="${userIdValue }" id="member_userId"
+			 		readonly type="text" name="member_userId"/><br> --%>
+			 	<div class="row">
+				<input class="row replyContentInput" type="text" id="fb_replyContent"
+					placeholder="댓글을 입력해주세요."/><br>
+			 	</div>
+						
+				<button id="replyButton1" class="replyBnt btn btn-success" >댓글 등록</button>
+			</sec:authorize>
+			
+			<!-- 로그인 안했을때 -->
+			<div class="notLogin">
+				<sec:authorize access="not isAuthenticated()">
+					댓글을 작성하시려면 로그인하세요.
+				</sec:authorize>
+			</div>
+		</div>
 	
 	<!-- 댓글 리스트 -->
 		<div class="row">
@@ -219,6 +336,25 @@ ul {
 		</div>
 		
 </div> <!-- 전체 컨테이너 -->
+	
+	<!-- 게시글 삭제 모달 -->
+	<div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h1 class="modal-title fs-5" id="exampleModalLabel">삭제 확인</h1>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        삭제하시겠습니까?
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+	        <button id="removeConfirmButton" type="button" class="btn btn-primary">삭제</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 	
 	<!-- 댓글 삭제 확인 모달 -->
 	<div class="modal fade" id="replyDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -258,11 +394,16 @@ ul {
 	  </div>
 	</div>
 
-	
+
 	
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script>
 const ctx = "${pageContext.request.contextPath}";
+
+//삭제확인 버튼 클릭하면 삭제 form 전송
+document.querySelector("#removeConfirmButton").addEventListener("click", function() {
+	document.querySelector("#removeForm").submit();
+});
 
 /* 좋아요 */
 document.querySelector("#likeButton").addEventListener("click", function() {
@@ -307,7 +448,6 @@ document.querySelector("#replyModifyConfirmButton").addEventListener("click", fu
 		body : JSON.stringify(data)
 	})
 	.then(res => res.json())
-	.then(data => document.querySelector("#replyMessage1").innerText = data.message)
 	.then(() => listReply());
 });
 
@@ -347,8 +487,8 @@ function listReply() {
 			const rereplyButtonId = `rereplyButton\${item.fb_replyNumber}`;
 			
 			/* 수정 삭제버튼 */
-			const editButton = `<button data-bs-toggle="modal" data-bs-target="#replyModifyModal" data-reply-id="\${item.fb_replyNumber}" id="\${modifyReplyButtonId}"> 수정</button>
-								<button data-bs-toggle="modal" data-bs-target="#replyDeleteModal" data-reply-id="\${item.fb_replyNumber}" id="\${removeReplyButtonId}"> 삭제</button>`
+			const editButton = `<button class="btn btn-outline-success btn-sm b1" data-bs-toggle="modal" data-bs-target="#replyModifyModal" data-reply-id="\${item.fb_replyNumber}" id="\${modifyReplyButtonId}"> 수정</button>
+								<button class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#replyDeleteModal" data-reply-id="\${item.fb_replyNumber}" id="\${removeReplyButtonId}"> 삭제</button>`
 			/* <button data-reply-id="\${item.fb_replyNumber}" id="\${rereplyButtonId}"> 대댓글</button>
 			<div id="rereplyForm">
 					<input id="rereplyContent" name="rereplyContent" type="text">
@@ -356,12 +496,14 @@ function listReply() {
 				</div>`*/
 								
 			const replyDiv = 
-				`<div>
-					댓글 : \${item.fb_replyContent}
-					작성시간 : \${item.ago}
-					작성자 : \${item.member_userId}
-					닉네임 : \${item.nickName}
-					\${item.editable ? editButton : ''}
+				`<div class="reply_list">
+					<span class="row"></span>
+					<div class="replylist_top">
+						<p> \${item.nickName}</p>
+						<p class="ago"> \${item.ago}</p>
+						\${item.editable ? editButton : ''}
+					</div>
+					<p> \${item.fb_replyContent}</p>
 				</div>`;
 				
 			replyListContainer.insertAdjacentHTML("beforeend", replyDiv);
@@ -392,7 +534,6 @@ function removeReply(replyId) {
 		method : "delete"
 	})
 	.then(res => res.json())
-	.then(data => document.querySelector("#replyMessage1").innerText = data.message)
 	.then(() => listReply());
 }
 
@@ -446,7 +587,6 @@ document.querySelector("#replyButton1").addEventListener("click", function() {
 	.then(res => res.json())
 	.then(data => {
 		document.querySelector("#fb_replyContent").value = "";
-		document.querySelector("#replyMessage1").innerText = data.message;
 	})
 	.then(() => listReply());
 });

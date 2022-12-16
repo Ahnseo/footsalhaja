@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -13,8 +14,8 @@ public class BoardDto {
 	private String fb_category;
 	private String fb_content;
 	private String fb_title;
-	private String member_userId;
 	private LocalDateTime fb_insertDatetime;
+	private String member_userId;
 	private int fb_likeCount;
 	private int fb_replyCount;
 	private int fb_viewCount;
@@ -22,6 +23,9 @@ public class BoardDto {
 	private String nickName;
 	private boolean liked;
 	private int ranking;
+	
+	private List<String> fb_fileName;
+	private int countFile;
 	
 	// 게시물 입력시간 변경
 	public String getAgo() {

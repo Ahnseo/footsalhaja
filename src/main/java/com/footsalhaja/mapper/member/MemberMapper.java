@@ -45,10 +45,27 @@ public interface MemberMapper {
 	public MemberDto getUserAbReplyList(String userId);
 	public MemberDto getUserMainReplyList(String userId);
 	
+	public int countFbReplyList(String userId);
+	public int countAbReplyList(String userId);
+	public int countMainReplyList(String userId);
+	
 	//내가 좋아요한 글 보기
 	public MemberDto getUserAbLikeList(String userId);
 	public MemberDto getUserFbLikeList(String userId);
+	
+	public int countUserAbLike(String userId);
+	public int countUserFbLike(String userId);
+
+	//프로필 이미지 넣기
+	public int insertprofileImg(String userId, String profileImg);
+	
+	//프로필 이미지 삭제
+	public int deleteProfileImgByUserId(String userId);
+
 
 	public int updateMemberAuth(String userId, List<String> newAuthorities);
+
+
+	public void deleteProfileImgByUserIdAndPrifileImg(String userId, String originalFilename);
 
 }

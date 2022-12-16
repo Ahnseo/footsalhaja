@@ -205,6 +205,27 @@
 		WHERE academyBoard_ab_number = #{ab_number} AND ab_fileName = #{originalFilename}
 	</delete>
 	
+	 	<!-- 좋아요 순위 -->
+ 	<!-- 기준 시간을 자동으로 바뀌게 해야함
+ 	현재시간으로 정해두기엔 초마다 바뀌니까 시간대별로(1시간간격쯤으로 )-->
+ 	 <select id="likeRank" resultType="com.footsalhaja.domain.academy.BoardDto">
+		SELECT
+			a.ab_number,
+			a.ab_category,
+			a.ab_title,
+	        a.ab_viewCount,
+	        a.ab_insertDatetime,
+	    	COUNT(DISTINCT r.ab_replyNumber) replyCnt,
+	    	COUNT(DISTINCT l.member_userId) countLike,
+	        DENSE_RANK() OVER (ORDER BY ab_likeCount DESC) as ranking
+	 	FROM
+			(select * from academyBoard a where a.ab_insertDatetime > date_add(now(),interval -1 week))
+	 		a LEFT JOIN academyBoardReply r ON a.ab_number = r.academyBoard_ab_number
+	 					LEFT JOIN academyBoardLike l ON a.ab_number = l.academyBoard_ab_number
+	 	GROUP BY a.ab_number
+	 	ORDER BY ab_likeCount DESC, ab_viewCount DESC
+	    LIMIT 5
+ 	</select>
  
  </mapper>
   

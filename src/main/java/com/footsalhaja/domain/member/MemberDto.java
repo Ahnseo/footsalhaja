@@ -36,6 +36,8 @@ public class MemberDto {
 	//private LocalDateTime deleteDatetime;
 	
 	private List<String> auth; 
+	
+	private String profileImg;
 
 	//마이페이지 내글 보기(아카데미게시판) 
 	private List<BoardDto> userAbList;

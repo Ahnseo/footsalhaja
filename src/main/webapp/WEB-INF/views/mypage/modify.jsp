@@ -43,8 +43,23 @@
                 <!-- Contact Section Form-->
                 <div class="row justify-content-center">
                     <div class="col-lg-8 col-xl-7">
-                        <form action="/mypage/modify" method="post" id="contactForm" data-sb-form-api-token="API_TOKEN">
-                            <!-- ID -->
+                        <form action="/mypage/modify" method="post" id="contactForm" data-sb-form-api-token="API_TOKEN" enctype="multipart/form-data">
+						<%-- 프로필 이미지 출력 --%>
+						<div style="text-align : center;">
+							<c:forEach items="${member.profileImg }" var="name">
+								<object data="${pageContext.request.contextPath}/기본프로필.png" type="image/png">
+								<textarea value = "${pageContext.request.contextPath}/user_profile/${member.userId }/${name}"></textarea>
+									<img src="${pageContext.request.contextPath}/user_profile/${member.userId }/${name}">
+								</object>
+							</c:forEach>		
+						</div>	
+					
+						<div class="form-floating mb-3"">
+							<input type="file" accept="image/*" class="form-control" name="file">
+						</div>
+
+
+						<!-- ID -->
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="userId" type="text" name ="userId" value="${member.userId}" data-sb-validations="required" readonly/>
                                 <label for="userId">ID</label>
@@ -75,20 +90,6 @@
                                 <label for="nickName">닉네임</label>
                             </div>
 
-                            <!-- 회원권한-->
-							<input type="hidden" name="auth" value="${member.auth}" readonly >
-							<div class="form-floating mb-3">
-							<c:if test="${member.auth.get(0) eq 'user'}">
-								<input class="form-control" id="permission" type="text" name="permission" value="일반회원" data-sb-validations="required" readonly /> 
-							</c:if>
-							<c:if test="${member.auth.get(0) eq 'manager'}">
-								<input class="form-control" id="permission" type="text" name="permission" value="매니저" data-sb-validations="required" readonly /> 
-							</c:if>
-							<c:if test="${member.auth.get(0) eq 'admin'}">
-								<input class="form-control" id="permission" type="text" name="permission" value="관리자" data-sb-validations="required" readonly /> 
-							</c:if>	
-								<label for="permission">회원권한</label>
-							</div>
                             
                             <!-- 이메일 -->
                             <div class="form-floating mb-3">
@@ -98,18 +99,42 @@
                                 <div class="invalid-feedback" data-sb-feedback="email:email">유효하지않은 메일 주소입니다.</div>
                             </div>
 
-                            <div class="form-floating mb-3">
-	                            <input class="form-control" type="text" name="birthYY" value="${member.birthYY}" readonly />
-	                            <label for="birthYY">년</label>
-                            </div>
-                            <div class="form-floating mb-3">
-	                            <input class="form-control" type="text" name="birthMM" value="${member.birthMM}" readonly />
-	                            <label for="birthMM">월</label>
-                            </div>
-                            <div class="form-floating mb-3">
-	                            <input class="form-control" type="text" name="birthDD" value="${member.birthDD}" readonly />
-	                            <label for="birthDD">일</label>
-                            </div>
+                            
+						<!-- 회원권한 -->
+						<input type="hidden" name="auth" value="${member.auth}" readonly>
+						<div class="form-floating mb-3">
+							<c:if test="${member.auth.get(0) eq 'user'}">
+								<input class="form-control" id="permission" type="text"
+									name="permission" value="일반회원" data-sb-validations="required"
+									readonly />
+							</c:if>
+							<c:if test="${member.auth.get(0) eq 'manager'}">
+								<input class="form-control" id="permission" type="text"
+									name="permission" value="매니저" data-sb-validations="required"
+									readonly />
+							</c:if>
+							<c:if test="${member.auth.get(0) eq 'admin'}">
+								<input class="form-control" id="permission" type="text"
+									name="permission" value="관리자" data-sb-validations="required"
+									readonly />
+							</c:if>
+							<label for="permission">회원권한</label>
+						</div>
+						<!-- 생년월일 -->
+						<div class="form-floating mb-3">
+							<c:if test="${member.birthMM < 10}">
+								<c:set var="zeroMM" value="0" />
+							</c:if>
+							<c:if test="${member.birthDD < 10}">
+								<c:set var="zeroDD" value="0" />
+							</c:if>
+
+							<input class="form-control" type="text" id="birthYYMMDD"
+								name="birthYY"
+								value="${member.birthYY}${zeroMM}${member.birthMM}${zeroDD}${member.birthDD}"
+								readonly /> <label for="birthYYMMDD">생년월일</label>
+						</div>
+
                             
                             <div class="form-floating mb-3">
 	                            <input class="form-control" type="text" name="activityArea" value="${member.activityArea}" readonly />

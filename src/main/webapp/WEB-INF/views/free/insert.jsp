@@ -120,7 +120,7 @@
 <!-- 전체 컨테이너 -->
 <div class="container-sm" >
 
-	<form action="" method="post">
+	<form action="" method="post" enctype="multipart/form-data">
 		<div class="categorySelectBox">
 			<p>카테고리</p>
 			<select class="categorySelect" name="fb_category">
@@ -136,7 +136,7 @@
 			<textarea id="summernote" name="fb_content" ></textarea>
 		</div>
 		<div>
-			<input class="form-control" type="file" name="fb_fileName"/><br>
+			<input multiple="multiple" type="file" class="form-control" name="files"/>
 		</div>
 	<input
 		value="${userIdValue }"
@@ -180,12 +180,12 @@ $(document).ready(function() {
 			data : data,
 			type : "POST",
 			url : `\${ctx}/free/uploadSummernoteImageFile`,
-			enctype : 'multipart/data',
 			contentType : false,
+			enctype : 'multipart/data',
 			processData : false,
 			success : function(data) {
             	//항상 업로드된 파일의 url이 있어야 한다. ('insertImage', url, filename)
-				$(editor).summernote('insertImage', data.url, data.fb_fileName);
+				$(editor).summernote('insertImage', data.url, data.fb_image);
             	/* //이미지가 업로드 되면, 하위에 테스트 확인차 추가하도록 해놓은 부분
 				$('#imageBoard > ul').append('<li><img src="'+url+'" width="480" height="auto"/></li>'); */
 			}

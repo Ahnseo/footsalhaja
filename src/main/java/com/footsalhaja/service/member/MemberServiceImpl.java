@@ -1,11 +1,16 @@
 package com.footsalhaja.service.member;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
 
 import com.footsalhaja.domain.member.MemberDto;
 import com.footsalhaja.domain.member.MemberPageInfo;
@@ -64,14 +69,62 @@ public class MemberServiceImpl implements MemberService {
 	
 	//userId로 회원정보 가져오기 
 	@Override
-	public MemberDto selectMemberInfoByUserId(String userId) {
+	public List<Object> selectMemberInfoByUserId(String userId) {
+		List<Object> list = new ArrayList<>();
 		
-		return memberMapper.selectMemberInfoByUserId(userId);
+		MemberDto memberInfo = memberMapper.selectMemberInfoByUserId(userId);
+		
+		Map<String, Integer> countActivity = new HashMap<>();
+		
+		int countAllAblist = memberMapper.countAllAblist(userId);
+		int countAllFblist = memberMapper.countAllFblist(userId);
+		int countAllMainlist = memberMapper.countAllMainlist(userId);
+		int countAbReplyList = memberMapper.countAbReplyList(userId);
+		int countFbReplyList = memberMapper.countFbReplyList(userId);
+		int countMainReplyList = memberMapper.countMainReplyList(userId);
+		int countUserAbLike = memberMapper.countUserAbLike(userId);
+		int countUserFbLike = memberMapper.countUserFbLike(userId);
+		
+		countActivity.put("countAllAblist", countAllAblist);
+		countActivity.put("countAllFblist", countAllFblist);
+		countActivity.put("countAllMainlist", countAllMainlist);
+		countActivity.put("countAbReplyList", countAbReplyList);
+		countActivity.put("countFbReplyList", countFbReplyList);
+		countActivity.put("countMainReplyList", countMainReplyList);
+		countActivity.put("countUserAbLike", countUserAbLike);
+		countActivity.put("countUserFbLike", countUserFbLike);
+		
+		list.add(memberInfo);
+		list.add(countActivity);
+		
+		return list;
 	}
 	
 	// userId로 회원정보 삭제하기 (modify.jsp 와 delete에 사용할 것 )
 	@Override
 	public int deleteMemberInfoByUserId(String userId) {
+		//프로필 이미지 삭제
+		
+		//저장된 파일의 경로 지정
+		String path = "C:\\Users\\lnh1017\\Desktop\\study\\project\\footsalhaja\\user_profile" +userId;
+		File folder = new File(path);
+		
+		File[] listFiles = folder.listFiles();
+
+		if (listFiles != null) {
+				for (File file : listFiles) {
+					file.delete();
+				}
+			}
+		
+		for (File file: listFiles) {
+			file.delete();
+		}
+		folder.delete();
+		
+		memberMapper.deleteProfileImgByUserId(userId);
+		
+		
 		//회원탈퇴 FK Authority ByUserId
 		memberMapper.deleteAuthorityByUserId(userId);
 		//회원탈퇴 member ByUserId
@@ -80,7 +133,28 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
-	public int updateMemberInfoByUserId(MemberDto memberModifiedValues) {
+	public int updateMemberInfoByUserId(MemberDto memberModifiedValues, MultipartFile file) {
+		
+		memberMapper.deleteProfileImgByUserIdAndPrifileImg(memberModifiedValues.getUserId(),file.getOriginalFilename());
+		
+		if (file != null && file.getSize() > 0) {
+			memberMapper.insertprofileImg(memberModifiedValues.getUserId(), file.getOriginalFilename());
+			// 파일 저장
+			// User id 이름의 새폴더 만들기
+			File folder = new File("C:\\Users\\lnh1017\\Desktop\\study\\project\\footsalhaja\\user_profile\\" + memberModifiedValues.getUserId());
+			folder.mkdirs();
+			
+			File dest = new File(folder, file.getOriginalFilename());
+			
+			try {
+				file.transferTo(dest);
+			} catch (Exception e) {
+				// @Transactional은 RuntimeException에서만 rollback 됨
+				e.printStackTrace();
+				throw new RuntimeException(e);
+			}
+		}
+		
 		int cnt = memberMapper.updateMemberInfoByUserId(memberModifiedValues);
 		//System.out.println(cnt);
 		System.out.println("serviceAuth : "+memberModifiedValues.getAuth());

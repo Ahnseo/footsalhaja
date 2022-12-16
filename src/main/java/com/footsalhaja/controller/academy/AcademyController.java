@@ -49,7 +49,7 @@ public class AcademyController {
 	
 	//list 목록
 	@GetMapping("list")
-	public void list(@RequestParam(name = "category", defaultValue = "") String category,
+	public void list(@RequestParam(name = "category", defaultValue = "") String category, BoardDto board,
 			Criteria cri, Model model) {
 	
 		// request param
@@ -71,6 +71,10 @@ public class AcademyController {
 		// forward
 		
 		cri.setKeyword(keyword);
+		
+		// 좋아요 순위
+		List<BoardDto> rank = service.likeRank(board); 
+		model.addAttribute("likeRank", rank);
 		
 	}
 	

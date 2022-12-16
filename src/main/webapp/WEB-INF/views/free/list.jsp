@@ -56,7 +56,7 @@ li {
 #likeBestRankBox {
 	border-radius: 15px;
 	border: 1px solid #ddd;
-	margin: 0 0 30px 0;
+	margin-left: 30px;
  }
  
 #likeBestRankBox p {
@@ -64,7 +64,7 @@ li {
 	font-weight: bold;
 	letter-spacing: -1px;
 	
-	margin: 15px 30px;
+	margin: 15px 0  10px 30px;
 }
 
 #likeBestRankBox span {
@@ -77,11 +77,10 @@ li {
  	border: 0;
  }
  
- #bestTable tr td.title:hover{
-	text-decoration:underline;
-	/* cursor: pointer; */
+ #bestTable .title:hover{
+ 	text-decoration: underline;
  }
- 
+  
  #bestTable tr td a {
  	text-decoration: none;
  	color: #333;
@@ -117,7 +116,7 @@ li {
 }
 
 #categoryBox .cateBtn:hover {
-	color: green;
+	color: #1cb99e;
 	font-weight: bold;
 	text-decoration: underline;
 }
@@ -138,7 +137,14 @@ li {
 #listBox .table .listTitle {
 	text-align: left;
 }
+#listBox .table .trtr {
+	cursor: pointer;
+}
 
+#listBox .table .trtr:hover .listTitle {
+ 	font-weight: bold;
+ }
+ 
 #listBox .table tr td {
 	height: 60px;
 	vertical-align: middle;
@@ -149,6 +155,7 @@ li {
  	color: #333;
  	padding: 15px;
  }
+ 
 
 /* 검색 페이징 글작성버튼 */
 #bottomBox{
@@ -228,10 +235,10 @@ li {
 	<!-- 좋아요 베스트 -->
 	<div id="likeBestRankBox" >
 		<p><span>HOT</span> 자유게시판 이번주 인기 글 </p>
-		<table id="bestTable" class="table">
+		<table id="bestTable" class="table table-sm">
 			<c:forEach items="${likeRank }" var="rank" >
 			<tr>
-				<td class="first"  width="100">
+				<td class="first"  width="100" >
 					<p>${rank.fb_category }</p>
 				</td>
 				<td class="title">
@@ -242,7 +249,7 @@ li {
 						${rank.fb_title }
 					</a>
 					<c:if test="${rank.fb_replyCount > 0 }">
-						<i class="fa-regular fa-comment"></i>${rank.fb_replyCount }
+						&nbsp;&nbsp;<i class="fa-regular fa-comment"></i> ${rank.fb_replyCount }
 					</c:if>
 				</td>
 				<td width="70"><i class="fa-regular fa-heart"></i> ${rank.fb_likeCount }</td>
@@ -281,18 +288,23 @@ li {
 		</thead>
 		<tbody>
 			<c:forEach items="${boardList }" var="board">
-				<tr>
+				<c:url value="/free/get" var="getLink">
+					<c:param name="number" value="${board.fb_number }"></c:param>
+				</c:url>
+				<tr onclick="location.href='${getLink}'" class="trtr">
 					<td>${board.fb_number }</td>
 					<td>${board.fb_category }</td>
 					<td class="listTitle col-sm-6">
-						<c:url value="/free/get" var="getLink">
-							<c:param name="number" value="${board.fb_number }"></c:param>
-						</c:url>
 						<a href="${getLink}">
 							${board.fb_title }
 						</a>
+						<!-- 댓글 수 출력 -->
 						<c:if test="${board.fb_replyCount > 0 }">
-							<i class="fa-regular fa-comment"></i>${board.fb_replyCount }
+							<i class="fa-regular fa-comment"></i> ${board.fb_replyCount }
+						</c:if>
+						<!-- 파일 수 출력 -->
+						<c:if test="${board.countFile > 0 }">
+								<i class="fa-regular fa-file"></i> ${board.countFile }
 						</c:if>
 					</td>
 					<td>${board.nickName }</td>
@@ -411,7 +423,7 @@ li {
 		</sec:authorize>
 		<!-- 로그인 안 했을때 -->
 		<sec:authorize access="not isAuthenticated()">
-			<button data-bs-toggle="modal" data-bs-target="#nonMemberModal" id="nonMemberInsertButton">글쓰기</button>
+			<button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#nonMemberModal" id="nonMemberInsertButton">글쓰기</button>
 		</sec:authorize>	
 		</div>
 	</div>

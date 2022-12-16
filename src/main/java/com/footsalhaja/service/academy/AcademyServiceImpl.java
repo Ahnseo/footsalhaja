@@ -237,4 +237,10 @@ public class AcademyServiceImpl implements AcademyService{
 		return cnt;
 	}
 
+	//좋아요 순위
+	@Override
+	public List<BoardDto> likeRank(BoardDto board) {
+		return mapper.likeRank(board);
+	}
+	
 }

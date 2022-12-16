@@ -1,15 +1,25 @@
 package com.footsalhaja.controller.member;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 
-
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.footsalhaja.domain.academy.AcademyReplyDto;
 import com.footsalhaja.domain.academy.BoardDto;
@@ -30,9 +40,18 @@ public class MypageContorller {
 	
 	@GetMapping("list")
 	public void mypageList(String userId, Model model){
-		// list에서 기본 정보를 히든 input으로 넣어둘까 ?
-		MemberDto myInfo = memberService.selectMemberInfoByUserId(userId);
+		
+		MemberDto memberInfoByUserId =  (MemberDto) memberService.selectMemberInfoByUserId(userId).get(0);
+		System.out.println("멤버인포 :"+memberInfoByUserId);
+		model.addAttribute("member", memberInfoByUserId);
+		
+		MemberDto myInfo = (MemberDto) memberService.selectMemberInfoByUserId(userId).get(0);
 		model.addAttribute("myInfo", myInfo);
+		System.out.println(myInfo);
+		
+		Map<String, Integer> countActivity = (Map<String, Integer>) memberService.selectMemberInfoByUserId(userId).get(1);
+		model.addAttribute("countActivity", countActivity);
+		System.out.println(countActivity);
 		
 	}
 	@PostMapping("list")
@@ -40,22 +59,41 @@ public class MypageContorller {
 		//form post로 무엇을 할까 ?
 	}
 	
+	
+	
 	@GetMapping({"get", "modify"})
 	public void myGetAndModify(@RequestParam(name="userId") String userId, Model model){
 		//RequestParam 으로 member/get?userId= 아이디값 가져와서 db 요청 -> MemberDto 타입 member ->  addAttribute "member" 넣음 . 
 		//System.out.println(userId);
-		MemberDto memberInfoByUserId = memberService.selectMemberInfoByUserId(userId);
-		System.out.println(memberInfoByUserId);
+		MemberDto memberInfoByUserId =  (MemberDto) memberService.selectMemberInfoByUserId(userId).get(0);
+		System.out.println("멤버인포 :"+memberInfoByUserId);
 		model.addAttribute("member", memberInfoByUserId);
+	}
+	
+	@GetMapping(value ="{userId}/profileImg", produces = MediaType.IMAGE_JPEG_VALUE)
+	public ResponseEntity<byte[]> myGetAndModifyWithProFile(@PathVariable(name="userId") String userId) throws Exception {
+		
+		
+		//RequestParam 으로 member/get?userId= 아이디값 가져와서 db 요청 -> MemberDto 타입 member ->  addAttribute "member" 넣음 . 
+		//System.out.println(userId);
+		MemberDto memberInfoByUserId = (MemberDto) memberService.selectMemberInfoByUserId(userId).get(0);
+		
+		//프로필 이미지 보이기
+		InputStream imageStream = new FileInputStream("C:\\Users\\lnh1017\\Desktop\\study\\project\\footsalhaja\\user_profile\\"+ userId +"\\" + memberInfoByUserId.getProfileImg());
+		byte[] imageByteArray = IOUtils.toByteArray(imageStream);
+		imageStream.close();
+		
+		System.out.println("이미지 "+imageByteArray);
+		return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
 		
 	}
 	
 	//회원정보 수정
 	@PostMapping("modify")
-	public String memberInfoModify(MemberDto memberModifiedValues) {
+	public String memberInfoModify(MemberDto memberModifiedValues, @RequestParam("file") MultipartFile File) {
 		//수정은 DB 삭제하고 -> 새로 저장 하기.
 		
-		memberService.updateMemberInfoByUserId(memberModifiedValues);
+		memberService.updateMemberInfoByUserId(memberModifiedValues, File);
 		//memberService.deleteMemberInfoByUserId(userId);
 		//memberService.insertMember(memberModifiedValues);
 		
@@ -120,11 +158,13 @@ public class MypageContorller {
 		
 		List<ReplyDto> MainReply = ReplylistByUserId.get(2).getUserMainReplyList();
 		
-		/* model.addAttribute("replyList", ReplylistByUserId); */
+		Map<String, Integer> countActivity = (Map<String, Integer>) memberService.selectMemberInfoByUserId(userId).get(1);
+		
 		model.addAttribute("userId", userId1);
 		model.addAttribute("userAbReplyList", AbReply);
 		model.addAttribute("userFbReplyList", FbReply);
 		model.addAttribute("userMainReplyList",MainReply);
+		model.addAttribute("countActivity", countActivity);
 		
 	}
 	
@@ -137,13 +177,12 @@ public class MypageContorller {
 		List<BoardDto> AbLike = LikelistByUserId.get(0).getUserAbLikeList();
 		List<com.footsalhaja.domain.free.BoardDto> FbLike = LikelistByUserId.get(1).getUserFbLikeList();
 		
+		Map<String, Integer> countActivity = (Map<String, Integer>) memberService.selectMemberInfoByUserId(userId).get(1);
+		
 		model.addAttribute("userId", userId2);
 		model.addAttribute("userFbLikeList", FbLike);
 		model.addAttribute("usrAbLikeList", AbLike);
-		
-		
-		System.out.println(FbLike);
-		System.out.println(AbLike);
+		model.addAttribute("countActivity", countActivity);
 	}
 	
 }

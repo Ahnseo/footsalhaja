@@ -50,6 +50,7 @@ public interface AcademyMapper {
 
 	public void deleteLikeByBoardId(int ab_number);
 	
-	
+	//랭킹
+	List<BoardDto> likeRank(BoardDto board);
 	
 }

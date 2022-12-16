@@ -3,6 +3,8 @@ package com.footsalhaja.service.free;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.footsalhaja.domain.free.BoardDto;
 import com.footsalhaja.domain.free.PageInfo;
 
@@ -14,7 +16,7 @@ public interface FreeService {
 
 	public BoardDto get(int fb_number);
 
-	public int update(BoardDto board);
+	public int update(BoardDto board, MultipartFile[] addFiles, List<String> removeFiles);
 
 	public int remove(int fb_number);
 	
@@ -29,4 +31,6 @@ public interface FreeService {
 	// 좋아요 순위
 	public List<BoardDto> likeRank(BoardDto board);
 	
+	//파일 등록
+	public int insertFile(BoardDto board, MultipartFile[] files);
 }

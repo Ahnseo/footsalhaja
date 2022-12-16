@@ -46,8 +46,20 @@
 					<c:url value="/mypage/modify" var="modifyLink">
 						<c:param name="userId" value="${member.userId}" />
 					</c:url>
-					
-					<form action="${modifyLink}" method="get" id="contactForm" data-sb-form-api-token="API_TOKEN">
+
+					<form action="${modifyLink}" method="get" id="contactForm" data-sb-form-api-token="API_TOKEN" enctype="multipart/form-data">
+							<%-- 프로필 이미지 출력 --%>
+						<div style="text-align : center;">
+							<c:forEach items="${member.profileImg }" var="name">
+								<div class= >
+								<object data="${pageContext.request.contextPath}/기본프로필.png" type="image/png">
+								<div>"${pageContext.request.contextPath}/user_profile/${member.userId }/${name}"</div>
+									<img src="${pageContext.request.contextPath}/user_profile/${member.userId }/${name}">
+								</object>
+								</div>
+							</c:forEach>		
+						</div>	
+							
 							<!-- ID -->
 							<div class="form-floating mb-3">
 								<input class="form-control" id="userId" type="text"
@@ -88,6 +100,7 @@
 									data-sb-validations="required" readonly/> <label for="nickName">닉네임</label>
 							</div>
 
+
 							<!-- 회원권한-->
 							<input type="hidden" name="auth" value="${member.auth}" readonly >
 							<div class="form-floating mb-3">
@@ -103,12 +116,14 @@
 								<label for="permission">회원권한</label>
 							</div>
 				
+
 							<!-- 이메일 -->
 							<div class="form-floating mb-3">
 								<input class="form-control" id="email" type="email" name="email"
 									value="${member.email}" data-sb-validations="required,email" readonly/>
 								<label for="email">메일주소</label>
 							</div>
+
 
 							<div class="form-floating mb-3">
 								<input class="form-control" type="text" name="birthYY"
@@ -123,7 +138,14 @@
 									value="${member.birthDD}" readonly /> <label for="birthDD">일</label>
 							</div>
 
-							<div class="form-floating mb-3">
+
+							<input class="form-control" type="text" id="birthYYMMDD"
+								name="birthYY"
+								value="${member.birthYY}${zeroMM}${member.birthMM}${zeroDD}${member.birthDD}"
+								readonly /> <label for="birthYYMMDD">생년월일</label>
+						</div>
+
+						<div class="form-floating mb-3">
 								<input class="form-control" type="text" name="activityArea"
 									value="${member.activityArea}" readonly /> <label
 									for="activityArea">활동지역</label>
