@@ -19,6 +19,7 @@ import com.footsalhaja.mapper.free.FreeReplyMapper;
 
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 import software.amazon.awssdk.services.s3.model.ObjectCannedACL;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
@@ -102,15 +103,11 @@ public class FreeServiceImpl implements FreeService{
 			
 		for (String fileName : removeFiles) {
 			// 1. File 테이블에서 record 지우기
-			System.out.println(fileName);
-			
 			freeMapper.deleteByBoardIdAndFileName(board.getFb_number(), fileName);
 			
-			// 2. 저장소에 실제 파일 지우기
-			String path = "D:\\study\\project\\project"+ board.getFb_number() + "\\" + fileName;
-			File file = new File(path);
-			
-			file.delete();
+			// 2. S3 저장소에 실제 파일(object) 지우기
+			String originalFileName = fileName.substring(36);
+			deleteFile(board.getFb_number(), originalFileName);
 			}
 		}
 		
@@ -123,6 +120,7 @@ public class FreeServiceImpl implements FreeService{
 		for (MultipartFile file : addFiles) {
 			if (file != null && file.getSize() > 0) {
 				// db에 파일 정보 저장
+					
 				String originalFileName = file.getOriginalFilename(); //오리지날 파일명 String
 				  
 				String fb_fileName = UUID.randomUUID() + originalFileName; //랜덤 UUID+파일이름으로 저장될 파일 새 이름
@@ -138,25 +136,37 @@ public class FreeServiceImpl implements FreeService{
 					fb_fileType = 0;
 				}
 				
+				try {
 				// 파일 저장
 				// ab_number 이름의 새 폴더 만들기 (파일 첨부된 게시물 ab_number번호의 새폴더가 생성됨)
 				File folder = new File("D:\\study\\project\\project"+ board.getFb_number());
 				folder.mkdirs();
 				
-				File dest = new File(folder, fb_fileName);
-				//첨부된 파일을 새 폴더에 전송
-				try {
-					file.transferTo(dest);
-				} catch (Exception e) {
-					//@@Transactional은 RuntimeExceptional에서만 rollback됨
-					e.printStackTrace();
-					throw new RuntimeException(e);
-				}
+				// S3에 파일 저장
+				// 키 생성
+				String key = "free/" + board.getFb_number() + "/" + file.getOriginalFilename();
+				
+				// putObjectRequest
+				PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+						.bucket(bucketName)
+						.key(key)
+						.acl(ObjectCannedACL.PUBLIC_READ)
+						.build();
+				
+				// requestBody
+				RequestBody requestBody = RequestBody.fromInputStream(file.getInputStream(), file.getSize());
+				
+				// object(파일) 올리기
+				s3Client.putObject(putObjectRequest, requestBody);
 				
 				//파일 경로
-				String fb_filePath = folder.getAbsolutePath();
-				
+				String fb_filePath = key;
 				freeMapper.insertFile(board.getFb_number(), fb_fileName, fb_filePath, fb_fileType);
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new RuntimeException(e);
+			}
+				
 			}
 		}
 		
@@ -167,24 +177,19 @@ public class FreeServiceImpl implements FreeService{
 	// 게시물 지우기
 	@Override
 	public int remove(int fb_number) {
-		//DB파일폴더 지우기
-		String path = "D:\\study\\project\\project" +fb_number;
-		File folder = new File(path);
+		BoardDto board = freeMapper.select(fb_number);
 		
-		File[] listFiles = folder.listFiles();
-
-		if (listFiles != null) {
-				for (File file : listFiles) {
-					file.delete();
-				}
+		List<String> fileNames = board.getFb_fileName();
+		
+		if (fileNames != null) {
+			for (String fileName : fileNames) {
+				// s3 저장소의 파일 지우기
+				String originalFileName = fileName.substring(36);
+				deleteFile(fb_number, originalFileName);
 			}
-		
-		for (File file: listFiles) {
-			file.delete();
 		}
-		folder.delete();
 		
-		//파일 지우기
+		// db파일 지우기
 		freeMapper.deleteFileByBoardId(fb_number);
 		// 댓글 지우기
 		replyMapper.deleteByBoardId(fb_number);
@@ -193,6 +198,15 @@ public class FreeServiceImpl implements FreeService{
 		 
 		// 게시물 지우기
 		return freeMapper.delete(fb_number);
+	}
+	
+	private void deleteFile(int fb_number, String fileName) {
+		String key = "free/" + fb_number + "/" + fileName;
+		DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
+				.bucket(bucketName)
+				.key(key)
+				.build();
+		s3Client.deleteObject(deleteObjectRequest);
 	}
 	
 	// 좋아요
@@ -244,8 +258,7 @@ public class FreeServiceImpl implements FreeService{
 		for (MultipartFile file : files) {
 			if (file != null && file.getSize() > 0) {
 				// db에 파일 정보 저장
-					// S3에 파일 저장
-					// 키 생성
+					
 				String originalFileName = file.getOriginalFilename(); //오리지날 파일명 String
 				  
 				String fb_fileName = UUID.randomUUID() + originalFileName; //랜덤 UUID+파일이름으로 저장될 파일 새 이름
@@ -267,6 +280,8 @@ public class FreeServiceImpl implements FreeService{
 				File folder = new File("D:\\study\\project\\project"+ board.getFb_number());
 				folder.mkdirs();
 				
+				// S3에 파일 저장
+				// 키 생성
 				String key = "free/" + board.getFb_number() + "/" + file.getOriginalFilename();
 				
 				// putObjectRequest
