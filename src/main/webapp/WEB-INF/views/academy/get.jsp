@@ -278,7 +278,7 @@ ul {
 					placeholder="댓글을 입력해주세요."/><br>
 			 	</div>
 						
-				<button id="replyButton1" class="replyBnt btn btn-success" >댓글 등록</button>
+				<button id="replySendButton" class="replyBnt btn btn-success" >댓글 등록</button>
 			</sec:authorize>
 			
 			<!-- 로그인 안했을때 -->
@@ -295,7 +295,7 @@ ul {
 					<!-- 댓글 나오는 부분 -->
 				</div>
 			<!-- 댓글 페이지 출력란 -->
-			<div id="replyPageFooter">
+			<div class="paginationBox" id="replyPageFooter">
 			</div>
 		</div>
 	</div>
@@ -340,7 +340,24 @@ ul {
 		</div>
 	</div> --%>
 	
-	
+	<!-- 게시글 삭제 모달 -->
+	<div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h1 class="modal-title fs-5" id="exampleModalLabel">삭제 확인</h1>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        삭제하시겠습니까?
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+	        <button id="removeConfirmButton" type="button" class="btn btn-primary">삭제</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 	
 	
 	<%-- 댓글 삭제 확인 모달 --%>
@@ -348,14 +365,14 @@ ul {
 	  <div class="modal-dialog">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h1 class="modal-title fs-5" id="exampleModalLabel">댓글 삭제 확인</h1>
+	        <h1 class="modal-title fs-5" id="exampleModalLabel">삭제 확인</h1>
 	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	      </div>
 	      <div class="modal-body">
 	        댓글을 삭제하시겠습니까?
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
 	        <button type="button" data-bs-dismiss="modal" id="removeConfirmModalSubmitButton" class="btn btn-danger">삭제</button>
 	      </div>
 	    </div>
@@ -374,7 +391,7 @@ ul {
 	        <input type="text" id="modifyReplyInput">
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
 	        <button type="button" data-bs-dismiss="modal" id="modifyFormModalSubmitButton" class="btn btn-danger">수정</button>
 	      </div>
 	    </div>
@@ -431,11 +448,18 @@ ul {
 
 				const removeReplyButtonId = `removeReplyButton\${item.ab_replyNumber}`;
 				
-				const editButton = `<button data-bs-toggle="modal" data-bs-target="#replyModifyModal" data-reply-id="\${item.ab_replyNumber}" id="\${modifyReplyButtonId}"> <i class="fa-solid fa-pen"></i></button>
-									<button data-bs-toggle="modal" data-bs-target="#replyDeleteModal" data-reply-id="\${item.ab_replyNumber}" id="\${removeReplyButtonId}"> <i class="fa-solid fa-x"></i></button>`
+				const editButton = `<button class="btn btn-outline-success btn-sm b1" data-bs-toggle="modal" data-bs-target="#replyModifyModal" data-reply-id="\${item.ab_replyNumber}" id="\${modifyReplyButtonId}"> <i class="fa-solid fa-pen"></i></button>
+					<button class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#replyDeleteModal" data-reply-id="\${item.ab_replyNumber}" id="\${removeReplyButtonId}"> <i class="fa-solid fa-x"></i></button>`
 				
-				const replyDiv = `<div><b> \${item.nickName}</b> \${item.ab_replyContent} : \${item.ago} \${item.editable ? editButton : ''}
-								</div>`;
+				const replyDiv = `<div class="reply_list">
+					<span class="row"></span>
+					<div class="replylist_top">
+						<p> \${item.nickName}</p>
+						<p class="ago"> \${item.ago}</p>
+						\${item.editable ? editButton : ''}
+					</div>
+					<p> \${item.ab_replyContent}</p>
+				</div>`;
 				
 				replyListContainer.insertAdjacentHTML("beforeend", replyDiv);
 				
@@ -485,10 +509,10 @@ ul {
 				if(endNum * 10 < replyCnt) {
 					next = true;
 				}
-				var str = "<ul class='pagination pull-right'>";
+				var str = "<ul class='pagination'>";
 
 				if(prev) {
-					str += "<li class='page-item'><span class='page-link' href='"+(startNum-1)+"'>Previous</span></li>";
+					str += "<li class='page-item'><span class='page-link' href='"+(startNum-1)+"'><i class='fa-solid fa-angles-left'></i></span></li>";
 				}
 				
 				for(var i=startNum ; i<=endNum; i++){
@@ -497,7 +521,7 @@ ul {
 				}
 				
 				if(next) {
-					str+= "<li class='page-item'><span class='page-link' href='"+(endNum+1) + "'>Next</span></li>";
+					str+= "<li class='page-item'><span class='page-link' href='"+(endNum+1) + "'><i class='fa-solid fa-angle-right'></i></span></li>";
 				}
 
 				str += "</ul></div>";
@@ -563,7 +587,7 @@ ul {
 	/* 댓글 입력 버튼 */
 	document.querySelector("#replySendButton").addEventListener("click", function() {
 		const ab_number = document.querySelector("#ab_number").value;
-		const ab_replyContent = document.querySelector("#replyInput").value;
+		const ab_replyContent = document.querySelector("#ab_replyContent").value;
 		const member_userId = document.querySelector("#member_userId").value;
 		
 		const data = {
@@ -581,8 +605,7 @@ ul {
 		})
 		.then(res => res.json())
 		.then(data => {
-			document.querySelector("#replyInput").value = "";
-			document.querySelector("#replyMessage").innerText = data.message;
+			document.querySelector("#ab_replyContent").value = "";
 		})
 		.then(() => listReply(page));
 	});
@@ -602,9 +625,9 @@ ul {
 	.then(data => {
 		
 		if (data.current == 'liked') {
-			document.querySelector("#likeButton").innerHTML = `<i class="fa-solid fa-thumbs-up"></i>`
+			document.querySelector("#likeButton").innerHTML = `<i class="fa-solid fa-heart"></i>`
 		} else {
-			document.querySelector("#likeButton").innerHTML = `<i class="fa-regular fa-thumbs-up"></i>`
+			document.querySelector("#likeButton").innerHTML = `<i class="fa-regular fa-heart"></i>`
 		}
 		
 		document.querySelector("#likeCount").innerText = data.count;
