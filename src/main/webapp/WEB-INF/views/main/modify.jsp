@@ -5,58 +5,59 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta name="viewport" charset="UTF-8" content="width=device-width, initial-scale=1">
 <title>Insert title here</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+<link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&display=swap" rel="stylesheet">
 <style>
-@font-face {
- font-family: 'NanumBarunGothic';
- font-style: normal;
- font-weight: 400;
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot');
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.ttf') format('truetype');
-}
+/* 글씨폰트 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&display=swap');
 
-@font-face {
- font-family: 'NanumBarunGothic';
- font-style: normal;
- font-weight: 700;
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot');
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.ttf') format('truetype')
-}
-
-@font-face {
- font-family: 'NanumBarunGothic';
- font-style: normal;
- font-weight: 300;
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot');
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.ttf') format('truetype');
-}
-
-.nanumbarungothic * {
- font-family: 'NanumBarunGothic', sans-serif;
-}
 #area{
-	font-family: 'NanumBarunGothic';
+	font-family: 'Noto Sans KR', sans-serif;
 	letter-spacing: -1px;
 	position: relative;
 	
 }
 #modi{
 	position: absolute; 
-	bottom: 0px; 
-	left: 1350px;
+	bottom: 4px; 
+	left: 850px;
 }
-
 #modiCancel{
+	background-color: #D3D3D3;
+	border-radius: 5px;
+	border-color: #D3D3D3;
+	color: #fff;
+	width: 60px;
+	height: 30px;
 	position: absolute; 
-	bottom: 0px; 
-	left: 1300px;
-	backgroung-color: gray;
-	width: 
+	bottom: 4px; 
+	left: 790px;
+}
+#remo{
+	background-color: #FFFFFF; 
+	border-color: #FFFFFF; 
+	border-radius: 5px;
+	color: black; 
+	width: 60px; 
+	height: 30px; 
+	text-decoration: underline;
+	bottom: 6px;
 }
 #wide{
 	max-width: 928px;
-	margin: 5px 0 0 500px;
+	margin: 5px 40px 0 500px; 
+}
+#buttons {
+	position: relative;
+	display: inline-block;
+	height: 40px;
 }
 
 </style>
@@ -75,7 +76,7 @@
 	<div class="row">
 		<div class="col">
 		
-			<div style="text-align: center; font-size:30px;">${main.nickName }님 예약 변경</div>
+		<div style="padding: 25px 0px; text-align: center; font-size:25px;">${main.nickName }님 예약 변경</div>
 			<input type="hidden" value="${main.member_userId }" readonly>
 	
 			<form id="modifyForm" action="" method="post" > 
@@ -90,53 +91,123 @@
  				 <div class="col-md">
 					<div class="form-floating">
 						<select class="form-select" id="region" name="region">
-							<option selected value="1">서울</option>
-							<option value="2">매칭</option>
+							 <option selected value="${main.locationId }">
+						 	 선택 지역:
+						 	 <c:choose>
+						 	 <c:when test="${main.locationId == 1 }">
+						 	 	서울
+						 	 </c:when>
+						 	 <c:when test="${main.locationId == 2 }">
+						 	 	서울
+						 	 </c:when>
+						 	 <c:when test="${main.locationId == 3 }">
+						 	 	서울
+						 	 </c:when>
+						 	 <c:when test="${main.locationId == 4 }">
+						 	 	서울
+						 	 </c:when>
+						 	 <c:when test="${main.locationId == 5 }">
+						 	 	서울
+						 	 </c:when>
+						 	 <c:when test="${main.locationId == 6 }">
+						 	 	경기
+						 	 </c:when>
+						 	 <c:when test="${main.locationId == 7 }">
+						 	 	경기
+						 	 </c:when>
+						 	 <c:when test="${main.locationId == 8 }">
+						 	 	경기
+						 	 </c:when>
+						 	 <c:when test="${main.locationId == 9 }">
+						 	 	경기
+						 	 </c:when>
+						 	 <c:when test="${main.locationId == 10 }">
+						 	 	경기
+						 	 </c:when>
+						 	 </c:choose>
+						 	 </option>
+						 	<option value="1">서울</option>
+							<option value="2">경기</option>
 						</select> 
 						<label for="region">활동 지역</label>
 					</div>
-				</div>
-					<div class="col-md">
-						<div class="form-floating">
-							<select class="form-select"  name="locationId" id="locationId">
-								<option value="1">천마 풋살파크</option>
-			     				<option value="2">아디다스 더베이스</option>
-			      				<option value="3">도봉 루다 풋살장</option>
-			    				<option value="4">영등포 SKY 풋살파크 A구장</option>
-			      				<option value="5">은평 롯데몰 A구장</option>
-							</select> 
-							<label for="locationId">예약 장소</label>
-							</div>
-						</div>
+				</div>	
+				<div class="col-md">
+					<div class="form-floating">
+						<select class="form-select"  name="locationId" id="locationId">
+							 <option selected value="${main.locationId }">
+						 	기존 예약 구장:
+						 	 <c:choose>
+						 	 <c:when test="${main.locationId == 1 }">
+						 	 	천마 풋살파크
+						 	 </c:when>
+						 	 <c:when test="${main.locationId == 2}">
+						 	 	아디다스 더베이스
+						 	 </c:when>
+						 	  <c:when test="${main.locationId == 3}">
+						 	 	도봉 루다 풋살장
+						 	 </c:when>
+						 	  <c:when test="${main.locationId == 4}">
+						 	 	영등포 SKY 풋살파크 A구장
+						 	 </c:when>
+						 	  <c:when test="${main.locationId == 5}">
+						 	 	은평 롯데몰 A구장
+						 	 </c:when>
+						 	 <c:when test="${main.locationId == 6 }">
+						 	 	피치 부천 이마트 부천점
+						 	 </c:when>
+						 	 <c:when test="${main.locationId == 7 }">
+						 	 	용인 기흥 낫소 풋살파크
+						 	 </c:when>
+						 	 <c:when test="${main.locationId == 8 }">
+						 	 	칼라힐 풋살파크 B구장
+						 	 </c:when>
+						 	 <c:when test="${main.locationId == 9 }">
+						 	 	인천 더 베스트 풋볼파크 구월점
+						 	 </c:when>
+						 	 <c:when test="${main.locationId == 10 }">
+						 	 	하남 감일 장수천 풋살파크
+						 	 </c:when>
+						 	 </c:choose>
+						 	 </option>
+							<option value="1">천마 풋살파크</option>
+			     			<option value="2">아디다스 더베이스</option>
+			      			<option value="3">도봉 루다 풋살장</option>
+			    			<option value="4">영등포 SKY 풋살파크 A구장</option>
+			      			<option value="5">은평 롯데몰 A구장</option>
+						</select> 
+						<label for="locationId">예약 구장</label>
 					</div>
- 				
+				</div>
+			</div>
+ 				 
  				<div class="form-floating" style="margin: 18px 0;">
 				  <select class="form-select" id="floatingSelect" name="bookTime" >
 				    <option selected value="${main.bookTime }">
 				    기존 예약 시간 : 
 				 	 <c:choose>
-				 	 <c:when test="${main.bookTime == 1 }">
+				 	 <c:when test="${main.bookTime == 6 }">
 				 	 	<c:out value="06:00 ~ 8:00"/>
 				 	 </c:when>
-				 	 <c:when test="${main.bookTime == 2 }">
+				 	 <c:when test="${main.bookTime == 9 }">
 				 	 	<c:out value="09:00 ~ 11:00"/>
 				 	 </c:when>
-				 	 <c:when test="${main.bookTime == 3 }">
+				 	 <c:when test="${main.bookTime == 14 }">
 				 	 	<c:out value="14:00 ~ 16:00"/>
 				 	 </c:when>
-				 	 <c:when test="${main.bookTime == 4 }">
+				 	 <c:when test="${main.bookTime == 18 }">
 				 	 	<c:out value="18:00 ~ 20:00"/>
 				 	 </c:when>
-				 	 <c:when test="${main.bookTime == 5 }">
+				 	 <c:when test="${main.bookTime == 21 }">
 				 	 	<c:out value="21:00 ~ 23:00"/>
 				 	 </c:when>
 				 	 </c:choose> 
 				    </option>
-				     <option value="1">06:00 ~ 8:00</option>
-					  <option value="2">09:00 ~ 11:00</option>
-					  <option value="3">14:00 ~ 16:00</option>
-					  <option value="4">18:00 ~ 20:00</option>
-					  <option value="5">21:00 ~ 23:00</option>
+				     <option value="6">06:00 ~ 8:00</option>
+					  <option value="9">09:00 ~ 11:00</option>
+					  <option value="14">14:00 ~ 16:00</option>
+					  <option value="18">18:00 ~ 20:00</option>
+					  <option value="21">21:00 ~ 23:00</option>
 				  </select>
 				  <label for="floatingSelect">구장이용시간</label>
 				</div>		
@@ -234,26 +305,29 @@
 				</div>
 			</form>
 			
-</div>		
-			
-			<div id="modi">
-			<input type="submit" value="수정" data-bs-toggle="modal" data-bs-target="#modifyModal" style="background-color: #6D8B74; border-radius:5px; border-color:#6D8B74; color:white; width: 60px; height: 30px;">
-			</div>
-			<c:url value="/main/remove" var="removeLink"/>
-			<form id="removeForm" action="${removeLink }" method="post">
-			<input type="hidden" name="bookId" value="${main.bookId }">
-			</form>
-			<input type="submit" value="삭제" data-bs-toggle="modal" data-bs-target="#removeModal" style="background-color: #FFFFFF; border-color:#FFFFFF; color:black; width: 60px; height: 30px; text-decoration: underline;">
-			
-			<button class="btn btn-secondary" id="modiCancel"  style="width: 60px; height: 30px;">
-				<a href="/main/list"style="color: white;">취소</a>
-			</button>
-					
-				
-			</div>
+</div>
+				<div id="buttons">
+					<div class="row">
+						<div class="col">
+							<div class="row-g-2">
+								<div id="modi">
+									<input type="submit" value="수정" data-bs-toggle="modal"data-bs-target="#modifyModal" style="background-color: #6D8B74; border-radius: 5px; border-color: #6D8B74; color: white; width: 60px; height: 30px;">
+								</div>
+								<c:url value="/main/remove" var="removeLink" />
+								<form id="removeForm" action="${removeLink }" method="post">
+									<input type="hidden" name="bookId" value="${main.bookId }">
+								</form>
+								<input id="remo" type="submit" value="삭제" data-bs-toggle="modal"data-bs-target="#removeModal">
+
+
+								<input id="modiCancel" type="button" value="취소"onclick="location.href='/main/list'">
+							</div>
+						</div>
+					</div>
+				</div>
 		</div>
 	</div>
-
+</div>
 
 <!-- modify Modal -->
 	<div class="modal fade" id="modifyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -10,6 +10,10 @@
 <sec:authentication property="name" var="userIdValue"/>
 <c:url value="/main/list" var="listLink" />
 <style>
+#wholeNav {
+	font-family: 'Noto Sans KR', sans-serif;
+	letter-spacing: -1px;
+}
 .bg1 {
 	position: relative;
 }
@@ -39,11 +43,15 @@
 .navTitle {
 	position: absolute;
 	left: 50px;
-	top: 15px;
+	top: 10px;
+	font-weight:bold;
+	font-size: 20px;
 }
+
+
 </style>
 
-<nav class="navbar navbar-expand-md navbar-dark sticky-top" style="background: linear-gradient(to right, #5F7161, #6D8B74); padding: 0;">
+<nav id="wholeNav" class="navbar navbar-expand-md navbar-dark sticky-top" style="background: linear-gradient(to right, #5F7161, #6D8B74); padding: 0;">
   <!-- One of the primary actions on mobile is to call a business - This displays a phone button on mobile only -->
   <div class="navbar-toggler-right" style="color: #fff;">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,11 +81,13 @@
 
       <c:if test="${loggedIn }">
 	      <li class="nav-item active userName">
-	         <a class="nav-link" href="" ><span style="font-weight:bold; ">${userIdValue } 님 환영합니다.</span></a>
+	         <a class="nav-link" href="" ><span>${userIdValue } 님 환영합니다.</span></a>
 	      </li>
       </c:if>
     </ul>
-
+	
+	
+	
     <ul class="navbar-nav w-100 px-3 justify-content-end bg2" style="background: #5F7161;">
 
 
@@ -156,8 +166,8 @@
       
     </ul>
 
-
-  </div>
+		</div>
+  
   
 
 </nav>
