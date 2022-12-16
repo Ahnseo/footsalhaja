@@ -28,11 +28,18 @@
 }
 
 .bg2 {
-	margin-top: -10px;
+	margin-top: 30px;
+	text-align: center;
 }
 
 #navbar {
 	padding: 0;
+}
+
+.navTitle {
+	position: absolute;
+	left: 50px;
+	top: 15px;
 }
 </style>
 
@@ -49,32 +56,30 @@
       <li class="nav-item active" >
         <a class="nav-link" href="${listLink }">
         <img class="nav_img" alt="" src="${pageContext.request.contextPath}/logo.png">
-        	<p>풋살하자</p>
+        	<p class="navTitle">풋살하자</p>
         <!-- <span class="sr-only">(current)</span> --></a>
-      </li> 
-      <li class="nav-item active userName">
-         <a class="nav-link" href="" ><span style="font-weight:bold; ">${userIdValue } 님 환영합니다.</span></a>
       </li>
+      
+      <sec:authorize access="hasAuthority('admin')" var="adminLogin"/>
+			<c:if test="${adminLogin }">
+				<p style="color:steelblue;">관리자 계정</p>
+			</c:if>
+      
+      <sec:authorize access="isAuthenticated()" var="loggedIn"></sec:authorize>
+      <c:if test="${not loggedIn }">
+	      <li class="nav-item active userName">
+	      </li>
+      </c:if>
+
+      <c:if test="${loggedIn }">
+	      <li class="nav-item active userName">
+	         <a class="nav-link" href="" ><span style="font-weight:bold; ">${userIdValue } 님 환영합니다.</span></a>
+	      </li>
+      </c:if>
     </ul>
 
     <ul class="navbar-nav w-100 px-3 justify-content-end bg2" style="background: #5F7161;">
 
-	<li class="nav-item active">
-        	<a class="nav-link" href="#">공지사항<!-- <span class="sr-only">(current)</span> --></a>
-    </li>
-
-     <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          커뮤니티
-        </a>
-
- 
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="http://localhost:8080/free/list"">자유게시판</a></li>
-          <li><a class="dropdown-item" href="http://localhost:8080/academy/list">아카데미</a></li>
-          <li><a class="dropdown-item" href="#">중고장터</a></li>
-        </ul>
-       </li>
 
         
         <%-- security 를 사용하여, 로그인 된 userId를 c:param value="로그인된 ID값" 사용합니다. 현재 주소창에 접속방법 예시) mypage/list?userId=askc6361 --%>
@@ -82,9 +87,15 @@
         <c:url value="/mypage/list" var="mypageLink">
         	<c:param name="userId" value="${userIdValue }"/>
         </c:url>
+        <c:url value="/free/list" var="freeLink"></c:url>
+        <c:url value="/academy/list" var="academyLink"></c:url>
         <li class="nav-item active">
-        	<a class="nav-link ${active eq 'mypageLink' ? 'active' : '' }" href="${mypageLink}">마이페이지</a>
+        	<a class="nav-link ${active eq 'freeLink' ? 'active' : '' }" href="${freeLink}">자유게시판</a>
       	</li>
+        <li class="nav-item active">
+        	<a class="nav-link ${active eq 'academyLink' ? 'active' : '' }" href="${academyLink}">아카데미</a>
+      	</li>
+        
         <li class="nav-item active">
         	<c:url value="/qna/qnaMainBoard" var="qnaLink">
       			<c:param name="page" value="1"/>
@@ -93,6 +104,15 @@
       		</c:url>
         	<a class="nav-link ${active eq 'qnaMainBoard' ? 'active' : '' }" href="${qnaLink}">고객문의</a>
       	</li>
+      	<c:if test="${loggedIn }">
+      	<li class="nav-item active">
+        	<a class="nav-link ${active eq 'mypageLink' ? 'active' : '' }" href="${mypageLink}">마이페이지</a>
+      	</li>
+      	</c:if>
+      	<c:if test="${ not loggedIn }">
+      	<li class="nav-item active">
+      	</li>
+      	</c:if>
       	
         <li class="nav-item dropdown">
 		    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
