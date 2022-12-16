@@ -37,7 +37,7 @@
 	 		m.userId = #{userId}
 	 	
 	 	ORDER BY 
-	 		qnaId DESC 
+	 		q.qnaId DESC 
 	 	LIMIT
 	 		#{offset}, #{records}
 	 </select>
@@ -82,7 +82,7 @@
 	 
 	 <select id="countAllQnAByUserId" resultType="int">
 	 	SELECT 
-	 		COUNT(*)
+	 		COUNT(q.qnaId)
 	 	FROM 
 	 	 	QnABoard q
 	 	LEFT JOIN member m 
@@ -175,7 +175,7 @@
 	
 	<select id="countAllQnA" resultType="int">
 		SELECT 
-	 		COUNT(*)
+	 		COUNT(qnaId)
 	 	FROM 
 	 	 	QnABoard 
 	 	WHERE
@@ -196,7 +196,7 @@
 	
 		<select id="countAllQnAByDone" resultType="int">
 		SELECT 
-	 		COUNT(*)
+	 		COUNT(qnaId)
 	 	FROM 
 	 	 	QnABoard 
 	 	WHERE
@@ -223,7 +223,7 @@
 	<!-- 좋아요 기능추가  -->
 	<select id="selectQnABoardLikeCount" resultType="int">
 		SELECT 
-			COUNT(*) likeCount
+			COUNT(qnaLikeId) likeCount
 		FROM 
 			QnABoardLike
 		WHERE 

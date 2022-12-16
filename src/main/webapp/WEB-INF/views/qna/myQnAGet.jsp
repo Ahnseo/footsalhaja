@@ -21,7 +21,6 @@
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="/css/styles.css" type="text/css" rel="stylesheet" />
 	
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
 
@@ -179,6 +178,7 @@ ul {
 	<input class="form-control" type="hidden" name="userId" id="userIdVal" value="${qna.userId}" readonly >
 	
 	<!-- 전체 컨테이너 -->
+<div class="p-4">
 	<div class="container-sm">
 		<div id="freeTitle">
 			<h2>문의</h2>
@@ -193,7 +193,7 @@ ul {
 					<c:if test="${qna.status != '답변대기'}"><span>${qna.status}</span></c:if>	
 				</p>
 	
-				<ul>
+				<ul class=" p-2 mt-2">
 					<li><i class="fa-solid fa-envelope"></i></li>
 					<li class="top_nickName"><i class="fa-solid fa-user"></i> ${qna.userId } </li>
 					<li class="top_nickName"><i class="fa-regular fa-clock"></i> ${qna.ago } </li>
@@ -277,7 +277,7 @@ ul {
 				</div>
 				<div class="post_wrap">
 					<div class="post_top">		
-						<ul class="p-2">
+						<ul class="p-2 mt-2">
 							<li><i class="fa-solid fa-envelope-open-text"></i></li>
 							<li class="top_nickName"><i class="fa-solid fa-user"></i> ${qnaAnswer.writer } </li>
 							<li class="top_nickName"><i class="fa-regular fa-clock"></i> ${qnaAnswer.ago } </li>
@@ -394,7 +394,7 @@ ul {
 	    </div>
 	  </div>
 	</div>  
-	
+</div>	
 	
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script>

@@ -32,8 +32,29 @@
  		FROM book b
  		LEFT JOIN member m ON b.member_userId = m.userId
  		LEFT JOIN location l ON b.location_locationId = l.locationId
+ 		
  		WHERE b.status = #{status}
+ 		
+	 	AND 
+	 	(
+		<trim prefixOverrides="OR">
+			<if test="type == 'all' or type == 'title'">
+			OR b.title LIKE #{keyword}
+			</if>
+			
+			<if test="type == 'all' or type == 'content'">
+			OR b.content LIKE #{keyword}
+			</if>
+			
+			<if test="type == 'all' or type == 'userId'">
+			OR m.userId LIKE #{keyword}
+			</if>
+		</trim> 
+		) 	
+		GROUP BY b.bookId
+ 		
  		ORDER BY b.insertDatetime DESC
+ 		LIMIT #{offset}, #{records}
  	</select>
  	
  	<select id="selectBookedListLimit" resultType="com.footsalhaja.domain.main.BookDto">

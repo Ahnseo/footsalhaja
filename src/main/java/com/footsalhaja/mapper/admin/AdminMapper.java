@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.footsalhaja.domain.admin.adminColChartDto;
 import com.footsalhaja.domain.main.BookDto;
 import com.footsalhaja.domain.qna.QnADto;
+import com.footsalhaja.domain.qna.QnAPageInfo;
 
 @Mapper
 public interface AdminMapper {
@@ -15,7 +16,7 @@ public interface AdminMapper {
 
 	List<BookDto> selectBookedListLimit(int status);
 	
-	List<BookDto> selectBookedListAll(int status);
+	List<BookDto> selectBookedListAll(int offset, int records ,String type ,String keyword, int status);
 
 	int insertVisitCount();
 

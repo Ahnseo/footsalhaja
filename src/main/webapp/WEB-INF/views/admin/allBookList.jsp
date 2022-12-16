@@ -22,7 +22,6 @@
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="/css/styles.css" type="text/css" rel="stylesheet" />
 	
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
 
@@ -42,6 +41,32 @@
 <div class="container">
 <h3>전체 예약내역</h3>
 	<p>검색키워드 =제목,id검색  + 최신순/예약 날짜별/예약시간별 /구장별 매치타입별 /Level별 /모집상태별로 버튼 누를때 마다 -> script: 쿼리 DESC<-> ASC 변경  </p>
+
+	<!-- 검색기능   -->
+	<div class="form-group">      
+	<c:url value="/admin/allBookList" var="allBookListLink"></c:url>
+		<form action="${allBookListLink }" class="d-flex flex-row-reverse" role="search">
+			 <div>
+			    <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+		    </div>
+		   
+	      	<div class="col-sm-3">
+			    <input class="form-control " type="search" name="q" value="${param.q }" placeholder="검색" aria-label="Search">
+		    </div>
+		   
+			<div class="col-sm-2">
+				<select name="t" id="searchTypeSelect" class="form-select">
+		      		<option value="all">전체</option>
+		      		<option value="userId" ${param.t == 'userId' ? 'selected' : '' }>ID</option>
+		      		<option value="name" ${param.t == 'name' ? 'selected' : '' }>이름</option>
+		      	</select>
+	      	</div>	
+	      	 <div class="col-sm-6">
+			 </div>
+		</form>
+	</div>
+	
+	
 	<div class="row">
 		<div class="col">
 			<table class="table">
@@ -138,6 +163,82 @@
 				 	</c:forEach>
 				 </tbody>
 			</table>
+			
+			<nav aria-label="Page navigation example">
+			  <ul class="pagination justify-content-center">
+			  
+			  	<!-- 맨앞 페이지 -->
+			  	<c:if test="${bookedPage.currentPageNumber ne 1}">
+				    <li class="page-item">
+				      <c:url value="/admin/allBookList" var="firstPageLink">   	
+				     	<c:param name="page" value="1"/>
+				     	<c:param name="q" value="${param.q}"/>
+				     	<c:param name="t" value="${param.t}"/>
+				      </c:url>	
+				      <a class="page-link" href="${firstPageLink}" aria-label="First">
+				        첫 페이지
+				      </a>
+				    </li>
+			    </c:if>
+			    
+			    <!-- 이전 10개의 페이지 ( 1 or 11 or 21 로 가기 ) -->
+			    <c:if test="${bookedPage.hasPrevButton}">
+				    <li class="page-item">
+				      <c:url value="/admin/allBookList" var="previousPageLink">
+				     	<c:param name="page" value="${bookedPage.jumpPrevPageNumber}"/>
+				     	<c:param name="q" value="${param.q}"/>
+				     	<c:param name="t" value="${param.t}"/>
+				      </c:url>	
+				      <a class="page-link" href="${previousPageLink}" aria-label="Previous">
+				        이전
+				      </a>
+				    </li>
+			    </c:if>
+			    
+			    <!-- 페이지 -->
+			    <c:forEach begin="${bookedPage.leftPageNumber}" end="${bookedPage.rightPageNumber}" var="pageNumber">
+			    	<li class="page-item">
+				    	<c:url value="/admin/allBookList" var="pageLink" >
+					    	<c:param name="page" value="${pageNumber}"/>
+					    	<c:param name="q" value="${param.q}"/>
+					     	<c:param name="t" value="${param.t}"/>
+				    	</c:url>
+				    	<a class="page-link ${bookedPage.currentPageNumber eq pageNumber ? 'active' : ''}" href="${pageLink}">
+				    		${pageNumber}
+				    	</a>
+				    </li>
+			    </c:forEach>
+			   
+			    <!-- 다음 10개의 페이지 ( 11 or 21 or 31 로 가기 )-->
+			    <c:if test="${bookedPage.hasNextButton}">
+				    <li class="page-item">
+				      <c:url value="/admin/allBookList" var="nextPageLink">
+				     	<c:param name="page" value="${bookedPage.jumpNextPageNumber}"/>
+				     	<c:param name="q" value="${param.q}"/>
+				     	<c:param name="t" value="${param.t}"/>
+				      </c:url>	
+				      <a class="page-link" href="${nextPageLink}" aria-label="Previous">
+				        다음
+				      </a>
+				    </li>
+			    </c:if>
+			    
+			    <!-- 마지막 페이지 -->
+			    <c:if test="${bookedPage.currentPageNumber ne bookedPage.lastPageNumber}">
+				    <li class="page-item">
+				      <c:url value="/admin/allBookList" var="lastPageLink">  
+				        <c:param name="page" value="${bookedPage.lastPageNumber}"/>
+				        <c:param name="q" value="${param.q}"/>
+				     	<c:param name="t" value="${param.t}"/>
+				      </c:url>	
+				      <a class="page-link" href="${lastPageLink}" aria-label="Last">
+				      	마지막 페이지
+				      </a>
+				    </li>
+			    </c:if>
+			  </ul>
+			</nav>
+			
 		</div>
 	</div>
 </div>

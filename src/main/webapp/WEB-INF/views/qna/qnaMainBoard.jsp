@@ -26,7 +26,6 @@
 	<!-- Core theme CSS (includes Bootstrap)-->
 	<link href="/css/styles.css" type="text/css" rel="stylesheet" />
 		
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
 	
@@ -79,17 +78,29 @@
 						<h2>QnA 문의</h2>
 					</div>
 					
-					<!-- 검색기능 추가 예정  -->
-					<c:url value="/qna/qnaMainBoard" var="qnaMainBoardLink"></c:url>
-					<form action="${qnaMainBoardLink }" class="d-flex" role="search">
-						<select name="t" id="searchTypeSelect" class="form-select">
-				      		<option value="all">전체</option>
-				      		<option value="userId" ${param.t == 'userId' ? 'selected' : '' }>ID</option>
-				      		<option value="name" ${param.t == 'name' ? 'selected' : '' }>이름</option>
-				      	</select>
-						<input class="form-control me-2" type="search" name="q" value="${param.q }" placeholder="검색" aria-label="Search">
-						<button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-					</form>
+					<!-- 검색기능   -->
+					<div class="form-group">      
+						<c:url value="/qna/qnaMainBoard" var="qnaMainBoardLink"/>
+						<form action="${qnaMainBoardLink }" class="d-flex flex-row-reverse" role="search">
+							 <div>
+							    <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+						    </div>
+						   
+					      	<div class="col-sm-3">
+							    <input class="form-control " type="search" name="q" value="${param.q }" placeholder="검색" aria-label="Search">
+						    </div>
+						   
+							<div class="col-sm-2">
+								<select name="t" id="searchTypeSelect" class="form-select">
+						      		<option value="all">전체</option>
+						      		<option value="userId" ${param.t == 'userId' ? 'selected' : '' }>ID</option>
+						      		<option value="name" ${param.t == 'name' ? 'selected' : '' }>이름</option>
+						      	</select>
+					      	</div>	
+					      	 <div class="col-sm-6">
+							 </div>
+						</form>
+					</div>
 					
 				</div>
 				
@@ -141,7 +152,8 @@
 								 	</c:forEach>
 								 </tbody>
 							</table>
-							<nav aria-label="Page navigation example">
+							
+							<div>
 							  <ul class="pagination justify-content-center">
 							  	
 							  	<!-- 맨앞 페이지 -->
@@ -173,7 +185,7 @@
 								    </li>
 							    </c:if>
 							    
-							    <!-- 페이지 -->
+							    <!-- 현재 페이지 -->
 							    <c:forEach begin="${qnaPageInfo.leftPageNumber}" end="${qnaPageInfo.rightPageNumber}" var="pageNumber">
 							    	<li class="page-item">
 								    	<c:url value="/qna/qnaMainBoard" var="pageLink" >
@@ -217,7 +229,7 @@
 								    </li>
 							    </c:if>
 							  </ul>
-							</nav>
+							</div>
 							<div class="d-flex flex-row-reverse">	
 							
 								<form action="/qna/insert" method="get">

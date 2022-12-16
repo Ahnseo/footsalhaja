@@ -68,21 +68,21 @@
         <!-- <span class="sr-only">(current)</span> --></a>
       </li>
       
-      <sec:authorize access="hasAuthority('admin')" var="adminLogin"/>
-			<c:if test="${adminLogin }">
-				<p style="color:steelblue;">관리자 계정</p>
-			</c:if>
-      
-      <sec:authorize access="isAuthenticated()" var="loggedIn"></sec:authorize>
+      <sec:authorize access="isAuthenticated()" var="loggedIn"/>
       <c:if test="${not loggedIn }">
 	      <li class="nav-item active userName">
 	      </li>
       </c:if>
 
       <c:if test="${loggedIn }">
-	      <li class="nav-item active userName">
+	      <li class="nav-item active userName d-flex">
+	      	 <sec:authorize access="hasAuthority('admin')" var="adminLogin"/>
+			 <c:if test="${adminLogin }">
+				<p class="nav-link" style="color:white;">관리자 계정</p>
+			 </c:if>
 	         <a class="nav-link" href="" ><span>${userIdValue } 님 환영합니다.</span></a>
 	      </li>
+
       </c:if>
     </ul>
 	
@@ -124,6 +124,7 @@
       	</li>
       	</c:if>
       	
+      	<sec:authorize access="hasAuthority('admin')">
         <li class="nav-item dropdown">
 		    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 		    	관리자
@@ -134,8 +135,11 @@
       			<c:param name="q" value=""/>
       			<c:param name="t" value="all"/>
       		</c:url>
-      		<c:url value="/admin/allBookList" var="allBookListLink"></c:url>
-      		<c:url value="/admin/stadiumManagement" var="stadiumManagementLink"></c:url>
+      		<c:url value="/admin/allBookList" var="allBookListLink">
+      			<c:param name="page" value="1"/>
+      			<c:param name="q" value=""/>
+      			<c:param name="t" value="all"/>
+      		</c:url>
       		<c:url value="/admin/allQnAList" var="allQnAListLink">
       			<c:param name="page" value="1"/>
       			<c:param name="q" value=""/>
@@ -148,7 +152,7 @@
 			    <li><a class="dropdown-item" href="${allQnAListLink }">전체문의</a></li>
 		    </ul>
 	    </li>
-      	
+      	</sec:authorize>
       	<sec:authorize access="isAnonymous()">
 	     	<c:url value="/member/login" var="loginLink"></c:url>
 	      	<li class="nav-item active">
