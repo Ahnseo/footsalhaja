@@ -248,19 +248,19 @@
 						
 						<div id="bookTime" style="font-weight: bold;">
 						<c:choose>
-						<c:when test="${main.bookTime == '1' }">
+						<c:when test="${main.bookTime == 1 }">
 							6:00 ~ 8:00
 						</c:when>
-						<c:when test="${main.bookTime == '2' }">
+						<c:when test="${main.bookTime == 2 }">
 							9:00 ~ 11:00	
 						</c:when>
-						<c:when test="${main.bookTime == '3' }">
+						<c:when test="${main.bookTime == 3 }">
 							14:00 ~ 16:00	
 						</c:when>
-						<c:when test="${main.bookTime == '4' }">
+						<c:when test="${main.bookTime == 4 }">
 							18:00 ~ 20:00	
 						</c:when>
-						<c:when test="${main.bookTime == '5' }">
+						<c:when test="${main.bookTime == 5 }">
 							21:00 ~ 23:00	
 						</c:when>
 						</c:choose>	
@@ -389,11 +389,6 @@
 		<div class="input-group mb-3" style=" width:1000px;">
 			 <input type="text" id="replyInput" class="form-control" placeholder="댓글쓰기" aria-describedby="replySendButton">
 			 <button class="btn btn-outline-secondary" type="button" id="replySendButton">작성</button>
-			
-			<div class="form-check form-check-inline mt-3">
-			    <input class="form-check-input" type="checkbox" name="secret" id="secret" checked>
-			    <label class="form-check-label">비밀댓글</label>
-			</div>
 		
 		</div>
 	</div>

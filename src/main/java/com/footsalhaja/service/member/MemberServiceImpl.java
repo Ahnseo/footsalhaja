@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.catalina.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,22 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Autowired
 	private MemberMapper memberMapper;
+	
+	@Override
+	public MemberDto getByEmail(String email) {
+		return memberMapper.selectByEmail(email);
+	};
+	
+	@Override
+	public MemberDto  getByNickName(String nickName) {
+		return memberMapper.selectByNickName(nickName);
+	};
+	
+	
+	@Override
+	public MemberDto getById(String userId){
+		return memberMapper.selectByUserId(userId);
+	}
 	
 	//회원가입(등록) 또는 회원정보 수정
 	@Override

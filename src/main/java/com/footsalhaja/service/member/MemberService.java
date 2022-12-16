@@ -17,8 +17,7 @@ public interface MemberService {
 	List<MemberDto> selectMemberList(int page, MemberPageInfo memberPageInfo, String keyword, String type);
 
 	List<Object> selectMemberInfoByUserId(String userId);
-
-	int deleteMemberInfoByUserId(String userId);
+  	int deleteMemberInfoByUserId(String userId);
 
 	int updateMemberInfoByUserId(MemberDto memberModifiedValues, MultipartFile file);
 	
@@ -33,5 +32,12 @@ public interface MemberService {
 	List<MemberDto> getUserLikeList(String userId);
 
 	int updateMemberAuth(String userId, List<String> addAuthorities);
+
+	MemberDto getById(String userId);
+
+	MemberDto getByEmail(String email);
+
+	MemberDto getByNickName(String nickName);
+	
 
 }

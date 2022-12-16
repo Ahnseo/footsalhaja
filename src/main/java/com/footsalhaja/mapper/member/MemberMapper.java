@@ -68,4 +68,12 @@ public interface MemberMapper {
 
 	public void deleteProfileImgByUserIdAndPrifileImg(String userId, String originalFilename);
 
+	//중복검사
+	public MemberDto selectByUserId(String userId);
+
+	public MemberDto selectByEmail(String email);
+	
+	public MemberDto selectByNickName(String nickName);
+
+
 }
