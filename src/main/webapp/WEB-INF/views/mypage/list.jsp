@@ -47,7 +47,7 @@ li {
 
 #userTitle h3 {
 	text-align: center;
-	padding: 60px;
+	padding: 50px;
  }
 
 .list {
@@ -57,6 +57,11 @@ li {
 .list span {
 	padding: 0.75em;
 }
+
+.list a {
+	text
+}
+
 
 </style>
 </head>
@@ -69,13 +74,13 @@ li {
 		<div id="userTitle">
 			<h3>${myInfo.userId}님의 마이페이지</h3>
 		</div>
-		<div style="text-align : center;">
+		<div style="text-align : center; ">
 			<c:forEach items="${member.profileImg }" var="name">
 				<object data="${pageContext.request.contextPath}/기본프로필.png" type="image/png">
 					<img src="${pageContext.request.contextPath}/user_profile/${member.userId }/${name}">
 				</object>
 			</c:forEach>		
-			<div>
+		<div>
 				<c:url value="/mypage/get" var="myInfoGetLink">
 					<c:param name="userId" value="${myInfo.userId}"/>
 				</c:url>
@@ -86,38 +91,38 @@ li {
 <div class = "list">
 
 	<ul class="list-group">
-	  <li class="list-group-item d-flex justify-content-between align-items-center">
-	   	<c:url value="/mypage/myAbDocumentList" var="listLink">
+	   <c:url value="/mypage/myAbDocumentList" var="listLink">
 			<c:param name="userId" value="${myInfo.userId}"></c:param>
 		</c:url>
+	  <li onclick="location.href='${listLink}'"  class="list-group-item d-flex justify-content-between align-items-center">
 		<a href="${listLink }">아카데미 게시판에 쓴 글 목록</a>
 	    <span class="badge bg-primary rounded-pill">${countActivity.countAllAblist}</span>
 	  </li>
-	  <li class="list-group-item d-flex justify-content-between align-items-center">
-	    	<c:url value="/mypage/myFbDocumentList" var="listLink">
+	    <c:url value="/mypage/myFbDocumentList" var="listLink">
 			<c:param name="userId" value="${myInfo.userId}"></c:param>
 		</c:url>
+	  <li onclick="location.href='${listLink}'" class="list-group-item d-flex justify-content-between align-items-center">
 		<a href="${listLink }" > 자유 게시판에 쓴 글 글 목록</a>
 	    <span class="badge bg-primary rounded-pill">${countActivity.countAllFblist}</span>
 	  </li>
-	  <li class="list-group-item d-flex justify-content-between align-items-center">
-	    	<c:url value="/mypage/myMainDocumentList" var="listLink">
+	    <c:url value="/mypage/myMainDocumentList" var="listLink">
 			<c:param name="userId" value="${myInfo.userId}"></c:param>
 		</c:url>
+	  <li onclick="location.href='${listLink}'" class="list-group-item d-flex justify-content-between align-items-center">
 		<a href="${listLink }" >예약 글 목록</a>
 	    <span class="badge bg-primary rounded-pill">${countActivity.countAllMainlist}</span>
 	  </li>
-	    <li class="list-group-item d-flex justify-content-between align-items-center">
 		<c:url value="/mypage/myReplyList" var="listLink">
 			<c:param name="userId" value="${myInfo.userId}"></c:param>
 		</c:url>
+	    <li onclick="location.href='${listLink}'" class="list-group-item d-flex justify-content-between align-items-center">
 		<a href="${listLink }">작성 댓글 목록</a>
 	    <span class="badge bg-primary rounded-pill">${countActivity.countAbReplyList + countActivity.countFbReplyList + countActivity.countMainReplyList} </span>
 	  </li>
-	      <li class="list-group-item d-flex justify-content-between align-items-center">
-			<c:url value="/mypage/myLikeList" var="listLink">
+		<c:url value="/mypage/myLikeList" var="listLink">
 			<c:param name="userId" value="${myInfo.userId}"></c:param>
 		</c:url>
+	      <li onclick="location.href='${listLink}'" class="list-group-item d-flex justify-content-between align-items-center">
 		<a href="${listLink }" > 좋아요한 글 목록</a>
 	    <span class="badge bg-primary rounded-pill">${countActivity.countUserAbLike + countActivity.countUserFbLike} </span>
 	  </li>

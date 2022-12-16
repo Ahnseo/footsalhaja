@@ -156,11 +156,11 @@ li {
 				</thead>
 				<tbody>
 					<c:forEach items="${userMainReplyList}" var="replyMainList">
-						<tr>
+						<c:url value="/main/get" var="getLink">
+							<c:param name="bookId" value="${replyMainList.book_bookId}"></c:param>
+						</c:url> 
+						<tr onclick="location.href='${getLink}'" class="trtr">
  						 	<td class="listTitle col-sm-6">
-								<c:url value="/main/get" var="getLink">
-									<c:param name="bookId" value="${replyMainList.book_bookId}"></c:param>
-								</c:url> 
 								<i class="fa-regular fa-comment-dots"></i><a class='move' href="${getLink }">${replyMainList.replyContent} </a>
 							</td> 
 						 	<td>${replyMainList.insertDatetime}</td>					 	
@@ -181,11 +181,11 @@ li {
 				</thead>
 				<tbody>
 					<c:forEach items="${userAbReplyList}" var="replyAbList">
-						<tr>	
+						<c:url value="/academy/get" var="getLink">
+							<c:param name="ab_number" value="${replyAbList.ab_number}"></c:param>
+						</c:url> 
+						<tr onclick="location.href='${getLink}'" class="trtr">	
 						 	<td class="listTitle col-sm-6">
-							<c:url value="/academy/get" var="getLink">
-								<c:param name="ab_number" value="${replyAbList.ab_number}"></c:param>
-							</c:url> 
 							<i class="fa-regular fa-comment-dots"></i><a class='move' href="${getLink }">${replyAbList.ab_replyContent} </a>
 						</td> 
 					 	<td>${replyAbList.ab_replyInsertDatetime}</td>					 	
@@ -205,11 +205,11 @@ li {
 				</thead>
 				<tbody>
 					<c:forEach items="${userFbReplyList}" var="replyFbList">
-						<tr>
+						<c:url value="/free/get" var="getLink">
+							<c:param name="number" value="${replyFbList.freeBoard_fb_number}"></c:param>
+						</c:url> 
+						<tr onclick="location.href='${getLink}'" class="trtr">	
 							<td class="listTitle col-sm-6">
-								<c:url value="/free/get" var="getLink">
-									<c:param name="number" value="${replyFbList.freeBoard_fb_number}"></c:param>
-								</c:url> 
 								<i class="fa-regular fa-comment-dots"></i><a class='move' href="${getLink }">${replyFbList.fb_replyContent} </a>
 							</td> 
 						 	<td>${replyFbList.fb_insertDatetime}</td>					 	

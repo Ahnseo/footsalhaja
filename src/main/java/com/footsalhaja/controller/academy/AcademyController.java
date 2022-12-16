@@ -166,8 +166,8 @@ public class AcademyController {
 	public String modify(BoardDto board, @RequestParam("files") MultipartFile[] addFiles,
 			@RequestParam(name = "removeFiles", required = false) List<String> removeFiles) {
 		service.modify(board, addFiles,removeFiles);
-		
-		return "redirect:/academy/list";
+		int num = board.getAb_number();
+		return "redirect:/academy/get?ab_number=" + num;
 	}
 	
 	//remove 게시글

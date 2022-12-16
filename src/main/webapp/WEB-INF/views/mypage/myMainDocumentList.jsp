@@ -129,13 +129,13 @@ li {
 			</thead>
 			<tbody>
 				<c:forEach items="${list.userMainList}" var="mainlist">
-					<tr>	
+					<c:url value="/main/get" var="getLink">
+						<c:param name="bookId" value="${mainlist.bookId}"></c:param>
+					</c:url> 
+					<tr onclick="location.href='${getLink}'" class="trtr">	
 					 	<td>${mainlist.bookDate}</td>
 					 	<td>${mainlist.bookTime}</td>					 	
 					 	<td class="listTitle col-sm-6">
-							<c:url value="/main/get" var="getLink">
-								<c:param name="bookId" value="${mainlist.bookId}"></c:param>
-							</c:url> 
 							<a class='move' href="${getLink }">${mainlist.title} </a>
 						</td>
 					 	<td>${mainlist.status}</td>

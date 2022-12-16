@@ -150,13 +150,13 @@ li {
 				</thead>
 				<tbody>
 					<c:forEach items="${list.userAbList}" var="ablist">
-						<tr>	
+						<c:url value="/academy/get" var="getLink">
+							<c:param name="ab_number" value="${ablist.ab_number}"></c:param>
+						</c:url> 
+						<tr onclick="location.href='${getLink}'" class="trtr">	
 						 	<td>${ablist.ab_number}</td>
 						 	<td>${ablist.ab_category}</td>					 	
 						 	<td class="listTitle col-sm-6">
-								<c:url value="/academy/get" var="getLink">
-									<c:param name="ab_number" value="${ablist.ab_number}"></c:param>
-								</c:url> 
 								<a class='move' href="${getLink }">${ablist.ab_title} </a>
 							</td>
 						 	<td>${ablist.ab_insertDatetime}</td>

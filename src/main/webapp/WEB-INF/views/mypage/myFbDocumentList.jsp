@@ -126,13 +126,13 @@ li {
 			</thead>
 			<tbody>
 					<c:forEach items="${list.userFbList}" var="fblist">
-						<tr>	
+						<c:url value="/free/get" var="getLink">
+							<c:param name="number" value="${fblist.fb_number}"></c:param>
+						</c:url> 
+						<tr onclick="location.href='${getLink}'" class="trtr">		
 						 	<td>${fblist.fb_number}</td>
 						 	<td>${fblist.fb_category}</td>					 	
 						 	<td class="listTitle col-sm-6">
-								<c:url value="/academy/get" var="getLink">
-									<c:param name="ab_number" value="${fblist.fb_number}"></c:param>
-								</c:url> 
 								<a class='move' href="${getLink }">${fblist.fb_title} </a>
 							</td>
 						 	<td>${fblist.fb_insertDatetime}</td>

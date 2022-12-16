@@ -204,9 +204,16 @@ ul {
 			<button type="button" class="btn btn-outline-success">게시글 목록</button>
 		</a>
 		
-		<!-- 작성자와 authentication.name이 같아야 수정버튼 보여주기 -->
+		<!-- 작성자와 authentication.name이 같아야 삭제&수정버튼 보여주기 -->
 		<sec:authentication property="name" var="userIdValue" />
 		
+		<!-- 삭제버튼 -->
+		<c:url value="/academy/remove" var="removeLink"></c:url>
+			<form id="removeForm" action="${removeLink }" method="post">
+				<input type="hidden" name="ab_number" value="${board.ab_number }"/>
+			</form>
+			<input class="btn btn-outline-success removeBtn" type="submit" value="삭제" data-bs-toggle="modal" data-bs-target="#removeModal"/>
+		<!-- 수정버튼 -->	
 		<c:if test="${board.member_userId == userIdValue}" >
 			<c:url value="/academy/modify" var="modifyLink">
 				<c:param name="ab_number" value="${board.ab_number }"></c:param>
@@ -302,44 +309,6 @@ ul {
 </div>
 	
 	
-<%-- 	<!-- 구 댓글 -->
-	
-	<div id="replyMessage">
-	</div>
-	
-	<div class="container-md">
-		<div class="row">
-			<div class="col">
-				<!-- 참조키 (ab_number, member_userId) 값_ -->
-				<input type="hidden" id="ab_number" value="${board.ab_number }">
-				<input type="hidden" id="member_userId" value="${board.member_userId }">
-
-				<!-- 로그인 했을때-->
-				<sec:authorize access="isAuthenticated()">
-				댓글 <input type="text" id="replyInput">
-					<button id="replySendButton">댓글쓰기</button>
-				</sec:authorize>
-
-				<!-- 로그인 안했을때 -->
-				<sec:authorize access="not isAuthenticated()">
-				댓글을 작성하시려면 로그인하세요.
-				</sec:authorize>
-			</div>
-		</div>
-		
-		<div class="row">
-			<div class="col">
-				<div id="replyListContainer">
-				
-				</div>
-				<!-- 댓글 페이지 출력란 -->
-			<div id="replyPageFooter">
-			</div>
-				
-			</div>
-		</div>
-	</div> --%>
-	
 	<!-- 게시글 삭제 모달 -->
 	<div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog">
@@ -402,7 +371,10 @@ ul {
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script>
 
-
+//삭제확인 버튼 클릭하면 삭제 form 전송
+document.querySelector("#removeConfirmButton").addEventListener("click", function() {
+	document.querySelector("#removeForm").submit();
+});
 
 
 /* 댓글 이벤트 처리 */
