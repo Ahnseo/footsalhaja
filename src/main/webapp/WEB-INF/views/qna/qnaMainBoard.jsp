@@ -6,15 +6,45 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Insert title here</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-</head>
-<body>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<meta name="description" content="" />
+	<meta name="author" content="" />
+	
+	<title>Insert title here</title>
+	
+	<!-- Favicon-->
+	<link rel="icon" type="image/x-icon" href="/footsalhaja/src/main/resources/assets/favicon.ico" />
+	<!-- Font Awesome icons (free version)-->
+	<script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+	<!-- Google fonts-->
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+	<link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+		
+	<!-- Core theme CSS (includes Bootstrap)-->
+	<link href="/css/styles.css" type="text/css" rel="stylesheet" />
+		
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
+	
+	<style>
+		#freeTitle h2 {
+			text-align: center;
+			padding: 60px;
+		 }
+		.listHover:hover {
+			background-color: #D3D3D3;
+			cursor: pointer;
+		}
+		.btn-m5{
+			margin : 5px;
+		}
+	</style>
+
+
 </head>
 <body>
 	<my:navbar active="qnaMainBoard"></my:navbar>
@@ -22,7 +52,9 @@
 		<div class="row">
 			<div class="col">
 			
-				<h3>FAQ 자주하는 질문</h3>
+				<div id="freeTitle">
+					<h2>FAQ 자주묻는 질문</h2>
+				</div>
 				<div class="mb-3">
 					<c:forEach items="${FAQList}" var="FAQ">
 						<div class="accordion" id="accordionFAQ">
@@ -43,24 +75,22 @@
 				</div>
 		
 				<div class="container">
-					<div class="row">
-						<div class="col-md-4">
-							<h3>QnA 문의</h3>
-						</div>
-						<!-- 검색기능 추가 예정  -->
-						<div class="col-md-8">
-							<c:url value="/qna/qnaMainBoard" var="qnaMainBoardLink"></c:url>
-							<form action="${qnaMainBoardLink }" class="d-flex" role="search">
-								<select name="t" id="searchTypeSelect" class="form-select">
-						      		<option value="all">전체</option>
-						      		<option value="userId" ${param.t == 'userId' ? 'selected' : '' }>ID</option>
-						      		<option value="name" ${param.t == 'name' ? 'selected' : '' }>이름</option>
-						      	</select>
-								<input class="form-control me-2" type="search" name="q" value="${param.q }" placeholder="검색" aria-label="Search">
-								<button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-							</form>
-						</div>
+					<div id="freeTitle">
+						<h2>QnA 문의</h2>
 					</div>
+					
+					<!-- 검색기능 추가 예정  -->
+					<c:url value="/qna/qnaMainBoard" var="qnaMainBoardLink"></c:url>
+					<form action="${qnaMainBoardLink }" class="d-flex" role="search">
+						<select name="t" id="searchTypeSelect" class="form-select">
+				      		<option value="all">전체</option>
+				      		<option value="userId" ${param.t == 'userId' ? 'selected' : '' }>ID</option>
+				      		<option value="name" ${param.t == 'name' ? 'selected' : '' }>이름</option>
+				      	</select>
+						<input class="form-control me-2" type="search" name="q" value="${param.q }" placeholder="검색" aria-label="Search">
+						<button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+					</form>
+					
 				</div>
 				
 				<div class="container">
@@ -72,29 +102,33 @@
 										<th>번호</th>
 										<th>카테고리</th>
 										<th>제목</th>
-										<th>작성자</th>
 										<th>좋아요</th>
+										<th>작성자</th>
+										<th>작성일시</th>
 										<th>문의상태</th>
 										<!-- <th>조회수</th> --> 
 									</tr>
 								</thead>
 								 <tbody>
 									 <c:forEach items="${allQnAListByDone}" var="allQnA" varStatus="st" >
-										<tr>
+										<c:url value="/qna/myQnAGet" var="getLink">
+									 		<c:param name="userId" value="${allQnA.userId}"/>
+									 		<c:param name="qnaId" value="${allQnA.qnaId}"/>
+									 	</c:url>	
+										<tr class="listHover" onclick="location.href='${getLink}'">
 										 	<td>${allQnA.qnaId}</td>
-										 	<td>${allQnA.category}</td>
-										 	
-										 	<c:url value="/qna/myQnAGet" var="getLink">
-										 		<c:param name="userId" value="${allQnA.userId}"/>
-										 		<c:param name="qnaId" value="${allQnA.qnaId}"/>
-										 	</c:url>	 	
+										 	<td>${allQnA.category}</td>	
 										 	<td>
 										 		<a href="${getLink}">${allQnA.title}</a>
+										 		<c:if test="${allQnA.replyCount != 0}">
+										 		
+										 			<span class="badge text-bg-light"><i class="fa-regular fa-message"></i> ${allQnA.replyCount}</span>
+										 			
+										 		</c:if>
 										 	</td>
-	
+										 	<td>${allQnA.likeCount}</td>
 										 	<td>${allQnA.userId}</td>
-											<td>${allQnA.likeCount}</td>
-											
+										 	<td>${allQnA.ago }</td>
 										 	<td>
 										 	 	<c:if test="${allQnA.status == '답변완료'}">  
 										        	<span class="badge bg-success rounded-pill">${allQnA.status}</span>   								        	
@@ -187,7 +221,8 @@
 							<div class="d-flex flex-row-reverse">	
 							
 								<form action="/qna/insert" method="get">
-									<button type="submit" id="insertBtn">문의하기</button>	
+								
+									<button id="insertBtn" class="btn btn-success btn-m5" type="submit" >문의하기</button>	
 								</form>
 								
 								<%-- 시큐리티 로그인된 userId = userIdValue -> ${userIdValue } 으로 사용하겠습니다.--%>
@@ -195,7 +230,7 @@
 								<form action="/qna/myQnAList" method="get">
 									<input type="hidden" name="userId" value="${userIdValue}">
 									<input type="hidden" name="page" value="1">
-									<button type="submit" id="myQnAListBtn">내 문의내역</button>
+									<button id="myQnAListBtn" class="btn btn-primary btn-m5" type="submit" >내 문의내역</button>
 								</form>
 							</div>
 						</div>
@@ -213,6 +248,11 @@
 <script>
 	const ctx = "${pageContext.request.contextPath}";
 	
+</script>
+<script>
+setTimeout(function() {
+	  console.log("Works!");
+	}, 1000);
 </script>
 	
 

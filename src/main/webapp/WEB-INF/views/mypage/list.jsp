@@ -33,7 +33,7 @@
 					<th>생년월일</th>
 					<th>활동지역</th>
 					<th>전화번호</th>
-					<th>회원권한(개인/팀)</th>
+					<th>회원권한</th>
 				</thead>
 				<tbody>
 					<c:url value="/mypage/get" var="myInfoGetLink">
@@ -51,7 +51,18 @@
 					 	<td>${myInfo.birthYY}-${myInfo.birthMM}-${myInfo.birthDD}</td>
 					 	<td>${myInfo.activityArea}</td>
 					 	<td>${myInfo.phone}</td>
-					 	<td>${myInfo.permission}</td>
+					 	<td>
+					 	<!-- 회원권한 -->
+							<c:if test="${myInfo.auth.get(0) eq 'user'}">
+								일반회원
+							</c:if>
+							<c:if test="${myInfo.auth.get(0) eq 'manager'}">
+								매니저
+							</c:if>
+							<c:if test="${myInfo.auth.get(0) eq 'admin'}">
+								관리자
+							</c:if>
+						</td>
 				 	</tr>
 				</tbody>
 			</table>

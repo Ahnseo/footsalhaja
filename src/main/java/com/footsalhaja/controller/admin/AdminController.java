@@ -81,6 +81,7 @@ public class AdminController {
 							@RequestParam(name="t") String type
 							) {	
 		List<QnADto> allQnAList= adminService.selectAllQnAList(page, qnaPageInfo, keyword, type);
+		System.out.println(allQnAList);
 		model.addAttribute("allQnAList", allQnAList);
 		model.addAttribute("qnaPageInfo", qnaPageInfo);
 		
@@ -100,9 +101,4 @@ public class AdminController {
 	}
 	
 	
-	
-	@GetMapping("stadiumManagement")
-	public void stadiumManagement() {
-		
-	}
 }

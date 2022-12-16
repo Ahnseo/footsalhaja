@@ -1,12 +1,17 @@
 package com.footsalhaja.controller.qna;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,20 +29,15 @@ public class QnAReplyController {
 	@Autowired
 	QnAService qnaService;
 	
+	//#### 답변 기능  ############
 	@PutMapping("add")
 	@ResponseBody
 	private String qnaReply(@RequestBody QnAReplyDto qnaReply, Authentication authentication, Model model, HttpServletRequest request ) {
-		//String loggedinId = authentication.getName();
-		//System.out.println("ctrl loggedinId : " + loggedinId);
-		//System.out.println("ctrl qnaReplyInfo.writer : " +qnaReply.getWriter());
-		//System.out.println("ctrl qnaReplyInfo all : " + qnaReply);
 		qnaService.insertQnAReply(qnaReply) ;
 		
 		// 답변 저장하면! -> QnABoard status '답변완료' 업데이트 하기. 
-		
 		// @ResponseBody redirect 방법 : request.getHeader() + jsp script .then(res=> res.text()).then(text=>location.href=text)
 		String referer = request.getHeader("Referer"); // 헤더에서 이전 페이지를 읽는다.
-		//System.out.println(referer);
 		return referer; // 이전 페이지로 이동하기 위한 값 
 	}
 	@PostMapping("qnaAnswerModify")
@@ -50,14 +50,42 @@ public class QnAReplyController {
 		String referer = request.getHeader("Referer");
 		return referer;
 	}
+	
+	//#### 댓글 기능  ############
 	@PutMapping("addToAnswer")
 	@ResponseBody
 	private String qnaReplyToAnswer(@RequestBody QnAReplyToAnswerDto qnaReplyToAnswer, Authentication authentication, Model model, HttpServletRequest request) {
-		System.out.println(qnaReplyToAnswer);
+		//System.out.println(qnaReplyToAnswer);
 		qnaService.insertQnAReplyToAnswer(qnaReplyToAnswer) ;
 		String referer = request.getHeader("Referer"); // 헤더에서 이전 페이지를 읽는다.
 		return referer; // 이전 페이지로 이동하기 위한 값 
 	}
+	@GetMapping("list/{answerId}")
+	@ResponseBody
+	public List<QnAReplyToAnswerDto> list(@PathVariable int answerId, Model model, Authentication authentication) {
+		
+		String username = "";
+		if (authentication != null) {
+			username = authentication.getName();
+		}
+		List<QnAReplyToAnswerDto> replyList = qnaService.selectReplyList(answerId, username);	
+		return replyList; // 이전 페이지로 이동하기 위한 
+	}
+	
+	@GetMapping("get/{replyId}")
+	@ResponseBody
+	public QnAReplyToAnswerDto getReply (@PathVariable int replyId) {
+		QnAReplyToAnswerDto reply = qnaService.selectQnAReplyById(replyId);
+		return reply;
+	}
+	
+	@PostMapping("modifyReply")
+	@ResponseBody
+	public void modifyReply(@RequestBody QnAReplyToAnswerDto reply) {
+		qnaService.updateReplyById(reply.getQnaReplyToAnswerId(), reply.getContent());
+
+	}
+	
 	
 	@DeleteMapping("deleteQnAAnswer")
 	@ResponseBody
@@ -73,21 +101,12 @@ public class QnAReplyController {
 	}
 	@DeleteMapping("deleteQnAReply")
 	@ResponseBody
-	public String deleteQnAReply(@RequestBody int qnaReplyToAnswerId, HttpServletRequest request) {
-		//qnaReplyId, qnaId, UserId 값 잘 넘어옴! 이 값들로 삭제 기능
-		//System.out.println("deleteAnswer:"+qnaReply);
-		System.out.println(qnaReplyToAnswerId);
-		qnaService.deleteQnAReplyByReplyId(qnaReplyToAnswerId);
+	public String deleteQnAReply(@RequestBody QnAReplyToAnswerDto qnaReplyToAnswer, HttpServletRequest request) {
+		
+		qnaService.deleteQnAReplyByReplyId(qnaReplyToAnswer.getQnaReplyToAnswerId());
 		
 		String referer = request.getHeader("Referer"); // 헤더에서 이전 페이지를 읽는다.
-		
 		return referer; // 이전 페이지로 이동하기 위한 값 
-	}
-	@PostMapping("modifyReply")
-	@ResponseBody
-	public void modifyReply(@RequestBody QnAReplyToAnswerDto reply) {
-		qnaService.updateReplyById(reply.getQnaReplyToAnswerId(), reply.getContent());
-
 	}
 
 	@DeleteMapping("deleteQnA")

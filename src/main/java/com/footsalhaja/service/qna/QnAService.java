@@ -43,6 +43,10 @@ public interface QnAService {
 	public int updateAnswerByAnswerId(int answerId, String content);
 
 	public int updateReplyById(int qnaReplyToAnswerId, String content);
+
+	public List<QnAReplyToAnswerDto> selectReplyList(int answerId, String username);
+
+	public QnAReplyToAnswerDto selectQnAReplyById(int replyId);
 	
 
 

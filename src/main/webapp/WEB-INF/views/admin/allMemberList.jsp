@@ -6,14 +6,38 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
 <title>Insert title here</title>
+<!-- Favicon-->
+<link rel="icon" type="image/x-icon" href="/footsalhaja/src/main/resources/assets/favicon.ico" />
+<!-- Font Awesome icons (free version)-->
+<script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+<!-- Google fonts-->
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+<link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+	
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="/css/styles.css" type="text/css" rel="stylesheet" />
+	
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-</head>
-<body>
-<meta charset="UTF-8">
-<title>회원목록</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
+
+
+<style>
+	.listHover:hover {
+		background-color: #D3D3D3;
+		cursor: pointer;
+	}
+	.btn-m5{
+		margin : 5px;
+	}
+
+
+</style>
 </head>
 <body>
 <!--현재 member테이블 의 컬럼들 ( userId, name, password, nickName, email, birthYY, birthMM, birthDD, activityArea, phone, personalGender, permission ) -->
@@ -21,7 +45,7 @@
 <div class="container">
 	<h3>전체 회원 목록 </h3>
 	<div class="row">
-		<div class="col-md-10">
+		<div class="col-md-8">
 			<c:url value="/admin/allMemberList" var="allMemberListLink"></c:url>
 			<form action="${allMemberListLink }" class="d-flex" role="search">
 				<select name="t" id="searchTypeSelect" class="form-select">
@@ -29,8 +53,10 @@
 		      		<option value="userId" ${param.t == 'userId' ? 'selected' : '' }>ID</option>
 		      		<option value="name" ${param.t == 'name' ? 'selected' : '' }>이름</option>
 		      	</select>
+		      
 				<input class="form-control me-2" type="search" name="q" value="${param.q }" placeholder="검색" aria-label="Search">
 				<button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+				
 			</form>
 		</div>
 	</div>
@@ -57,20 +83,47 @@
 					 <c:url value="/member/get" var="getLink">
 					 	<c:param name="userId" value="${member.userId}"/>
 					 </c:url>
-							<tr>
+	 	
+							<tr class="listHover" onclick="location.href='${getLink}'">
 							 	<td>${st.count}</td>
 							 	<td>
 							 		<a href="${getLink}">${member.userId}</a>
 							 	</td>
 							 	<td>${member.password}</td>
-							 	<td>${member.personalGender}</td>
+							 	<td>	
+							 		<c:if test="${member.personalGender eq 'M'}">
+										남자
+									</c:if>
+									<c:if test="${member.personalGender eq 'F'}">
+										여자
+									</c:if>
+							 	</td>
 							 	<td>${member.name}</td>
 							 	<td>${member.nickName}</td>
 							 	<td>${member.email}</td>
-							 	<td>${member.birthYY}-${member.birthMM}-${member.birthDD}</td>
+							 	<td>
+							 	<c:if test="${member.birthMM < 10}">
+									<c:set var="zeroMM" value="0"/>
+								</c:if>
+								<c:if test="${member.birthDD < 10}">
+									<c:set var="zeroDD" value="0"/>
+								</c:if>
+	
+							 		${member.birthYY}-${zeroMM}${member.birthMM}-${zeroDD}${member.birthDD}
+							 	</td>
 							 	<td>${member.activityArea}</td>
 							 	<td>${member.phone}</td>
-							 	<td>${member.auth}</td>
+							 	<td>
+								 	<c:if test="${member.auth.get(0) eq 'user'}">
+								 		일반회원
+									</c:if>
+									<c:if test="${member.auth.get(0) eq 'manager'}">
+										매니저
+									</c:if>
+									<c:if test="${member.auth.get(0) eq 'admin'}">
+										관리자
+									</c:if>	 
+							 	</td>
 						 	</tr>
 				 	</c:forEach>
 				</tbody>

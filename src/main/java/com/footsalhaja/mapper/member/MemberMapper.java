@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.footsalhaja.domain.academy.AcademyReplyDto;
-import com.footsalhaja.domain.academy.BoardDto;
 import com.footsalhaja.domain.member.MemberDto;
 
 @Mapper
@@ -50,5 +48,7 @@ public interface MemberMapper {
 	//내가 좋아요한 글 보기
 	public MemberDto getUserAbLikeList(String userId);
 	public MemberDto getUserFbLikeList(String userId);
+
+	public int updateMemberAuth(String userId, List<String> newAuthorities);
 
 }

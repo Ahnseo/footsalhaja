@@ -12,6 +12,14 @@
 			(#{userId}, #{name}, #{password}, #{nickName}, #{email}, #{birthYY}, #{birthMM}, #{birthDD}, #{activityArea}, #{phone},  #{personalGender} )
 	</insert>
  	
+ 	<update id="updateMemberAuth">
+ 		<foreach item="newAuth" collection="newAuthorities">
+ 	
+ 		UPDATE member SET
+ 		auth = #{newAuth}
+ 		WHERE userId = #{userId}
+ 		</foreach>
+ 	</update>
  	
  	<update id="updateMemberInfoByUserId">
  		UPDATE member
@@ -19,7 +27,8 @@
 	 		password = #{password},
 	 		nickName = #{nickName},
 	 		email = #{email},
-	 		phone = #{phone}
+	 		phone = #{phone},
+	 		auth = #{auth}
 	 	WHERE
 	 		userId = #{userId}	 			 		
  	</update>

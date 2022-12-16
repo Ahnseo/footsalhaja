@@ -35,6 +35,7 @@
 	 	ON q.member_userId = m.userId 	
 	 	WHERE
 	 		m.userId = #{userId}
+	 	
 	 	ORDER BY 
 	 		qnaId DESC 
 	 	LIMIT
@@ -49,28 +50,33 @@
 	 		q.content,
 	 		q.status,
 	 		q.member_userId AS userId,
-	 		COUNT(distinct l.qnaLikeId) AS likeCount
-	 	FROM 
-	 	 	QnABoard q
+	 		q.insertDatetime,
+	 		COUNT(distinct l.qnaLikeId) AS likeCount,
+	 		COUNT(DISTINCT r.qnaReplyToAnswerId) AS replyCount
+	 		
+	 	FROM QnABoard q
 	 	LEFT JOIN QnABoardLike l ON q.qnaId = l.qnaId
+	 	LEFT JOIN QnAReplyToAnswer r ON q.qnaId = r.qnaId
 	 	WHERE
-	 		status = #{status} 
-	 	AND (
+	 		q.status = #{status} 
+	 	AND 
+	 	(
 		<trim prefixOverrides="OR">
 			<if test="type == 'all' or type == 'title'">
-			OR title LIKE #{keyword}
+			OR q.title LIKE #{keyword}
 			</if>
 			
 			<if test="type == 'all' or type == 'content'">
-			OR content LIKE #{keyword}
+			OR q.content LIKE #{keyword}
 			</if>
 			
 			<if test="type == 'all' or type == 'userId'">
-			OR member_userId LIKE #{keyword}
+			OR q.member_userId LIKE #{keyword}
 			</if>
 		</trim> 
 		) 	
-	 	ORDER BY qnaId DESC
+		GROUP BY q.qnaId
+	 	ORDER BY q.qnaId DESC
 	 	LIMIT #{offset}, #{records}
 	 </select>
 	 
@@ -143,7 +149,8 @@
 	 		q.content,
 	 		q.status,
 	 		q.member_userId AS userId,
-	 		COUNT(l.qnaLikeId) AS likeCount
+	 		q.insertDatetime,
+	 		COUNT(DISTINCT l.qnaLikeId) AS likeCount
 	 	FROM 
 	 	 	QnABoard q
 	 	LEFT JOIN QnABoardLike l ON q.qnaId = l.qnaId 	
@@ -160,8 +167,9 @@
 			<if test="type == 'all' or type == 'userId'">
 			OR member_userId LIKE #{keyword}
 			</if>
-		</trim>  	
-	 	ORDER BY qnaId DESC
+		</trim>
+		Group By q.qnaId
+	 	ORDER BY q.qnaId DESC
 	 	LIMIT #{offset}, #{records}
 	</select>
 	
@@ -275,6 +283,37 @@
 		INSERT INTO QnAReplyToAnswer (qnaReplyId, qnaId, writer, content, userId)
 		VALUES( #{qnaReplyId}, #{qnaId}, #{writer}, #{content}, #{userId} )
 	</insert>
+	
+	<select id="selectReplyList" resultType="com.footsalhaja.domain.qna.QnAReplyToAnswerDto">
+		SELECT 
+			qnaReplyToAnswerId,
+			qnaReplyId,
+			qnaId,
+			userId,
+			(writer = #{userId}) editable,
+			content,
+			insertDatetime
+		FROM 
+			QnAReplyToAnswer
+		WHERE 
+			qnaReplyId = #{answerId}
+	</select>
+	
+	<select id="selectQnAReplyById" resultType="com.footsalhaja.domain.qna.QnAReplyToAnswerDto">
+		SELECT 
+			qnaReplyToAnswerId,
+			qnaReplyId,
+			qnaId,
+			userId,
+			writer,
+			content,
+			insertDatetime
+		FROM 
+			QnAReplyToAnswer
+		WHERE 
+			qnaReplyToAnswerId = #{replyId}
+	</select>
+	
 	<select id="selectQnAReplyToAnswerList" resultType="com.footsalhaja.domain.qna.QnAReplyToAnswerDto">
 		<!-- //qnaReplyToAnswerId, qnaReplyId, qnaId, writer, content, userId, insertDatetime -->
 		SELECT 
@@ -320,6 +359,10 @@
 	</delete>
 	<delete id="deleteQnA">
 		DELETE FROM QnABoard
+		WHERE qnaId = #{qnaId}
+	</delete>
+	<delete id="deleteLikesByqnaId">
+		DELETE FROM QnABoardLike
 		WHERE qnaId = #{qnaId}
 	</delete>
  </mapper>

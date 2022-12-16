@@ -5,12 +5,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.footsalhaja.domain.member.MemberDto;
 import com.footsalhaja.domain.member.MemberPageInfo;
 import com.footsalhaja.mapper.member.MemberMapper;
 
 @Service
+@Transactional
 public class MemberServiceImpl implements MemberService {
 	
 	@Autowired
@@ -80,8 +82,32 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int updateMemberInfoByUserId(MemberDto memberModifiedValues) {
 		int cnt = memberMapper.updateMemberInfoByUserId(memberModifiedValues);
-		System.out.println(cnt);
-		System.out.println(memberModifiedValues);
+		//System.out.println(cnt);
+		System.out.println("serviceAuth : "+memberModifiedValues.getAuth());
+		return cnt;
+	}
+	
+	//회원권한 추가하기 
+	@Override
+	public int updateMemberAuth(String userId, List<String> addAuthorities) {
+		
+		MemberDto member = memberMapper.selectMemberInfoByUserId(userId);
+		List<String> oldAuthorities = member.getAuth();
+		//System.out.println("oldAuthorities :"+oldAuthorities);
+		
+		List<String> newAuthorities = new ArrayList<>();
+		
+		for(String oldAuth : oldAuthorities) {
+			for(String auth : addAuthorities) {
+				if(oldAuth != auth) {
+					newAuthorities.add(auth);
+				}
+			}
+		}
+		//System.out.println("newAuthorities :"+newAuthorities);
+		
+		int cnt = memberMapper.updateMemberAuth(userId, newAuthorities);
+		
 		return cnt;
 	}
 	

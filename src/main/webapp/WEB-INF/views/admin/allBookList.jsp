@@ -6,18 +6,42 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
 <title>Insert title here</title>
+<!-- Favicon-->
+<link rel="icon" type="image/x-icon" href="/footsalhaja/src/main/resources/assets/favicon.ico" />
+<!-- Font Awesome icons (free version)-->
+<script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+<!-- Google fonts-->
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+<link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+	
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="/css/styles.css" type="text/css" rel="stylesheet" />
+	
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-</head>
-<body>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
+
+<style>
+	.listHover:hover {
+		background-color: #D3D3D3;
+		cursor: pointer;
+	}
+	.btn-m5{
+		margin : 5px;
+	}
+
+</style>
 </head>
 <body>
 <my:navbar active=""></my:navbar>
 <div class="container">
+<h3>전체 예약내역</h3>
+	<p>검색키워드 =제목,id검색  + 최신순/예약 날짜별/예약시간별 /구장별 매치타입별 /Level별 /모집상태별로 버튼 누를때 마다 -> script: 쿼리 DESC<-> ASC 변경  </p>
 	<div class="row">
 		<div class="col">
 			<table class="table">
@@ -37,20 +61,70 @@
 				</thead>
 				<tbody>
 					 <c:forEach items="${allBookedList}" var="booked"  >
-						<tr>
+						<c:url value="/main/get" var="getBookedLink">
+					 		<c:param name="bookId" value="${booked.bookId}"/>
+					 	</c:url>
+						<tr class="listHover" onclick="location.href='${getBookedLink}'">
 						 	<td>${booked.bookId}</td>
-						 	<c:url value="/main/get" var="getBookedLink">
-						 		
-						 		<c:param name="bookId" value="${booked.bookId}"/>
-						 	</c:url>
+						 	
 						 	<td><a href="${getBookedLink}">${booked.title}</a></td>
 						 	<td>${booked.bookDate}</td>
-						 	<td>${booked.bookTime}</td>
+						 	
+						 	<td>
+							 	<c:choose>
+							        <c:when test="${booked.bookTime == 6}">
+							        	<span class="mr10px">6:00~8:00</span>
+							        </c:when>
+							        <c:when test="${booked.bookTime == 9}">
+							        	<span class="mr10px">9:00~11:00</span>
+							        </c:when>
+							        <c:when test="${booked.bookTime == 14}">
+							        	<span class="mr10px">14:00~16:00</span>
+							        </c:when>
+							        <c:when test="${booked.bookTime == 18}">
+							        	<span class="mr10px">18:00~20:00</span>
+							        </c:when>
+							        <c:when test="${booked.bookTime == 21}">
+							        	<span class="mr10px">21:00~23:00</span>
+							        </c:when>
+						        </c:choose>
+						 	</td>
+						 	
 						 	<td>${booked.stadiumName}</td>
-						 	<td>${booked.matchType}</td>
-						 	<td>${booked.level}</td>					 	
-						 	<td>${booked.teamGender}</td>
+						 	
+						 	<td>
+							 	<c:if test="${booked.matchType eq '3'}">
+						 		3 vs 3 
+						 		</c:if>
+						 		<c:if test="${booked.matchType eq '4'}">
+						 		4 vs 4
+						 		</c:if>
+						 		<c:if test="${booked.matchType eq '5'}">
+						 		5 vs 5 
+						 		</c:if>				 	
+						 	</td>
+						 	<td>
+						 		<c:if test="${booked.level eq '1'}">
+						 		비기너 
+						 		</c:if>
+						 		<c:if test="${booked.level eq '2'}">
+						 		아마추어 
+						 		</c:if>
+						 		<c:if test="${booked.level eq '3'}">
+						 		챌린저 
+						 		</c:if>
+						 	</td>					 	
+						 	<td>					 	
+							 	<c:if test="${booked.teamGender eq 'M'}">
+									남자
+								</c:if>
+								<c:if test="${booked.teamGender eq 'F'}">
+									여자
+								</c:if>
+						 	</td>
+						 	
 						 	<td>${booked.userId}</td>
+						 	
 						 	<td>
 							    <c:if test="${booked.status == 0}">  
 						        	<span class="badge bg-success rounded-pill">모집완료</span>   								        	
@@ -59,6 +133,7 @@
 						        	<span class="badge bg-danger rounded-pill">모집중</span>   								        	
 						        </c:if>
 					        </td>
+					        
 					 	</tr>
 				 	</c:forEach>
 				 </tbody>

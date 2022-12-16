@@ -74,12 +74,21 @@
                                 <input class="form-control" id="nickName" type="text" name = "nickName" value="${member.nickName}" data-sb-validations="required" />
                                 <label for="nickName">닉네임</label>
                             </div>
-                            
-                            <!-- 개인ID/팀ID -->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="permission" type="text" name="permission" value="${member.permission}" data-sb-validations="required" readonly />
-                                <label for="permission">개인ID/팀ID</label>
-                            </div>
+
+                            <!-- 회원권한-->
+							<input type="hidden" name="auth" value="${member.auth}" readonly >
+							<div class="form-floating mb-3">
+							<c:if test="${member.auth.get(0) eq 'user'}">
+								<input class="form-control" id="permission" type="text" name="permission" value="일반회원" data-sb-validations="required" readonly /> 
+							</c:if>
+							<c:if test="${member.auth.get(0) eq 'manager'}">
+								<input class="form-control" id="permission" type="text" name="permission" value="매니저" data-sb-validations="required" readonly /> 
+							</c:if>
+							<c:if test="${member.auth.get(0) eq 'admin'}">
+								<input class="form-control" id="permission" type="text" name="permission" value="관리자" data-sb-validations="required" readonly /> 
+							</c:if>	
+								<label for="permission">회원권한</label>
+							</div>
                             
                             <!-- 이메일 -->
                             <div class="form-floating mb-3">
@@ -88,11 +97,7 @@
                                 <div class="invalid-feedback" data-sb-feedback="email:required">메일주소는 필수 입력 해야합니다.</div>
                                 <div class="invalid-feedback" data-sb-feedback="email:email">유효하지않은 메일 주소입니다.</div>
                             </div>
-                            
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="permission" type="text" name="permission" value="${member.permission}" data-sb-validations="required" readonly/>
-                                <label for="permission">개인ID/팀ID</label>
-                            </div>
+
                             <div class="form-floating mb-3">
 	                            <input class="form-control" type="text" name="birthYY" value="${member.birthYY}" readonly />
 	                            <label for="birthYY">년</label>
