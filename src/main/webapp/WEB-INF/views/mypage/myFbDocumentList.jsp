@@ -135,7 +135,7 @@ li {
 						 	<td class="listTitle col-sm-6">
 								<a class='move' href="${getLink }">${fblist.fb_title} </a>
 							</td>
-						 	<td>${fblist.fb_insertDatetime}</td>
+						 	<td>${fblist.ago}</td>
 						 	<td>${fblist.fb_viewCount}</td>
 					 	</tr>
 					</c:forEach>

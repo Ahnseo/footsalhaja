@@ -159,7 +159,7 @@ li {
 						 	<td class="listTitle col-sm-6">
 								<a class='move' href="${getLink }">${ablist.ab_title} </a>
 							</td>
-						 	<td>${ablist.ab_insertDatetime}</td>
+						 	<td>${ablist.ago}</td>
 						 	<td>${ablist.ab_viewCount}</td>
 					 	</tr>
 					</c:forEach>

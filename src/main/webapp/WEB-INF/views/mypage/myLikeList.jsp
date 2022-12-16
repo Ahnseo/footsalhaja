@@ -160,7 +160,7 @@ li {
  						 	<td class="listTitle col-sm-6">
 								<i class="fa-solid fa-heart"></i><a class='move' href="${getLink }">${likeAbList.ab_title} </a>
 							</td> 
-						 	<td>${likeAbList.ab_insertDatetime}</td>					 	
+						 	<td>${likeAbList.ago}</td>					 	
 					</c:forEach>
 				</tbody>
 			</table>
@@ -184,7 +184,7 @@ li {
  						 	<td class="listTitle col-sm-6">
 								<i class="fa-solid fa-heart"></i><a class='move' href="${getLink }">${likeFbList.fb_title} </a>
 							</td> 
-						 	<td>${likeFbList.fb_insertDatetime}</td>					 	
+						 	<td>${likeFbList.ago}</td>					 	
 					 	</tr>
 					</c:forEach>
 				</tbody>

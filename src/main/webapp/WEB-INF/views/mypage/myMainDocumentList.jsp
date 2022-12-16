@@ -79,7 +79,15 @@ li {
  }
 
 /* 글목록 */
-#listBox .table{
+#listBox .table. th{
+	font-size: 13px;
+	letter-spacing: -1px;
+	text-align: center;
+	padding: 5px;
+}
+
+
+#listBox tbody{
 	font-size: 16px;
 	letter-spacing: -1px;
 	text-align: center;
@@ -116,7 +124,7 @@ li {
 	<div id="listBox" >
 		<table class="table table-hover container">
 			<thead>
-				<tr scope="row">	
+				<tr class = "trtr" scope="row">	
 					<th>예약 날짜</th>
 					<th>예약 시간</th>
 					<th>제목</th>
