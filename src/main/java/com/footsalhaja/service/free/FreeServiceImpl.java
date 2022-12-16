@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,6 +16,11 @@ import com.footsalhaja.domain.free.BoardDto;
 import com.footsalhaja.domain.free.PageInfo;
 import com.footsalhaja.mapper.free.FreeMapper;
 import com.footsalhaja.mapper.free.FreeReplyMapper;
+
+import software.amazon.awssdk.core.sync.RequestBody;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.ObjectCannedACL;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 @Service
 @Transactional
@@ -26,9 +32,16 @@ public class FreeServiceImpl implements FreeService{
 	@Autowired
 	private FreeReplyMapper replyMapper;
 	
+	@Autowired
+	private S3Client s3Client;
+	
+	@Value("${aws.s3.bucket}")
+	private String bucketName;
+	
 	
 	@Override
 	public int insert(BoardDto board) {
+		
 		return freeMapper.insert(board);
 	}
 
@@ -231,6 +244,8 @@ public class FreeServiceImpl implements FreeService{
 		for (MultipartFile file : files) {
 			if (file != null && file.getSize() > 0) {
 				// db에 파일 정보 저장
+					// S3에 파일 저장
+					// 키 생성
 				String originalFileName = file.getOriginalFilename(); //오리지날 파일명 String
 				  
 				String fb_fileName = UUID.randomUUID() + originalFileName; //랜덤 UUID+파일이름으로 저장될 파일 새 이름
@@ -246,27 +261,41 @@ public class FreeServiceImpl implements FreeService{
 					fb_fileType = 0;
 				}
 				
+				try {
 				// 파일 저장
 				// ab_number 이름의 새 폴더 만들기 (파일 첨부된 게시물 ab_number번호의 새폴더가 생성됨)
 				File folder = new File("D:\\study\\project\\project"+ board.getFb_number());
 				folder.mkdirs();
 				
-				File dest = new File(folder, fb_fileName);
-				//첨부된 파일을 새 폴더에 전송
-				try {
-					file.transferTo(dest);
-				} catch (Exception e) {
-					//@@Transactional은 RuntimeExceptional에서만 rollback됨
-					e.printStackTrace();
-					throw new RuntimeException(e);
-				}
+				String key = "free/" + board.getFb_number() + "/" + file.getOriginalFilename();
+				
+				// putObjectRequest
+				PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+						.bucket(bucketName)
+						.key(key)
+						.acl(ObjectCannedACL.PUBLIC_READ)
+						.build();
+				
+				// requestBody
+				RequestBody requestBody = RequestBody.fromInputStream(file.getInputStream(), file.getSize());
+				
+				// object(파일) 올리기
+				s3Client.putObject(putObjectRequest, requestBody);
 				
 				//파일 경로
-				String fb_filePath = folder.getAbsolutePath();
-				
+				String fb_filePath = key;
 				freeMapper.insertFile(board.getFb_number(), fb_fileName, fb_filePath, fb_fileType);
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new RuntimeException(e);
+			}
+				
 			}
 		}
 		return cnt;
 	}
+	
+	
+	
+	
 }

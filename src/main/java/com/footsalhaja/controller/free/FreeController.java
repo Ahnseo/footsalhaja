@@ -49,7 +49,6 @@ public class FreeController {
 	public String insert(BoardDto board, MultipartFile[] files,
 			RedirectAttributes rttr) {
 		
-		System.out.println(files);
 		service.insertFile(board, files);
 		
 		return "redirect:/free/list";
