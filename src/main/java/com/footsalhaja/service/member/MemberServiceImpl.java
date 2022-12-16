@@ -123,7 +123,7 @@ public class MemberServiceImpl implements MemberService {
 		//프로필 이미지 삭제
 		
 		//저장된 파일의 경로 지정
-		String path = "C:\\Users\\lnh1017\\Desktop\\study\\project\\footsalhaja\\user_profile" +userId;
+		String path = "\\Users\\ahn\\Desktop\\study\\server\\java\\spring-workspace\\footsalhaja\\user_profile" +userId;
 		File folder = new File(path);
 		
 		File[] listFiles = folder.listFiles();
@@ -158,7 +158,8 @@ public class MemberServiceImpl implements MemberService {
 			memberMapper.insertprofileImg(memberModifiedValues.getUserId(), file.getOriginalFilename());
 			// 파일 저장
 			// User id 이름의 새폴더 만들기
-			File folder = new File("C:\\Users\\lnh1017\\Desktop\\study\\project\\footsalhaja\\user_profile\\" + memberModifiedValues.getUserId());
+									// /Users/ahn/Desktop/study/server/java/spring-workspace/footsalhaja
+			File folder = new File("\\Users\\ahn\\Desktop\\study\\server\\java\\spring-workspace\\footsalhaja\\user_profile\\" + memberModifiedValues.getUserId());
 			folder.mkdirs();
 			
 			File dest = new File(folder, file.getOriginalFilename());

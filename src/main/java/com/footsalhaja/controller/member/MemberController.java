@@ -113,31 +113,31 @@ public class MemberController {
 	}
 	
 
-//	@PostMapping("addAuth")
-//	public String addAuth(String userId, MemberDto modifiedMemberInfo) {
-//		//System.out.println("userId????:"+userId);
-//		List<String> addAuthorities = new ArrayList<>();
-//		
-//		List<String> authorities = modifiedMemberInfo.getAuth();
-//		for(String auth : authorities ) {
-//			addAuthorities.add(auth);
-//		}
 
-//	//회원정보 수정
-//	@PostMapping("modify")
-//	public String memberInfoModify(MemberDto memberModifiedValues, @RequestParam("file") MultipartFile File) {
-//		//수정은 DB 삭제하고 -> 새로 저장 하기.
-//		
-//		memberService.updateMemberInfoByUserId(memberModifiedValues, File);
-//		//memberService.deleteMemberInfoByUserId(userId);
-//		//memberService.insertMember(memberModifiedValues);
-//
-//		
-//		//System.out.println("add:"+addAuthorities);
-//		memberService.updateMemberAuth(userId, addAuthorities);
-//		
-//		return "redirect:/member/get?userId="+userId; 
-//
-//
-//	}	
+	@PostMapping("addAuth")
+	public String addAuth(String userId, MemberDto modifiedMemberInfo) {
+		System.out.println("userId????:"+userId);
+		List<String> addAuthorities = new ArrayList<>();
+		
+		List<String> authorities = modifiedMemberInfo.getAuth();
+		for(String auth : authorities ) {
+			addAuthorities.add(auth);
+		}
+		
+		memberService.updateMemberAuth(userId, addAuthorities);
+		return "redirect:/member/get?userId="+userId;
+	}
+
+	//회원정보 수정
+	@PostMapping("modify")
+	public String memberInfoModify(MemberDto memberModifiedValues, @RequestParam("file") MultipartFile File) {
+		//수정은 DB 삭제하고 -> 새로 저장 하기.
+		
+		memberService.updateMemberInfoByUserId(memberModifiedValues, File);
+		//memberService.deleteMemberInfoByUserId(userId);
+		//memberService.insertMember(memberModifiedValues);
+
+		return "redirect:/member/get?userId="+memberModifiedValues.getUserId();
+	}
+
 }
