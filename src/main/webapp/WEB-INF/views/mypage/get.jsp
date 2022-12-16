@@ -26,7 +26,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-<!--현재 member테이블 의 컬럼들 ( userId, name, password, nickName, email, birthYY, birthMM, birthDD, activityArea, phone, personalGender, permission ) -->
+<!--현재 member테이블 의 컬럼들 ( userId, name, password, nickName, email, birthYY, birthMM, birthDD, activityArea, phone, personalGender, auth ) -->
 <my:navbar active=""></my:navbar>
 
 <section class="page-section" id="contact">
@@ -83,10 +83,14 @@
 
 							<!-- 성별 -->
 							<div class="form-floating mb-3">
-								<input class="form-control" id="personalGender" type="text"
-									name="personalGender" value="${member.personalGender}"
-									data-sb-validations="required" readonly /> <label
-									for="personalGender">성별</label>
+								<input class="form-control" id="personalGender" type="hidden" name="personalGender" value="${member.personalGender}" data-sb-validations="required" readonly /> 
+								<label for="personalGender">성별</label>
+								<c:if test="${member.personalGender eq 'M'}">
+									<input class="form-control" type="text"  value="남자" data-sb-validations="required" readonly /> 
+								</c:if>
+								<c:if test="${member.personalGender eq 'F'}">
+									<input class="form-control" type="text"  value="여자" data-sb-validations="required" readonly /> 
+								</c:if>
 							</div>
 
 							<!-- 닉네임 -->
@@ -96,6 +100,23 @@
 									data-sb-validations="required" readonly/> <label for="nickName">닉네임</label>
 							</div>
 
+
+							<!-- 회원권한-->
+							<input type="hidden" name="auth" value="${member.auth}" readonly >
+							<div class="form-floating mb-3">
+							<c:if test="${member.auth.get(0) eq 'user'}">
+								<input class="form-control" id="" type="text"  value="일반회원" data-sb-validations="required" readonly /> 
+							</c:if>
+							<c:if test="${member.auth.get(0) eq 'manager'}">
+								<input class="form-control" id="" type="text"  value="매니저" data-sb-validations="required" readonly /> 
+							</c:if>
+							<c:if test="${member.auth.get(0) eq 'admin'}">
+								<input class="form-control" id="" type="text"  value="관리자" data-sb-validations="required" readonly /> 
+							</c:if>	
+								<label for="permission">회원권한</label>
+							</div>
+				
+
 							<!-- 이메일 -->
 							<div class="form-floating mb-3">
 								<input class="form-control" id="email" type="email" name="email"
@@ -103,34 +124,20 @@
 								<label for="email">메일주소</label>
 							</div>
 
-						<!-- 회원권한 -->
-						<input type="hidden" name="auth" value="${member.auth}" readonly>
-						<div class="form-floating mb-3">
-							<c:if test="${member.auth.get(0) eq 'user'}">
-								<input class="form-control" id="permission" type="text"
-									name="permission" value="일반회원" data-sb-validations="required"
-									readonly />
-							</c:if>
-							<c:if test="${member.auth.get(0) eq 'manager'}">
-								<input class="form-control" id="permission" type="text"
-									name="permission" value="매니저" data-sb-validations="required"
-									readonly />
-							</c:if>
-							<c:if test="${member.auth.get(0) eq 'admin'}">
-								<input class="form-control" id="permission" type="text"
-									name="permission" value="관리자" data-sb-validations="required"
-									readonly />
-							</c:if>
-							<label for="permission">회원권한</label>
-						</div>
-						<!-- 생년월일 -->
-						<div class="form-floating mb-3">
-							<c:if test="${member.birthMM < 10}">
-								<c:set var="zeroMM" value="0" />
-							</c:if>
-							<c:if test="${member.birthDD < 10}">
-								<c:set var="zeroDD" value="0" />
-							</c:if>
+
+							<div class="form-floating mb-3">
+								<input class="form-control" type="text" name="birthYY"
+									value="${member.birthYY}" readonly /> <label for="birthYY">년</label>
+							</div>
+							<div class="form-floating mb-3">
+								<input class="form-control" type="text" name="birthMM"
+									value="${member.birthMM}" readonly /> <label for="birthMM">월</label>
+							</div>
+							<div class="form-floating mb-3">
+								<input class="form-control" type="text" name="birthDD"
+									value="${member.birthDD}" readonly /> <label for="birthDD">일</label>
+							</div>
+
 
 							<input class="form-control" type="text" id="birthYYMMDD"
 								name="birthYY"

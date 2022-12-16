@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.footsalhaja.domain.qna.FAQDto;
 import com.footsalhaja.domain.qna.QnADto;
@@ -15,6 +16,7 @@ import com.footsalhaja.domain.qna.QnAReplyToAnswerDto;
 import com.footsalhaja.mapper.qna.QnAMapper;
 
 @Service
+@Transactional
 public class QnAServiceImpl implements QnAService {
 
 	@Autowired
@@ -126,6 +128,8 @@ public class QnAServiceImpl implements QnAService {
 	}
 	@Override
 	public QnADto selectMyQnAGetByQnAIdAndUserId(String userId, int qnaId) {
+		//Map<String, String> map = new HashMap<>();
+		
 		return qnaMapper.selectMyQnAGetByQnAIdAndUserId(userId, qnaId);
 	}
 	//updateMyQnABoard
@@ -139,29 +143,38 @@ public class QnAServiceImpl implements QnAService {
 	//######################################################################
 	//좋아요 기능 만들기 
 	@Override
-	public Map<String, String> updateLikeCount(String qnaId, String loggedinId) {
-		//System.out.println("service : " + qnaId);
-		//System.out.println("service : " + loggedinId);
+	public Map<String, Object> updateLikeCount(String qnaId, String loggedinId) {
+		System.out.println("service : " + qnaId);
+		System.out.println("service : " + loggedinId);
 
-		Map<String, String> map = new HashMap<>();
+		Map<String, Object> map = new HashMap<>();
 		
 		int cnt = qnaMapper.selectQnABoardLikeCount(qnaId,loggedinId);
-		System.out.println(cnt);
+		System.out.println("cnt: "+cnt);
 		
 		if(cnt == 0) {
+			//게시물번호 + 유저ID에 의한 .. 좋아요 수가 0개 일때, 처음 좋아요 누르게 되니까 . 저장만 .
 			qnaMapper.insertQnABoardLikeCount(qnaId,loggedinId);
 			map.put("current", "liked");
-			return map;
-		}else {			
+			;
+		}else {		
+			//게시물번호 + 유저ID에 의한 .. 좋아요 수가 1개 이면, 버튼 누르면 , 삭제  
 			qnaMapper.deleteQnABoardLikeCount(qnaId, loggedinId);
 			map.put("current", "not liked");
-			return map;
+			
 		}
 		
+		int countAll = qnaMapper.countAllLikeByQnAId(qnaId);
+		// 현재 몇개인지
+		map.put("count", countAll);
+		
+		return map;
 	}
 	//######################################################################
 	@Override
 	public int deleteQnA(int qnaId) {
+		//문의글의 여러 좋아요 삭제 
+		qnaMapper.deleteLikesByqnaId(qnaId);
 		//여러댓글삭제  by 답변의 id  
 		qnaMapper.deleteAllQnAReplyById(qnaId);
 		//답변삭제 by 답변 id
@@ -224,6 +237,19 @@ public class QnAServiceImpl implements QnAService {
 		int cnt = qnaMapper.updateReplyById(qnaReplyToAnswerId, content);
 		return cnt;
 	}
+	
+	//댓글 리스트 가져오기 다시!! js
+	@Override
+	public List<QnAReplyToAnswerDto> selectReplyList(int answerId,String username) {
+		return qnaMapper.selectReplyList(answerId, username);
+	}
+	@Override
+	public QnAReplyToAnswerDto selectQnAReplyById(int replyId) {
+		
+		return qnaMapper.selectQnAReplyById(replyId);
+	}
+	
+	
 	//QnA답변에 대한 댓글 리스트 가져오기
 	@Override
 	public List<QnAReplyToAnswerDto> selectQnAReplyToAnswerList(int qnaReplyId){	

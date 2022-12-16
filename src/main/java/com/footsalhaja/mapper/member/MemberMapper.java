@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.footsalhaja.domain.academy.AcademyReplyDto;
-import com.footsalhaja.domain.academy.BoardDto;
 import com.footsalhaja.domain.member.MemberDto;
 
 @Mapper
@@ -64,5 +62,18 @@ public interface MemberMapper {
 	//프로필 이미지 삭제
 	public int deleteProfileImgByUserId(String userId);
 
+
+	public int updateMemberAuth(String userId, List<String> newAuthorities);
+
+
 	public void deleteProfileImgByUserIdAndPrifileImg(String userId, String originalFilename);
+
+	//중복검사
+	public MemberDto selectByUserId(String userId);
+
+	public MemberDto selectByEmail(String email);
+	
+	public MemberDto selectByNickName(String nickName);
+
+
 }

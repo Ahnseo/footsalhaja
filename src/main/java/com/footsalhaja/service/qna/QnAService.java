@@ -21,7 +21,7 @@ public interface QnAService {
 
 	public QnADto selectMyQnAGetByQnAIdAndUserId(String userId, int qnaId);
 
-	public Map<String, String> updateLikeCount(String qnaId, String loggedinId);
+	public Map<String, Object> updateLikeCount(String qnaId, String loggedinId);
 
 	public int insertQnAReply(QnAReplyDto qnaReply);
 	public QnAReplyDto selectQnAReply(QnAReplyDto qnaReply);
@@ -43,6 +43,10 @@ public interface QnAService {
 	public int updateAnswerByAnswerId(int answerId, String content);
 
 	public int updateReplyById(int qnaReplyToAnswerId, String content);
+
+	public List<QnAReplyToAnswerDto> selectReplyList(int answerId, String username);
+
+	public QnAReplyToAnswerDto selectQnAReplyById(int replyId);
 	
 
 

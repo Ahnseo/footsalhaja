@@ -3,92 +3,67 @@
 <%@ attribute name="active" required="false" %> <%-- narvar active 초기값 false --%>
 <style>
 
-ul{
-list-style: none;
-}
+
 
 footer {
-	width: 100%;
-	background: #6D8B74;
+  width: 100%;
+  height: 90px;
+  bottom: 0px;
+  border-top: 1px solid #c4c4c4;
+  padding-top: 15px;
+  color: #808080;
+  font-size: 11px;
+  background-color: #ecf0f1;
 }
 
-hr {
-    background:#F8F8F8;
-    height:2px;
-    border:0;
+footer a {
+  margin: 0 20px 10px 20px;
+  color: #808080; font-size: 11px;
+  text-align: right;
 }
 
-#footerWhole {
-	color: 	#C0C0C0;
-	width: 100%;
-	position: relative;
-	
+footer a:visited {
+  color: #808080;
 }
 
-#footerWhole div {
-	display: inline-block; 
-	vertical-align: top;
-	padding: 0;
-	
+footer div {
+  margin-top: 0; margin-bottom: 0;
+  text-align: center;
 }
 
-#footerWhole .companyInfo {
-	position: absolute;
-	right: 0;
+footer div span {
+  margin-left: 20px;
+
 }
 
-#footerWhole div ul .first {
-	font-size: 20px;
-	font-weight: bold;
+#linkNav {
+	text-align: center;
 }
+
+.spans {
+	margin-top: 20px;
+	background-color: #ecf0f1;
+	margin-bottom: 20px;
+}
+
 
 </style>
 <footer>
 
-	<hr>
-	<!-- border-top: solid; border-color:#F8F8F8; -->
-	<div class="container-md" id="footerWhole" >
-			<div id="introduction" >
-				<ul>
-					<li class="first">
-						<a href="/main/list" style="color:#C0C0C0">풋살하자</a>
-					</li>
-		           <li>소개</li>
-		           <li>채용</li>
-		           <li>공지사항</li>
-		           <li><a href='tel:010-XXXX-XXXX' style="color:#C0C0C0">고객센터</a></li>
-		        </ul>				
-			</div>
-	  
+
+    <nav id="linkNav">
+        <a href='https://cocoder.tistory.com' target='_blank'>공지사항</a> |
+        <a href='https://github.com/cocoder16' target='_blank'>고객문의</a> |
+        <a href='https://github.com/cocoder16' target='_blank'>소개</a> |
+        <a href='https://github.com/cocoder16' target='_blank'>채용</a> 
+    </nav>
     
-	      <div>
-		       <ul>
-		       		<li class="first">SNS</li>
-		       		<li>
-			       		<a href="https://www.instagram.com" style="color:#C0C0C0"/>
-						<i class="fa-brands fa-instagram"></i>	
-						</a>	
-					</li>		
-					<li>
-						<a href="https://ko-kr.facebook.com/" style="color:#C0C0C0">
-						<i class="fa-brands fa-facebook"></i>
-						</a>
-					</li>		
-				</ul>							
-	       </div>
-	
-	    
-	       <div class="companyInfo" style="font-size:12px;">
-		       <ul>
-			      <li>주소: 서울특별시 강남구 역삼동 하나로</li>	 
-			      <li>대표메일: contact@futsalhaja.com</li>
-			      <li>마케팅 제안: team@futsalhaja.com | 02-xxx-xxxx</li>
-			      <li>사업자 번호: 000-11-xxxx | 대표: 하나로</li>
-			      <li>통신판매업 신고 2020</li>
-			      <li>Copyright PLAB All rights reserved.</li>
-			      <li>이용약관 | 개인정보 처리방침 | 사업자 정보 확인</li>
-			    </ul>   
-	       </div>        
-	</div>
- 	
+    <div class="spans">
+        <span>대표명: 김풋살</span><br/>
+        <span>이메일 : futsalhaja@gmail.com</span><br/>
+        <span>Copyright 2020. cocoder. All Rights Reserved.</span>
+        <address>서울특별시 강남구 역삼동 하나로</address>
+    </div>
+
 </footer>
+

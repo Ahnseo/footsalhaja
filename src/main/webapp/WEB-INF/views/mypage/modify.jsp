@@ -89,6 +89,7 @@
                                 <input class="form-control" id="nickName" type="text" name = "nickName" value="${member.nickName}" data-sb-validations="required" />
                                 <label for="nickName">닉네임</label>
                             </div>
+
                             
                             <!-- 이메일 -->
                             <div class="form-floating mb-3">
@@ -97,6 +98,7 @@
                                 <div class="invalid-feedback" data-sb-feedback="email:required">메일주소는 필수 입력 해야합니다.</div>
                                 <div class="invalid-feedback" data-sb-feedback="email:email">유효하지않은 메일 주소입니다.</div>
                             </div>
+
                             
 						<!-- 회원권한 -->
 						<input type="hidden" name="auth" value="${member.auth}" readonly>
@@ -132,6 +134,7 @@
 								value="${member.birthYY}${zeroMM}${member.birthMM}${zeroDD}${member.birthDD}"
 								readonly /> <label for="birthYYMMDD">생년월일</label>
 						</div>
+
                             
                             <div class="form-floating mb-3">
 	                            <input class="form-control" type="text" name="activityArea" value="${member.activityArea}" readonly />

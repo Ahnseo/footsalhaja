@@ -65,9 +65,11 @@ li {
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
 <body>
 <myInfo:navbar active="myInfopageLink"></myInfo:navbar>
+
 <div class="container-sm">
 		<div id="userTitle">
 			<h3>${myInfo.userId}님의 마이페이지</h3>
+
 		</div>
 		<div style="text-align : center;">
 			<c:forEach items="${member.profileImg }" var="name">

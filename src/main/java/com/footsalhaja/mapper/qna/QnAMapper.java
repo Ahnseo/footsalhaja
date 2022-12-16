@@ -38,6 +38,7 @@ public interface QnAMapper {
 	int selectQnABoardLikeCount(String qnaId, String loggedinId);
 	int insertQnABoardLikeCount(String qnaId, String loggedinId);
 	int deleteQnABoardLikeCount(String qnaId, String loggedinId);
+	int countAllLikeByQnAId(String qnaId);
 	
 	//####################################################################################
 	//QnA 답변 등록하기 (관리자/매니저)
@@ -64,14 +65,24 @@ public interface QnAMapper {
 	int deleteQnAReplyByAnswerId(int qnaAnswerId);
 	
 	//####################################################################################
+	//모든 댓글 리스트 가져오기 
+	List<QnAReplyToAnswerDto> selectReplyList(int answerId, String userId);
+	//id로 댓글 정보 가져오기(수정모달에 값넣기 위해 사용 ) 
+	QnAReplyToAnswerDto selectQnAReplyById(int replyId);
 	//댓글 수정 
 	int updateReplyById(int qnaReplyToAnswerId, String content);
+	//문의게시물 id 로 모든 좋아요 삭제 
+	int deleteLikesByqnaId(int qnaId);
 	//문의 게시물 id로 모든 댓글들을  삭제 
 	int deleteAllQnAReplyById(int qnaId);
 	//문의 삭제을 위한 답변삭제 
 	int deleteAnswerBYqnaId(int qnaId);
 	//문의 삭제 
 	int deleteQnA(int qnaId);
+	
+	
+	
+	
 	
 	
 	

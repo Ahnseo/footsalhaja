@@ -6,35 +6,69 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
 <title>Insert title here</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+<!-- Favicon-->
+<link rel="icon" type="image/x-icon" href="/footsalhaja/src/main/resources/assets/favicon.ico" />
+<!-- Font Awesome icons (free version)-->
+<script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+<!-- Google fonts-->
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+<link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+	
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="/css/styles.css" type="text/css" rel="stylesheet" />
+	
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-</head>
-<body>
-<meta charset="UTF-8">
-<title>전체 문의 목록</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
+
+<style>
+	.listHover:hover {
+		background-color: #D3D3D3;
+		cursor: pointer;
+	}
+	.btn-m5{
+		margin : 5px;
+	}
+
+
+</style>
 </head>
 <body>
 <sec:authentication property="name" var="userIdValue"/>
 <my:navbar active=""></my:navbar>
-<div class="container-fluid">
-	<h3>전체문의내역(답변대기/ 답변완료 기능 추가하기)</h3>	
-	<div class="row">
-		<div class="col-md-10">
-			<c:url value="/admin/allQnAList" var="allQnAlistLink"></c:url>
-			<form action="${allQnAlistLink }" class="d-flex" role="search">
+<div class="container">
+	<h3>전체 문의내역</h3>	
+	<p> (수정: 클릭버튼추가 { 카테고리/ 답변상태 /최신글  } => 쿼리수정 )</p>
+	
+	<!-- 검색기능   -->
+	<div class="form-group">      
+	<c:url value="/admin/allQnAList" var="allQnAlistLink"></c:url>
+		<form action="${allQnAlistLink }" class="d-flex flex-row-reverse" role="search">
+			 <div>
+			    <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+		    </div>
+		   
+	      	<div class="col-sm-3">
+			    <input class="form-control " type="search" name="q" value="${param.q }" placeholder="검색" aria-label="Search">
+		    </div>
+		   
+			<div class="col-sm-2">
 				<select name="t" id="searchTypeSelect" class="form-select">
 		      		<option value="all">전체</option>
-		      		<option value="title" ${param.t == 'title' ? 'selected' : '' }>제목</option>
-		      		<option value="content" ${param.t == 'content' ? 'selected' : '' }>본문</option>
-		      		<option value="userId" ${param.t == 'userId' ? 'selected' : '' }>작성자</option>
+		      		<option value="userId" ${param.t == 'userId' ? 'selected' : '' }>ID</option>
+		      		<option value="name" ${param.t == 'name' ? 'selected' : '' }>이름</option>
 		      	</select>
-				<input class="form-control me-2" type="search" name="q" value="${param.q }" placeholder="검색" aria-label="Search">
-				<button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-			</form>
-		</div>
+	      	</div>	
+	      	 <div class="col-sm-6">
+			 </div>
+		</form>
 	</div>
+	
+	
 	<div class="row">
 		<div class="col">
 			<table class="table">
@@ -43,26 +77,29 @@
 						<th>번호</th>
 						<th>카테고리</th>
 						<th>제목</th>
-						<th>내용</th>
-						<th>작성자</th>
 						<th>좋아요</th>
+						<th>작성자</th>
+						<th>작성일시</th>
 						<th>문의상태</th>
 					</tr>
 				</thead>
 				<tbody>
 					 <c:forEach items="${allQnAList}" var="allQnAList"  >
-						<tr>
+						 <c:url value="/qna/myQnAGet" var="myQnAGetLink">
+					 		<c:param name="userId" value="${allQnAList.userId}"/>
+					 		<c:param name="qnaId" value="${allQnAList.qnaId}"/>
+					 	</c:url>
+						<tr class="listHover" onclick="location.href='${myQnAGetLink}'">
 						 	<td>${allQnAList.qnaId}</td>	
 						 	<td>${allQnAList.category}</td>
 						 	<!-- 특정회원의 QnA 보러가기 -->
-						 	<c:url value="/qna/myQnAGet" var="myQnAGetLink">
-						 		<c:param name="userId" value="${allQnAList.userId}"/>
-						 		<c:param name="qnaId" value="${allQnAList.qnaId}"/>
-						 	</c:url>
+						 	
 						 	<td><a href="${myQnAGetLink}">${allQnAList.title}</a></td>
-						 	<td>${allQnAList.content}</td>
-						 	<td>${allQnAList.userId}</td>
+						 	
 						 	<td>${allQnAList.likeCount}</td>
+						 	<td>${allQnAList.userId}</td>
+						 	<td>${allQnAList.insertDatetime}</td>
+						 	
 						 	<td>
 						 	 	<c:if test="${allQnAList.status == '답변완료'}">  
 						        	<span class="badge bg-success rounded-pill">${allQnAList.status}</span>   								        	

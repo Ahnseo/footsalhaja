@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -23,6 +27,8 @@ import com.footsalhaja.domain.qna.QnAPageInfo;
 import com.footsalhaja.domain.qna.QnAReplyDto;
 import com.footsalhaja.domain.qna.QnAReplyToAnswerDto;
 import com.footsalhaja.service.qna.QnAService;
+
+
 
 @Controller
 @RequestMapping("qna")
@@ -43,6 +49,8 @@ public class QnAController {
 		List<FAQDto> FAQList = qnaService.selectFAQList();
 		// 답변완료된!! allQnAList 만!! 가져오기
 		List<QnADto> allQnAListByDone = qnaService.selectQnAListByStatusDone(page, qnaPageInfo, type, keyword);
+		
+		
 		
 		model.addAttribute("FAQList", FAQList);
 		model.addAttribute("allQnAListByDone", allQnAListByDone);
@@ -85,10 +93,10 @@ public class QnAController {
 	public void myQnAGet(String userId, int qnaId, Model model, QnAReplyDto qnaReply) {
 		QnADto qna = qnaService.selectMyQnAGetByQnAIdAndUserId(userId, qnaId);
 		model.addAttribute("qna", qna);
-		System.out.println("qna 정보 : "+ qna);
+		//System.out.println("qna 정보 : "+ qna);
 		
 		QnAReplyDto qnaAnswer = qnaService.selectQnAReply(qnaReply);
-		System.out.println("qnaAnswer :"+qnaAnswer);
+		//System.out.println("qnaAnswer :"+qnaAnswer);
 		
 		model.addAttribute("qnaAnswer", qnaAnswer);
 		
@@ -116,20 +124,29 @@ public class QnAController {
 		System.out.println("con_userId="+modifiedQnA.getUserId());
 		return "redirect:/qna/myQnAGet?userId="+modifiedQnA.getUserId()+"&qnaId="+modifiedQnA.getQnaId();
 	}
+	@DeleteMapping("deleteMyQnA")
+	@ResponseBody
+	public void deleteQnA(@RequestBody QnADto qna, HttpServletRequest request) {
+		int qnaId = qna.getQnaId();
+		qnaService.deleteQnA(qnaId);		
+	}
 	
 	
 	@PutMapping("likeCount")
 	@ResponseBody
 	@PreAuthorize("isAuthenticated()")
-	private Map<String, String> insertlikeCount(@RequestBody Map<String, String> req, Authentication authentication) {
+	public String updatelikeCount(@RequestBody Map<String, String> req, Authentication authentication, HttpServletRequest request) {
 		String qnaId = req.get("qnaId");
-		String loggedinId = authentication.getName();
-		
+		String loggedinId = authentication.getName();		
 		System.out.println("qnaId : " + qnaId );
 		System.out.println("loggedinId : " + loggedinId);
 		
-		//클릭하면 저장, 다시클릭하면 삭제되는 좋아요 DB	
-		return qnaService.updateLikeCount(qnaId, loggedinId);
+		//클릭하면 저장, 다시클릭하면 삭제되는 좋아요 DB
+		Map<String, Object> result = qnaService.updateLikeCount(qnaId, loggedinId);
+		
+		String referer = request.getHeader("Referer");
+		return referer;
+		
 	}
 	
 	

@@ -101,14 +101,14 @@
 #body {
 	max-width: 928px;
 	margin: 0 auto;
-	background-color: #faf5f5;
+	background-color: #fff;
 	
 }
 
 #wrapper {
 	display: block;
 	width: 100%;
-	background-color: #faf5f5;
+	background-color: #fff;
 	letter-spacing: -1px;
 	font-family: 'Noto Sans KR', sans-serif;
 }
@@ -334,45 +334,6 @@
 	height: 30px;
  }
 
-/* .ui-datepicker {
-	width: 17em;
-	padding: .2em .2em 0;
-	display: none;
-    background:#4F6828;
-    margin-left: 0px;
-    z-index: 9999 !important;
-}
-.ui-datepicker .ui-datepicker-title {
-	margin: 0 2.3em;
-	line-height: 1.8em;
-	text-align: center;
-    color:#FFFFFF;
-    background:#4F6828;  
-}
-.ui-datepicker table {
-	width: 100%;
-	font-size: .7em;
-	border-collapse: collapse;
-    font-family:verdana;
-	margin: 0 0 .4em;
-    color:#000000;
-    background:#DCEAC8;    
-}
-.ui-datepicker td {
-
-	border: 0;
-	padding: 1px;
-
-    
-}
-.ui-datepicker td span,
-.ui-datepicker td a {
-	display: block;
-	padding: .8em;
-	text-align: right;
-	text-decoration: none;
-} */
-
 </style>
 </head>
 <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.js"></script> 
@@ -504,7 +465,7 @@
             
 
 	<div id="getId" class="">
-	  <div data-bs-spy="scroll" data-bs-target="#navbar-example2"  data-bs-smooth-scroll="true" class="scrollspy-example bg-light p-5 rounded-2 " tabindex="0">
+	  <div data-bs-spy="scroll" data-bs-target="#navbar-example2"  data-bs-smooth-scroll="true" class="scrollspy-example p-5 rounded-2 " tabindex="0">
 		<div class="row">
 			<form name="searchForm">
 			<div class="opt">
@@ -652,6 +613,7 @@
 	</div>
 </div>
 </div>
+<my:footer></my:footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>

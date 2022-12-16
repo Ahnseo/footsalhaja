@@ -10,6 +10,10 @@
 <sec:authentication property="name" var="userIdValue"/>
 <c:url value="/main/list" var="listLink" />
 <style>
+#wholeNav {
+	font-family: 'Noto Sans KR', sans-serif;
+	letter-spacing: -1px;
+}
 .bg1 {
 	position: relative;
 }
@@ -28,15 +32,26 @@
 }
 
 .bg2 {
-	margin-top: -10px;
+	margin-top: 30px;
+	text-align: center;
 }
 
 #navbar {
 	padding: 0;
 }
+
+.navTitle {
+	position: absolute;
+	left: 50px;
+	top: 10px;
+	font-weight:bold;
+	font-size: 20px;
+}
+
+
 </style>
 
-<nav class="navbar navbar-expand-md navbar-dark sticky-top" style="background: linear-gradient(to right, #5F7161, #6D8B74); padding: 0;">
+<nav id="wholeNav" class="navbar navbar-expand-md navbar-dark sticky-top" style="background: linear-gradient(to right, #5F7161, #6D8B74); padding: 0;">
   <!-- One of the primary actions on mobile is to call a business - This displays a phone button on mobile only -->
   <div class="navbar-toggler-right" style="color: #fff;">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,32 +64,32 @@
       <li class="nav-item active" >
         <a class="nav-link" href="${listLink }">
         <img class="nav_img" alt="" src="${pageContext.request.contextPath}/logo.png">
-        	<p>풋살하자</p>
+        	<p class="navTitle">풋살하자</p>
         <!-- <span class="sr-only">(current)</span> --></a>
-      </li> 
-      <li class="nav-item active userName">
-         <a class="nav-link" href="" ><span style="font-weight:bold; ">${userIdValue } 님 환영합니다.</span></a>
       </li>
-    </ul>
+      
+      <sec:authorize access="isAuthenticated()" var="loggedIn"/>
+      <c:if test="${not loggedIn }">
+	      <li class="nav-item active userName">
+	      </li>
+      </c:if>
 
+      <c:if test="${loggedIn }">
+	      <li class="nav-item active userName d-flex">
+	      	 <sec:authorize access="hasAuthority('admin')" var="adminLogin"/>
+			 <c:if test="${adminLogin }">
+				<p class="nav-link" style="color:white;">관리자 계정</p>
+			 </c:if>
+	         <a class="nav-link" href="" ><span>${userIdValue } 님 환영합니다.</span></a>
+	      </li>
+
+      </c:if>
+    </ul>
+	
+	
+	
     <ul class="navbar-nav w-100 px-3 justify-content-end bg2" style="background: #5F7161;">
 
-	<li class="nav-item active">
-        	<a class="nav-link" href="#">공지사항<!-- <span class="sr-only">(current)</span> --></a>
-    </li>
-
-     <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          커뮤니티
-        </a>
-
- 
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="http://localhost:8080/free/list"">자유게시판</a></li>
-          <li><a class="dropdown-item" href="http://localhost:8080/academy/list">아카데미</a></li>
-          <li><a class="dropdown-item" href="#">중고장터</a></li>
-        </ul>
-       </li>
 
         
         <%-- security 를 사용하여, 로그인 된 userId를 c:param value="로그인된 ID값" 사용합니다. 현재 주소창에 접속방법 예시) mypage/list?userId=askc6361 --%>
@@ -82,9 +97,15 @@
         <c:url value="/mypage/list" var="mypageLink">
         	<c:param name="userId" value="${userIdValue }"/>
         </c:url>
+        <c:url value="/free/list" var="freeLink"></c:url>
+        <c:url value="/academy/list" var="academyLink"></c:url>
         <li class="nav-item active">
-        	<a class="nav-link ${active eq 'mypageLink' ? 'active' : '' }" href="${mypageLink}">마이페이지</a>
+        	<a class="nav-link ${active eq 'freeLink' ? 'active' : '' }" href="${freeLink}">자유게시판</a>
       	</li>
+        <li class="nav-item active">
+        	<a class="nav-link ${active eq 'academyLink' ? 'active' : '' }" href="${academyLink}">아카데미</a>
+      	</li>
+        
         <li class="nav-item active">
         	<c:url value="/qna/qnaMainBoard" var="qnaLink">
       			<c:param name="page" value="1"/>
@@ -93,7 +114,17 @@
       		</c:url>
         	<a class="nav-link ${active eq 'qnaMainBoard' ? 'active' : '' }" href="${qnaLink}">고객문의</a>
       	</li>
+      	<c:if test="${loggedIn }">
+      	<li class="nav-item active">
+        	<a class="nav-link ${active eq 'mypageLink' ? 'active' : '' }" href="${mypageLink}">마이페이지</a>
+      	</li>
+      	</c:if>
+      	<c:if test="${ not loggedIn }">
+      	<li class="nav-item active">
+      	</li>
+      	</c:if>
       	
+      	<sec:authorize access="hasAuthority('admin')">
         <li class="nav-item dropdown">
 		    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 		    	관리자
@@ -104,8 +135,11 @@
       			<c:param name="q" value=""/>
       			<c:param name="t" value="all"/>
       		</c:url>
-      		<c:url value="/admin/allBookList" var="allBookListLink"></c:url>
-      		<c:url value="/admin/stadiumManagement" var="stadiumManagementLink"></c:url>
+      		<c:url value="/admin/allBookList" var="allBookListLink">
+      			<c:param name="page" value="1"/>
+      			<c:param name="q" value=""/>
+      			<c:param name="t" value="all"/>
+      		</c:url>
       		<c:url value="/admin/allQnAList" var="allQnAListLink">
       			<c:param name="page" value="1"/>
       			<c:param name="q" value=""/>
@@ -118,7 +152,7 @@
 			    <li><a class="dropdown-item" href="${allQnAListLink }">전체문의</a></li>
 		    </ul>
 	    </li>
-      	
+      	</sec:authorize>
       	<sec:authorize access="isAnonymous()">
 	     	<c:url value="/member/login" var="loginLink"></c:url>
 	      	<li class="nav-item active">
@@ -136,8 +170,8 @@
       
     </ul>
 
-
-  </div>
+		</div>
+  
   
 
 </nav>
