@@ -80,6 +80,10 @@
 			 <c:if test="${adminLogin }">
 				<p class="nav-link" style="color:white;">관리자 계정</p>
 			 </c:if>
+			 <sec:authorize access="hasAuthority('manager')" var="managerLogin"/>
+			 <c:if test="${managerLogin }">
+				<p class="nav-link" style="color:white;">매니저 계정</p>
+			 </c:if>
 	         <a class="nav-link" href="" ><span>${userIdValue } 님 환영합니다.</span></a>
 	      </li>
 

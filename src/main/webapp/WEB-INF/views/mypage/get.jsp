@@ -110,6 +110,9 @@
 							<c:if test="${member.auth.get(0) eq 'manager'}">
 								<input class="form-control" id="" type="text"  value="매니저" data-sb-validations="required" readonly /> 
 							</c:if>
+							<c:if test="${member.auth.get(0) eq 'black'}">
+								<input style="color : red;" class="form-control" id="permission" type="text" name="permission" value="블랙리스트" data-sb-validations="required" readonly /> 
+							</c:if>	
 							<c:if test="${member.auth.get(0) eq 'admin'}">
 								<input class="form-control" id="" type="text"  value="관리자" data-sb-validations="required" readonly /> 
 							</c:if>	

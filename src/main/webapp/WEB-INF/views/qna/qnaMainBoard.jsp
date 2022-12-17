@@ -358,7 +358,7 @@
 							  </ul>
 							</nav>
 							
-							
+							<sec:authorize access="isAuthenticated()">
 							<div class="d-flex flex-row-reverse">	
 								<form action="/qna/insert" method="get">
 									<button id="insertBtn" class="btn btn-success btn-m5" type="submit" >문의하기</button>	
@@ -372,6 +372,7 @@
 									<button id="myQnAListBtn" class="btn btn-primary btn-m5" type="submit" >내 문의내역</button>
 								</form>
 							</div>
+							</sec:authorize>
 							
 						</div>
 					</div>

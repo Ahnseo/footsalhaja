@@ -42,16 +42,31 @@
 	<div class="container">
 		 <!-- Contact Section Heading-->
 		 <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">${member.userId}님의 회원정보</h2>
+		 <!-- 권한은 List로 추가, 삭제한다. [ user AND ( manager OR admin) ] 회원은 여러 권한을 갖을 수 있다 . 하지만, 권한참조테이블 따로만들기 싫어서 그냥 하련다 .. -->
+		
 		 <!-- Icon Divider-->
          <div class="divider-custom">
+         
              <div class="divider-custom-line"></div>
              <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
              <div class="divider-custom-line"></div>
          </div>
-
+         
          <div class="row justify-content-center">
         	<div class="col-lg-8 col-xl-7">
-				
+        		<sec:authorize access="hasAuthority('admin')">
+				 	<form action="/member/addAuth" method="post">	
+						<input type="hidden" name="userId" value="${member.userId}">
+						<select class="" name="auth" id="addAuth">
+							<option value="" disabled selected >회원권한선택</option>
+							<option value="user">일반회원</option>
+							<option value="manager">매니저</option>
+							<option value="black">black</option>
+							
+						</select>
+						<button type="submit"class="btn btn-warning">회원권한변경</button>		
+					</form>
+				</sec:authorize>
 				<form id="contactForm" data-sb-form-api-token="API_TOKEN">	
 				<!-- ID -->
 				<div class="form-floating mb-3">
@@ -101,6 +116,9 @@
 				<c:if test="${member.auth.get(0) eq 'manager'}">
 					<input class="form-control" id="permission" type="text" name="permission" value="매니저" data-sb-validations="required" readonly /> 
 				</c:if>
+				<c:if test="${member.auth.get(0) eq 'black'}">
+					<input style="color : red;" class="form-control" id="permission" type="text" name="permission" value="블랙리스트" data-sb-validations="required" readonly /> 
+				</c:if>	
 				<c:if test="${member.auth.get(0) eq 'admin'}">
 					<input class="form-control" id="permission" type="text" name="permission" value="관리자" data-sb-validations="required" readonly /> 
 				</c:if>	
@@ -140,20 +158,9 @@
 					
 				</form>
 				
-				<hr>
 				
-				<!-- 권한은 List로 추가, 삭제한다. [ user AND ( manager OR admin) ] 회원은 여러 권한을 갖을 수 있다 . 하지만, 권한참조테이블 따로만들기 싫어서 그냥 하련다 .. -->
-				<form action="/member/addAuth" method="post">	
-					<input type="hidden" name="userId" value="${member.userId}">
-					<select name="auth" id="addAuth">
-						<option value="user">일반회원</option>
-						<option value="manager">매니저</option>
-						<c:if test="${userIdValue eq 'admin'}">
-							<option value="admin">관리자</option>
-						</c:if>
-					</select>
-					<button type="submit"class="btn btn-warning">회원권한변경</button>		
-				</form>
+				
+				
 				
 			</div>
 		</div>
