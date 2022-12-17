@@ -6,7 +6,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -135,17 +134,17 @@ public class QnAController {
 	@PutMapping("likeCount")
 	@ResponseBody
 	@PreAuthorize("isAuthenticated()")
-	public String updatelikeCount(@RequestBody Map<String, String> req, Authentication authentication, HttpServletRequest request) {
+	public Map<String, Object>  updatelikeCount(@RequestBody Map<String, String> req, Authentication authentication, HttpServletRequest request) {
 		String qnaId = req.get("qnaId");
 		String loggedinId = authentication.getName();		
-		System.out.println("qnaId : " + qnaId );
-		System.out.println("loggedinId : " + loggedinId);
+		//System.out.println("qnaId : " + qnaId );
+		//System.out.println("loggedinId : " + loggedinId);
 		
 		//클릭하면 저장, 다시클릭하면 삭제되는 좋아요 DB
 		Map<String, Object> result = qnaService.updateLikeCount(qnaId, loggedinId);
 		
-		String referer = request.getHeader("Referer");
-		return referer;
+		// json형태로 map.put 으로 넣은 liked? not liked?-> current ,좋아요 총갯수 count  
+		return result;
 		
 	}
 	

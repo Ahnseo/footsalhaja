@@ -10,21 +10,9 @@
 <meta name="description" content="" />
 <meta name="author" content="" />
 <title>Insert title here</title>
-<!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="/footsalhaja/src/main/resources/assets/favicon.ico" />
-<!-- Font Awesome icons (free version)-->
-<script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
-<!-- Google fonts-->
-<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
-<link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
-	
-<!-- Core theme CSS (includes Bootstrap)-->
-<link href="/css/styles.css" type="text/css" rel="stylesheet" />
-	
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
 
 <style>
+
 @font-face {
  font-family: 'NanumBarunGothic';
  font-style: normal;
@@ -162,14 +150,20 @@ ul {
 	color: #333;
 	
 }
-
-
 .btn-m5{
 	margin : 5px;
+}
+.listHover:hover {
+	background-color: #D3D3D3;
+	cursor: pointer;
 }
 
 
 </style>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
+
 </head>
 <body>
 	<my:navbar active="getMyQnA"></my:navbar>
@@ -199,50 +193,59 @@ ul {
 					<li class="top_nickName"><i class="fa-regular fa-clock"></i> ${qna.ago } </li>
 					<li class="top_nickName"><i class="fa-regular fa-heart"></i> ${qna.likeCount } </li>
 				</ul>
-				<div class="top_title">
+				<div class="top_content">
 					<label for="" class="form-label">제목</label>
-					<p class="top_title">${qna.title } </p>
+					<p class="form-control">${qna.title } </p>
 				</div>
 			</div><!-- </div class = "post_top" -->
 			
 			<!-- 문의 본문  -->
-			<div class="top_content">
-				<label for="" class="form-label">문의내용</label>
-				<p class="" >${qna.content}</p>
+			<div class="top_content ">
+				<label for="" class="form-label">내용</label>
+				<p class="form-control" >${qna.content}</p>
 			</div>
 			
-			<!-- 문의 내용의 삭제/ 수정/ 답변하기 버튼 -->	
 			<!-- 문의내용 좋아요 버튼 -->
 			<div class="likeBox">
-				<div id="likeBtnDiv">
-					<p class="likeIcon"  id="likeBtn"
-					<sec:authorize access="not isAuthenticated()">
+				
+				<p  <sec:authorize access="not isAuthenticated()">
 						style="pointer-events: none;"
 					</sec:authorize>	
-					>	
+					id="likeBtn" class="likeIcon"
+					>
+					
 						<i class="fa-regular fa-heart"></i>
-					</p>
-					<p class="likeCount1">좋아요</p>
-					<p id="likeCount" class="likeCount2">${qna.likeCount }</p>
-				</div>
+					
+				</p>
+				<p class="likeCount1">좋아요</p>
+				
+				<p id="likeCnt" class="likeCount2"> ${qna.likeCount }</p>
+			
 			</div><!-- 좋아요 버튼 -->
 			
+			
 			<div class="d-flex flex-row-reverse"> 
+				<sec:authorize access="hasAuthority('${userIdvalue}')"><!-- 문의 수정은 작성자 userId 만!! -->
 				<c:url value="/qna/myQnAModify" var="myQnAModifyLink">
 					<c:param name="userId" value="${qna.userId}"/>
 					<c:param name="qnaId" value="${qna.qnaId}"/>
-				</c:url>
+				</c:url>	
 				<button onclick="location.href='${myQnAModifyLink}'" class="btn btn-warning btn-m5" type="button">
 					수정
 				</button><!-- 수정 버튼 -->	
+				</sec:authorize>
 				
 				<!-- 답변하기 버튼  답변이 없을때만 => 작성가능!  fetch -> post방 -> controller -->
+				<sec:authorize access="hasAuthority('admin')">
 				<c:if test="${qnaAnswer == null}">	
 					<button class="btn btn-success btn-m5" type="button" data-bs-toggle="collapse" data-bs-target="#qnaReplyCollapseAnswer" aria-expanded="false" aria-controls="collapseExample">
 						답변하기
 					</button>	
 				</c:if>
-			</div> <!-- 답번하기 버튼 (관리자만 )-->	
+				</sec:authorize><!-- 답번하기 버튼 (관리자만 )-->	
+				
+			</div> 
+			
 		</div>
 	</div>
 	
@@ -292,7 +295,8 @@ ul {
 					</div>
 					
 					<div class="d-flex flex-row-reverse">
-						<%-- <c:if test="${userIdValue == 'admin'}"> --%>
+					
+						<sec:authorize access="hasAuthority('admin')">
 						<div>
 							<input id="qnaReplyIdValue" type="hidden" value="${qnaAnswer.qnaReplyId}">
 							<input id="qnaIdValue" type="hidden" value="${qnaAnswer.qnaId}">
@@ -302,7 +306,8 @@ ul {
 						<div>
 							<button class="btn btn-warning btn-m5"  type="button"  data-bs-toggle="modal" data-bs-target="#modifyAnswerInputModal" >수정</button>
 						</div>
-						<%-- </c:if> --%>
+						</sec:authorize>
+						
 						<sec:authorize access="isAuthenticated()">
 							<button class="btn btn-success btn-m5" type="button" data-bs-toggle="modal" data-bs-target="#replyInputModal">
 								댓글작성
@@ -346,11 +351,11 @@ ul {
 	      <div class="modal-body">
 	      <div>
     	    댓글 
-    	    <!-- //qnaReplyId,qnaId,userId,writer,content,insertDatetime -->
+    	    <!-- //qnaReplyId,qnaId,userId,content,insertDatetime -->
     	    <input type="hidden" id="qnaReplyId2" value="${qna.qnaReplyId}" readonly>
     	    <input type="hidden" id="qnaReplyQnAId2" value="${qna.qnaId}" readonly>
-    	    <input type="hidden" id="qnaReplyUserId2" value="${qna.userId}" readonly>
-    	    <input type="hidden" id="qnaReplyWriter2" value="${userIdValue}" readonly>
+    	    <input type="hidden" id="qnaReplyUserId2" value="${userIdValue}" readonly>
+    	    
 	      </div>
 	      <div>
 	      	<textarea id="qnaReplyContent2" cols="45" rows="3"></textarea>
@@ -389,7 +394,7 @@ ul {
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-danger btn-m5" data-bs-dismiss="modal">취소</button>
-	        <button id="modifyReplySumbitBtn" type="button" onclick="" class="btn btn-success btn-m5">수정</button>
+	        <button id="modifyReplySumbitBtn" type="button" onclick="" class="btn btn-success btn-m5">등록</button>
 	      </div>
 	    </div>
 	  </div>
@@ -510,8 +515,8 @@ ul {
 	});
 	
 	
-
-
+const qnaReplyBtn = document.querySelector("#qnaReplyBtn");
+if(qnaReplyBtn != null) {
 	<!-- 답변 저장기능 (관리자만 작성가능)-->
 	document.querySelector("#qnaReplyBtn").addEventListener("click", function() {
 		const qnaId = document.querySelector("#qnaReplyQnAId").value;
@@ -540,7 +545,7 @@ ul {
 		.then(redirectPath => location.href = redirectPath)
 		
 	});
-	
+}	
 	<!-- 답변 삭제  -->
 	function deleteAnswer() {
 		document.querySelector("#qnaAnswerDeleteBtn").addEventListener("click", function() {
@@ -565,9 +570,9 @@ ul {
 		const qnaReplyId = document.querySelector("#qnaReplyId2").value;
 		const qnaId = document.querySelector("#qnaReplyQnAId2").value;
 		const userId = document.querySelector("#qnaReplyUserId2").value;
-		const writer = document.querySelector("#qnaReplyWriter2").value;
 		const content = document.querySelector("#qnaReplyContent2").value;
-		const data = {qnaReplyId, qnaId, userId, writer, content};
+		
+		const data = {qnaReplyId, qnaId, userId, content};
 		fetch(ctx + "/qnaReply/addToAnswer", 
 				{ method : "put",
 				headers : { "Content-Type" : "application/json" },
@@ -605,8 +610,8 @@ ul {
 			headers : { "Content-Type" : "application/json" },
 			body : JSON.stringify({qnaId : qnaId})
 		})
-		.then(res => res.text())
-		.then(redirectPath => location.href = redirectPath)
+		
+		.then(()=> history.go(0));
 		
 	});
 	

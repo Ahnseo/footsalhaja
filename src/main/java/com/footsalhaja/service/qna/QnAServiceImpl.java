@@ -156,7 +156,7 @@ public class QnAServiceImpl implements QnAService {
 			//게시물번호 + 유저ID에 의한 .. 좋아요 수가 0개 일때, 처음 좋아요 누르게 되니까 . 저장만 .
 			qnaMapper.insertQnABoardLikeCount(qnaId,loggedinId);
 			map.put("current", "liked");
-			;
+			
 		}else {		
 			//게시물번호 + 유저ID에 의한 .. 좋아요 수가 1개 이면, 버튼 누르면 , 삭제  
 			qnaMapper.deleteQnABoardLikeCount(qnaId, loggedinId);
@@ -164,9 +164,10 @@ public class QnAServiceImpl implements QnAService {
 			
 		}
 		
-		int countAll = qnaMapper.countAllLikeByQnAId(qnaId);
+		int count = qnaMapper.countAllLikeByQnAId(qnaId);
 		// 현재 몇개인지
-		map.put("count", countAll);
+		System.out.println("count:"+ count);
+		map.put("count", count);
 		
 		return map;
 	}

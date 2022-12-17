@@ -28,14 +28,19 @@
 	 		q.content,
 	 		q.status,
 	 		m.userId,
-	 		m.nickName
+	 		m.nickName,
+	 		COUNT(DISTINCT l.qnaLikeId) AS likeCount,
+	 		COUNT(DISTINCT r.qnaReplyToAnswerId) AS replyCount
+	 	 	 		
 	 	FROM 
 	 	 	QnABoard q
-	 	LEFT JOIN member m 
-	 	ON q.member_userId = m.userId 	
+	 	LEFT JOIN member m ON q.member_userId = m.userId 	
+	 	LEFT JOIN QnABoardLike l ON q.qnaId = l.qnaId
+	 	LEFT JOIN QnAReplyToAnswer r ON q.qnaId = r.qnaId
 	 	WHERE
 	 		m.userId = #{userId}
-	 	
+	 		
+	 	GROUP BY q.qnaId
 	 	ORDER BY 
 	 		q.qnaId DESC 
 	 	LIMIT
@@ -150,22 +155,25 @@
 	 		q.status,
 	 		q.member_userId AS userId,
 	 		q.insertDatetime,
-	 		COUNT(DISTINCT l.qnaLikeId) AS likeCount
+	 		COUNT(DISTINCT l.qnaLikeId) AS likeCount,
+	 		COUNT(DISTINCT r.qnaReplyToAnswerId) AS replyCount
 	 	FROM 
 	 	 	QnABoard q
-	 	LEFT JOIN QnABoardLike l ON q.qnaId = l.qnaId 	
+	 	LEFT JOIN QnABoardLike l ON q.qnaId = l.qnaId 
+	 	LEFT JOIN QnAReplyToAnswer r ON q.qnaId = r.qnaId 
+	 	
 	 	WHERE
 		<trim prefixOverrides="OR">
 			<if test="type == 'all' or type == 'title'">
-			OR title LIKE #{keyword}
+			OR q.title LIKE #{keyword}
 			</if>
 			
 			<if test="type == 'all' or type == 'content'">
-			OR content LIKE #{keyword}
+			OR q.content LIKE #{keyword}
 			</if>
 			
 			<if test="type == 'all' or type == 'userId'">
-			OR member_userId LIKE #{keyword}
+			OR q.member_userId LIKE #{keyword}
 			</if>
 		</trim>
 		Group By q.qnaId
@@ -279,9 +287,9 @@
 	</select>
 	
 	<insert id="insertQnAReplyToAnswer">
-		<!-- //qnaReplyToAnswerId, qnaReplyId, qnaId, writer, content, userId, insertDatetime -->
-		INSERT INTO QnAReplyToAnswer (qnaReplyId, qnaId, writer, content, userId)
-		VALUES( #{qnaReplyId}, #{qnaId}, #{writer}, #{content}, #{userId} )
+		<!-- //qnaReplyToAnswerId, qnaReplyId, qnaId,  content, userId, insertDatetime -->
+		INSERT INTO QnAReplyToAnswer (qnaReplyId, qnaId, content, userId)
+		VALUES( #{qnaReplyId}, #{qnaId}, #{content}, #{userId} )
 	</insert>
 	
 	<select id="selectReplyList" resultType="com.footsalhaja.domain.qna.QnAReplyToAnswerDto">
@@ -290,7 +298,7 @@
 			qnaReplyId,
 			qnaId,
 			userId,
-			(writer = #{userId}) editable,
+			(userId = #{userId}) editable,
 			content,
 			insertDatetime
 		FROM 
@@ -305,7 +313,6 @@
 			qnaReplyId,
 			qnaId,
 			userId,
-			writer,
 			content,
 			insertDatetime
 		FROM 
@@ -315,13 +322,12 @@
 	</select>
 	
 	<select id="selectQnAReplyToAnswerList" resultType="com.footsalhaja.domain.qna.QnAReplyToAnswerDto">
-		<!-- //qnaReplyToAnswerId, qnaReplyId, qnaId, writer, content, userId, insertDatetime -->
+		<!-- //qnaReplyToAnswerId, qnaReplyId, qnaId, content, userId, insertDatetime -->
 		SELECT 
 			qnaReplyToAnswerId,
 			qnaReplyId,
 			qnaId,
 			userId,
-			writer,
 			content,
 			insertDatetime
 		FROM 

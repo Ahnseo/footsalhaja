@@ -17,6 +17,7 @@ public class QnADto {
 	private String content;
 	private String status; // 0= 처리중 / 1=처리완료
 	private String userId;
+	private boolean liked;
 	private int likeCount;
 	private int replyCount;
 	

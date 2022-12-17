@@ -12,21 +12,9 @@
 <meta name="description" content="" />
 <meta name="author" content="" />
 <title>Insert title here</title>
-<!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="/footsalhaja/src/main/resources/assets/favicon.ico" />
-<!-- Font Awesome icons (free version)-->
-<script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
-<!-- Google fonts-->
-<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
-<link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
-	
-<!-- Core theme CSS (includes Bootstrap)-->
-<link href="/css/styles.css" type="text/css" rel="stylesheet" />
-	
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
 
 <style>
+
 @font-face {
  font-family: 'NanumBarunGothic';
  font-style: normal;
@@ -164,14 +152,16 @@ ul {
 	color: #333;
 	
 }
-
-
 .btn-m5{
 	margin : 5px;
 }
 
 
+
 </style>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
 
 </head>
 <body>
@@ -182,53 +172,109 @@ ul {
 		<h2><span><i class="fa-solid fa-envelope"></i></span>문의 작성</h2>
 	</div>
 	<div class="container-sm">
-		<form action="" method="post">
-		
+		<form id="form" action="" method="post">
 			<div class="post_wrap">
 				<div class="post_top">
-					<div class="top_title">
+					<div class="top_content">
 						<div class="d-flex mt-4">
 							<div class="col-sm-4 ">
-								<select name="category" class="form-select" aria-label="Default select example">
+								<select id="categories" name="category" class="form-select" aria-label="Default select example">
 								  <option selected disabled >카테고리</option>
-								  <option value="시설문의">시설문의</option>
 								  <option value="신고/제재">신고/제재</option>
 								  <option value="결제문의">결제문의</option>
+								  <option value="시설문의">시설문의</option>
 								  <option value="기타문의">기타문의</option>
 								</select>
 							</div>
 							<div class="col-sm-4">
 							</div>
 							<div class="col-sm-4">
+								<input type="hidden" name="userId" value="${userIdValue}">
 								<i class="fa-solid fa-user"></i> ${userIdValue }
 							</div>
 						</div>
 					
-						<label for="" class="form-label">제목</label>
-						<input id="" class="form-control" name="title" value="" placeholder="제목"/>
+						<label for="" class="form-label mt-3">제목</label>
+						<input id="title" class="form-control" name="title" value="" placeholder="제목"/>
 					</div><!-- "top_title"  -->
 				</div><!-- "post_top" -->
 				
 				<!-- 문의 본문  -->
 				<div class="top_content">
 					<label for="" class="form-label">내용</label>
-					<textarea id="" class="form-control" name="content"></textarea>
+					<textarea id="content" class="form-control" name="content"></textarea>
 				</div>
+				
+				<c:set value="false" var="emptyCategory" />
+				<c:if test="${not empty category}">
+					<c:set value="true" var="emptyCategory" />
+				</c:if>
 				<div class = "d-flex flex-row-reverse">
-					
-					<button class="btn btn-outline-danger btn-m5" type="button" id="deleteQnABtn" >삭제</button>
-					<button class="btn btn-outline-success btn-m5"  type="submit" id="" >수정완료</button>
+					<button class="btn btn-outline-success btn-m5" 
+						type="button" id="insertSubmitBtn"
+								${ emptyCategory ? 'data-bs-toggle="modal" data-bs-target="#exampleModal"' :''}	>
+					등록
+					</button>
 				</div>
 			</div><!-- "post_wrap" -->
 
 		</form>
+		
 	</div>
 	
-	
-	
-	
-	
+	<!-- Button trigger modal -->
+	<button type="button" class="btn btn-primary" >
+	  Launch demo modal
+	</button>
+
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        ...
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary">Save changes</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 	
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+
+<script>
+	const form = document.querySelector("#form");
+	const insertSubmitBtn = document.querySelector("#insertSubmitBtn");
+	var categories = document.querySelector("#categories");
+	const title = document.querySelector("#title");
+	const content = document.querySelector("#content");
+	
+	insertSubmitBtn.addEventListener("click", function(e){
+		/* 버튼 submit 중지  */
+		e.preventDefault();
+		
+		if(categories.value.trim() != "" &&
+		   title.value.trim() != "" &&
+		   content.value.trim() != "" ) {
+			
+			form.submit();
+			
+		}else {
+			/* 실패시 메세지 주기 !... 어떻게 ???  */
+		}
+	});
+
+
+
+
+
+</script>
+
 </body>
 </html>

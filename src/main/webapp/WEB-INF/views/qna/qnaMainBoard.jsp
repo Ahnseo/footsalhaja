@@ -14,34 +14,163 @@
 	<meta name="author" content="" />
 	
 	<title>Insert title here</title>
-	
-	<!-- Favicon-->
-	<link rel="icon" type="image/x-icon" href="/footsalhaja/src/main/resources/assets/favicon.ico" />
-	<!-- Font Awesome icons (free version)-->
-	<script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
-	<!-- Google fonts-->
-	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
-	<link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
-		
-	<!-- Core theme CSS (includes Bootstrap)-->
-	<link href="/css/styles.css" type="text/css" rel="stylesheet" />
-		
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
-	
+
 	<style>
-		#freeTitle h2 {
-			text-align: center;
-			padding: 60px;
-		 }
-		.listHover:hover {
-			background-color: #D3D3D3;
-			cursor: pointer;
-		}
-		.btn-m5{
-			margin : 5px;
-		}
+
+	@font-face {
+	 font-family: 'NanumBarunGothic';
+	 font-style: normal;
+	 font-weight: 400;
+	 src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot');
+	 src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.ttf') format('truetype');
+	}
+
+	@font-face {
+	 font-family: 'NanumBarunGothic';
+	 font-style: normal;
+	 font-weight: 700;
+	 src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot');
+	 src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.ttf') format('truetype')
+	}
+
+	@font-face {
+	 font-family: 'NanumBarunGothic';
+	 font-style: normal;
+	 font-weight: 300;
+	 src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot');
+	 src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.ttf') format('truetype');
+	}
+
+	* {
+	    padding: 0;
+	    margin: 0;
+	    box-sizing: border-box;
+	}
+
+	#freeTitle h2 {
+		text-align: center;
+		padding: 60px;
+	 }
+
+	ul {
+	   list-style:none;
+	  }
+
+	.container-sm { 
+		font-family: 'NanumBarunGothic';
+		letter-spacing: -1px;
+		font-size: 16px;
+	}
+
+	.post_wrap {
+		border: 1px solid #ced4da;
+		border-radius: 10px;
+		margin: 0 0 30px 0;
+	}
+	.reply_wrap {
+		border: 1px solid #ced4da;
+		border-radius: 10px;
+		margin: 0 0 30px 0;
+	}
+
+
+	/* 상단 버튼부분 */
+	.topbtnBox {
+		margin: 30px 0 15px 0;
+		position: relative;
+	}
+	.topbtnBox .modifyBtn {
+		text-align: right;
+		position: absolute;
+		top: 0;
+		right: 0;
+	}
+
+	/* 상단 제목부분 */
+	.post_top {
+		
+	}
+	.post_top .top_category {
+		border: 1px solid #ddd;
+	 	vertical-align: middle;
+	 	display: inline-block;
+	 	margin: 20px 20px 0;
+	 	padding: 0 4px;
+	 	
+	 	color: #666;
+	 	font-size: 14px;
+	 	font-weight: normal;
+	}
+	.post_top .top_title {
+		font-size: 20px;
+		font-weight: bold;
+		margin: 10px 20px;
+	}
+	.post_top ul {
+		text-align: left;
+		padding-left:0;
+	}
+	.post_top ul li {
+		display: inline-block;
+		margin-left: 20px;
+		font-size: 13px;
+	}
+
+	.post_wrap .top_content {
+		margin: 40px 20px;
+		
+	}
+	.reply_wrap .reply_content {
+		margin: 0px 20px;
+		
+	}
+	.reply_wrap ul {
+		text-align: left;
+		padding-left:0;
+	}
+	.reply_wrap ul li {
+		display: inline-block;
+		margin-left: 20px;
+		font-size: 13px;
+	}
+
+	.post_wrap .likeBox {
+		text-align: center;
+	}
+
+	.likeBox .likeIcon {
+		font-size: 26px;
+		color: green;
+	}
+	.likeBox .likeCount1 {
+		font-size: 14px;
+		margin-top: -20px;
+		color: #333;
+	}
+	.likeBox .likeCount2 {
+		font-size: 14px;
+		margin-top: -15px;
+		font-weight: bold;
+		color: #333;
+		
+	}
+	.btn-m5{
+		margin : 5px;
+	}
+	.listHover:hover {
+		background-color: #D3D3D3;
+		cursor: pointer;
+	}
+	.basicPageBtn{
+		background-color : #47E5C4;
+		font-color: white;
+	}
+
+
 	</style>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
 
 
 </head>
@@ -50,7 +179,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col">
-			
+
 				<div id="freeTitle">
 					<h2>FAQ 자주묻는 질문</h2>
 				</div>
@@ -153,28 +282,27 @@
 								 </tbody>
 							</table>
 							
-							<div>
-							  <ul class="pagination justify-content-center">
+							<nav>
+							  <ul class="pagination justify-content-center ">
 							  	
 							  	<!-- 맨앞 페이지 -->
 							  	<c:if test="${qnaPageInfo.currentPageNumber > 10}">
-								    <li class="page-item">
+								    <li class="page-item ">
 								      <c:url value="/qna/qnaMainBoard" var="firstPageLink">
-								     
 								     	<c:param name="page" value="1"/>
 								     	<c:param name="q" value=""/>
 								     	<c:param name="t" value="all"/>
 								      </c:url>	
-								      <a class="page-link" href="${firstPageLink}" aria-label="First">
+								      <a class="page-link " href="${firstPageLink}" aria-label="First">
 								        맨앞
 								      </a>
 								    </li>
 							    </c:if>    
+							    
 							    <!-- 이전 10개의 페이지 ( 1 or 11 or 21 로 가기 ) -->
 							    <c:if test="${qnaPageInfo.hasPrevButton}">
 								    <li class="page-item">
-								      <c:url value="/qna/qnaMainBoard" var="previousPageLink">
-								     	
+								      <c:url value="/qna/qnaMainBoard" var="previousPageLink">			     	
 								     	<c:param name="page" value="${jumpPrevPageNumber}"/>
 								     	<c:param name="q" value=""/>
 								     	<c:param name="t" value="all"/>
@@ -188,8 +316,7 @@
 							    <!-- 현재 페이지 -->
 							    <c:forEach begin="${qnaPageInfo.leftPageNumber}" end="${qnaPageInfo.rightPageNumber}" var="pageNumber">
 							    	<li class="page-item">
-								    	<c:url value="/qna/qnaMainBoard" var="pageLink" >
-				
+								    	<c:url value="/qna/qnaMainBoard" var="pageLink" >		
 									    	<c:param name="page" value="${pageNumber}"/>
 									    	<c:param name="q" value=""/>
 									     	<c:param name="t" value="all"/>
@@ -203,8 +330,7 @@
 							    <!-- 다음 10개의 페이지 ( 11 or 21 or 31 로 가기 )-->
 							    <c:if test="${qnaPageInfo.hasNextButton}">
 								    <li class="page-item">
-								      <c:url value="/qna/qnaMainBoard" var="nextPageLink">
-								     
+								      <c:url value="/qna/qnaMainBoard" var="nextPageLink">								     
 								     	<c:param name="page" value="${qnaPageInfo.jumpNextPageNumber}"/>
 								     	<c:param name="q" value=""/>
 								     	<c:param name="t" value="all"/>
@@ -228,12 +354,13 @@
 								      </a>
 								    </li>
 							    </c:if>
+							    
 							  </ul>
-							</div>
-							<div class="d-flex flex-row-reverse">	
+							</nav>
 							
+							
+							<div class="d-flex flex-row-reverse">	
 								<form action="/qna/insert" method="get">
-								
 									<button id="insertBtn" class="btn btn-success btn-m5" type="submit" >문의하기</button>	
 								</form>
 								
@@ -245,6 +372,7 @@
 									<button id="myQnAListBtn" class="btn btn-primary btn-m5" type="submit" >내 문의내역</button>
 								</form>
 							</div>
+							
 						</div>
 					</div>
 				</div>
@@ -252,6 +380,7 @@
 				<hr>
 				
 				<p>회사전화번호/찾아오시는길</p> 
+				
 			</div>
 		</div>
 	</div>
