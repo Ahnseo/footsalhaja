@@ -67,6 +67,25 @@ li {
 	font-size: 20px;
 }
 
+ object {
+  text-align: center;
+  max-width: 250px;
+  height: 250px;
+  object-fit: cover;
+}
+
+defaultImg {
+
+  text-align: center;
+  max-width: 250px;
+  height: 250px;
+  object-fit: cover;
+}
+
+#myInfo {
+	margin-top: 10px;
+}
+
 
 </style>
 </head>
@@ -80,16 +99,21 @@ li {
 			<h3>${myInfo.userId}님의 마이페이지</h3>
 		</div>
 		<div style="text-align : center; ">
+			<c:if test="${member.profileImg eq null}">
+				<img class= "defaultImg" src="${pageContext.request.contextPath}/기본프로필.png">
+			</c:if>
 			<c:forEach items="${member.profileImg }" var="name">
-				<object data="${pageContext.request.contextPath}/기본프로필.png" type="image/png">
-					<img src="${pageContext.request.contextPath}/user_profile/${member.userId }/${name}">
-				</object>
+				<div class= "containerProfile">	
+					<object data="${imgUrl }/${member.userId }/${name}" type="image/png">
+						<img src="${pageContext.request.contextPath}/기본프로필.png">
+					</object>
+				</div>
 			</c:forEach>		
 		<div>
 				<c:url value="/mypage/get" var="myInfoGetLink">
 					<c:param name="userId" value="${myInfo.userId}"/>
 				</c:url>
-					<a href="${myInfoGetLink}"><button type="button" class="btn btn-outline-success">회원정보 확인</button></a>
+					<a href="${myInfoGetLink}"><button type="button" id= "myInfo" class="btn btn-outline-success">회원정보 확인</button></a>
 			</div>
 		</div>
 

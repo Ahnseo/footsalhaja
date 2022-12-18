@@ -171,6 +171,7 @@
 				type : "POST",
 				url : `\${ctx}/academy/uploadSummernoteImageFile`,
 				contentType : false,
+				cache: false,
 				enctype : 'multipart/data',
 				processData : false,
 				success : function(data) {

@@ -64,5 +64,4 @@ public interface MemberMapper {
 	//프로필 이미지 삭제
 	public int deleteProfileImgByUserId(String userId);
 
-	public void deleteProfileImgByUserIdAndPrifileImg(String userId, String originalFilename);
 }

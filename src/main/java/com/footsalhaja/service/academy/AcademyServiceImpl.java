@@ -78,6 +78,7 @@ public class AcademyServiceImpl implements AcademyService{
 			
 			// 2. 저장소에 실제 파일 지우기
 			String originalfileName = fileName.substring(36);
+			System.out.println(originalfileName);
 			deleteFile(board.getAb_number(), originalfileName);
 			}
 		}
@@ -165,6 +166,9 @@ public class AcademyServiceImpl implements AcademyService{
 	
 	private void deleteFile(int ab_number, String fileName) {
 		String key = "academy" + ab_number + "/" + fileName;
+		
+		System.out.println("deleteFile key"+key);
+		
 		DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
 				.bucket(bucketName)
 				.key(key)

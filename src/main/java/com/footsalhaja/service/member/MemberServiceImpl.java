@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,11 +15,24 @@ import com.footsalhaja.domain.member.MemberDto;
 import com.footsalhaja.domain.member.MemberPageInfo;
 import com.footsalhaja.mapper.member.MemberMapper;
 
+import software.amazon.awssdk.core.sync.RequestBody;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
+import software.amazon.awssdk.services.s3.model.ObjectCannedACL;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
+
 @Service
 public class MemberServiceImpl implements MemberService {
 	
 	@Autowired
 	private MemberMapper memberMapper;
+	
+	@Autowired
+	private S3Client s3Client;
+	
+	@Value("${aws.s3.bucket}")
+	private String bucketName;
+	
 	
 	//회원가입(등록) 또는 회원정보 수정
 	@Override
@@ -101,16 +115,16 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int deleteMemberInfoByUserId(String userId) {
 		//프로필 이미지 삭제
-		
+	
 		//저장된 파일의 경로 지정
-		String path = "C:\\Users\\lnh1017\\Desktop\\study\\project\\footsalhaja\\user_profile" +userId;
+		String path = "user_profile/" +userId;
 		File folder = new File(path);
 		
 		File[] listFiles = folder.listFiles();
 
 		if (listFiles != null) {
 				for (File file : listFiles) {
-					file.delete();
+					deleteFile(userId, file.getName());
 				}
 			}
 		
@@ -121,6 +135,11 @@ public class MemberServiceImpl implements MemberService {
 		
 		memberMapper.deleteProfileImgByUserId(userId);
 		
+		//회원탈퇴 게시물 댓글 지우기
+		
+		//회원탈퇴 게시물 지우기
+		
+		//회원탈퇴 좋아요 지우기
 		
 		//회원탈퇴 FK Authority ByUserId
 		memberMapper.deleteAuthorityByUserId(userId);
@@ -129,27 +148,52 @@ public class MemberServiceImpl implements MemberService {
 		return cnt;
 	}
 	
+	private void deleteFile(String userId, String fileName) {
+		String key = "user_profile/" + userId + "/" + fileName;
+		DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
+				.bucket(bucketName)
+				.key(key)
+				.build();
+		s3Client.deleteObject(deleteObjectRequest);
+	}
+	
+	private void uploadFile(String userId, MultipartFile file) {
+		try {
+			// S3에 파일 저장
+			// 키 생성
+			String key = "user_profile/" + userId + "/" + file.getOriginalFilename();
+			
+			// putObjectRequest
+			PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+					.bucket(bucketName)
+					.key(key)
+					.acl(ObjectCannedACL.PUBLIC_READ)
+					.build();
+			
+			// requestBody
+			RequestBody requestBody = RequestBody.fromInputStream(file.getInputStream(), file.getSize());
+			
+			// object(파일) 올리기
+			s3Client.putObject(putObjectRequest, requestBody);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	}
+	
 	@Override
 	public int updateMemberInfoByUserId(MemberDto memberModifiedValues, MultipartFile file) {
 		
-		memberMapper.deleteProfileImgByUserIdAndPrifileImg(memberModifiedValues.getUserId(),file.getOriginalFilename());
 		
 		if (file != null && file.getSize() > 0) {
+			//기존 프로필 삭제
+			memberMapper.deleteProfileImgByUserId(memberModifiedValues.getUserId());
+			deleteFile(memberModifiedValues.getUserId(), file.getOriginalFilename());
+			
 			memberMapper.insertprofileImg(memberModifiedValues.getUserId(), file.getOriginalFilename());
 			// 파일 저장
-			// User id 이름의 새폴더 만들기
-			File folder = new File("C:\\Users\\lnh1017\\Desktop\\study\\project\\footsalhaja\\user_profile\\" + memberModifiedValues.getUserId());
-			folder.mkdirs();
-			
-			File dest = new File(folder, file.getOriginalFilename());
-			
-			try {
-				file.transferTo(dest);
-			} catch (Exception e) {
-				// @Transactional은 RuntimeException에서만 rollback 됨
-				e.printStackTrace();
-				throw new RuntimeException(e);
-			}
+			uploadFile(memberModifiedValues.getUserId(),file);
 		}
 		
 		int cnt = memberMapper.updateMemberInfoByUserId(memberModifiedValues);

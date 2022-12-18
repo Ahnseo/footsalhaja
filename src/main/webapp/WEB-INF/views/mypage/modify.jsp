@@ -31,6 +31,19 @@ h2 {
 	text-align: center;
 	padding: 1px;
  }
+ 
+  object {
+  text-align: center;
+  max-width: 250px;
+  height: 250px;
+  object-fit: cover;
+}
+
+.defaultImg {
+	text-align : center; 
+	margin-bottom: 12px;
+}
+
 </style>
 
 </head>
@@ -54,13 +67,17 @@ h2 {
                     <div class="col-lg-8 col-xl-7">
                         <form action="/mypage/modify" method="post" id="contactForm" data-sb-form-api-token="API_TOKEN" enctype="multipart/form-data">
 						<%-- 프로필 이미지 출력 --%>
-						<div style="text-align : center;">
+						<div class= "defaultImg">
+							<c:if test="${member.profileImg eq null}">
+								<img class= "defaultImg" src="${pageContext.request.contextPath}/기본프로필.png">
+							</c:if>
 							<c:forEach items="${member.profileImg }" var="name">
-								<object data="${pageContext.request.contextPath}/기본프로필.png" type="image/png">
-								<textarea value = "${pageContext.request.contextPath}/user_profile/${member.userId }/${name}"></textarea>
-									<img src="${pageContext.request.contextPath}/user_profile/${member.userId }/${name}">
-								</object>
-							</c:forEach>		
+								<div class= "containerProfile">	
+									<object data="${imgUrl }/${member.userId }/${name}" type="image/png">
+										<img src="${pageContext.request.contextPath}/기본프로필.png">
+									</object>
+								</div>
+							</c:forEach>			
 						</div>	
 					
 						<div class="form-floating mb-3"">
