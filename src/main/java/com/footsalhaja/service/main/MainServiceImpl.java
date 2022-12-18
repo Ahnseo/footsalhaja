@@ -1,6 +1,9 @@
 package com.footsalhaja.service.main;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,8 +62,8 @@ public class MainServiceImpl implements MainService {
 
 	//@Override
 	// 메인리스트 불러오기
-	public List<BookDto> listBook() {
-		return bookMapper.listBook();
+	public List<BookDto> listBook(String datepickerSday, String datepickerEday) {
+		return bookMapper.listBook(datepickerSday, datepickerEday);
 	}
 
 	public int remove(int bookId) {

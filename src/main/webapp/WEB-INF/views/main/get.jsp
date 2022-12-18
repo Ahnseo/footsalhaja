@@ -7,10 +7,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta name="viewport" charset="UTF-8" content="width=device-width, initial-scale=1">
 <title>Insert title here</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+<link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&display=swap" rel="stylesheet">
 <style>
+/* 글씨폰트 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&display=swap');
+
+#area{
+	font-family: 'Noto Sans KR', sans-serif;
+	letter-spacing: -1px;
+}
 .box {	 
+	position: relative;
 	 display: flex;
 	 justify-content: center;
 	 height: 200px;
@@ -28,8 +43,12 @@
 	margin: 10px 10px;
 	padding: 5px 10px;
 }
-
+#container1content{
+	font-size: 18px;
+	font-weight: semi-bold;
+}
 .container2 {
+	position: relative;
 	border: 2px solid #5F7161;
 	border-radius: 10px;
 	font-color: black;
@@ -46,35 +65,38 @@
 	border-radius: 10px;
 	font-color: black;
 	margin: auto;
-	width: 1000px;
+	width: 1020px;
 	height: 100px;
 	padding: 10px;
 	text-align: justify;
+	font-size: 20px;
 	
 }
-.modi {
-	justify-align: right;
-}
-#replyListContainer{
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-}
+
 #reply {
+	position: relative;
 	display: flex;
-	border: 2px solid #5F7161;
-	border-radius: 10px;
+	border-bottom: 2px solid #999999;
 	width: 1000px;
-	height: 50px;
-	margin: 5px 0px 5px 452px;
+	height: 70px;
+	margin: 5px 0px 5px 55px;
 	padding: 2.5px 10px;
+}
+
+#modi {
+	position: absolute; 
+	bottom:295px; 
+	left: 60px;
 }
 </style>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
 </head>
 <body>
+<div id="area">
 <my:navbar></my:navbar>
+
 <div id="map" style="width:1000px;height:450px;margin:30px auto;"></div>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=17df836d167348dc7ea95e69cb597603"></script>
 	<script>
@@ -102,8 +124,7 @@
      marker.setMap(map);
 		</script>
 <%-- ---------------------------------------------------------------- --%>	
-
-<div class="container-md">
+<div class="container-md" id="whole">
 	<div class="row">
 		<div class="col">
 
@@ -114,117 +135,119 @@
 					<div class="container1">
 					<h2><i class="fa-solid fa-futbol"></i> 매치 포인트 </h2>
 						
-						<div id="level">
-						<i class="fa-solid fa-ranking-star"></i>
+					<div id="container1content">
+							<div id="level">
+							<i class="fa-solid fa-ranking-star"></i>
+								<c:choose>
+								<c:when test="${main.level == '1' }">
+									비기너
+								</c:when>
+								<c:when test="${main.level == '2' }">
+									아마추어
+								</c:when>
+								<c:when test="${main.level == '3' }">
+									챌린저
+								</c:when>
+								</c:choose>
+							</div>
+						
+						<div id="matchType">
+						<i class="fa-solid fa-flag-checkered"></i>
 							<c:choose>
-							<c:when test="${main.level == '1' }">
-								비기너
-							</c:when>
-							<c:when test="${main.level == '2' }">
-								아마추어
-							</c:when>
-							<c:when test="${main.level == '3' }">
-								챌린저
-							</c:when>
-							</c:choose>
+								<c:when test="${main.matchType == '3' }">
+									3 vs 3
+								</c:when>
+								<c:when test="${main.matchType == '4' }">
+									4 vs 4
+								</c:when>
+								<c:when test="${main.matchType == '5' }">
+									5 vs 5
+								</c:when>
+								</c:choose>
 						</div>
-					
-					<div id="matchType">
-					<i class="fa-solid fa-flag-checkered"></i>
+						<div id="teamGender">
+						<i class="fa-solid fa-venus-mars"></i>
+							<c:choose>
+								<c:when test="${main.teamGender == 'F' }">
+									여자만
+								</c:when>
+								<c:when test="${main.teamGender == 'M' }">
+									남자만
+								</c:when>
+								</c:choose>
+						</div>
+						
+						<div id="shoes">
+						<i class="fa-solid fa-shoe-prints"></i>
 						<c:choose>
-							<c:when test="${main.matchType == '3' }">
-								3 vs 3
-							</c:when>
-							<c:when test="${main.matchType == '4' }">
-								4 vs 4
-							</c:when>
-							<c:when test="${main.matchType == '5' }">
-								5 vs 5
-							</c:when>
-							</c:choose>
-					</div>
-					<div id="teamGender">
-					<i class="fa-solid fa-venus-mars"></i>
-						<c:choose>
-							<c:when test="${main.teamGender == 'F' }">
-								여자만
-							</c:when>
-							<c:when test="${main.teamGender == 'M' }">
-								남자만
-							</c:when>
-							</c:choose>
-					</div>
-					
-					<div id="shoes">
-					<i class="fa-solid fa-shoe-prints"></i>
-					<c:choose>
-					<c:when test="${main.locationId == '1' }">
-						풋살화,운동화
-					</c:when>
-					<c:when test="${main.locationId == '2' }">
-						실내풋살화
-					</c:when>
-					<c:when test="${main.locationId == '3' }">
-						풋살화
-					</c:when>
-					<c:when test="${main.locationId == '4' }">
-						풋살화,운동화
-					</c:when>
-					<c:when test="${main.locationId == '5' }">
-						풋살화
-					</c:when>
-					<c:when test="${main.locationId == '6' }">
-						실내풋살화, 운동화
-					</c:when>
-					<c:when test="${main.locationId == '7' }">
-						실내풋살화
-					</c:when>
-					<c:when test="${main.locationId == '8' }">
-						풋살화, 운동화
-					</c:when>
-					<c:when test="${main.locationId == '9' }">
-						풋살화
-					</c:when>
-					<c:when test="${main.locationId == '10' }">
-						풋살화
-					</c:when>
-					</c:choose>
+						<c:when test="${main.locationId == '1' }">
+							풋살화,운동화
+						</c:when>
+						<c:when test="${main.locationId == '2' }">
+							실내풋살화
+						</c:when>
+						<c:when test="${main.locationId == '3' }">
+							풋살화
+						</c:when>
+						<c:when test="${main.locationId == '4' }">
+							풋살화,운동화
+						</c:when>
+						<c:when test="${main.locationId == '5' }">
+							풋살화
+						</c:when>
+						<c:when test="${main.locationId == '6' }">
+							실내풋살화, 운동화
+						</c:when>
+						<c:when test="${main.locationId == '7' }">
+							실내풋살화
+						</c:when>
+						<c:when test="${main.locationId == '8' }">
+							풋살화, 운동화
+						</c:when>
+						<c:when test="${main.locationId == '9' }">
+							풋살화
+						</c:when>
+						<c:when test="${main.locationId == '10' }">
+							풋살화
+						</c:when>
+						</c:choose>
+						</div>
 					</div>
 					</div>
 					
 					<input type="hidden" id="bookDate1" value="${main.bookDate }">
 					
 					<div class="container2">
-						<div id="bookDate">
+						<div id="bookDate" style="font-weight:bold;">
 						${main.bookDate } 
 						</div>
-						<div id="day">
+						<div id="day" style="position: absolute; bottom: 141px; left: 120px; font-weight:bold;">
 						<script type="text/javascript">
 						document.write(getDateStr(bookDate1));
 						</script>
 						</div>
 						
-						<div id="bookTime">
+						<div id="bookTime" style="font-weight: bold;">
 						<c:choose>
-						<c:when test="${main.bookTime == '1' }">
+						<c:when test="${main.bookTime == 6 }">
 							6:00 ~ 8:00
 						</c:when>
-						<c:when test="${main.bookTime == '2' }">
+						<c:when test="${main.bookTime == 9 }">
 							9:00 ~ 11:00	
 						</c:when>
-						<c:when test="${main.bookTime == '3' }">
+						<c:when test="${main.bookTime == 14 }">
 							14:00 ~ 16:00	
 						</c:when>
-						<c:when test="${main.bookTime == '4' }">
+						<c:when test="${main.bookTime == 18 }">
 							18:00 ~ 20:00	
 						</c:when>
-						<c:when test="${main.bookTime == '5' }">
+						<c:when test="${main.bookTime == 21 }">
 							21:00 ~ 23:00	
 						</c:when>
 						</c:choose>	
 						</div>
 						
-						<div>
+						<div style="font-weight: bold;">
 						<c:choose>
 						<c:when test="${main.locationId == '1' }">
 							천마 풋살파크
@@ -259,8 +282,46 @@
 						</c:choose>
 						</div>
 						
-						<div id="nickName">
-						작성자 ${main.nickName }
+						
+						<div style="font-size:13px; text-decoration: underline;">상세주소</div>						
+						<div style="font-size:15px;">
+						<c:choose>
+						<c:when test="${main.locationId == '1' }">
+							송파구 성내천로29길 28
+						</c:when>
+						<c:when test="${main.locationId == '2' }">
+							용산구 한강대로23길 55 현대아이파크몰 리빙파크 9층
+						</c:when>
+						<c:when test="${main.locationId == '3' }">
+							도봉구 방학로 223
+						</c:when>
+						<c:when test="${main.locationId == '4' }">
+							영등포구 선유로43길 19
+						</c:when>
+						<c:when test="${main.locationId == '5' }">
+							은평구 통일로 1050
+						</c:when>
+						<c:when test="${main.locationId == '6' }">
+							부천시 석천로 188
+						</c:when>
+						<c:when test="${main.locationId == '7' }">
+							용인시 기흥구 신고매로 59 리빙파워센터 RF층
+						</c:when>
+						<c:when test="${main.locationId == '8' }">
+							안양시 동안구 시민대로 312
+						</c:when>
+						<c:when test="${main.locationId == '9' }">
+							인천시 남동구 인하로 485
+						</c:when>
+						<c:when test="${main.locationId == '10' }">
+							하남시 서하남로12번길 28-20
+						</c:when>
+						</c:choose>
+						</div>
+					
+						
+						<div id="nickName" style="font-size: 15px;">
+						작성자: ${main.nickName }
 						</div>
 					</div>								
 				</div>
@@ -271,11 +332,10 @@
 						</div>									
 					</div>
 				
-	        		<div style="font-size:10px;">
+	        		<div style="font-size:12px; position:absolute; bottom: -20px; right: 70px;">
 	        		${main.ago }
 	        		</div>
-				
-				
+							
 
 				
 				<div id="modi">
@@ -284,7 +344,7 @@
 							<c:param name="bookId" value="${main.bookId }"></c:param>
 						</c:url>
 						<a href="${modifyLink }">
-							<button id="modifyButton" type="button" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button>				
+							<button id="modifyButton" type="button" style="background-color: #6D8B74; border-radius:5px; border-color:#6D8B74; color:white;">수정하기</button>				
 						</a>				
 					</c:if>
 				</div>
@@ -306,17 +366,18 @@
 	<input type="hidden" id="userId" value="${main.userId }">  --%>
 			
 		
-	<div class="container-md" style="padding: 20px 160px;">
+	<div class="container-md" style="padding: 20px 70px;">
 		<div class="input-group mb-3" style=" width:1000px;">
 			 <input type="text" id="replyInput" class="form-control" placeholder="댓글쓰기" aria-describedby="replySendButton">
 			 <button class="btn btn-outline-secondary" type="button" id="replySendButton">작성</button>
+		
 		</div>
 	</div>
 
 	</sec:authorize>	
 	
 	<sec:authorize access="not isAuthenticated()">
-	<div class="container-md" style="padding: 20px 160px;">
+	<div class="container-md" style="padding: 20px 70px;">
 		<div class="input-group mb-3" style=" width:1000px;">
 		    <input type="text" id="replyInputBlocked" class="form-control" placeholder="댓글을 작성하시려면 로그인하세요." readonly>
 		</div>
@@ -324,15 +385,16 @@
 	
 	</sec:authorize>
 	
-	<div class="row">
-		<div class="col">
-			<div id="replyListContainer">
-			
-			</div>
-		</div>
-	</div>
 	
-
+			<div class="container-md">
+				<div class="row">
+					<div class="col">
+						<div id="replyListContainer"></div>
+					</div>
+				</div>
+			</div>
+			
+		
 
 <%-- 댓글 삭제 확인 모달 --%>
 	<!-- Modal -->
@@ -353,7 +415,8 @@
 	    </div>
 	  </div>
 	</div>
-
+</div>
+<my:footer></my:footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script>
 const ctx = "${pageContext.request.contextPath}";
@@ -398,18 +461,18 @@ function listReply(){
 		
 	const replyDiv = `
 	
-	
+				
 				<div id="reply">  
-					<div>
+					<div  style="font-size: 15px; font-weight: bold;">
 					\${item.nickName} 
 					</div>
-					<div>
+					<div style="font-size: 13px; padding: 2.5px 0 0 10px;">
+					\${item.ago}
+					</div>				
+					<div style="position: absolute; bottom:3px; "">
 					\${item.replyContent} 
 					</div>
-					<div>
-					\${item.ago}
-					</div>
-					<div style="justify-content: space-between;">
+					<div style="position: absolute; bottom:1px; right: 0px;">
 					\${item.editable ? removeButton : '' }		
 					</div>
 				</div>`;

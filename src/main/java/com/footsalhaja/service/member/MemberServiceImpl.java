@@ -6,10 +6,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.catalina.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+
 
 import com.footsalhaja.domain.member.MemberDto;
 import com.footsalhaja.domain.member.MemberPageInfo;
@@ -22,11 +26,13 @@ import software.amazon.awssdk.services.s3.model.ObjectCannedACL;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 @Service
+@Transactional
 public class MemberServiceImpl implements MemberService {
 	
 	@Autowired
 	private MemberMapper memberMapper;
 	
+
 	@Autowired
 	private S3Client s3Client;
 	
@@ -34,6 +40,23 @@ public class MemberServiceImpl implements MemberService {
 	private String bucketName;
 	
 	
+
+	@Override
+	public MemberDto getByEmail(String email) {
+		return memberMapper.selectByEmail(email);
+	};
+	
+	@Override
+	public MemberDto  getByNickName(String nickName) {
+		return memberMapper.selectByNickName(nickName);
+	};
+	
+	
+	@Override
+	public MemberDto getById(String userId){
+		return memberMapper.selectByUserId(userId);
+	}
+
 	//회원가입(등록) 또는 회원정보 수정
 	@Override
 	public int insertMember(MemberDto member) {
@@ -82,11 +105,13 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public List<Object> selectMemberInfoByUserId(String userId) {
 		List<Object> list = new ArrayList<>();
+
 		
 		MemberDto memberInfo = memberMapper.selectMemberInfoByUserId(userId);
 		
 		Map<String, Integer> countActivity = new HashMap<>();
 		
+
 		int countAllAblist = memberMapper.countAllAblist(userId);
 		int countAllFblist = memberMapper.countAllFblist(userId);
 		int countAllMainlist = memberMapper.countAllMainlist(userId);
@@ -115,16 +140,20 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int deleteMemberInfoByUserId(String userId) {
 		//프로필 이미지 삭제
+
 	
 		//저장된 파일의 경로 지정
 		String path = "user_profile/" +userId;
+
 		File folder = new File(path);
 		
 		File[] listFiles = folder.listFiles();
 
 		if (listFiles != null) {
 				for (File file : listFiles) {
+
 					deleteFile(userId, file.getName());
+
 				}
 			}
 		
@@ -135,11 +164,13 @@ public class MemberServiceImpl implements MemberService {
 		
 		memberMapper.deleteProfileImgByUserId(userId);
 		
+
 		//회원탈퇴 게시물 댓글 지우기
 		
 		//회원탈퇴 게시물 지우기
 		
 		//회원탈퇴 좋아요 지우기
+
 		
 		//회원탈퇴 FK Authority ByUserId
 		memberMapper.deleteAuthorityByUserId(userId);
@@ -185,7 +216,6 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int updateMemberInfoByUserId(MemberDto memberModifiedValues, MultipartFile file) {
 		
-		
 		if (file != null && file.getSize() > 0) {
 			//기존 프로필 삭제
 			memberMapper.deleteProfileImgByUserId(memberModifiedValues.getUserId());
@@ -194,11 +224,36 @@ public class MemberServiceImpl implements MemberService {
 			memberMapper.insertprofileImg(memberModifiedValues.getUserId(), file.getOriginalFilename());
 			// 파일 저장
 			uploadFile(memberModifiedValues.getUserId(),file);
+
 		}
 		
 		int cnt = memberMapper.updateMemberInfoByUserId(memberModifiedValues);
-		System.out.println(cnt);
-		System.out.println(memberModifiedValues);
+		//System.out.println(cnt);
+		System.out.println("serviceAuth : "+memberModifiedValues.getAuth());
+		return cnt;
+	}
+	
+	//회원권한 추가하기 
+	@Override
+	public int updateMemberAuth(String userId, List<String> addAuthorities) {
+		
+		MemberDto member = memberMapper.selectMemberInfoByUserId(userId);
+		List<String> oldAuthorities = member.getAuth();
+		//System.out.println("oldAuthorities :"+oldAuthorities);
+		
+		List<String> newAuthorities = new ArrayList<>();
+		
+		for(String oldAuth : oldAuthorities) {
+			for(String auth : addAuthorities) {
+				if(oldAuth != auth) {
+					newAuthorities.add(auth);
+				}
+			}
+		}
+		//System.out.println("newAuthorities :"+newAuthorities);
+		
+		int cnt = memberMapper.updateMemberAuth(userId, newAuthorities);
+		
 		return cnt;
 	}
 	

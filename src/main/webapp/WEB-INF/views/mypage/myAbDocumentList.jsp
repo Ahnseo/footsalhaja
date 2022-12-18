@@ -157,6 +157,7 @@ li {
 						 	<td>${ablist.ab_number}</td>
 						 	<td>${ablist.ab_category}</td>					 	
 						 	<td class="listTitle col-sm-6">
+
 								<a class='move' href="${getLink }">${ablist.ab_title} </a>
 							</td>
 						 	<td>${ablist.ago}</td>

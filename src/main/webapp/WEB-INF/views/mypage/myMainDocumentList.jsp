@@ -79,6 +79,7 @@ li {
  }
 
 /* 글목록 */
+
 #listBox .table. th{
 	font-size: 13px;
 	letter-spacing: -1px;
@@ -88,6 +89,7 @@ li {
 
 
 #listBox tbody{
+
 	font-size: 16px;
 	letter-spacing: -1px;
 	text-align: center;
@@ -124,7 +126,9 @@ li {
 	<div id="listBox" >
 		<table class="table table-hover container">
 			<thead>
+
 				<tr class = "trtr" scope="row">	
+
 					<th>예약 날짜</th>
 					<th>예약 시간</th>
 					<th>제목</th>
@@ -137,6 +141,7 @@ li {
 			</thead>
 			<tbody>
 				<c:forEach items="${list.userMainList}" var="mainlist">
+
 					<c:url value="/main/get" var="getLink">
 						<c:param name="bookId" value="${mainlist.bookId}"></c:param>
 					</c:url> 
@@ -144,6 +149,7 @@ li {
 					 	<td>${mainlist.bookDate}</td>
 					 	<td>${mainlist.bookTime}</td>					 	
 					 	<td class="listTitle col-sm-6">
+
 							<a class='move' href="${getLink }">${mainlist.title} </a>
 						</td>
 					 	<td>${mainlist.status}</td>

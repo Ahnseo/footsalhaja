@@ -2,9 +2,11 @@ package com.footsalhaja.service.member;
 
 import java.util.List;
 
+
 import org.springframework.web.multipart.MultipartFile;
 
 import com.footsalhaja.domain.academy.BoardDto;
+
 import com.footsalhaja.domain.member.MemberDto;
 import com.footsalhaja.domain.member.MemberPageInfo;
 
@@ -16,7 +18,9 @@ public interface MemberService {
 
 	List<Object> selectMemberInfoByUserId(String userId);
 
+
 	int deleteMemberInfoByUserId(String userId);
+
 
 	int updateMemberInfoByUserId(MemberDto memberModifiedValues, MultipartFile file);
 	
@@ -29,5 +33,14 @@ public interface MemberService {
 	List<MemberDto> getUserReplyList(String userId);
 	
 	List<MemberDto> getUserLikeList(String userId);
+
+	int updateMemberAuth(String userId, List<String> addAuthorities);
+
+	MemberDto getById(String userId);
+
+	MemberDto getByEmail(String email);
+
+	MemberDto getByNickName(String nickName);
+	
 
 }

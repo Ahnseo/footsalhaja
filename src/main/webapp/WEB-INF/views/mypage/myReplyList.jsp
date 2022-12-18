@@ -138,6 +138,7 @@ li {
 		<h3>${userId}님이 작성한 댓글 <i class="fa-regular fa-comment-dots"></i></h3>
 	</div>
 	<div id="categoryBox" >
+
 		<a id ="bookBtn" href="#categoryBox"><button type="button" class="btn btn-outline-success">예약 (${countActivity.countMainReplyList})</button></a>
 		<a id ="academyBtn" href="#academy"><button type="button" class="btn btn-outline-success">아카데미 (${countActivity.countAbReplyList})</button></a>
 		<a id ="freeBtn" href="#freeBoard"><button type="button" class="btn btn-outline-success">자유게시판 (${countActivity.countFbReplyList})</button></a>
@@ -156,6 +157,7 @@ li {
 				</thead>
 				<tbody>
 					<c:forEach items="${userMainReplyList}" var="replyMainList">
+
 						<c:url value="/main/get" var="getLink">
 							<c:param name="bookId" value="${replyMainList.book_bookId}"></c:param>
 						</c:url> 
@@ -164,6 +166,7 @@ li {
 								<i class="fa-regular fa-comment-dots"></i><a class='move' href="${getLink }">${replyMainList.replyContent} </a>
 							</td> 
 						 	<td>${replyMainList.ago}</td>					 	
+
 					 	</tr>
 					</c:forEach>
 				</tbody>
@@ -181,6 +184,7 @@ li {
 				</thead>
 				<tbody>
 					<c:forEach items="${userAbReplyList}" var="replyAbList">
+
 						<c:url value="/academy/get" var="getLink">
 							<c:param name="ab_number" value="${replyAbList.ab_number}"></c:param>
 						</c:url> 
@@ -189,6 +193,7 @@ li {
 							<i class="fa-regular fa-comment-dots"></i><a class='move' href="${getLink }">${replyAbList.ab_replyContent} </a>
 						</td> 
 					 	<td>${replyAbList.ago}</td>					 	
+
 					</c:forEach>
 				</tbody>
 			</table>
@@ -213,6 +218,7 @@ li {
 								<i class="fa-regular fa-comment-dots"></i><a class='move' href="${getLink }">${replyFbList.fb_replyContent} </a>
 							</td> 
 						 	<td>${replyFbList.ago}</td>					 	
+
 					 	</tr>
 					</c:forEach>
 				</tbody>

@@ -79,10 +79,12 @@ public class MypageContorller {
 		MemberDto memberInfoByUserId = (MemberDto) memberService.selectMemberInfoByUserId(userId).get(0);
 		
 		//프로필 이미지 보이기
+
 		InputStream imageStream = new FileInputStream("user_profile/" + userId + "/" + memberInfoByUserId.getProfileImg());
 		byte[] imageByteArray = IOUtils.toByteArray(imageStream);
 		imageStream.close();
 		
+
 		System.out.println("이미지 "+imageByteArray);
 		return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
 		

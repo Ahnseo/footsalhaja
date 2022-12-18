@@ -204,6 +204,7 @@ ul {
 			<button type="button" class="btn btn-outline-success">게시글 목록</button>
 		</a>
 		
+
 		<!-- 작성자와 authentication.name이 같아야 삭제&수정버튼 보여주기 -->
 		<sec:authentication property="name" var="userIdValue" />
 		
@@ -214,6 +215,7 @@ ul {
 			</form>
 			<input class="btn btn-outline-success removeBtn" type="submit" value="삭제" data-bs-toggle="modal" data-bs-target="#removeModal"/>
 		<!-- 수정버튼 -->	
+
 		<c:if test="${board.member_userId == userIdValue}" >
 			<c:url value="/academy/modify" var="modifyLink">
 				<c:param name="ab_number" value="${board.ab_number }"></c:param>
@@ -305,8 +307,10 @@ ul {
 			<div class="paginationBox" id="replyPageFooter">
 			</div>
 		</div>
+    
 	</div>
 </div>
+
 	
 	
 	<!-- 게시글 삭제 모달 -->

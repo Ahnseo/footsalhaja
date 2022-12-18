@@ -241,7 +241,9 @@ li {
 							${rank.ab_title }
 						</a>
 						<c:if test="${rank.replyCnt > 0 }">
+
 							&nbsp;&nbsp;<i class="fa-regular fa-comment"></i>${rank.replyCnt }
+
 						</c:if>
 					</td>
 					<td width="70"><i class="fa-regular fa-heart"></i> ${rank.countLike }</td>
@@ -277,14 +279,17 @@ li {
 			</thead>
 			<tbody>
 				<c:forEach items="${boardList}" var="board">
+
 					<c:url value="/academy/get" var="getLink">
 						<c:param name="ab_number" value="${board.ab_number}"></c:param>
 					</c:url>
 					<tr onclick="location.href='${getLink}'" class="trtr">
+
 						<td>${board.ab_number }</td>
 						<td>${board.ab_category }</td>
 						<td>${board.countLike }</td>
 						<td class="listTitle col-sm-6">
+
 							<a class= 'move' href="${getLink }">
 								${board.ab_title}
 							</a>

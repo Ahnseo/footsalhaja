@@ -16,12 +16,14 @@ public interface MainMapper {
 
 	int delete(int bookId);
 
-	
+	  
 	String selectNick(String userId) ;
 
-	List<BookDto> listBook();
+	List<BookDto> listBook(String datepickerSday, String datepickerEday);
 	
 	BookDto select(int bookId, String nickName);
+
+	
 
 }
  

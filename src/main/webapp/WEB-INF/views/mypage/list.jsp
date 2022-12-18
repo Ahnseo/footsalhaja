@@ -47,7 +47,9 @@ li {
 
 #userTitle h3 {
 	text-align: center;
+
 	padding: 50px;
+
  }
 
 .list {
@@ -55,6 +57,7 @@ li {
 }
 
 .list span {
+
 	padding: 1.0em;
 }
 
@@ -87,6 +90,7 @@ defaultImg {
 }
 
 
+
 </style>
 </head>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
@@ -94,6 +98,7 @@ defaultImg {
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
 <body>
 <myInfo:navbar active="myInfopageLink"></myInfo:navbar>
+
 <div class="container-sm">
 		<div id="userTitle">
 			<h3>${myInfo.userId}님의 마이페이지</h3>
@@ -116,6 +121,7 @@ defaultImg {
 					<a href="${myInfoGetLink}"><button type="button" id= "myInfo" class="btn btn-outline-success">회원정보 확인</button></a>
 			</div>
 		</div>
+
 
 <div class = "list">
 
@@ -152,6 +158,7 @@ defaultImg {
 			<c:param name="userId" value="${myInfo.userId}"></c:param>
 		</c:url>
 	      <li onclick="location.href='${listLink}'" class="list-group-item d-flex justify-content-between align-items-center">
+
 		<a href="${listLink }" > 좋아요한 글 목록</a>
 	    <span class="badge bg-primary rounded-pill">${countActivity.countUserAbLike + countActivity.countUserFbLike} </span>
 	  </li>

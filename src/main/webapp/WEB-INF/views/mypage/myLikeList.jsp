@@ -153,6 +153,7 @@ li {
 				</thead>
 				<tbody>
 					<c:forEach items="${usrAbLikeList}" var="likeAbList">
+
 						<c:url value="/academy/get" var="getLink">
 							<c:param name="ab_number" value="${likeAbList.ab_number}"></c:param>
 						</c:url> 
@@ -161,6 +162,7 @@ li {
 								<i class="fa-solid fa-heart"></i><a class='move' href="${getLink }">${likeAbList.ab_title} </a>
 							</td> 
 						 	<td>${likeAbList.ago}</td>					 	
+
 					</c:forEach>
 				</tbody>
 			</table>
@@ -177,6 +179,7 @@ li {
 				</thead>
 				<tbody>
 					<c:forEach items="${userFbLikeList}" var="likeFbList">
+
 						<c:url value="/free/get" var="getLink">
 							<c:param name="number" value="${likeFbList.fb_number}"></c:param>
 						</c:url> 
@@ -185,6 +188,7 @@ li {
 								<i class="fa-solid fa-heart"></i><a class='move' href="${getLink }">${likeFbList.fb_title} </a>
 							</td> 
 						 	<td>${likeFbList.ago}</td>					 	
+
 					 	</tr>
 					</c:forEach>
 				</tbody>

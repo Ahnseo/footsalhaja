@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -24,6 +27,8 @@ import com.footsalhaja.domain.qna.QnAReplyDto;
 import com.footsalhaja.domain.qna.QnAReplyToAnswerDto;
 import com.footsalhaja.service.qna.QnAService;
 
+
+
 @Controller
 @RequestMapping("qna")
 public class QnAController {
@@ -36,13 +41,17 @@ public class QnAController {
 	public void qnaMainBoard(@RequestParam(name="page", defaultValue = "1") int page,
 							@RequestParam(name="q") String keyword,
 							@RequestParam(name="t") String type,
+							@RequestParam(name="c") String c,
 							QnAPageInfo qnaPageInfo,
 							Model model
 							) {
 		// FAQ data 가져오기
 		List<FAQDto> FAQList = qnaService.selectFAQList();
 		// 답변완료된!! allQnAList 만!! 가져오기
-		List<QnADto> allQnAListByDone = qnaService.selectQnAListByStatusDone(page, qnaPageInfo, type, keyword);
+		System.out.println("@@@@ c :"+c);
+		List<QnADto> allQnAListByDone = qnaService.selectQnAListByStatusDone(page, qnaPageInfo, type, keyword, c);
+		
+		
 		
 		model.addAttribute("FAQList", FAQList);
 		model.addAttribute("allQnAListByDone", allQnAListByDone);
@@ -60,16 +69,26 @@ public class QnAController {
 
 		qnaService.insertQnABoard(qnaBoard); // null : ServiceImpl 에서만 model 사용중이기 때문
 
-		return "redirect:/qna/myQnAList?userId=" + userId;
+		return "redirect:/qna/myQnAList?userId="+userId+"&page=1&t=all&q=&c=";
 	}
 
 	// MyQnAList
 	@GetMapping("myQnAList")
-	public void myQnAList(@RequestParam(name = "page", defaultValue = "1") int page, QnAPageInfo qnaPageInfo,
-			Model model, String userId) throws Exception {
+	public void myQnAList(@RequestParam(name = "page", defaultValue = "1") int page,
+							@RequestParam(name = "t", defaultValue = "all")	String type,
+							@RequestParam(name = "q") String keyword,	
+							@RequestParam(name = "c") String c,
+							QnAPageInfo qnaPageInfo,
+							Model model, String userId) throws Exception {
+		System.out.println("page:"+page);
+		System.out.println("type:"+type);
+		System.out.println("keyword:"+keyword);
+		System.out.println("c:"+c);
+		
+		
 		// myQnAList 페이지네이션 추가
 		List<QnADto> myQnAList = new ArrayList<>();
-		myQnAList = qnaService.myQnAList(userId, page, qnaPageInfo);
+		myQnAList = qnaService.myQnAList(userId, page, qnaPageInfo, type, keyword, c );
 		model.addAttribute("myQnAList", myQnAList);
 
 		// 게시판 내림차순 만들기 위해 사용 myQnAListSize - st.count
@@ -85,10 +104,10 @@ public class QnAController {
 	public void myQnAGet(String userId, int qnaId, Model model, QnAReplyDto qnaReply) {
 		QnADto qna = qnaService.selectMyQnAGetByQnAIdAndUserId(userId, qnaId);
 		model.addAttribute("qna", qna);
-		System.out.println("qna 정보 : "+ qna);
+		//System.out.println("qna 정보 : "+ qna);
 		
 		QnAReplyDto qnaAnswer = qnaService.selectQnAReply(qnaReply);
-		System.out.println("qnaAnswer :"+qnaAnswer);
+		//System.out.println("qnaAnswer :"+qnaAnswer);
 		
 		model.addAttribute("qnaAnswer", qnaAnswer);
 		
@@ -116,20 +135,29 @@ public class QnAController {
 		System.out.println("con_userId="+modifiedQnA.getUserId());
 		return "redirect:/qna/myQnAGet?userId="+modifiedQnA.getUserId()+"&qnaId="+modifiedQnA.getQnaId();
 	}
+	@DeleteMapping("deleteMyQnA")
+	@ResponseBody
+	public void deleteQnA(@RequestBody QnADto qna, HttpServletRequest request) {
+		int qnaId = qna.getQnaId();
+		qnaService.deleteQnA(qnaId);		
+	}
 	
 	
 	@PutMapping("likeCount")
 	@ResponseBody
 	@PreAuthorize("isAuthenticated()")
-	private Map<String, String> insertlikeCount(@RequestBody Map<String, String> req, Authentication authentication) {
+	public Map<String, Object>  updatelikeCount(@RequestBody Map<String, String> req, Authentication authentication, HttpServletRequest request) {
 		String qnaId = req.get("qnaId");
-		String loggedinId = authentication.getName();
+		String loggedinId = authentication.getName();		
+		//System.out.println("qnaId : " + qnaId );
+		//System.out.println("loggedinId : " + loggedinId);
 		
-		System.out.println("qnaId : " + qnaId );
-		System.out.println("loggedinId : " + loggedinId);
+		//클릭하면 저장, 다시클릭하면 삭제되는 좋아요 DB
+		Map<String, Object> result = qnaService.updateLikeCount(qnaId, loggedinId);
 		
-		//클릭하면 저장, 다시클릭하면 삭제되는 좋아요 DB	
-		return qnaService.updateLikeCount(qnaId, loggedinId);
+		// json형태로 map.put 으로 넣은 liked? not liked?-> current ,좋아요 총갯수 count  
+		return result;
+		
 	}
 	
 	
