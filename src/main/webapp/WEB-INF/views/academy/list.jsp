@@ -384,7 +384,7 @@ li {
 			</sec:authorize>
 		<!-- 로그인 안 했을때 -->
 			<sec:authorize access="not isAuthenticated()">
-				<button data-bs-toggle="modal" data-bs-target="#nonMemberModal" id="nonMemberInsertButton">글쓰기</button>
+				<button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#nonMemberModal" id="nonMemberInsertButton">글쓰기</button>
 			</sec:authorize>	
 		</div>
 	</div>
