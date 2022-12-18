@@ -176,10 +176,12 @@
 </head>
 <body>
 	<my:navbar active="qnaMainBoard"></my:navbar>
+	<%-- 시큐리티 로그인된 userId = userIdValue -> ${userIdValue } 으로 사용하겠습니다.--%>
+	<sec:authentication property="name" var="userIdValue"/>
+	
 	<div class="container">
 		<div class="row">
 			<div class="col">
-
 				<div id="freeTitle">
 					<h2>FAQ 자주묻는 질문</h2>
 				</div>
@@ -201,33 +203,45 @@
 						</div>
 					</c:forEach>
 				</div>
-		
+				
 				<div class="container">
 					<div id="freeTitle">
 						<h2>QnA 문의</h2>
 					</div>
 					
-					<!-- 검색기능   -->
+					<!-- 검색기능 + 카테고리   -->
 					<div class="form-group">      
-						<c:url value="/qna/qnaMainBoard" var="qnaMainBoardLink"/>
-						<form action="${qnaMainBoardLink }" class="d-flex flex-row-reverse" role="search">
-							 <div>
-							    <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+						<c:url value="/qna/qnaMainBoard" var="qnaMainBoardLink"></c:url> 	
+						<form action="${qnaMainBoardLink }"  role="search">
+							<div class="d-flex flex-row-reverse" >
+								<div class="col-sm-1">
+								    <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+							    </div>
+							   
+						      	<div class="col-sm-3">
+						      		<input type="hidden" name="page" value="${qnaPageInfo.currentPageNumber}">
+								    <input class="form-control " type="search" name="q" value="${param.q }" placeholder="검색" aria-label="Search">
+							    </div>
+							   
+								<div class="col-sm-2">
+									<select name="t" id="searchTypeSelect" class="form-select">
+							      		<option value="all">전체</option>
+							      		<option value="userId" ${param.t == 'userId' ? 'selected' : '' }>작성자</option>
+							      		<option value="content" ${param.t == 'content' ? 'selected' : '' }>본문</option>
+							      	</select>
+						      	</div>	
+						      	<div class="col-4">
+						      	</div>
+						      	<div class="col-2">
+							      	<select name="c" id="searchTypeSelect" class="form-select">
+										<option value="" >카테고리</option>
+										<option value="accusation" ${param.c == 'accusation' ? 'selected' : '' }>신고/재제</option>
+										<option value="payment" ${param.c == 'payment' ? 'selected' : '' }>결제문의</option>
+										<option value="facility" ${param.c == 'facility' ? 'selected' : '' }>시설문의</option>
+										<option value="etc" ${param.c == 'etc' ? 'selected' : '' }>기타문의</option>
+									</select>
+								</div>
 						    </div>
-						   
-					      	<div class="col-sm-3">
-							    <input class="form-control " type="search" name="q" value="${param.q }" placeholder="검색" aria-label="Search">
-						    </div>
-						   
-							<div class="col-sm-2">
-								<select name="t" id="searchTypeSelect" class="form-select">
-						      		<option value="all">전체</option>
-						      		<option value="userId" ${param.t == 'userId' ? 'selected' : '' }>ID</option>
-						      		<option value="name" ${param.t == 'name' ? 'selected' : '' }>이름</option>
-						      	</select>
-					      	</div>	
-					      	 <div class="col-sm-6">
-							 </div>
 						</form>
 					</div>
 					
@@ -290,11 +304,12 @@
 								    <li class="page-item ">
 								      <c:url value="/qna/qnaMainBoard" var="firstPageLink">
 								     	<c:param name="page" value="1"/>
-								     	<c:param name="q" value=""/>
-								     	<c:param name="t" value="all"/>
+								     	<c:param name="c" value="${param.c}"/>
+								     	<c:param name="q" value="${param.q}"/>
+								     	<c:param name="t" value="${param.t}"/>				
 								      </c:url>	
 								      <a class="page-link " href="${firstPageLink}" aria-label="First">
-								        맨앞
+								      &laquo;
 								      </a>
 								    </li>
 							    </c:if>    
@@ -304,24 +319,26 @@
 								    <li class="page-item">
 								      <c:url value="/qna/qnaMainBoard" var="previousPageLink">			     	
 								     	<c:param name="page" value="${jumpPrevPageNumber}"/>
-								     	<c:param name="q" value=""/>
-								     	<c:param name="t" value="all"/>
+								     	<c:param name="c" value="${param.c}"/>
+								     	<c:param name="q" value="${param.q}"/>
+								     	<c:param name="t" value="${param.t}"/>
 								      </c:url>	
 								      <a class="page-link" href="${previousPageLink}" aria-label="Previous">
-								        이전
+								      &lt;
 								      </a>
 								    </li>
 							    </c:if>
 							    
 							    <!-- 현재 페이지 -->
 							    <c:forEach begin="${qnaPageInfo.leftPageNumber}" end="${qnaPageInfo.rightPageNumber}" var="pageNumber">
-							    	<li class="page-item">
+							    	<li class="page-item ${qnaPageInfo.currentPageNumber eq pageNumber ? 'active' : ''}">
 								    	<c:url value="/qna/qnaMainBoard" var="pageLink" >		
 									    	<c:param name="page" value="${pageNumber}"/>
-									    	<c:param name="q" value=""/>
-									     	<c:param name="t" value="all"/>
+									    	<c:param name="c" value="${param.c}"/>
+							      			<c:param name="t" value="${param.t}"/>
+							      			<c:param name="q" value="${param.q}"/>
 								    	</c:url>
-								    	<a class="page-link ${qnaPageInfo.currentPageNumber eq pageNumber ? 'active' : ''}" href="${pageLink}">
+								    	<a class="page-link" href="${pageLink}">
 								    		${pageNumber}
 								    	</a>
 								    </li>
@@ -332,11 +349,12 @@
 								    <li class="page-item">
 								      <c:url value="/qna/qnaMainBoard" var="nextPageLink">								     
 								     	<c:param name="page" value="${qnaPageInfo.jumpNextPageNumber}"/>
-								     	<c:param name="q" value=""/>
-								     	<c:param name="t" value="all"/>
+								     	<c:param name="c" value="${param.c}"/>
+								     	<c:param name="q" value="${param.q}"/>
+								     	<c:param name="t" value="${param.t}"/>
 								      </c:url>	
 								      <a class="page-link" href="${nextPageLink}" aria-label="Previous">
-								        다음
+								      &gt;
 								      </a>
 								    </li>
 							    </c:if>
@@ -346,11 +364,12 @@
 								    <li class="page-item">
 								      <c:url value="/qna/qnaMainBoard" var="lastPageLink">  
 								        <c:param name="page" value="${qnaPageInfo.lastPageNumber}"/>
-								        <c:param name="q" value=""/>
-								     	<c:param name="t" value="all"/>
+								        <c:param name="c" value="${param.c}"/>
+								     	<c:param name="q" value="${param.q}"/>
+								     	<c:param name="t" value="${param.t}"/>
 								      </c:url>	
 								      <a class="page-link" href="${lastPageLink}" aria-label="Last">
-								      	맨마지막
+								      &raquo;
 								      </a>
 								    </li>
 							    </c:if>
@@ -360,17 +379,21 @@
 							
 							<sec:authorize access="isAuthenticated()">
 							<div class="d-flex flex-row-reverse">	
+								
 								<form action="/qna/insert" method="get">
 									<button id="insertBtn" class="btn btn-success btn-m5" type="submit" >문의하기</button>	
 								</form>
 								
-								<%-- 시큐리티 로그인된 userId = userIdValue -> ${userIdValue } 으로 사용하겠습니다.--%>
-								<sec:authentication property="name" var="userIdValue"/>
-								<form action="/qna/myQnAList" method="get">
-									<input type="hidden" name="userId" value="${userIdValue}">
-									<input type="hidden" name="page" value="1">
-									<button id="myQnAListBtn" class="btn btn-primary btn-m5" type="submit" >내 문의내역</button>
-								</form>
+								
+								<c:url value="/qna/myQnAList" var="myQnAListLink">
+									<c:param name="userId" value="${userIdValue}"/>
+					      			<c:param name="page" value="1"/>
+					      			<c:param name="c" value=""/>
+					      			<c:param name="t" value="all"/>
+					      			<c:param name="q" value=""/>
+					      		</c:url>
+					      		<button onclick="location.href='${myQnAListLink}'" class="btn btn-primary btn-m5" type="submit" >내 문의내역</button>
+					      		
 							</div>
 							</sec:authorize>
 							

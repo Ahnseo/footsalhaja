@@ -176,7 +176,7 @@
 				     	<c:param name="t" value="${param.t}"/>
 				      </c:url>	
 				      <a class="page-link" href="${firstPageLink}" aria-label="First">
-				        첫 페이지
+				      &laquo;
 				      </a>
 				    </li>
 			    </c:if>
@@ -190,20 +190,20 @@
 				     	<c:param name="t" value="${param.t}"/>
 				      </c:url>	
 				      <a class="page-link" href="${previousPageLink}" aria-label="Previous">
-				        이전
+				      &lt;
 				      </a>
 				    </li>
 			    </c:if>
 			    
 			    <!-- 페이지 -->
 			    <c:forEach begin="${bookedPage.leftPageNumber}" end="${bookedPage.rightPageNumber}" var="pageNumber">
-			    	<li class="page-item">
+			    	<li class="page-item ${bookedPage.currentPageNumber eq pageNumber ? 'active' : ''}">
 				    	<c:url value="/admin/allBookList" var="pageLink" >
 					    	<c:param name="page" value="${pageNumber}"/>
 					    	<c:param name="q" value="${param.q}"/>
 					     	<c:param name="t" value="${param.t}"/>
 				    	</c:url>
-				    	<a class="page-link ${bookedPage.currentPageNumber eq pageNumber ? 'active' : ''}" href="${pageLink}">
+				    	<a class="page-link " href="${pageLink}">
 				    		${pageNumber}
 				    	</a>
 				    </li>
@@ -218,7 +218,7 @@
 				     	<c:param name="t" value="${param.t}"/>
 				      </c:url>	
 				      <a class="page-link" href="${nextPageLink}" aria-label="Previous">
-				        다음
+				      &gt;
 				      </a>
 				    </li>
 			    </c:if>
@@ -232,7 +232,7 @@
 				     	<c:param name="t" value="${param.t}"/>
 				      </c:url>	
 				      <a class="page-link" href="${lastPageLink}" aria-label="Last">
-				      	마지막 페이지
+				      &raquo;
 				      </a>
 				    </li>
 			    </c:if>

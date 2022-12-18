@@ -301,7 +301,7 @@ ul {
 							<input id="qnaReplyIdValue" type="hidden" value="${qnaAnswer.qnaReplyId}">
 							<input id="qnaIdValue" type="hidden" value="${qnaAnswer.qnaId}">
 							<input id="qnaUserIdValue" type="hidden" value="${qnaAnswer.userId}">
-							<button id="qnaAnswerDeleteBtn" class="btn btn-danger btn-m5" type="button" >삭제</button>
+							<button id="qnaAnswerDeleteBtn" onclick="deleteAnswer()" class="btn btn-danger btn-m5" type="button" >삭제</button>
 						</div>
 						<div>
 							<button class="btn btn-warning btn-m5"  type="button"  data-bs-toggle="modal" data-bs-target="#modifyAnswerInputModal" >수정</button>
@@ -330,7 +330,7 @@ ul {
 	      <div class="modal-body">
 	      	<!-- //qnaReplyId,qnaId,userId,writer,content,insertDatetime -->
 	      	<input type="hidden" id="qnaAnswerId" value="${qna.qnaReplyId}" readonly>
-			수정할 답변 내용<textarea id="qnaAnswerContentModify" cols="40" rows="5"></textarea>
+			수정할 답변 내용<textarea id="qnaAnswerContentModify" cols="40" rows="5">${qnaAnswer.content }</textarea>
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-danger btn-m5" data-bs-dismiss="modal">취소</button>
@@ -352,6 +352,7 @@ ul {
 	      <div>
     	    댓글 
     	    <!-- //qnaReplyId,qnaId,userId,content,insertDatetime -->
+    	    
     	    <input type="hidden" id="qnaReplyId2" value="${qna.qnaReplyId}" readonly>
     	    <input type="hidden" id="qnaReplyQnAId2" value="${qna.qnaId}" readonly>
     	    <input type="hidden" id="qnaReplyUserId2" value="${userIdValue}" readonly>
@@ -548,20 +549,19 @@ if(qnaReplyBtn != null) {
 }	
 	<!-- 답변 삭제  -->
 	function deleteAnswer() {
-		document.querySelector("#qnaAnswerDeleteBtn").addEventListener("click", function() {
-			const qnaReplyId = document.querySelector("#qnaReplyIdValue").value;
-			const qnaId = document.querySelector("#qnaIdValue").value;
-			const userId = document.querySelector("#qnaUserIdValue").value;
-			const data = {qnaReplyId, qnaId, userId};
-			fetch(ctx + "/qnaReply/deleteQnAAnswer", 
-					{ method : "delete",
-			    	headers : { "Content-Type" : "application/json" },
-			    	body : JSON.stringify(data)
-			})
-			.then(res => res.text())
-			.then(redirectPath => location.href = redirectPath)
-			
-		});
+		
+		const qnaReplyId = document.querySelector("#qnaReplyIdValue").value;
+		const qnaId = document.querySelector("#qnaIdValue").value;
+		const userId = document.querySelector("#qnaUserIdValue").value;
+		const data = {qnaReplyId, qnaId, userId};
+		fetch(ctx + "/qnaReply/deleteQnAAnswer", 
+				{ method : "delete",
+		    	headers : { "Content-Type" : "application/json" },
+		    	body : JSON.stringify(data)
+		})
+		.then(res => res.text())
+		.then(redirectPath => location.href = redirectPath)
+	
 	}
 	
 	
@@ -581,23 +581,6 @@ if(qnaReplyBtn != null) {
 		.then(res => res.text())
 		.then(redirectPath => location.href = redirectPath)
 	});
-	
-	
-
-
-	
-	<!-- function() 댓글 삭제  qnaReplyToAnswerId, qnaReplyId, qnaId, writer, content, userId, insertDatetime -->
-	function deleteReply() {
-		console.log("t삭제버튼 클릭됨 ");
-		const qnaReplyToAnswerId = document.querySelector("#qnaReplyToAnswerIdValue").value;
-		fetch(ctx + "/qnaReply/deleteQnAReply",
-				{ method : "delete",
-		    	headers : { "Content-Type" : "application/json" },
-		    	body : JSON.stringify(qnaReplyToAnswerId)
-		})
-		.then(res => res.text())
-		.then(redirectPath => location.href = redirectPath)
-	};
 	
 	
 	

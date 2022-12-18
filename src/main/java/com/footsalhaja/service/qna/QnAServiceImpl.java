@@ -32,18 +32,39 @@ public class QnAServiceImpl implements QnAService {
 	}
 	// 답변완료된 모든 리스트 가져오기 mainQnABoard 
 	@Override
-	public List<QnADto> selectQnAListByStatusDone(int page, QnAPageInfo qnaPageInfo, String type, String keyword) {
+	public List<QnADto> selectQnAListByStatusDone(int page, QnAPageInfo qnaPageInfo, String type, String keyword, String c) {
+		//all accusation payment facility etc
+		
+		//System.out.println("###### c :"+c);
+		String category = "";
+		switch (c) {
+		case "accusation":
+			category = "신고/제재";
+			break;
+		case "payment":
+			category = "결제문의";
+			break;
+		case "facility":
+			category = "시설문의";
+			break;
+		case "etc":
+			category = "기타문의";
+			break;
+		
+		}
+		//System.out.println("category::::"+category);
+		
 		// 페이지네이션 추가
 		int records = 10; // 10 rows 씩 목록에 나타냅니다  
 		int offset = (page - 1) * records; //page=2 : 11~20 rows ,  page=3 : 21~30 rows 나타냄 
 		String status = "답변완료";
-		int countAllQnAByDone = qnaMapper.countAllQnAByDone(type, keyword, status);
-		System.out.println("done 문의 갯수 : " + countAllQnAByDone + "개");
+		int countAllQnAByDone = qnaMapper.countAllQnAByDone(type, "%"+keyword+"%", status, c, category);
+		//System.out.println("done 문의 갯수 : " + countAllQnAByDone + "개");
 		int lastPageNumber = (countAllQnAByDone - 1) / records + 1;
-		System.out.println("lastPageNumber:"+lastPageNumber);
+		//System.out.println("lastPageNumber:"+lastPageNumber);
 
 		int leftPageNumber = (page - 1) / 10 * 10 + 1;	
-		System.out.println("leftPageNumber : " + leftPageNumber);
+		//System.out.println("leftPageNumber : " + leftPageNumber);
 		int rightPageNumber = leftPageNumber + 9;
 		rightPageNumber = Math.min(rightPageNumber, lastPageNumber);
 		
@@ -70,18 +91,36 @@ public class QnAServiceImpl implements QnAService {
 		qnaPageInfo.setHasPrevButton(hasPrevButton);	
 		qnaPageInfo.setHasNextButton(hasNextButton);
 		
+	
 		
-		
-		return qnaMapper.selectQnAListByStatusDone(offset,records, "%"+keyword+"%", type, status);
+		return qnaMapper.selectQnAListByStatusDone(offset, records, "%"+keyword+"%", type, status, c, category);
 	}
 	@Override
-	public List<QnADto> myQnAList(String userId, int page, QnAPageInfo qnaPageInfo) {
+	public List<QnADto> myQnAList(String userId, int page, QnAPageInfo qnaPageInfo, String type, String keyword, String c) {
+		//카테코리 기능 추가 
+		String category = "";
+		switch (c) {
+		case "accusation":
+			category = "신고/제재";
+			break;
+		case "payment":
+			category = "결제문의";
+			break;
+		case "facility":
+			category = "시설문의";
+			break;
+		case "etc":
+			category = "기타문의";
+			break;
+		
+		}
+		
 		// 페이지네이션 추가
 		int records = 10; // 10 rows 씩 목록에 나타냅니다  
 		int offset = (page - 1) * records; //page=2 : 11~20 rows ,  page=3 : 21~30 rows 나타냄 
 		
-		int countAllByUserId = qnaMapper.countAllQnAByUserId(userId);
-		System.out.println("userId의 문의 갯수 : " + countAllByUserId + "개");
+		int countAllByUserId = qnaMapper.countAllQnAByUserId(userId, type, "%"+keyword+"%", c, category);
+		//System.out.println("userId의 문의 갯수 : " + countAllByUserId + "개");
 		int lastPageNumber = (countAllByUserId - 1) / records + 1;
 		//                50 - 1 = 49 / 10 = 4.9 = 4 + 1 = 5 
 
@@ -89,7 +128,7 @@ public class QnAServiceImpl implements QnAService {
 					// 2 - 1 = 1 /10 =0  *10 =0 + 1 => 1
 					// 10 - 1 = 9/10 =0  *10 =0 + 1 => 1
 					// 11 - 1 = 11/10=1  *10 =10 + 1 => 11	
-		System.out.println("leftPageNumber : " + leftPageNumber);
+		//System.out.println("leftPageNumber : " + leftPageNumber);
 		int rightPageNumber = leftPageNumber + 9;
 		rightPageNumber = Math.min(rightPageNumber, lastPageNumber);
 		
@@ -115,7 +154,8 @@ public class QnAServiceImpl implements QnAService {
 		qnaPageInfo.setJumpNextPageNumber(jumpNextPageNumber);
 		qnaPageInfo.setHasPrevButton(hasPrevButton);	
 		qnaPageInfo.setHasNextButton(hasNextButton);
-		return qnaMapper.myQnAList(userId, records, offset );
+		
+		return qnaMapper.myQnAList(userId, records, offset, type, "%"+keyword+"%", c, category);
 	}
 	
 	@Override
@@ -208,9 +248,11 @@ public class QnAServiceImpl implements QnAService {
 	public int deleteAnswerByAnswerId(QnAReplyDto qnaReply) {
 		int qnaId = qnaReply.getQnaId();
 		int qnaAnswerId = qnaReply.getQnaReplyId();
+		System.out.println("@@@qnaAnswerId : "+qnaAnswerId);
 		
 		//1.답변에 대한 여러 댓글 삭제 
-		qnaMapper.deleteQnAReplyByAnswerId(qnaAnswerId);
+		int delAllReplies = qnaMapper.deleteQnAReplyByAnswerId(qnaAnswerId);
+		System.out.println("###delAllReplies:"+delAllReplies);
 		//2.답변 삭제 
 		int cnt = qnaMapper.deleteAnswerByAnswerId(qnaAnswerId);
 		if (cnt == 1){
@@ -230,6 +272,10 @@ public class QnAServiceImpl implements QnAService {
 	//QnA 답변에대한 댓글 쓰기
 	@Override
 	public int insertQnAReplyToAnswer(QnAReplyToAnswerDto qnaReplyToAnswer) {
+		
+		System.out.println("답변 id == "+qnaReplyToAnswer.getQnaReplyId());
+		
+		
 		int cnt = qnaMapper.insertQnAReplyToAnswer(qnaReplyToAnswer);
 		return cnt;
 	}

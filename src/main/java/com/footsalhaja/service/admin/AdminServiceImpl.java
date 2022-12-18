@@ -21,11 +21,39 @@ public class AdminServiceImpl implements AdminService {
 	private AdminMapper adminMapper;
 	
 	@Override
-	public List<QnADto> selectAllQnAList(int page, QnAPageInfo qnaPageInfo, String keyword, String type) {
+	public List<QnADto> selectAllQnAList(int page, QnAPageInfo qnaPageInfo, String keyword, String type, String c, String s) {
+		//카테코리 기능 추가 
+		String category = "";
+		switch (c) {
+		case "accusation":
+			category = "신고/제재";
+			break;
+		case "payment":
+			category = "결제문의";
+			break;
+		case "facility":
+			category = "시설문의";
+			break;
+		case "etc":
+			category = "기타문의";
+			break;
+		
+		}
+		//답변상태 기능 추가 
+		String status = "";
+		switch (s) {
+		case "yet":
+			status = "답변대기";
+			break;
+		case "done":
+			status = "답변완료";
+			break;
+		}
+		
 		// 페이지네이션 추가
 		int records = 10; // 10 rows 씩 목록에 나타냅니다  
 		int offset = (page - 1) * records; //page=2 : 11~20 rows ,  page=3 : 21~30 rows 나타냄 		
-		int countAll = qnaMapper.countAllQnA(type, "%"+keyword+"%");
+		int countAll = qnaMapper.countAllQnA(type, "%"+keyword+"%", c, category, s, status);
 		int lastPageNumber = (countAll - 1) / records + 1;
 		int leftPageNumber = (page - 1) / 10 * 10 + 1;
 		int rightPageNumber = leftPageNumber + 9;
@@ -49,15 +77,19 @@ public class AdminServiceImpl implements AdminService {
 		qnaPageInfo.setHasPrevButton(hasPrevButton);	
 		qnaPageInfo.setHasNextButton(hasNextButton);
 				
-		return qnaMapper.selectAllQnAList(offset, records, "%"+keyword+"%", type);
+		return qnaMapper.selectAllQnAList(offset, records, "%"+keyword+"%", type, c, category, s, status);
 	}
 	
 	@Override
 	public List<BookDto> selectBookedListAll(int page , QnAPageInfo qnaPageInfo ,String type ,String keyword) {
+		
+		int status = 0; //예약된 매칭만 리스트로 가져오기  -> allBookList.jsp 테이블로 보여주기 
+		
 		// 페이지네이션 추가
 			int records = 10; // 10 rows 씩 목록에 나타냅니다  
 			int offset = (page - 1) * records; //page=2 : 11~20 rows ,  page=3 : 21~30 rows 나타냄 		
-			int countAll = qnaMapper.countAllQnA(type, "%"+keyword+"%");
+			int countAll = adminMapper.selectAllBookedCount(type, "%"+keyword+"%", status);
+			
 			int lastPageNumber = (countAll - 1) / records + 1;
 			int leftPageNumber = (page - 1) / 10 * 10 + 1;
 			int rightPageNumber = leftPageNumber + 9;
@@ -81,7 +113,7 @@ public class AdminServiceImpl implements AdminService {
 			qnaPageInfo.setHasPrevButton(hasPrevButton);	
 			qnaPageInfo.setHasNextButton(hasNextButton);
 		
-		int status = 0; //예약된 매칭만 리스트로 가져오기  -> allBookList.jsp 테이블로 보여주기 
+		
 		
 		
 		return adminMapper.selectBookedListAll(offset, records ,type ,"%"+keyword+"%", status);

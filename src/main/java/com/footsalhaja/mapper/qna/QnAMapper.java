@@ -16,23 +16,23 @@ public interface QnAMapper {
 	//Create QnABoard
 	int insertQnABoard(QnADto qnaBoard);
 	//select myQnA TABLE by userId
-	List<QnADto> myQnAList(String userId, int records, int offset);
+	List<QnADto> myQnAList(String userId, int records, int offset, String type, String keyword, String c, String category);
 	//페이지네이션 하기위해 userId로 등록된 QnA 갯수 구하기 
-	int countAllQnAByUserId(String userId);
+	int countAllQnAByUserId(String userId, String type, String keyword, String c, String category);
 	//모든 QnA게시물 가져오기 by userId 
 	QnADto selectMyQnAListByUserId(String userId);
 	//myQnA 1개 정보 가져오기 by userId, qnaId
 	QnADto selectMyQnAGetByQnAIdAndUserId(String userId, int qnaId);
 	//select All QnAList (관리자 전용)
-	List<QnADto> selectAllQnAList(int offset, int records, String keyword, String type);
+	List<QnADto> selectAllQnAList(int offset, int records, String keyword, String type, String c, String category, String s, String status);
 	//페이지네이션 lastPageNumber에 필요한 값 
-	int countAllQnA(String type, String keyword);
+	int countAllQnA(String type, String keyword, String c, String category, String s, String status);
 	//updateMyQnA게시물 
 	int updateMyQnABoard(QnADto qna);
 	//답변완료된 모든 리스트 불러오기
-	List<QnADto> selectQnAListByStatusDone(int offset, int records, String keyword, String type, String status);
+	List<QnADto> selectQnAListByStatusDone(int offset, int records, String keyword, String type, String status, String c, String category);
 	//qnaMainBoard lastpage 만들기 위해 count 
-	int countAllQnAByDone(String type, String keyword, String status);
+	int countAllQnAByDone(String type, String keyword, String status, String c, String category);
 	//####################################################################################
 	//QnA Id와 로그인된 Id로 좋아요기능 추가
 	int selectQnABoardLikeCount(String qnaId, String loggedinId);

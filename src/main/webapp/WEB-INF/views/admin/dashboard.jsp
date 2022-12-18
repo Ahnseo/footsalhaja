@@ -114,8 +114,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 		     		<div class="top p-2">
 		     			<h3>오늘의 할일</h3>
 		     			<h5><%= sf.format(nowTime) %> </h5>
-		     			
-		     			
+
 		     			<span class="mr10px">오늘방문자</span><span class="badge bg-danger rounded-pill mr10px">${todayVisitCount}</span>
 		     			<span class="mr10px">예약된 매치</span><span class="badge bg-danger rounded-pill mr10px">${todaybookedCount}</span> 
 		     			<span class="mr10px">QnA</span><span class="badge bg-danger rounded-pill mr10px">${todayWaitingQnACount}</span>  
@@ -153,7 +152,10 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 		        	<div class="left p-2">
 			        	<nav id="navbar-example1" class="navbar bg-light px-3 mb-2">
 				        	<c:url value="/main/list" var="bookLink"/>
-					        <a class="navbar-brand" href="${bookLink}">오늘의 예약</a>
+					        <a class="navbar-brand mr10px" href="${bookLink}">예약된 매치
+					        	<span class="badge bg-danger rounded-pill">${todaybookedCount}</span>
+					        </a>
+					        
 					        <ul class="nav nav-pills">
 					        	<li class="nav-item">
 					        		<a class="nav-link" href="${bookLink}"><i class="fa-solid fa-link"></i></a>
@@ -216,7 +218,9 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 				        		<c:param name="q" value=""/>
 				        		<c:param name="t" value="all"/>
 				        	</c:url>
-					        <a class="navbar-brand" href="${allQnAListLink}">대기중인 QnA</a>
+					        <a class="navbar-brand mr10px" href="${allQnAListLink}">대기중인 QnA
+					        	<span class="badge bg-danger rounded-pill mr10px">${todayWaitingQnACount}</span> 
+					        </a>
 					        <ul class="nav nav-pills">
 					        	<li class="nav-item">
 					        		<a class="nav-link" href="${allQnAListLink}"><i class="fa-solid fa-link"></i></a>

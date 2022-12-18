@@ -13,7 +13,7 @@ public interface QnAService {
 
 	public int insertQnABoard(QnADto qnaBoard);
 	
-	public List<QnADto> myQnAList(String userId, int page, QnAPageInfo qnaPageInfo);
+	public List<QnADto> myQnAList(String userId, int page, QnAPageInfo qnaPageInfo, String type, String keyword, String c);
 	
 	public QnADto selectMyQnAListByUserId(String userId);
 
@@ -38,7 +38,7 @@ public interface QnAService {
 
 	public int updateMyQnABoard(QnADto modifiedQnA);
 
-	public List<QnADto> selectQnAListByStatusDone(int page, QnAPageInfo qnaPageInfo, String type, String keyword);
+	public List<QnADto> selectQnAListByStatusDone(int page, QnAPageInfo qnaPageInfo, String type, String keyword, String c);
 
 	public int updateAnswerByAnswerId(int answerId, String content);
 

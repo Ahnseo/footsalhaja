@@ -170,125 +170,173 @@ ul {
 <body>
 	<sec:authentication property="name" var="userIdValue"/>
 	<my:navbar active="myQnAList"></my:navbar>
+	
 	<div class="container">
-		<div class="row">
-			<div class="col">
-			<h3>${userIdValue} 님의 문의내역</h3>
-				<table class="table">
-					<thead>
-						<tr>	
-							<th>번호</th>
-							<th>카테고리</th>
-							<th>제목</th>
-							<th>작성자</th>
-							<th>좋아요</th>
-							<th>문의상태</th>
-						</tr>
-					</thead>
-					 <tbody>
-						 <c:forEach items="${myQnAList}" var="myQnAList"  >
-							 <c:url value="/qna/myQnAGet" var="myQnAGetLink">
-						 		<c:param name="userId" value="${myQnAList.userId}"/>
-						 		<c:param name="qnaId" value="${myQnAList.qnaId}"/>
-						 	</c:url>
-							<tr class="listHover" onclick="location.href='${myQnAGetLink}'">
-							 	<td>${myQnAList.qnaId}</td>	
-							 	<td>${myQnAList.category}</td>
-							 	
-							 	<td>
-							 		<a href="${myQnAGetLink}">${myQnAList.title}</a>
-							 		<c:if test="${myQnAList.replyCount != 0}">
-							 			<span class="badge text-bg-light"><i class="fa-regular fa-message"></i> ${myQnAList.replyCount}</span>		
-							 		</c:if>
-							 	</td>
-							 	
-							 	<td>${myQnAList.userId}</td>
-							 	<td>${myQnAList.likeCount}</td>
-							 	<td>
-							 	 	<c:if test="${myQnAList.status == '답변완료'}">  
-							        	<span class="badge bg-success rounded-pill">${myQnAList.status}</span>   								        	
-							        </c:if>
-							        <c:if test="${myQnAList.status == '답변대기'}">  
-							        	<span class="badge bg-danger rounded-pill">${myQnAList.status}</span>   								        	
-							        </c:if>
-							    </td>
-						 	</tr>
-					 	</c:forEach>
-					 </tbody>
-				</table>
-				
-				<nav>
-				  <ul class="pagination justify-content-center">
-				  	<!-- 맨앞 페이지 -->
-				  	<c:if test="${qnaPageInfo.currentPageNumber > 10}">
-					    <li class="page-item">
-					      <c:url value="/qna/myQnAList" var="firstPageLink">
-					     	<c:param name="userId" value="${userIdValue}"/>
-					     	<c:param name="page" value="1"/>
-					      </c:url>	
-					      <a class="page-link" href="${firstPageLink}" aria-label="First">
-					        맨앞
-					      </a>
-					    </li>
-				    </c:if>
-				    
-				    <!-- 이전 10개의 페이지 ( 1 or 11 or 21 로 가기 ) -->
-				    <c:if test="${qnaPageInfo.hasPrevButton}">
-					    <li class="page-item">
-					      <c:url value="/qna/myQnAList" var="previousPageLink">
-					     	<c:param name="userId" value="${userIdValue}"/>
-					     	<c:param name="page" value="${jumpPrevPageNumber}"/>
-					      </c:url>	
-					      <a class="page-link" href="${previousPageLink}" aria-label="Previous">
-					        이전
-					      </a>
-					    </li>
-				    </c:if>
-				    
-				    <!-- 페이지 -->
-				    <c:forEach begin="${qnaPageInfo.leftPageNumber}" end="${qnaPageInfo.rightPageNumber}" var="pageNumber">
-				    	<li class="page-item">
-					    	<c:url value="/qna/myQnAList" var="pageLink" >
-						    	<c:param name="userId" value="${userIdValue}"/>
-						    	<c:param name="page" value="${pageNumber}"/>
-					    	</c:url>
-					    	<a class="page-link" href="${pageLink}">
-					    		${pageNumber}
-					    	</a>
-					    </li>
-				    </c:forEach>
+		<h3>${userIdValue} 님의 문의내역</h3>
+		
+		<!-- 검색기능 + 카테고리   -->
+		<div class="form-group">      
+			<c:url value="/qna/myQnAList" var="myQnAListLink"></c:url> 	
+			<form action="${myQnAListLink }"  role="search">
+				<div class="d-flex flex-row-reverse" >
+					<div class="col-sm-1">
+					    <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+				    </div>
 				   
-				    <!-- 다음 10개의 페이지 ( 11 or 21 or 31 로 가기 )-->
-				    <c:if test="${qnaPageInfo.hasNextButton}">
-					    <li class="page-item">
-					      <c:url value="/qna/myQnAList" var="nextPageLink">
-					     	<c:param name="userId" value="${userIdValue}"/>
-					     	<c:param name="page" value="${qnaPageInfo.jumpNextPageNumber}"/>
-					      </c:url>	
-					      <a class="page-link" href="${nextPageLink}" aria-label="Previous">
-					        다음
-					      </a>
-					    </li>
-				    </c:if>
-				    
-				    <!-- 마지막 페이지 -->
-				    <c:if test="${qnaPageInfo.currentPageNumber ne qnaPageInfo.lastPageNumber}">	  
-					    <li class="page-item">
-					      <c:url value="/qna/myQnAList" var="lastPageLink">  
-					        <c:param name="userId" value="${userIdValue}"/>
-					        <c:param name="page" value="${qnaPageInfo.lastPageNumber}"/>
-					      </c:url>			      
-					      	<a class="page-link" href="${lastPageLink}" aria-label="Last">
-					      	맨마지막
-					      	</a>				     
-					    </li>
-				    </c:if>
-				    
-				  </ul>
-				</nav>
-				
-			</div>
+			      	<div class="col-sm-3">
+			      		<input type="hidden" name="userId" value="${userIdValue}">
+					    <input class="form-control " type="search" name="q" value="${param.q }" placeholder="검색" aria-label="Search">
+				    </div>
+				   
+					<div class="col-sm-2">
+						<select name="t" id="searchTypeSelect" class="form-select">
+				      		<option value="all">전체</option>
+				      		<option value="userId" ${param.t == 'userId' ? 'selected' : '' }>작성자</option>
+				      		<option value="content" ${param.t == 'content' ? 'selected' : '' }>본문</option>
+				      	</select>
+			      	</div>	
+			      	<div class="col-4">
+			      	</div>
+			      	<div class="col-2">
+				      	<select name="c" id="searchTypeSelect" class="form-select">
+							<option value="" >카테고리</option>
+							<option value="accusation" ${param.c == 'accusation' ? 'selected' : '' }>신고/재제</option>
+							<option value="payment" ${param.c == 'payment' ? 'selected' : '' }>결제문의</option>
+							<option value="facility" ${param.c == 'facility' ? 'selected' : '' }>시설문의</option>
+							<option value="etc" ${param.c == 'etc' ? 'selected' : '' }>기타문의</option>
+						</select>
+					</div>
+			    </div>
+			</form>
 		</div>
+		<table class="table">
+			<thead>
+				<tr>	
+					<th>번호</th>
+					<th>카테고리</th>
+					<th>제목</th>
+					<th>작성자</th>
+					<th>좋아요</th>
+					<th>문의상태</th>
+				</tr>
+			</thead>
+			 <tbody>
+				 <c:forEach items="${myQnAList}" var="myQnAList"  >
+					 <c:url value="/qna/myQnAGet" var="myQnAGetLink">
+				 		<c:param name="userId" value="${myQnAList.userId}"/>
+				 		<c:param name="qnaId" value="${myQnAList.qnaId}"/>
+				 	</c:url>
+					<tr class="listHover" onclick="location.href='${myQnAGetLink}'">
+					 	<td>${myQnAList.qnaId}</td>	
+					 	<td>${myQnAList.category}</td>
+					 	
+					 	<td>
+					 		<a href="${myQnAGetLink}">${myQnAList.title}</a>
+					 		<c:if test="${myQnAList.replyCount != 0}">
+					 			<span class="badge text-bg-light"><i class="fa-regular fa-message"></i> ${myQnAList.replyCount}</span>		
+					 		</c:if>
+					 	</td>
+					 	
+					 	<td>${myQnAList.userId}</td>
+					 	<td>${myQnAList.likeCount}</td>
+					 	<td>
+					 	 	<c:if test="${myQnAList.status == '답변완료'}">  
+					        	<span class="badge bg-success rounded-pill">${myQnAList.status}</span>   								        	
+					        </c:if>
+					        <c:if test="${myQnAList.status == '답변대기'}">  
+					        	<span class="badge bg-danger rounded-pill">${myQnAList.status}</span>   								        	
+					        </c:if>
+					    </td>
+				 	</tr>
+			 	</c:forEach>
+			 </tbody>
+		</table>
+			
+		<nav>
+		  <ul class="pagination justify-content-center">
+		  	<!-- 맨앞 페이지 -->
+		  	<c:if test="${qnaPageInfo.currentPageNumber > 10}">
+			    <li class="page-item">
+			      <c:url value="/qna/myQnAList" var="firstPageLink">
+			     	<c:param name="userId" value="${userIdValue}"/>
+			     	<c:param name="page" value="1"/>
+			     	<c:param name="c" value="${param.c}"/>
+			     	<c:param name="q" value="${param.q}"/>
+			     	<c:param name="t" value="${param.t}"/>
+			      </c:url>	
+			      <a class="page-link" href="${firstPageLink}" aria-label="First">
+			      &laquo;
+			      </a>
+			    </li>
+		    </c:if>
+		    
+		    <!-- 이전 10개의 페이지 ( 1 or 11 or 21 로 가기 ) -->
+		    <c:if test="${qnaPageInfo.hasPrevButton}">
+			    <li class="page-item">
+			      <c:url value="/qna/myQnAList" var="previousPageLink">
+			     	<c:param name="userId" value="${userIdValue}"/>
+			     	<c:param name="page" value="${jumpPrevPageNumber}"/>
+			     	<c:param name="c" value="${param.c}"/>
+			     	<c:param name="q" value="${param.q}"/>
+			     	<c:param name="t" value="${param.t}"/>
+			      </c:url>	
+			      <a class="page-link" href="${previousPageLink}" aria-label="Previous">
+			      &lt;
+			      </a>
+			    </li>
+		    </c:if>
+		    
+		    <!-- 페이지 -->
+		    <c:forEach begin="${qnaPageInfo.leftPageNumber}" end="${qnaPageInfo.rightPageNumber}" var="pageNumber">
+		    	<li class="page-item  ${qnaPageInfo.currentPageNumber eq pageNumber ? 'active' : ''}">
+			    	<c:url value="/qna/myQnAList" var="pageLink" >
+				    	<c:param name="userId" value="${userIdValue}"/>
+				    	<c:param name="page" value="${pageNumber}"/>
+				    	<c:param name="c" value="${param.c}"/>
+				     	<c:param name="q" value="${param.q}"/>
+				     	<c:param name="t" value="${param.t}"/>
+			    	</c:url>
+			    	<a class="page-link" href="${pageLink}">
+			    		${pageNumber}
+			    	</a>
+			    </li>
+		    </c:forEach>
+		   
+		    <!-- 다음 10개의 페이지 ( 11 or 21 or 31 로 가기 )-->
+		    <c:if test="${qnaPageInfo.hasNextButton}">
+			    <li class="page-item">
+			      <c:url value="/qna/myQnAList" var="nextPageLink">
+			     	<c:param name="userId" value="${userIdValue}"/>
+			     	<c:param name="page" value="${qnaPageInfo.jumpNextPageNumber}"/>
+			     	<c:param name="c" value="${param.c}"/>
+			     	<c:param name="q" value="${param.q}"/>
+			     	<c:param name="t" value="${param.t}"/>
+			      </c:url>	
+			      <a class="page-link" href="${nextPageLink}" aria-label="Previous">
+			      &gt;
+			      </a>
+			    </li>
+		    </c:if>
+		    
+		    <!-- 마지막 페이지 -->
+		    <c:if test="${qnaPageInfo.currentPageNumber ne qnaPageInfo.lastPageNumber}">	  
+			    <li class="page-item">
+			      <c:url value="/qna/myQnAList" var="lastPageLink">  
+			        <c:param name="userId" value="${userIdValue}"/>
+			        <c:param name="page" value="${qnaPageInfo.lastPageNumber}"/>
+			        <c:param name="c" value="${param.c}"/>
+			     	<c:param name="q" value="${param.q}"/>
+			     	<c:param name="t" value="${param.t}"/>
+			      </c:url>			      
+			      	<a class="page-link" href="${lastPageLink}" aria-label="Last">
+			      	&raquo;
+			      	</a>				     
+			    </li>
+		    </c:if>
+		    
+		  </ul>
+		</nav>
+			
 	</div>
 
 

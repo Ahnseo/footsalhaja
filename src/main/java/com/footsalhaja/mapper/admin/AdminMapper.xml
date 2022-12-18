@@ -12,6 +12,15 @@
  		WHERE status = #{status}
  		ORDER BY insertDatetime DESC
  	</select>
+ 	
+ 	<select id="selectAllBookedCount" resultType="int">
+ 		SELECT 
+ 			COUNT(bookId)
+ 		FROM
+ 			book
+ 		WHERE
+ 			status = #{status}		
+ 	</select>
  	<!-- bookId, title, content, matchType, level, status, 
  	bookDate, bookTime, insertDatetime, teamGender, location_locationId, member_userId -->
  	<select id="selectBookedListAll" resultType="com.footsalhaja.domain.main.BookDto">

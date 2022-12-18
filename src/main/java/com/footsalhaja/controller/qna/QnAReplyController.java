@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,6 +49,18 @@ public class QnAReplyController {
 		String referer = request.getHeader("Referer");
 		return referer;
 	}
+	@DeleteMapping("deleteQnAAnswer")
+	@ResponseBody
+	public String deleteAnswer(@RequestBody QnAReplyDto qnaReply, HttpServletRequest request) {
+		//qnaReplyId, qnaId, UserId 값 잘 넘어옴! 이 값들로 삭제 기능
+		//System.out.println("deleteAnswer:"+qnaReply);
+		
+		qnaService.deleteAnswerByAnswerId(qnaReply);
+		
+		String referer = request.getHeader("Referer"); // 헤더에서 이전 페이지를 읽는다.
+		
+		return referer; // 이전 페이지로 이동하기 위한 값 
+	}
 	
 	//#### 댓글 기능  ############
 	@PutMapping("addToAnswer")
@@ -87,18 +98,7 @@ public class QnAReplyController {
 	}
 	
 	
-	@DeleteMapping("deleteQnAAnswer")
-	@ResponseBody
-	public String deleteAnswer(@RequestBody QnAReplyDto qnaReply, HttpServletRequest request) {
-		//qnaReplyId, qnaId, UserId 값 잘 넘어옴! 이 값들로 삭제 기능
-		//System.out.println("deleteAnswer:"+qnaReply);
-		
-		qnaService.deleteAnswerByAnswerId(qnaReply);
-		
-		String referer = request.getHeader("Referer"); // 헤더에서 이전 페이지를 읽는다.
-		
-		return referer; // 이전 페이지로 이동하기 위한 값 
-	}
+	
 	@DeleteMapping("deleteQnAReply")
 	@ResponseBody
 	public String deleteQnAReply(@RequestBody QnAReplyToAnswerDto qnaReplyToAnswer, HttpServletRequest request) {

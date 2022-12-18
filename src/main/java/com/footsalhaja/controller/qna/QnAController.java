@@ -41,13 +41,15 @@ public class QnAController {
 	public void qnaMainBoard(@RequestParam(name="page", defaultValue = "1") int page,
 							@RequestParam(name="q") String keyword,
 							@RequestParam(name="t") String type,
+							@RequestParam(name="c") String c,
 							QnAPageInfo qnaPageInfo,
 							Model model
 							) {
 		// FAQ data 가져오기
 		List<FAQDto> FAQList = qnaService.selectFAQList();
 		// 답변완료된!! allQnAList 만!! 가져오기
-		List<QnADto> allQnAListByDone = qnaService.selectQnAListByStatusDone(page, qnaPageInfo, type, keyword);
+		System.out.println("@@@@ c :"+c);
+		List<QnADto> allQnAListByDone = qnaService.selectQnAListByStatusDone(page, qnaPageInfo, type, keyword, c);
 		
 		
 		
@@ -67,16 +69,26 @@ public class QnAController {
 
 		qnaService.insertQnABoard(qnaBoard); // null : ServiceImpl 에서만 model 사용중이기 때문
 
-		return "redirect:/qna/myQnAList?userId=" + userId;
+		return "redirect:/qna/myQnAList?userId="+userId+"&page=1&t=all&q=&c=";
 	}
 
 	// MyQnAList
 	@GetMapping("myQnAList")
-	public void myQnAList(@RequestParam(name = "page", defaultValue = "1") int page, QnAPageInfo qnaPageInfo,
-			Model model, String userId) throws Exception {
+	public void myQnAList(@RequestParam(name = "page", defaultValue = "1") int page,
+							@RequestParam(name = "t", defaultValue = "all")	String type,
+							@RequestParam(name = "q") String keyword,	
+							@RequestParam(name = "c") String c,
+							QnAPageInfo qnaPageInfo,
+							Model model, String userId) throws Exception {
+		System.out.println("page:"+page);
+		System.out.println("type:"+type);
+		System.out.println("keyword:"+keyword);
+		System.out.println("c:"+c);
+		
+		
 		// myQnAList 페이지네이션 추가
 		List<QnADto> myQnAList = new ArrayList<>();
-		myQnAList = qnaService.myQnAList(userId, page, qnaPageInfo);
+		myQnAList = qnaService.myQnAList(userId, page, qnaPageInfo, type, keyword, c );
 		model.addAttribute("myQnAList", myQnAList);
 
 		// 게시판 내림차순 만들기 위해 사용 myQnAListSize - st.count

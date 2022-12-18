@@ -13,15 +13,6 @@
 <meta name="author" content="" />
 <title>Insert title here</title>
 
-<!-- Core theme CSS (includes Bootstrap)-->
-<link href="/css/styles.css" type="text/css" rel="stylesheet" />
-<!-- Font awesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<!-- Bootswatch -- >
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
-<!--  Google font -->
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&display=swap" rel="stylesheet">
-
 <style>
 /* 글씨폰트 */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&display=swap');
@@ -39,6 +30,9 @@
 }
 </style>
 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
 
 </head>
 <body>
@@ -52,7 +46,7 @@
 			<h3>회원가입</h3>
 			
 			<form action="" method="post">
-			 	<div class="mb-3">
+			 	<div class="mb-2">
 				   아이디
 					<div class="input-group mb-3">
 					    <input id="userIdInput1" type="text" class="form-control" name="userId"  placeholder="ID" aria-describedby="button-addon1">
@@ -61,7 +55,7 @@
 				   	<div id="userIdText1" class="form-text">아이디 중복확인을 해주세요.</div>
 			 	 </div>  
    			
-   			 	<div class="mb-3">
+   			 	<div class="mb-2">
 			   	 비밀번호
 				    <div class="input-group mb-3">
 				      <input type="password" id="passwordInput1" class="form-control" name="password"  placeholder="Password">
@@ -69,21 +63,21 @@
 				      <div id="passwordText1" class="form-text"></div>
 			  	</div>  
 			   
-			    <div class="mb-3">
+			    <div class="mb-2">
 			   	 비밀번호 확인
 				    <div class="input-group mb-3">
 				      <input type="password" id="passwordInput2" class="form-control" >
 				    </div>
 			  	</div>  
 			   
-			    <div class="mb-3">
+			    <div class="mb-2">
 				    이름
 				    <div class="input-group mb-3">
 				      <input type="text" class="form-control" name="name"  placeholder="Name" aria-label="" >
 				    </div>
 				</div>  
 				
-				<div class="mb-3">
+				<div class="mb-2">
 				닉네임 
 				<div class="input-group mb-3">
 				   <input id="nickNameInput1" type="text" class="form-control" name="nickName"  placeholder="Nickname" aria-describedby="button-addon1">
@@ -92,7 +86,7 @@
 			    	<div id="nickNameText1" class="form-text">별명 중복확인을 해주세요.</div>
 			   </div>   
 			   
-			   <div class="mb-3">
+			   <div class="mb-2">
 					이메일
 					<div class="input-group mb-3">
 					   <input id="emailInput1" type="email" class="form-control" name="email"  placeholder="Email" aria-describedby="button-addon1">
@@ -139,7 +133,6 @@
 					</select>
 				</div>	
 				
-				
 				성별
 				<select class="input-group mb-3 form-control" name="personalGender" >
 					<option value="M" selected="selected">남자(M)</option>
@@ -151,7 +144,7 @@
 			      <input type="text" class="form-control" name="activityArea"  placeholder="Activity Area" aria-label="" >
 			    </div>
 				
- 			<div class="mb-3">
+			    <div class="mb-2">
 					전화번호 
 					<div class="input-group mb-3">
 					   <input id="phoneInput1" type="text" class="form-control" name="phone"  placeholder="Phone Number" aria-describedby="button-addon1">
@@ -162,7 +155,7 @@
 				<div class="d-flex flex-row-reverse">
 					<input disabled id="signUpButton" class="btn btn-primary" type="submit" value="회원가입">
 				</div>
-				
+
 			</form>
 		</div>
 	</div>

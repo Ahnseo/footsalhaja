@@ -159,6 +159,7 @@ ul {
 
 
 </style>
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
@@ -179,7 +180,7 @@ ul {
 						<div class="d-flex mt-4">
 							<div class="col-sm-4 ">
 								<select id="categories" name="category" class="form-select" aria-label="Default select example">
-								  <option selected disabled >카테고리</option>
+								  <option value="" selected disabled >카테고리</option>
 								  <option value="신고/제재">신고/제재</option>
 								  <option value="결제문의">결제문의</option>
 								  <option value="시설문의">시설문의</option>
@@ -222,8 +223,72 @@ ul {
 		
 	</div>
 	
-
-
+	
+	<!-- Button trigger failModalCategories -->
+	<!-- ####### hidden ####### -->
+	<input type="hidden" id="failModalCategoriesBtn" class="btn btn-primary" value="카테고리실패모달" data-bs-toggle="modal" data-bs-target="#failModalCategories"/>
+	 
+	<!-- failModalcategories -->
+	<div class="modal fade" id="failModalCategories" tabindex="-1" aria-labelledby="failModalCategoriesLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h1 class="modal-title fs-5" id="failModalCategoriesLabel">문의 등록 실패</h1>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        <p>카테고리를 선택하세요.</p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">돌아가기</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<!-- Button trigger failModalTitle -->
+	<!-- ####### hidden ####### -->
+	<input type="hidden" id="failModalTitleBtn" class="btn btn-primary" value="제목실패모달" data-bs-toggle="modal" data-bs-target="#failModalTitle"/>
+	 
+	<!-- failModalcategories -->
+	<div class="modal fade" id="failModalTitle" tabindex="-1" aria-labelledby="failModalTitleLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h1 class="modal-title fs-5" id="failModalTitleLabel">문의 등록 실패</h1>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        <p>제목을 입력하세요.</p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">돌아가기</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<!-- Button trigger failModalContent -->
+	<!-- ####### hidden ####### -->
+	<input type="hidden" id="failModalContentBtn" class="btn btn-primary" value="본문실패모달" data-bs-toggle="modal" data-bs-target="#failModalContent"/>
+	 
+	<!-- failModalcategories -->
+	<div class="modal fade" id="failModalContent" tabindex="-1" aria-labelledby="failModalContentLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h1 class="modal-title fs-5" id="failModalContentLabel">문의 등록 실패</h1>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        <p>문의내용을 입력하세요.</p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">돌아가기</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 	
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 
@@ -244,11 +309,22 @@ ul {
 			
 			form.submit();
 			
-		}else {
-			/* 실패시 메세지 주기 !... 어떻게 ???  */
+		}else if(categories.value.trim() == "") {
+			/* 카테고리 value="" => 모달띄우기 */
+			document.querySelector("#failModalCategoriesBtn").click();
+		}else if(title.value.trim() == "") {
+			/* 제목 value="" => 모달띄우기 */
+			document.querySelector("#failModalTitleBtn").click();
+		}
+		else if(content.value.trim() == "") {
+			/* 본문내용 value="" => 모달띄우기 */
+			document.querySelector("#failModalContentBtn").click();
 		}
 	});
 
+function failModal() {
+	
+}
 
 
 

@@ -43,32 +43,48 @@
 <my:navbar active=""></my:navbar>
 <div class="container">
 	<h3>전체 문의내역</h3>	
-	<p> (수정: 클릭버튼추가 { 카테고리/ 답변상태 /최신글  } => 쿼리수정 )</p>
 	
-	<!-- 검색기능   -->
-	<div class="form-group">      
-	<c:url value="/admin/allQnAList" var="allQnAlistLink"></c:url>
-		<form action="${allQnAlistLink }" class="d-flex flex-row-reverse" role="search">
-			 <div>
-			    <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+	<!-- 검색기능 + 카테고리 + 답변상태  -->
+	<div class="form-group">     
+	
+		<c:url value="/admin/allQnAList" var="allQnAListLink"></c:url> 	
+		<form action="${allQnAListLink }"  role="search">
+			<div class="d-flex flex-row-reverse" >
+				<div class="col-sm-1">
+				    <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+			    </div>
+			   
+		      	<div class="col-sm-3">
+				    <input class="form-control " type="search" name="q" value="${param.q }" placeholder="검색" aria-label="Search">
+			    </div>
+			   
+				<div class="col-sm-2">
+					<select name="t" id="searchTypeSelect" class="form-select">
+			      		<option value="all">전체</option>
+			      		<option value="userId" ${param.t == 'userId' ? 'selected' : '' }>작성자</option>
+			      		<option value="content" ${param.t == 'content' ? 'selected' : '' }>본문</option>
+			      	</select>
+		      	</div>	
+		      	<div class="col-2">
+		      	</div>
+		      	<div class="col-2">
+		      	<select name="s" id="searchTypeSelect" class="form-select">
+					<option value="yet" ${param.s == 'yet' ? 'selected' : '' }>답변대기</option>
+					<option value="done" ${param.s == 'done' ? 'selected' : '' }>답변완료</option>
+				</select>
+		      	</div>
+		      	<div class="col-2">
+			      	<select name="c" id="searchTypeSelect" class="form-select">
+						<option value="" >카테고리</option>
+						<option value="accusation" ${param.c == 'accusation' ? 'selected' : '' }>신고/재제</option>
+						<option value="payment" ${param.c == 'payment' ? 'selected' : '' }>결제문의</option>
+						<option value="facility" ${param.c == 'facility' ? 'selected' : '' }>시설문의</option>
+						<option value="etc" ${param.c == 'etc' ? 'selected' : '' }>기타문의</option>
+					</select>
+				</div>
 		    </div>
-		   
-	      	<div class="col-sm-3">
-			    <input class="form-control " type="search" name="q" value="${param.q }" placeholder="검색" aria-label="Search">
-		    </div>
-		   
-			<div class="col-sm-2">
-				<select name="t" id="searchTypeSelect" class="form-select">
-		      		<option value="all">전체</option>
-		      		<option value="userId" ${param.t == 'userId' ? 'selected' : '' }>ID</option>
-		      		<option value="name" ${param.t == 'name' ? 'selected' : '' }>이름</option>
-		      	</select>
-	      	</div>	
-	      	 <div class="col-sm-6">
-			 </div>
 		</form>
 	</div>
-	
 	
 	<div class="row">
 		<div class="col">
@@ -128,11 +144,13 @@
 				    <li class="page-item">
 				      <c:url value="/admin/allQnAList" var="firstPageLink">   	
 				     	<c:param name="page" value="1"/>
+				     	<c:param name="c" value="${param.c}"/>
 				     	<c:param name="q" value="${param.q}"/>
 				     	<c:param name="t" value="${param.t}"/>
+				     	<c:param name="s" value="${param.s}"/>
 				      </c:url>	
 				      <a class="page-link" href="${firstPageLink}" aria-label="First">
-				        첫 페이지
+				      &laquo;
 				      </a>
 				    </li>
 			    </c:if>
@@ -142,24 +160,28 @@
 				    <li class="page-item">
 				      <c:url value="/admin/allQnAList" var="previousPageLink">
 				     	<c:param name="page" value="${jumpPrevPageNumber}"/>
+				     	<c:param name="c" value="${param.c}"/>
 				     	<c:param name="q" value="${param.q}"/>
 				     	<c:param name="t" value="${param.t}"/>
+				     	<c:param name="s" value="${param.s}"/>
 				      </c:url>	
 				      <a class="page-link" href="${previousPageLink}" aria-label="Previous">
-				        이전
+				      &lt;
 				      </a>
 				    </li>
 			    </c:if>
 			    
 			    <!-- 페이지 -->
 			    <c:forEach begin="${qnaPageInfo.leftPageNumber}" end="${qnaPageInfo.rightPageNumber}" var="pageNumber">
-			    	<li class="page-item">
+			    	<li class="page-item ${qnaPageInfo.currentPageNumber eq pageNumber ? 'active' : ''}">
 				    	<c:url value="/admin/allQnAList" var="pageLink" >
 					    	<c:param name="page" value="${pageNumber}"/>
+					    	<c:param name="c" value="${param.c}"/>
 					    	<c:param name="q" value="${param.q}"/>
 					     	<c:param name="t" value="${param.t}"/>
+					     	<c:param name="s" value="${param.s}"/>
 				    	</c:url>
-				    	<a class="page-link ${qnaPageInfo.currentPageNumber eq pageNumber ? 'active' : ''}" href="${pageLink}">
+				    	<a class="page-link" href="${pageLink}">
 				    		${pageNumber}
 				    	</a>
 				    </li>
@@ -170,11 +192,13 @@
 				    <li class="page-item">
 				      <c:url value="/admin/allQnAList" var="nextPageLink">
 				     	<c:param name="page" value="${qnaPageInfo.jumpNextPageNumber}"/>
+				     	<c:param name="c" value="${param.c}"/>
 				     	<c:param name="q" value="${param.q}"/>
 				     	<c:param name="t" value="${param.t}"/>
+				     	<c:param name="s" value="${param.s}"/>
 				      </c:url>	
 				      <a class="page-link" href="${nextPageLink}" aria-label="Previous">
-				        다음
+				      &gt;
 				      </a>
 				    </li>
 			    </c:if>
@@ -184,11 +208,13 @@
 				    <li class="page-item">
 				      <c:url value="/admin/allQnAList" var="lastPageLink">  
 				        <c:param name="page" value="${qnaPageInfo.lastPageNumber}"/>
+				        <c:param name="c" value="${param.c}"/>
 				        <c:param name="q" value="${param.q}"/>
 				     	<c:param name="t" value="${param.t}"/>
+				     	<c:param name="s" value="${param.s}"/>
 				      </c:url>	
 				      <a class="page-link" href="${lastPageLink}" aria-label="Last">
-				      	마지막 페이지
+				      &raquo;
 				      </a>
 				    </li>
 			    </c:if>

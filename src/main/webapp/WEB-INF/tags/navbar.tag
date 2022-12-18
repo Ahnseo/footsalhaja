@@ -113,6 +113,7 @@
         <li class="nav-item active">
         	<c:url value="/qna/qnaMainBoard" var="qnaLink">
       			<c:param name="page" value="1"/>
+      			<c:param name="c" value=""/>
       			<c:param name="q" value=""/>
       			<c:param name="t" value="all"/>
       		</c:url>
@@ -136,18 +137,20 @@
       		<c:url value="/admin/dashboard" var="dashboardLink"></c:url>
       		<c:url value="/admin/allMemberList" var="allMemberListLink">
       			<c:param name="page" value="1"/>
-      			<c:param name="q" value=""/>
       			<c:param name="t" value="all"/>
+      			<c:param name="q" value=""/>
       		</c:url>
       		<c:url value="/admin/allBookList" var="allBookListLink">
       			<c:param name="page" value="1"/>
-      			<c:param name="q" value=""/>
       			<c:param name="t" value="all"/>
+      			<c:param name="q" value=""/>
       		</c:url>
       		<c:url value="/admin/allQnAList" var="allQnAListLink">
       			<c:param name="page" value="1"/>
-      			<c:param name="q" value=""/>
+      			<c:param name="c" value=""/>
       			<c:param name="t" value="all"/>
+      			<c:param name="q" value=""/>
+      			<c:param name="s" value="yet"/>
       		</c:url>
 		    <ul class="dropdown-menu">
 			    <li><a class="dropdown-item" href="${dashboardLink }">대시보드</a></li>

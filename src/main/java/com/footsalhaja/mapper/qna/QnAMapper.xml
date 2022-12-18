@@ -39,7 +39,24 @@
 	 	LEFT JOIN QnAReplyToAnswer r ON q.qnaId = r.qnaId
 	 	WHERE
 	 		m.userId = #{userId}
-	 		
+	 	AND	
+	 	<if test="c != ''">
+	 		q.category = #{category}
+	 	AND
+	 	</if>	
+	 	(	
+	 	<trim prefixOverrides="OR">
+		 	<if test="type == 'all' or type == 'title'">
+		 	OR q.title LIKE #{keyword}
+		 	</if>
+		 	<if test="type == 'all' or type == 'content'">
+		 	OR q.content LIKE #{keyword}
+		 	</if>
+		 	<if test="type == 'all' or type == 'userId'">
+		 	OR m.userId LIKE #{keyword}
+		 	</if>
+	 	</trim>	
+	 	)
 	 	GROUP BY q.qnaId
 	 	ORDER BY 
 	 		q.qnaId DESC 
@@ -58,14 +75,17 @@
 	 		q.insertDatetime,
 	 		COUNT(distinct l.qnaLikeId) AS likeCount,
 	 		COUNT(DISTINCT r.qnaReplyToAnswerId) AS replyCount
-	 		
 	 	FROM QnABoard q
 	 	LEFT JOIN QnABoardLike l ON q.qnaId = l.qnaId
 	 	LEFT JOIN QnAReplyToAnswer r ON q.qnaId = r.qnaId
 	 	WHERE
 	 		q.status = #{status} 
-	 	AND 
-	 	(
+	 	AND	
+ 	 	<if test="c != ''">
+ 			q.category = #{category} 
+ 		AND 
+ 		</if>
+ 		(
 		<trim prefixOverrides="OR">
 			<if test="type == 'all' or type == 'title'">
 			OR q.title LIKE #{keyword}
@@ -79,7 +99,7 @@
 			OR q.member_userId LIKE #{keyword}
 			</if>
 		</trim> 
-		) 	
+		)
 		GROUP BY q.qnaId
 	 	ORDER BY q.qnaId DESC
 	 	LIMIT #{offset}, #{records}
@@ -90,10 +110,27 @@
 	 		COUNT(q.qnaId)
 	 	FROM 
 	 	 	QnABoard q
-	 	LEFT JOIN member m 
-	 	ON q.member_userId = m.userId 	
+	 	LEFT JOIN member m ON q.member_userId = m.userId 	
 	 	WHERE
 	 		m.userId = #{userId}
+	 	AND	
+	 	<if test="c != ''">
+	 		q.category = #{category}
+	 	AND
+	 	</if>	
+	 	(	
+	 	<trim prefixOverrides="OR">
+		 	<if test="type == 'all' or type == 'title'">
+		 	OR q.title LIKE #{keyword}
+		 	</if>
+		 	<if test="type == 'all' or type == 'content'">
+		 	OR q.content LIKE #{keyword}
+		 	</if>
+		 	<if test="type == 'al' or type == 'userId'">
+		 	OR m.userId LIKE #{keyword}
+		 	</if>
+	 	</trim>	
+	 	)	
 	 </select>
 	 
 	<select id="selectMyQnAListByUserId" resultType="com.footsalhaja.domain.qna.QnADto">
@@ -124,12 +161,12 @@
 	 		q.status,
 	 		q.insertDatetime,
 	 		m.userId,
-	 		r.qnaReplyId,
+	 		a.qnaReplyId,
 	 		COUNT(DISTINCT l.qnaLikeId) AS likeCount
 	 	FROM 
 	 	 	QnABoard q
 	 	LEFT JOIN member m   ON q.member_userId = m.userId
-	 	LEFT JOIN QnAReply r ON q.member_userId = r.userId
+	 	LEFT JOIN QnAReply a ON q.qnaId = a.qnaId
 	 	LEFT JOIN QnABoardLike l ON q.qnaId = l.qnaId
 	 	WHERE 
 	 		m.userId = #{userId} AND q.qnaId = #{qnaId}
@@ -163,6 +200,15 @@
 	 	LEFT JOIN QnAReplyToAnswer r ON q.qnaId = r.qnaId 
 	 	
 	 	WHERE
+	 	<if test="c != ''">
+	 		q.category = #{category}
+	 	AND
+	 	</if>
+	 	<if test="s != ''">
+	 		q.status = #{status}
+	 	AND
+	 	</if>
+	 	(
 		<trim prefixOverrides="OR">
 			<if test="type == 'all' or type == 'title'">
 			OR q.title LIKE #{keyword}
@@ -176,6 +222,7 @@
 			OR q.member_userId LIKE #{keyword}
 			</if>
 		</trim>
+		)
 		Group By q.qnaId
 	 	ORDER BY q.qnaId DESC
 	 	LIMIT #{offset}, #{records}
@@ -187,6 +234,16 @@
 	 	FROM 
 	 	 	QnABoard 
 	 	WHERE
+	 
+	 	<if test="c != ''">
+	 		category = #{category}
+	 	AND
+	 	</if>
+	 	<if test="s != ''">
+	 		status = #{status}
+	 	AND
+	 	</if>
+	 	(
 		<trim prefixOverrides="OR">
 			<if test="type == 'all' or type == 'title'">
 			OR title LIKE #{keyword}
@@ -199,7 +256,9 @@
 			<if test="type == 'all' or type == 'userId'">
 			OR member_userId LIKE #{keyword}
 			</if>
-		</trim> 	
+		</trim> 
+		)
+	 		
 	</select>
 	
 		<select id="countAllQnAByDone" resultType="int">
@@ -208,9 +267,13 @@
 	 	FROM 
 	 	 	QnABoard 
 	 	WHERE
-	 		status = #{status} AND
-	 	(
-	 	
+	 		status = #{status}
+	 	AND 	
+	 	<if test="c != ''">
+ 			category = #{category} 
+ 		AND 
+ 		</if>
+ 		(
 		<trim prefixOverrides="OR">
 			<if test="type == 'all' or type == 'title'">
 			OR title LIKE #{keyword}

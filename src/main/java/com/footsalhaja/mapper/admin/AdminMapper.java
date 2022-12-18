@@ -7,7 +7,6 @@ import org.apache.ibatis.annotations.Mapper;
 import com.footsalhaja.domain.admin.adminColChartDto;
 import com.footsalhaja.domain.main.BookDto;
 import com.footsalhaja.domain.qna.QnADto;
-import com.footsalhaja.domain.qna.QnAPageInfo;
 
 @Mapper
 public interface AdminMapper {
@@ -27,6 +26,10 @@ public interface AdminMapper {
 	int selectTodayWaitingQnACount(String status);
 
 	List<adminColChartDto> chartListByDate();
+	
+	
+	// 전체 예약리스트 페이지네이션 !!!!
+	int selectAllBookedCount(String type, String keyword, int status);
 
 
 
