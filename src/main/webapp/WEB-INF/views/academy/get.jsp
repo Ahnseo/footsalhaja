@@ -204,7 +204,6 @@ ul {
 			<button type="button" class="btn btn-outline-success">게시글 목록</button>
 		</a>
 		
-<<<<<<< HEAD
 		<!-- 작성자와 authentication.name이 같아야 삭제&수정버튼 보여주기 -->
 		<sec:authentication property="name" var="userIdValue" />
 		
@@ -220,25 +219,6 @@ ul {
 					<c:param name="ab_number" value="${board.ab_number }"></c:param>
 				</c:url>
 				<a class="btn btn-outline-success modifyBtn" href="${modifyLink }">수정</a>
-=======
-
-		<!-- 작성자와 authentication.name이 같아야 삭제&수정버튼 보여주기 -->
-		<sec:authentication property="name" var="userIdValue" />
-		
-		<!-- 삭제버튼 -->
-		<c:url value="/academy/remove" var="removeLink"></c:url>
-			<form id="removeForm" action="${removeLink }" method="post">
-				<input type="hidden" name="ab_number" value="${board.ab_number }"/>
-			</form>
-			<input class="btn btn-outline-success removeBtn" type="submit" value="삭제" data-bs-toggle="modal" data-bs-target="#removeModal"/>
-		<!-- 수정버튼 -->	
-
-		<c:if test="${board.member_userId == userIdValue}" >
-			<c:url value="/academy/modify" var="modifyLink">
-				<c:param name="ab_number" value="${board.ab_number }"></c:param>
-			</c:url>
-			<a class="btn btn-outline-success modifyBtn" href="${modifyLink }">수정</a>
->>>>>>> main
 		</c:if>
 	</div>
 	
@@ -328,15 +308,9 @@ ul {
     
 	</div>
 </div>
-<<<<<<< HEAD
 	
 	
 
-=======
-
-	
-	
->>>>>>> main
 	<!-- 게시글 삭제 모달 -->
 	<div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog">
@@ -368,13 +342,8 @@ ul {
 	        댓글을 삭제하시겠습니까?
 	      </div>
 	      <div class="modal-footer">
-<<<<<<< HEAD
 	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
 	        <button type="button" id="replyDeleteConfirmButton" class="btn btn-primary" data-bs-dismiss="modal">삭제</button>
-=======
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-	        <button type="button" data-bs-dismiss="modal" id="removeConfirmModalSubmitButton" class="btn btn-danger">삭제</button>
->>>>>>> main
 	      </div>
 	    </div>
 	  </div>
@@ -393,11 +362,7 @@ ul {
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-<<<<<<< HEAD
 	        <button type="button" id="replyModifyConfirmButton" class="btn btn-primary" data-bs-dismiss="modal">수정</button>
-=======
-	        <button type="button" data-bs-dismiss="modal" id="modifyFormModalSubmitButton" class="btn btn-danger">수정</button>
->>>>>>> main
 	      </div>
 	    </div>
 	  </div>

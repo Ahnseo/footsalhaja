@@ -331,11 +331,7 @@
  	</resultMap>
  	
  	<select id="countFbReplyList" resultType="int">
-<<<<<<< HEAD
 		SELECT Count(fb_replyNumber)
-=======
-		SELECT Count(*)
->>>>>>> main
 		FROM member m LEFT JOIN freeBoardReply fr ON m.userId = fr.member_userId
 		WHERE m.userId = #{userId}
 	</select>
@@ -365,11 +361,7 @@
  	</resultMap>
  	
  	 <select id="countAbReplyList" resultType="int">
-<<<<<<< HEAD
 		SELECT Count(ab_replyNumber)
-=======
-		SELECT Count(*)
->>>>>>> main
 		FROM member m LEFT JOIN academyBoardReply ar ON m.userId = ar.member_userId
 		WHERE m.userId = #{userId}
 	</select>
@@ -399,11 +391,7 @@
  	</resultMap>
  	
  	 <select id="countMainReplyList" resultType="int">
-<<<<<<< HEAD
 		SELECT Count(replyId)
-=======
-		SELECT Count(*)
->>>>>>> main
 		FROM member m LEFT JOIN bookReply br ON m.userId = br.member_userId
 		WHERE m.userId = #{userId}
 	</select>
@@ -431,11 +419,7 @@
  	</resultMap>
  	
  	 <select id="countUserAbLike" resultType="int">
-<<<<<<< HEAD
 		SELECT Count(academyBoard_ab_number)
-=======
-		SELECT Count(*)
->>>>>>> main
 		FROM member m LEFT JOIN academyBoardLike al ON m.userId = al.member_userId
 		WHERE m.userId = #{userId}
 	</select>
@@ -463,11 +447,7 @@
  	</resultMap>
  	
  	<select id="countUserFbLike" resultType="int">
-<<<<<<< HEAD
 		SELECT Count(freeBoard_fb_number)
-=======
-		SELECT Count(*)
->>>>>>> main
 		FROM member m LEFT JOIN freeBoardLike fl ON m.userId = fl.member_userId
 		WHERE m.userId = #{userId}
 	</select>
@@ -484,8 +464,6 @@
 		WHERE member_userId = #{userId}
 	</delete>
 
-<<<<<<< HEAD
-=======
 	
 	<!-- 중복 프로필 이름 덮어씌우기 -->
  	<delete id="deleteProfileImgByUserIdAndPrifileImg">
@@ -493,5 +471,4 @@
 	WHERE member_userId = #{userId} AND profileImage_file = #{originalFilename}
 	</delete>
 
->>>>>>> main
  </mapper>

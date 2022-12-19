@@ -241,13 +241,7 @@ li {
 							${rank.ab_title }
 						</a>
 						<c:if test="${rank.replyCnt > 0 }">
-<<<<<<< HEAD
 							&nbsp;&nbsp;<i class="fa-regular fa-comment"></i>${rank.replyCnt }
-=======
-
-							&nbsp;&nbsp;<i class="fa-regular fa-comment"></i>${rank.replyCnt }
-
->>>>>>> main
 						</c:if>
 					</td>
 					<td width="70"><i class="fa-regular fa-heart"></i> ${rank.countLike }</td>
@@ -274,43 +268,23 @@ li {
 				<tr scope="row">
 					<th>No</th>
 					<th>말머리</th>
-<<<<<<< HEAD
 					<th><i class="fa-regular fa-heart"></i></th>
 					<th>제목</th>
 					<th>닉네임</th>
 					<th>작성시간</th>
 					<th><i class="fa-regular fa-eye"></i></th>
-=======
-					<th>좋아요</th>
-					<th>제목</th>
-					<th>닉네임</th>
-					<th>작성시간</th>
-					<th>조회수</th>
->>>>>>> main
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach items="${boardList}" var="board">
-<<<<<<< HEAD
-=======
-
->>>>>>> main
 					<c:url value="/academy/get" var="getLink">
 						<c:param name="ab_number" value="${board.ab_number}"></c:param>
 					</c:url>
 					<tr onclick="location.href='${getLink}'" class="trtr">
-<<<<<<< HEAD
-=======
-
->>>>>>> main
 						<td>${board.ab_number }</td>
 						<td>${board.ab_category }</td>
 						<td>${board.countLike }</td>
 						<td class="listTitle col-sm-6">
-<<<<<<< HEAD
-=======
-
->>>>>>> main
 							<a class= 'move' href="${getLink }">
 								${board.ab_title}
 							</a>
@@ -410,11 +384,7 @@ li {
 			</sec:authorize>
 		<!-- 로그인 안 했을때 -->
 			<sec:authorize access="not isAuthenticated()">
-<<<<<<< HEAD
 				<button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#nonMemberModal" id="nonMemberInsertButton">글쓰기</button>
-=======
-				<button data-bs-toggle="modal" data-bs-target="#nonMemberModal" id="nonMemberInsertButton">글쓰기</button>
->>>>>>> main
 			</sec:authorize>	
 		</div>
 	</div>

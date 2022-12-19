@@ -2,10 +2,6 @@ package com.footsalhaja.service.member;
 
 import java.util.List;
 
-<<<<<<< HEAD
-=======
-
->>>>>>> main
 import org.springframework.web.multipart.MultipartFile;
 
 import com.footsalhaja.domain.academy.BoardDto;
@@ -20,17 +16,9 @@ public interface MemberService {
 	List<MemberDto> selectMemberList(int page, MemberPageInfo memberPageInfo, String keyword, String type);
 
 	List<Object> selectMemberInfoByUserId(String userId);
-<<<<<<< HEAD
 
 	int deleteMemberInfoByUserId(String userId);
 
-=======
-
-
-	int deleteMemberInfoByUserId(String userId);
-
-
->>>>>>> main
 	int updateMemberInfoByUserId(MemberDto memberModifiedValues, MultipartFile file);
 	
 	MemberDto getUserAbList(String userId, int page, MemberPageInfo pageInfo);

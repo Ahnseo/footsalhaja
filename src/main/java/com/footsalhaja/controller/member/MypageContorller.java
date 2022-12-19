@@ -1,11 +1,6 @@
 package com.footsalhaja.controller.member;
 
 import java.io.FileInputStream;
-<<<<<<< HEAD
-
-=======
-import java.io.FileNotFoundException;
->>>>>>> main
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
@@ -85,18 +80,10 @@ public class MypageContorller {
 		MemberDto memberInfoByUserId = (MemberDto) memberService.selectMemberInfoByUserId(userId).get(0);
 		
 		//프로필 이미지 보이기
-<<<<<<< HEAD
-=======
-
->>>>>>> main
 		InputStream imageStream = new FileInputStream("user_profile/" + userId + "/" + memberInfoByUserId.getProfileImg());
 		byte[] imageByteArray = IOUtils.toByteArray(imageStream);
 		imageStream.close();
 		
-<<<<<<< HEAD
-=======
-
->>>>>>> main
 		System.out.println("이미지 "+imageByteArray);
 		return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
 		

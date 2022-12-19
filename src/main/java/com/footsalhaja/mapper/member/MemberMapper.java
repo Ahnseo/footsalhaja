@@ -70,8 +70,6 @@ public interface MemberMapper {
 	
 	//프로필 이미지 삭제
 	public int deleteProfileImgByUserId(String userId);
-<<<<<<< HEAD
-=======
 
 
 	public int updateMemberAuth(String userId, List<String> newAuthorities);
@@ -86,7 +84,5 @@ public interface MemberMapper {
 	
 	public MemberDto selectByNickName(String nickName);
 
-
->>>>>>> main
 
 }
