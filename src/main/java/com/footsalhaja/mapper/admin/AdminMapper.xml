@@ -21,9 +21,21 @@
  		LEFT JOIN member m ON m.userId = b.member_userId
  		LEFT JOIN location l ON b.location_locationId = l.locationId	
  		WHERE
+
+ 		<if test="d1 != '' and d2 != '' ">
+	 		b.bookDate BETWEEN #{d1} AND #{d2}
+ 		AND
+ 		</if>
+ 		
+ 		<if test="s != ''">
 	 		b.status = #{status}	
  		AND
-	 
+ 		</if>
+ 		
+	 	<if test="l != ''">
+			l.locationId = #{l}
+		AND
+		</if>
 	 	(
 		<trim prefixOverrides="OR">
 			<if test="type == 'all' or type == 'title'">
@@ -67,10 +79,21 @@
  		LEFT JOIN member m ON b.member_userId = m.userId
  		LEFT JOIN location l ON b.location_locationId = l.locationId
  		WHERE 
+ 		<if test="d1 != '' and d2 != '' ">
+	 		b.bookDate BETWEEN #{d1} AND #{d2}
+ 		AND
+ 		</if>
  		
+	 	<if test="s != ''">
 	 		b.status = #{status}	
  		AND
-	 
+ 		</if>
+ 		
+	 	<if test="l != ''">
+			l.locationId = #{l}
+		AND
+		</if>
+		
 	 	(
 		<trim prefixOverrides="OR">
 			<if test="type == 'all' or type == 'title'">
