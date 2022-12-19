@@ -357,7 +357,7 @@
 	<div id="body" class="container">
         <div class="row">
             <div class="col">
-                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true" data-ride="carousel">
                     <div class="carousel-indicators">
                         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -365,23 +365,23 @@
                     </div>
                     <div class="carousel-inner" style="border-radius: 5%">
                         <div class="carousel-item active">
-                            <img src="https://thumb.mt.co.kr/06/2022/10/2022100408360974086_1.jpg/dims/optimize/" class="w-100" style="margin: 0 auto;" alt="...">
+                            <img src="${pageContext.request.contextPath}/광고4.png" class="w-100" style="height: 400px; width: 750px;"alt="...">
                             <div class="carousel-caption d-none d-md-block">
-                                <h5>1</h5>
+                                <h5></h5>
                                 <p></p>
                             </div>
                         </div>
                         <div class="carousel-item">
-                            <img src="http://www.footballist.co.kr/news/photo/201802/105313_40203_012.jpg" class="w-100" alt="...">
+                            <img src="${pageContext.request.contextPath}/광고5.png" class="w-100" style="height: 400px; width: 750px;" alt="...">
                             <div class="carousel-caption d-none d-md-block">
-                                <h5>2</h5>
+                                <h5></h5>
                                 <p></p>
                             </div>
                         </div>
                         <div class="carousel-item">
-                            <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fs0Yc1%2FbtrnL7wfLC6%2FT28ucgZkikSLV7pdnxIkLk%2Fimg.jpg" class="w-100" alt="...">
+                            <img src="${pageContext.request.contextPath}/광고6.png" class="w-100" style="height: 400px; width: 750px;" alt="...">
                             <div class="carousel-caption d-none d-md-block">
-                                <h5>3</h5>
+                                <h5></h5>
                                 <p></p>
                             </div>
                         </div>
@@ -654,6 +654,11 @@ $(document).ready(function(){
 });
 
 
+$(window).ready(function() {
+	$('.carousel').carousel({
+	  interval: 3500
+	});
+});
 
 </script>
 </body>
