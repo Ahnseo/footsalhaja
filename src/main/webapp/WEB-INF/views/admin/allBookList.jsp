@@ -74,8 +74,8 @@
 				<c:set value='<%=sf.format(addMonth)%>' var="addMonth" /> 
 				<!-- ${addMonth}  -->
 				
+				<!-- 날짜별로 조회하면  DB query => ORDER BY b.bookDate ASC  -->
 				<c:choose>
-					<!--날짜별로 조회하면, 조회한 날부터 가장빠른나의 예약건을 위로 !   DB query => ORDER BY b.bookDate ASC  -->
 					<c:when test="${empty param.d1 && empty param.d2}">
 						<!-- 오늘 부터 ~ 다음 달 까지  -->
 						<input type="Date" class="form-control col-2" id="d1" name="d1" value="${nowDate }" ${param.d1 == '${param.d1 }' ? 'selected' : '' }>
