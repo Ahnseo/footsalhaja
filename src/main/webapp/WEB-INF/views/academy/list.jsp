@@ -9,43 +9,16 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-@font-face {
- font-family: 'NanumBarunGothic';
- font-style: normal;
- font-weight: 400;
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot');
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.ttf') format('truetype');
-}
-
-@font-face {
- font-family: 'NanumBarunGothic';
- font-style: normal;
- font-weight: 700;
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot');
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.ttf') format('truetype')
-}
-
-@font-face {
- font-family: 'NanumBarunGothic';
- font-style: normal;
- font-weight: 300;
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot');
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.ttf') format('truetype');
-}
-
-.nanumbarungothic * {
- font-family: 'NanumBarunGothic', sans-serif;
-}
-
+/* 글씨폰트 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&display=swap');
 li {
    list-style:none;
   }
   
 .container-sm { 
-	font-family: 'NanumBarunGothic';
+	font-family: 'Noto Sans KR', sans-serif;
 	letter-spacing: -1px;
 }
-
 /* 아카데미게시판 */
 #academyTitle h2 {
 	text-align: center;
@@ -56,7 +29,7 @@ li {
 #likeBestRankBox {
 	border-radius: 15px;
 	border: 1px solid #ddd;
-	margin: 0 0 30px 0;
+	margin-left: 30px;
  }
  
 #likeBestRankBox p {
@@ -64,24 +37,21 @@ li {
 	font-weight: bold;
 	letter-spacing: -1px;
 	
-	margin: 15px 30px;
+	margin: 15px 0  10px 30px;
 }
-
 #likeBestRankBox span {
 	color: red;
 }
-
  #bestTable tr td {
  	color: #666;
  	font-size: 16px;
  	border: 0;
  }
  
- #bestTable tr td.title:hover{
-	text-decoration:underline;
-	/* cursor: pointer; */
+ #bestTable .title:hover{
+ 	text-decoration: underline;
  }
- 
+  
  #bestTable tr td a {
  	text-decoration: none;
  	color: #333;
@@ -108,48 +78,48 @@ li {
 	text-align: center;
 	margin: 60px;
 }
-
 #categoryBox .cateBtn {
 	border: 0;
 	background : 0;
 	font-size: 16px;
 	margin: 0 20px;
 }
-
 #categoryBox .cateBtn:hover {
-	color: green;
+	color: #1cb99e;
 	font-weight: bold;
 	text-decoration: underline;
 }
-
 .clickCateBtn {
  	color: lightgreen;
 	font-weight: bold;
 	text-decoration: underline;
  }
-
 /* 글목록 */
 #listBox .table{
 	font-size: 16px;
 	letter-spacing: -1px;
 	text-align: center;
 }
-
 #listBox .table .listTitle {
 	text-align: left;
 }
-
+#listBox .table .trtr {
+	cursor: pointer;
+}
+#listBox .table .trtr:hover .listTitle {
+ 	font-weight: bold;
+ }
+ 
 #listBox .table tr td {
 	height: 60px;
 	vertical-align: middle;
 }
-
 #listBox .table tr td a {
  	text-decoration: none;
  	color: #333;
  	padding: 15px;
  }
-
+ 
 /* 검색 페이징 글작성버튼 */
 #bottomBox{
 	margin: 30px 0;
@@ -173,7 +143,6 @@ li {
 	top: 0;
 	right: 0;
 }
-
 /* 검색창 */
 .searchBox .searchSelect{
    width : 80px;
@@ -182,7 +151,7 @@ li {
    border: 1px solid #999;
    
    color: #666;
-   padding:2px 0 0 10px;
+   padding-left: 10px;
   }
   
 .searchBox .searchWrap {
@@ -191,30 +160,22 @@ li {
    border-radius: 25px;
    border: 1px solid #999;
   }
-
 .searchBox .searchWrap .search{
   border: 0;
-  margin: 0 10px 10px 0;
   outline: none;
-  
+  margin-top: 5px;
  }
  
 .searchBox .searchWrap .btn {
-	width : 50px;
+	padding: 0 5px 5px 0;
  }
   
-#searchTypeSelect {
-	width: auto;
-}
-.searchBox .searchWrap .search {
-	margin-left : 3px;
-}
-
 </style>
 </head>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&display=swap" rel="stylesheet">
 <body>
 
 <my:navbar></my:navbar>
@@ -254,11 +215,11 @@ li {
 		<div id="categoryBox" class="d-grid gap-2 ">
 			<c:url value="/academy/list" var="listLink"></c:url>
 			<form action="${listLink }">
-				<button class='btn btn-default' name="category" value="">전체</button>
-				<button class='btn btn-default' name="category" value="레슨">레슨</button>
-				<button class='btn btn-default' name="category" value="꿀팁">꿀팁</button>
-				<button class='btn btn-default' name="category" value="팀원모집">팀원모집</button>
-				<button class='btn btn-default' name="category" value="질문/답변">질문/답변</button>
+				<button class='cateBtn' name="category" value="">전체</button>
+				<button class='cateBtn' name="category" value="레슨">레슨</button>
+				<button class='cateBtn' name="category" value="꿀팁">꿀팁</button>
+				<button class='cateBtn' name="category" value="팀원모집">팀원모집</button>
+				<button class='cateBtn' name="category" value="질문/답변">질문/답변</button>
 			</form>
 		</div>
 		<!-- 글목록 -->
@@ -267,11 +228,11 @@ li {
 			<thead>
 				<tr scope="row">
 					<th>No</th>
-					<th>말머리</th>
-					<th><i class="fa-regular fa-heart"></i></th>
+					<th>카테고리</th>
 					<th>제목</th>
 					<th>닉네임</th>
 					<th>작성시간</th>
+					<th><i class="fa-regular fa-heart"></i></th>
 					<th><i class="fa-regular fa-eye"></i></th>
 				</tr>
 			</thead>
@@ -283,7 +244,6 @@ li {
 					<tr onclick="location.href='${getLink}'" class="trtr">
 						<td>${board.ab_number }</td>
 						<td>${board.ab_category }</td>
-						<td>${board.countLike }</td>
 						<td class="listTitle col-sm-6">
 							<a class= 'move' href="${getLink }">
 								${board.ab_title}
@@ -307,6 +267,7 @@ li {
 						</td>
 						<td>${board.nickName }</td>
 						<td>${board.ago }</td>
+						<td>${board.countLike }</td>
 						<td>${board.ab_viewCount }</td>
 					</tr>
 				</c:forEach> 
@@ -412,7 +373,7 @@ li {
 	  </div>
 	</div>
 	
-
+<my:footer></my:footer>	
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 
 <script type="text/javascript">

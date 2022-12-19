@@ -51,7 +51,7 @@
 
 </style>
 
-<nav id="wholeNav" class="navbar navbar-expand-md navbar-dark sticky-top" style="background: linear-gradient(to right, #5F7161, #6D8B74); padding: 0;">
+<nav id="wholeNav" class="navbar navbar-expand-md navbar-dark sticky-top" style="background: linear-gradient(to right, #5F7161, #6D8B74)  ; padding: 0;">
   <!-- One of the primary actions on mobile is to call a business - This displays a phone button on mobile only -->
   <div class="navbar-toggler-right" style="color: #fff;">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -100,6 +100,7 @@
         
         <c:url value="/mypage/list" var="mypageLink">
         	<c:param name="userId" value="${userIdValue }"/>
+        	
         </c:url>
         <c:url value="/free/list" var="freeLink"></c:url>
         <c:url value="/academy/list" var="academyLink"></c:url>
@@ -120,8 +121,31 @@
         	<a class="nav-link ${active eq 'qnaMainBoard' ? 'active' : '' }" href="${qnaLink}">고객문의</a>
       	</li>
       	<c:if test="${loggedIn }">
-      	<li class="nav-item active">
-        	<a class="nav-link ${active eq 'mypageLink' ? 'active' : '' }" href="${mypageLink}">마이페이지</a>
+      	<li class="nav-item dropdown">
+        	<a class="nav-link dropdown-toggle nav-link ${active eq 'mypageLink' ? 'active' : '' }" href="${mypageLink}" role="button" data-bs-toggle="dropdown" aria-expanded="false">마이페이지</a>
+        	<ul class="dropdown-menu">		    
+					<li><a class="dropdown-item" href="${mypageLink }">회원정보</a></li>
+				 <c:url value="myAbDocumentList" var="myAblist">
+	        		<c:param name="userId" value="${userIdValue }"/>
+	        	 </c:url>
+					<li><a class="dropdown-item" href="${myAblist }">아카데미 게시판 쓴 글 목록</a></li>
+				<c:url value="myFbDocumentList" var="myFblist">
+	        		<c:param name="userId" value="${userIdValue }"/>
+	        	 </c:url>
+					<li><a class="dropdown-item" href="${myFblist }">자유게시판에 쓴 글 목록</a></li>
+				<c:url value="myMainDocumentList" var="myBooklist">
+	        		<c:param name="userId" value="${userIdValue }"/>
+	        	 </c:url>
+				    <li><a class="dropdown-item" href="${myBooklist }">예약글 목록</a></li>
+				 <c:url value="myReplyList" var="myReplylist">
+	        		<c:param name="userId" value="${userIdValue }"/>
+	        	 </c:url> 
+				    <li><a class="dropdown-item" href="${myReplylist }">작성 댓글 목록</a></li>
+				 <c:url value="myLikeList" var="myLikelist">
+	        		<c:param name="userId" value="${userIdValue }"/>
+	        	 </c:url>
+				    <li><a class="dropdown-item" href="${myLikelist }">좋아요 한 글 목록</a></li>
+			</ul>
       	</li>
       	</c:if>
       	<c:if test="${ not loggedIn }">

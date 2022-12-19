@@ -2,46 +2,22 @@
     pageEncoding="UTF-8"%>      
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="myInfo" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-@font-face {
- font-family: 'NanumBarunGothic';
- font-style: normal;
- font-weight: 400;
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot');
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.ttf') format('truetype');
-}
-
-@font-face {
- font-family: 'NanumBarunGothic';
- font-style: normal;
- font-weight: 700;
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot');
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.ttf') format('truetype')
-}
-
-@font-face {
- font-family: 'NanumBarunGothic';
- font-style: normal;
- font-weight: 300;
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot');
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.ttf') format('truetype');
-}
-
-.nanumbarungothic * {
- font-family: 'NanumBarunGothic', sans-serif;
-}
+/* 글씨폰트 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&display=swap');
 
 li {
    list-style:none;
   }
   
 .container-sm { 
-	font-family: 'NanumBarunGothic';
+	font-family: 'Noto Sans KR', sans-serif;
 	letter-spacing: -1px;
 }
 
@@ -99,6 +75,29 @@ li {
  	color: #333;
  	padding: 15px;
  }
+ /* 검색 페이징 글작성버튼 */
+#bottomBox{
+	margin: 30px 0;
+	text-align: center;
+	position: relative;
+	
+}
+#bottomBox .searchBox{
+	display: inline-block;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+#bottomBox .paginationBox{
+	display: inline-block;
+	margin-top: 60px;
+}
+#bottomBox .insertBox{
+	display: inline-block;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
 
 
 
@@ -107,13 +106,14 @@ li {
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&display=swap" rel="stylesheet">
 <body>
 <myInfo:navbar active="myInfopageLink"></myInfo:navbar>
 <div class="container-sm">
 	<div id="userFreeTitle">
 		<h3>${list.userId}님이 자유게시판에 쓴 글 리스트</h3> 
 	</div>
-	<div id="listBox" >
+		<div id="listBox" >
 		<table class="table table-hover container">
 			<thead>
 				<tr scope="row">
@@ -133,10 +133,6 @@ li {
 						 	<td>${fblist.fb_number}</td>
 						 	<td>${fblist.fb_category}</td>					 	
 						 	<td class="listTitle col-sm-6">
-<<<<<<< HEAD
-=======
-
->>>>>>> main
 								<a class='move' href="${getLink }">${fblist.fb_title} </a>
 							</td>
 						 	<td>${fblist.ago}</td>
@@ -146,7 +142,7 @@ li {
 				</tbody>
 			</table>
 		</div>
-	<div id="bottomBox">
+<div id="bottomBox">
 	<!-- 페이지네이션 -->
 		<div class="paginationBox">
 			<ul class="pagination">
@@ -202,7 +198,7 @@ li {
 		</div>
 	</div>
 </div>
-
+<my:footer></my:footer>	
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </body>
 </html>

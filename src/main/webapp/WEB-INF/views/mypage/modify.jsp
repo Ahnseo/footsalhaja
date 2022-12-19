@@ -16,8 +16,6 @@
 <!-- Font Awesome icons (free version)-->
 <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
 <!-- Google fonts-->
-<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
-<link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
 	
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="/css/styles.css" type="text/css" rel="stylesheet" />
@@ -26,13 +24,21 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <style type="text/css">
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&display=swap');
+
+.page-section {
+	font-family: 'Noto Sans KR', sans-serif;
+	letter-spacing: -1px;
+}
 
 h2 {
+	font-family: 'Noto Sans KR', sans-serif;
 	text-align: center;
 	padding: 1px;
  }
  
   object {
+  font-family: 'Noto Sans KR', sans-serif;
   text-align: center;
   max-width: 250px;
   height: 250px;
@@ -45,7 +51,7 @@ h2 {
 }
 
 </style>
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
 </head>
 
 <body>
@@ -67,10 +73,7 @@ h2 {
                     <div class="col-lg-8 col-xl-7">
                         <form action="/mypage/modify" method="post" id="contactForm" data-sb-form-api-token="API_TOKEN" enctype="multipart/form-data">
 						<%-- 프로필 이미지 출력 --%>
-<<<<<<< HEAD
-=======
 
->>>>>>> main
 						<div class= "defaultImg">
 							<c:if test="${member.profileImg eq null}">
 								<img class= "defaultImg" src="${pageContext.request.contextPath}/기본프로필.png">
@@ -82,10 +85,7 @@ h2 {
 									</object>
 								</div>
 							</c:forEach>			
-<<<<<<< HEAD
-=======
 
->>>>>>> main
 						</div>	
 					
 						<div class="form-floating mb-3"">
@@ -123,10 +123,7 @@ h2 {
                                 <input class="form-control" id="nickName" type="text" name = "nickName" value="${member.nickName}" data-sb-validations="required" />
                                 <label for="nickName">닉네임</label>
                             </div>
-<<<<<<< HEAD
-=======
 
->>>>>>> main
                             
                             <!-- 이메일 -->
                             <div class="form-floating mb-3">
@@ -171,10 +168,7 @@ h2 {
 								value="${member.birthYY}${zeroMM}${member.birthMM}${zeroDD}${member.birthDD}"
 								readonly /> <label for="birthYYMMDD">생년월일</label>
 						</div>
-<<<<<<< HEAD
-=======
 
->>>>>>> main
                             
                             <div class="form-floating mb-3">
 	                            <input class="form-control" type="text" name="activityArea" value="${member.activityArea}" readonly />
@@ -214,7 +208,7 @@ h2 {
         </section>
 
 
-
+<my:footer></my:footer>	
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </body>
 </html>
