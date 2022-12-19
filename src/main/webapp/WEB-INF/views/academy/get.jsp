@@ -219,6 +219,22 @@ ul {
 					<c:param name="ab_number" value="${board.ab_number }"></c:param>
 				</c:url>
 				<a class="btn btn-outline-success modifyBtn" href="${modifyLink }">수정</a>
+
+		<!-- 작성자와 authentication.name이 같아야 삭제&수정버튼 보여주기 -->
+		<sec:authentication property="name" var="userIdValue" />
+		
+		<c:if test="${board.member_userId == userIdValue}" >
+			<!-- 삭제버튼 -->
+			<c:url value="/academy/remove" var="removeLink"></c:url>
+				<form id="removeForm" action="${removeLink }" method="post">
+					<input type="hidden" name="ab_number" value="${board.ab_number }"/>
+				</form>
+				<input class="btn btn-outline-success removeBtn" type="submit" value="삭제" data-bs-toggle="modal" data-bs-target="#removeModal"/>
+			<!-- 수정버튼 -->	
+				<c:url value="/academy/modify" var="modifyLink">
+					<c:param name="ab_number" value="${board.ab_number }"></c:param>
+				</c:url>
+				<a class="btn btn-outline-success modifyBtn" href="${modifyLink }">수정</a>
 		</c:if>
 	</div>
 	
@@ -308,9 +324,6 @@ ul {
     
 	</div>
 </div>
-	
-	
-
 	<!-- 게시글 삭제 모달 -->
 	<div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog">

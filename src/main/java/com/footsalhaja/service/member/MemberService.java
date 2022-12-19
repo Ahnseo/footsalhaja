@@ -19,6 +19,8 @@ public interface MemberService {
 
 	int deleteMemberInfoByUserId(String userId);
 
+	int deleteMemberInfoByUserId(String userId);
+
 	int updateMemberInfoByUserId(MemberDto memberModifiedValues, MultipartFile file);
 	
 	MemberDto getUserAbList(String userId, int page, MemberPageInfo pageInfo);

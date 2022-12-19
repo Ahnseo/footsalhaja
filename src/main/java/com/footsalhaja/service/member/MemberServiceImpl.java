@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.footsalhaja.domain.academy.BoardDto;
+
 import com.footsalhaja.domain.member.MemberDto;
 import com.footsalhaja.domain.member.MemberPageInfo;
 import com.footsalhaja.mapper.member.MemberMapper;
@@ -30,14 +31,14 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Autowired
 	private MemberMapper memberMapper;
-	
+
 	@Autowired
 	private S3Client s3Client;
 	
 	@Value("${aws.s3.bucket}")
 	private String bucketName;
 	
-	
+
 	@Override
 	public MemberDto getByEmail(String email) {
 		return memberMapper.selectByEmail(email);
@@ -53,7 +54,7 @@ public class MemberServiceImpl implements MemberService {
 	public MemberDto getById(String userId){
 		return memberMapper.selectByUserId(userId);
 	}
-	
+  
 	//회원가입(등록) 또는 회원정보 수정
 	@Override
 	public int insertMember(MemberDto member) {
@@ -106,7 +107,7 @@ public class MemberServiceImpl implements MemberService {
 		MemberDto memberInfo = memberMapper.selectMemberInfoByUserId(userId);
 		
 		Map<String, Integer> countActivity = new HashMap<>();
-		
+
 		int countAllAblist = memberMapper.countAllAblist(userId);
 		int countAllFblist = memberMapper.countAllFblist(userId);
 		int countAllMainlist = memberMapper.countAllMainlist(userId);
@@ -136,6 +137,21 @@ public class MemberServiceImpl implements MemberService {
 	public int deleteMemberInfoByUserId(String userId) {
 		//프로필 이미지 삭제
 		String profileImg = memberMapper.selectMemberInfoByUserId(userId).getProfileImg();
+		
+		if (profileImg != null) {
+			// s3 저장소의 프로필 지우기
+			deleteFile(userId, profileImg);
+		
+		}
+		
+		//DB 프로필 지우기
+		memberMapper.deleteProfileImgByUserId(userId);
+		//회원탈퇴 게시물 지우기
+		memberMapper.deleteMemberDocumentsByUserId(userId);
+		//회원탈퇴 게시물 댓글 지우기
+		memberMapper.deleteMemberReplysByUserId(userId);
+		//회원탈퇴 좋아요 지우기
+		memberMapper.deleteMemberLikesByUserId(userId);
 		
 		if (profileImg != null) {
 			// s3 저장소의 프로필 지우기
@@ -194,7 +210,6 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Override
 	public int updateMemberInfoByUserId(MemberDto memberModifiedValues, MultipartFile file) {
-		
 		
 		if (file != null && file.getSize() > 0) {
 			//기존 프로필 삭제

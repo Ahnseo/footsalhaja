@@ -47,7 +47,6 @@ li {
 
 #userTitle h3 {
 	text-align: center;
-	padding: 50px;
  }
 
 .list {

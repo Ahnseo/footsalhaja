@@ -71,7 +71,6 @@ public interface MemberMapper {
 	//프로필 이미지 삭제
 	public int deleteProfileImgByUserId(String userId);
 
-
 	public int updateMemberAuth(String userId, List<String> newAuthorities);
 
 

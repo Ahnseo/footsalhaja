@@ -3,6 +3,7 @@ package com.footsalhaja.controller.academy;
 import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.URLEncoder;
+
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
@@ -37,6 +38,7 @@ import com.footsalhaja.service.academy.AcademyServiceImpl;
 import software.amazon.awssdk.auth.credentials.AwsCredentials;
 import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
 import software.amazon.awssdk.core.ResponseBytes;
+
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.GetObjectResponse;
@@ -44,15 +46,22 @@ import software.amazon.awssdk.services.s3.model.ObjectCannedACL;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 
+
 import com.amazonaws.HttpMethod;
 import com.amazonaws.auth.AWSCredentials;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
+
+
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
+
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
+
 
 @Controller
 @RequestMapping("academy")
@@ -139,6 +148,7 @@ public class AcademyController {
 	  
 	  String ab_image = UUID.randomUUID() + originalFileName; //랜덤 UUID+파일이름으로 저장될 파일 새 이름
 	  
+
 	  System.out.println(ab_filePath);
 	  
 	  try {
@@ -183,6 +193,8 @@ public class AcademyController {
 			  System.out.println(url);
 			 
 			//url에 s3 bucket 파일 저장된 경로 전달해야됨... s3라 인증된 presignedUrl으로 전달
+
+
 			jsonObject.put("url", url);
 			jsonObject.put("ab_image", ab_image);
 			jsonObject.put("responseCode", "success");

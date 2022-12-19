@@ -464,7 +464,6 @@
 		WHERE member_userId = #{userId}
 	</delete>
 
-	
 	<!-- 중복 프로필 이름 덮어씌우기 -->
  	<delete id="deleteProfileImgByUserIdAndPrifileImg">
 	DELETE FROM profileImage
