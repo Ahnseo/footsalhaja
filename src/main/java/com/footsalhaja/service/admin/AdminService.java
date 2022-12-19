@@ -18,7 +18,7 @@ public interface AdminService {
 	//관리자가 볼수있는 예약된 리스트 
 	public List<BookDto> selectBookedListLimit();
 	
-	public List<BookDto> selectBookedListAll(int page , QnAPageInfo qnaPageInfo ,String type ,String keyword);
+	public List<BookDto> selectBookedListAll(int page , QnAPageInfo qnaPageInfo ,String type ,String keyword, String s, String l, String d1, String d2);
 
 	public int selectTodayVisitCount();
 

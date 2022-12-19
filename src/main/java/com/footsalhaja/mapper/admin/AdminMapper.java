@@ -15,7 +15,7 @@ public interface AdminMapper {
 
 	List<BookDto> selectBookedListLimit(int status);
 	
-	List<BookDto> selectBookedListAll(int offset, int records ,String type ,String keyword, int status);
+	List<BookDto> selectBookedListAll(int offset, int records ,String type ,String keyword, String s, int status, String l, String d1, String d2);
 
 	int insertVisitCount();
 
@@ -29,7 +29,7 @@ public interface AdminMapper {
 	
 	
 	// 전체 예약리스트 페이지네이션 !!!!
-	int selectAllBookedCount(String type, String keyword, int status);
+	int selectAllBookedCount(String type, String keyword, String s, int status, String l, String d1, String d2);
 
 
 
