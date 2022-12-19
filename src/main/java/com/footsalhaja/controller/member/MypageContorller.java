@@ -1,7 +1,7 @@
 package com.footsalhaja.controller.member;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import com.footsalhaja.domain.academy.AcademyReplyDto;
@@ -102,7 +102,8 @@ public class MypageContorller {
 	}
 	@PostMapping("delete")
 	public String deleteMemberInfo(String userId) {
-		// 작성 예정 입니다... form ->post방식으로 히든input name ="userId" 응용 합니다.  
+		// 작성 예정 입니다... form ->post방식으로 히든input name ="userId" 응용 합니다.
+		
 		memberService.deleteMemberInfoByUserId(userId);
 		
 		return "redirect:/main/list";

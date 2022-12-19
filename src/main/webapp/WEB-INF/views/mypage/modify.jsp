@@ -185,17 +185,17 @@ h2 {
                             <!-- Submit Button-->
                             <input class="btn btn-primary btn-xl" id="submitButton" type="submit" value="수정"/>
                         </form>
+						<form action="/mypage/delete" method="post">
+							<%-- 히든 input userId 사용해서 post 방식으로 controller 에게 값 넘기기 !  --%>
+							<input type="hidden" name="userId" value="${member.userId}"> 
+							<input class="btn btn-danger" id="submitButton" type="submit" value="탈퇴">
+							탈퇴하기 : Foreign Key 함께 삭제하는 코드를 작성해야하므로, 나중에 DB통합 할때 수정하겠습니다 .
+						</form>
                     </div>
                 </div>
             </div>
         </section>
 
-			<form action="/mypage/delete" method="post">
-				<%-- 히든 input userId 사용해서 post 방식으로 controller 에게 값 넘기기 !  --%>
-				<input type="hidden" name="userId" value="${member.userId}"> 
-				<input type="submit" value="탈퇴하기">
-				탈퇴하기 : Foreign Key 함께 삭제하는 코드를 작성해야하므로, 나중에 DB통합 할때 수정하겠습니다 .
-			</form>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
