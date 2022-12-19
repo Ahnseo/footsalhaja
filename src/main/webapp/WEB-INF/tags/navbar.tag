@@ -168,7 +168,7 @@
       			<c:param name="page" value="1"/>
       			<c:param name="t" value="all"/>
       			<c:param name="q" value=""/>
-      			<c:param name="s" value="done"/>
+      			<c:param name="s" value=""/>
       			<c:param name="l" value=""/>
       			<c:param name="d1" value=""/>
       			<c:param name="d2" value=""/>

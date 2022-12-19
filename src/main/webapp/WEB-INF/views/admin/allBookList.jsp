@@ -4,9 +4,20 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Calendar" %>
+<%@ page import="java.lang.Deprecated" %>
 <%
+	//오늘 날짜 구하기
 	Date nowDate = new Date();
 	SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+	
+	//한달 후 날짜 구하기
+	Date addMonth = new Date();
+    
+    int getNowMM = nowDate.getMonth();
+    
+    addMonth.setMonth(getNowMM + 1);
+    
 %>
 <!DOCTYPE html>
 <html>
@@ -54,19 +65,28 @@
 		<form action="${allBookListLink }"  role="search">
 			<label for="col-12">예약일정</label>
 			<div class="d-flex col-12 mb-2">
+			
 				<!-- 현재 날짜 설정  -->
 				<c:set value="<%=sf.format(nowDate)%>" var="nowDate"/>
-				<!-- ${nowDate} -->
+				<!-- ${nowDate}  -->
+				
+				<!-- 한달후 날짜 설정 -->
+				<c:set value='<%=sf.format(addMonth)%>' var="addMonth" /> 
+				<!-- ${addMonth}  -->
+				
 				<c:choose>
 				
 					<c:when test="${empty param.d1 && empty param.d2}">
-						<input type="Date" class="form-control col-2" id="d1" name="d1" value="${nowDate}" ${param.d1 == '${param.d1 }' ? 'selected' : '' }>
+						<!-- 오늘 부터 ~ 다음 달 까지  -->
+						<input type="Date" class="form-control col-2" id="d1" name="d1" value="${nowDate }" ${param.d1 == '${param.d1 }' ? 'selected' : '' }>
 						<span class=" col-1"> 부터 </span>
-						<input type="Date" class="form-control col-2" id="d2" name="d2" value="${nowDate}" ${param.d1 == '${param.d2 }' ? 'selected' : '' }>
+						
+						<input type="Date" class="form-control col-2" id="d2" name="d2" value="${addMonth }" ${param.d1 == '${param.d2 }' ? 'selected' : '' }>
 						<span class=" col-1"> 까지 </span>
 					</c:when>
 					
 					<c:when test="${not empty param.d1 && not empty param.d2}">
+						<!-- 원하는 날짜 선택 검색 -->
 						<input type="Date" class="form-control col-2" id="d1" name="d1" value="${param.d1 }" ${param.d1 == '${param.d1 }' ? 'selected' : '' }>
 						<span class=" col-1"> 부터 </span>
 						<input type="Date" class="form-control col-2" id="d2" name="d2" value="${param.d2 }" ${param.d2 == '${param.d2 }' ? 'selected' : '' }>
