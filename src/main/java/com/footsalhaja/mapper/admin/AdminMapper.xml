@@ -115,7 +115,7 @@
 		) 	
 		GROUP BY b.bookId
  		
- 		ORDER BY b.insertDatetime DESC
+ 		ORDER BY b.bookDate ASC
  		
  		LIMIT #{offset}, #{records}
  	</select>
