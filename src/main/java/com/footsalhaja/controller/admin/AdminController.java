@@ -70,9 +70,11 @@ public class AdminController {
 	public void allBookList(@RequestParam(name="page", defaultValue="1") int page, 
 							@RequestParam(name="t") String type,
 							@RequestParam(name="q") String keyword,
+							@RequestParam(name="s") String s,
+							@RequestParam(name="s") String l,
 							QnAPageInfo qnaPageInfo,
 							Model model) {
-		List<BookDto> allBookedList = adminService.selectBookedListAll(page ,qnaPageInfo ,type ,keyword);
+		List<BookDto> allBookedList = adminService.selectBookedListAll(page ,qnaPageInfo ,type ,keyword, s, l);
 		model.addAttribute("allBookedList", allBookedList);
 		
 		model.addAttribute("bookedPage", qnaPageInfo);

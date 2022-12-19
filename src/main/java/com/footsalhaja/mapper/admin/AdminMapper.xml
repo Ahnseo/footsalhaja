@@ -15,11 +15,36 @@
  	
  	<select id="selectAllBookedCount" resultType="int">
  		SELECT 
- 			COUNT(bookId)
+ 			COUNT(b.bookId)
  		FROM
- 			book
+ 			book b
+ 		LEFT JOIN member m ON m.userId = b.member_userId
+ 		LEFT JOIN location l ON b.location_locationId = l.locationId	
  		WHERE
- 			status = #{status}		
+	 		b.status = #{status}	
+ 		AND
+	 
+	 	(
+		<trim prefixOverrides="OR">
+			<if test="type == 'all' or type == 'title'">
+			OR b.title LIKE #{keyword}
+			</if>
+			
+			<if test="type == 'all' or type == 'content'">
+			OR b.content LIKE #{keyword}
+			</if>
+			
+			<if test="type == 'all' or type == 'userId'">
+			OR m.userId LIKE #{keyword}
+			</if>
+			
+			<if test="type == 'all' or type == 'stadiumName'">
+			OR l.stadiumName LIKE #{keyword}
+			</if>
+		</trim> 
+		) 	
+		
+ 			
  	</select>
  	<!-- bookId, title, content, matchType, level, status, 
  	bookDate, bookTime, insertDatetime, teamGender, location_locationId, member_userId -->
@@ -41,10 +66,11 @@
  		FROM book b
  		LEFT JOIN member m ON b.member_userId = m.userId
  		LEFT JOIN location l ON b.location_locationId = l.locationId
+ 		WHERE 
  		
- 		WHERE b.status = #{status}
- 		
-	 	AND 
+	 		b.status = #{status}	
+ 		AND
+	 
 	 	(
 		<trim prefixOverrides="OR">
 			<if test="type == 'all' or type == 'title'">
@@ -54,15 +80,20 @@
 			<if test="type == 'all' or type == 'content'">
 			OR b.content LIKE #{keyword}
 			</if>
-			
+						
 			<if test="type == 'all' or type == 'userId'">
 			OR m.userId LIKE #{keyword}
+			</if>
+			
+			<if test="type == 'all' or type == 'stadiumName'">
+			OR l.stadiumName LIKE #{keyword}
 			</if>
 		</trim> 
 		) 	
 		GROUP BY b.bookId
  		
  		ORDER BY b.insertDatetime DESC
+ 		
  		LIMIT #{offset}, #{records}
  	</select>
  	

@@ -42,27 +42,57 @@
 <h3>전체 예약내역</h3>
 	<p>검색키워드 =제목,id검색  + 최신순/예약 날짜별/예약시간별 /구장별 매치타입별 /Level별 /모집상태별로 버튼 누를때 마다 -> script: 쿼리 DESC<-> ASC 변경  </p>
 
-	<!-- 검색기능   -->
-	<div class="form-group">      
-	<c:url value="/admin/allBookList" var="allBookListLink"></c:url>
-		<form action="${allBookListLink }" class="d-flex flex-row-reverse" role="search">
-			 <div>
-			    <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+	<!-- 검색기능 + 예약날짜 + 구장별 + 모집상태  -->
+	<div class="form-group">     
+	
+		<c:url value="/admin/allBookList" var="allBookListLink"></c:url> 	
+		<form action="${allBookListLink }"  role="search">
+			<div class="d-flex flex-row-reverse" >
+				<div class="col-sm-1">
+				    <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+			    </div>
+			   
+		      	<div class="col-sm-3">
+				    <input class="form-control " type="search" name="q" value="${param.q }" placeholder="검색" aria-label="Search">
+			    </div>
+			   
+				<div class="col-sm-2">
+					<select name="t" id="searchTypeSelect" class="form-select">
+			      		<option value="all">전체</option>
+			      		
+			      		<option value="title" ${param.t == 'title' ? 'selected' : '' }>제목</option>
+			      		<option value="userId" ${param.t == 'userId' ? 'selected' : '' }>작성자</option>
+			      		<option value="content" ${param.t == 'content' ? 'selected' : '' }>본문</option>
+			      		<option value="stadiumName" ${param.t == 'stadiumName' ? 'selected' : '' }>구장이름</option>
+			      	</select>
+		      	</div>	
+		      	
+		      	<div class="col-2">
+			      	<select name="s" id="" class="form-select">
+			      		<option value="done" ${param.s == 'done' ? 'selected' : '' }>모집완료 </option>
+						<option value="yet" ${param.s == 'yet' ? 'selected' : '' }>모집중 </option>
+					</select>
+		      	</div>
+		      	<div class="col-2">
+		      	</div>
+		      	<div class="col-2">
+		      	<select class="form-select" name="l" id="location">
+		      	 	<option  value="" ${param.stdm == ''? 'selected' : '' } >예약장소</option>
+				    <option value="1" ${param.stdm == '1'? 'selected' : '' } >천마 풋살파크</option>
+				    <option value="2" ${param.stdm == '2'? 'selected' : '' } >아디다스 더베이스</option>
+				   	<option value="3" ${param.stdm == '3'? 'selected' : '' } >도봉 루다 풋살장</option>
+				    <option value="4" ${param.stdm == '4'? 'selected' : '' } >영등포 SKY 풋살파크 A구장</option>
+				    <option value="5" ${param.stdm == '5'? 'selected' : '' } >은평 롯데몰 A구장</option>
+				   
+				    <option value="6" ${param.stdm == '6'? 'selected' : '' } >피치 부천 이마트 부천점</option>
+				    <option value="7" ${param.stdm == '7'? 'selected' : '' } >용인 기흥 낫소 풋살파크</option>
+				   	<option value="8" ${param.stdm == '8'? 'selected' : '' } >칼라힐 풋살파크 B구장</option>
+				    <option value="9" ${param.stdm == '9'? 'selected' : '' } >인천 더 베스트 풋볼파크 구월점</option>
+				    <option value="10" ${param.stdm == '10'? 'selected' : '' } >하남 감일 장수천 풋살파크</option>
+	   			</select>
+	   			
+				</div>
 		    </div>
-		   
-	      	<div class="col-sm-3">
-			    <input class="form-control " type="search" name="q" value="${param.q }" placeholder="검색" aria-label="Search">
-		    </div>
-		   
-			<div class="col-sm-2">
-				<select name="t" id="searchTypeSelect" class="form-select">
-		      		<option value="all">전체</option>
-		      		<option value="userId" ${param.t == 'userId' ? 'selected' : '' }>ID</option>
-		      		<option value="name" ${param.t == 'name' ? 'selected' : '' }>이름</option>
-		      	</select>
-	      	</div>	
-	      	 <div class="col-sm-6">
-			 </div>
 		</form>
 	</div>
 	
@@ -174,6 +204,7 @@
 				     	<c:param name="page" value="1"/>
 				     	<c:param name="q" value="${param.q}"/>
 				     	<c:param name="t" value="${param.t}"/>
+				     	<c:param name="s" value="${param.s}"/>
 				      </c:url>	
 				      <a class="page-link" href="${firstPageLink}" aria-label="First">
 				      &laquo;
@@ -188,6 +219,7 @@
 				     	<c:param name="page" value="${bookedPage.jumpPrevPageNumber}"/>
 				     	<c:param name="q" value="${param.q}"/>
 				     	<c:param name="t" value="${param.t}"/>
+				     	<c:param name="s" value="${param.s}"/>
 				      </c:url>	
 				      <a class="page-link" href="${previousPageLink}" aria-label="Previous">
 				      &lt;
@@ -202,6 +234,7 @@
 					    	<c:param name="page" value="${pageNumber}"/>
 					    	<c:param name="q" value="${param.q}"/>
 					     	<c:param name="t" value="${param.t}"/>
+					     	<c:param name="s" value="${param.s}"/>
 				    	</c:url>
 				    	<a class="page-link " href="${pageLink}">
 				    		${pageNumber}
@@ -216,6 +249,7 @@
 				     	<c:param name="page" value="${bookedPage.jumpNextPageNumber}"/>
 				     	<c:param name="q" value="${param.q}"/>
 				     	<c:param name="t" value="${param.t}"/>
+				     	<c:param name="s" value="${param.s}"/>
 				      </c:url>	
 				      <a class="page-link" href="${nextPageLink}" aria-label="Previous">
 				      &gt;
@@ -230,6 +264,7 @@
 				        <c:param name="page" value="${bookedPage.lastPageNumber}"/>
 				        <c:param name="q" value="${param.q}"/>
 				     	<c:param name="t" value="${param.t}"/>
+				     	<c:param name="s" value="${param.s}"/>
 				      </c:url>	
 				      <a class="page-link" href="${lastPageLink}" aria-label="Last">
 				      &raquo;
@@ -244,5 +279,6 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+
 </body>
 </html>

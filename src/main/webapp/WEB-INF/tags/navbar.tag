@@ -144,6 +144,7 @@
       			<c:param name="page" value="1"/>
       			<c:param name="t" value="all"/>
       			<c:param name="q" value=""/>
+      			<c:param name="s" value="done"/>
       		</c:url>
       		<c:url value="/admin/allQnAList" var="allQnAListLink">
       			<c:param name="page" value="1"/>

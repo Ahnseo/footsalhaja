@@ -126,7 +126,7 @@
 		 	<if test="type == 'all' or type == 'content'">
 		 	OR q.content LIKE #{keyword}
 		 	</if>
-		 	<if test="type == 'al' or type == 'userId'">
+		 	<if test="type == 'all' or type == 'userId'">
 		 	OR m.userId LIKE #{keyword}
 		 	</if>
 	 	</trim>	

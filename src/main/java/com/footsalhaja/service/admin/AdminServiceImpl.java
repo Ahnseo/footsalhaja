@@ -81,14 +81,23 @@ public class AdminServiceImpl implements AdminService {
 	}
 	
 	@Override
-	public List<BookDto> selectBookedListAll(int page , QnAPageInfo qnaPageInfo ,String type ,String keyword) {
-		
-		int status = 0; //예약된 매칭만 리스트로 가져오기  -> allBookList.jsp 테이블로 보여주기 
+	public List<BookDto> selectBookedListAll(int page , QnAPageInfo qnaPageInfo ,String type ,String keyword, String s ) {
+		//답변상태 기능 추가 
+		int status = 1; // 1 = 모집중 , 0 = 모집완료 
+		switch (s) {
+		case "yet":
+			status = 1;
+			break;
+		case "done":
+			status = 0;
+			break;
+		}
 		
 		// 페이지네이션 추가
 			int records = 10; // 10 rows 씩 목록에 나타냅니다  
 			int offset = (page - 1) * records; //page=2 : 11~20 rows ,  page=3 : 21~30 rows 나타냄 		
-			int countAll = adminMapper.selectAllBookedCount(type, "%"+keyword+"%", status);
+			int countAll = adminMapper.selectAllBookedCount(type, "%"+keyword+"%", s, status);
+			System.out.println("countAll### : "+countAll);
 			
 			int lastPageNumber = (countAll - 1) / records + 1;
 			int leftPageNumber = (page - 1) / 10 * 10 + 1;
@@ -114,9 +123,7 @@ public class AdminServiceImpl implements AdminService {
 			qnaPageInfo.setHasNextButton(hasNextButton);
 		
 		
-		
-		
-		return adminMapper.selectBookedListAll(offset, records ,type ,"%"+keyword+"%", status);
+		return adminMapper.selectBookedListAll(offset, records ,type ,"%"+keyword+"%", s, status);
 	}
 	
 	@Override
