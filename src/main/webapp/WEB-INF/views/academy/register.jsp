@@ -149,7 +149,7 @@
   	        maxHeight: null,
   	        focus: true, 
   	        lang : "ko-KR",
-  	        placeholder: '최대 2048자까지 쓸수 있다 함',	//placeholder 설정
+  	        placeholder: '최대 2048자까지 쓸수 있습니다',	//placeholder 설정
 			callbacks: {	//여기 부분이 이미지를 첨부하는 부분
 				onImageUpload: function(files, editor) {
 		            for (var i = files.length - 1; i >= 0; i--) {
@@ -177,8 +177,6 @@
 				success : function(data) {
 	            	//항상 업로드된 파일의 url이 있어야 한다. ('insertImage', url, filename)
 					$(editor).summernote('insertImage', data.url, data.ab_image);
-	            	/* //이미지가 업로드 되면, 하위에 테스트 확인차 추가하도록 해놓은 부분
-					$('#imageBoard > ul').append('<li><img src="'+url+'" width="480" height="auto"/></li>'); */
 				}
 			});
 		} 

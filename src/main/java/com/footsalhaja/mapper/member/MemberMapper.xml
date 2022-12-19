@@ -121,7 +121,37 @@
  			<result column="auth" property="auth"/>
  		</collection>
  	</resultMap>
-	
+ 	
+ 	<!-- 회원탈퇴 (게시물 지우기) -->
+ 	<delete id="deleteMemberDocumentsByUserId">
+	 	DELETE a, f, b, l
+	 	FROM member m LEFT JOIN academyBoard a ON m.userId = a.member_userId
+		 				LEFT JOIN freeBoard f ON m.userId = f.member_userId
+		 				LEFT JOIN book b ON m.userId = b.member_userId
+						LEFT JOIN location l ON b.location_locationId = l.locationId
+	 					
+	 	WHERE userId = #{userId}
+ 	</delete>
+ 	
+ 	 <!-- 회원탈퇴 (댓글 지우기) -->
+ 	<delete id="deleteMemberReplysByUserId">
+	 	DELETE ar, fr, br
+	 	FROM member m LEFT JOIN freeBoardReply fr ON m.userId = fr.member_userId
+		 				LEFT JOIN academyBoardReply ar ON m.userId = ar.member_userId
+		 				LEFT JOIN bookReply br ON m.userId = br.member_userId
+	 					
+	 	WHERE userId = #{userId}
+ 	</delete>
+ 	
+ 	<!-- 회원탈퇴 (좋아요 지우기) -->
+ 	 <delete id="deleteMemberLikesByUserId">
+	 	DELETE al, fl
+	 	FROM member m LEFT JOIN academyBoardLike al ON m.userId = al.member_userId
+	 					LEFT JOIN freeBoardLike fl ON m.userId = fl.member_userId
+	 					
+	 	WHERE userId = #{userId}
+ 	</delete>
+ 	
  	<!-- 회원탈퇴 member ByUserId -->
  	<delete id="deleteMemberInfoByUserId">
 	 	DELETE FROM member
@@ -164,7 +194,7 @@
  	</resultMap>
  	
  	<select id="countAllAblist" resultType="int">
-		SELECT Count(*)
+		SELECT Count(ab_number)
 		FROM member m LEFT JOIN academyBoard a ON m.userId = a.member_userId 
 		WHERE m.userId = #{userId}
 	</select>
@@ -200,7 +230,7 @@
  	</resultMap>
  	
  	<select id="countAllFblist" resultType="int">
-		SELECT Count(*)
+		SELECT Count(fb_number)
 		FROM member m LEFT JOIN freeBoard f ON m.userId = f.member_userId 
 		WHERE m.userId = #{userId}
 	</select>
@@ -247,7 +277,7 @@
  	</resultMap>
  	
  	 <select id="countAllMainlist" resultType="int">
-		SELECT Count(*)
+		SELECT Count(bookId)
 		FROM member m LEFT JOIN book b ON m.userId = b.member_userId
 						LEFT JOIN location l ON b.location_locationId = l.locationId
 		WHERE m.userId = #{userId}
@@ -278,7 +308,7 @@
  	</resultMap>
  	
  	<select id="countFbReplyList" resultType="int">
-		SELECT Count(*)
+		SELECT Count(fb_replyNumber)
 		FROM member m LEFT JOIN freeBoardReply fr ON m.userId = fr.member_userId
 		WHERE m.userId = #{userId}
 	</select>
@@ -308,7 +338,7 @@
  	</resultMap>
  	
  	 <select id="countAbReplyList" resultType="int">
-		SELECT Count(*)
+		SELECT Count(ab_replyNumber)
 		FROM member m LEFT JOIN academyBoardReply ar ON m.userId = ar.member_userId
 		WHERE m.userId = #{userId}
 	</select>
@@ -338,7 +368,7 @@
  	</resultMap>
  	
  	 <select id="countMainReplyList" resultType="int">
-		SELECT Count(*)
+		SELECT Count(replyId)
 		FROM member m LEFT JOIN bookReply br ON m.userId = br.member_userId
 		WHERE m.userId = #{userId}
 	</select>
@@ -366,7 +396,7 @@
  	</resultMap>
  	
  	 <select id="countUserAbLike" resultType="int">
-		SELECT Count(*)
+		SELECT Count(academyBoard_ab_number)
 		FROM member m LEFT JOIN academyBoardLike al ON m.userId = al.member_userId
 		WHERE m.userId = #{userId}
 	</select>
@@ -394,7 +424,7 @@
  	</resultMap>
  	
  	<select id="countUserFbLike" resultType="int">
-		SELECT Count(*)
+		SELECT Count(freeBoard_fb_number)
 		FROM member m LEFT JOIN freeBoardLike fl ON m.userId = fl.member_userId
 		WHERE m.userId = #{userId}
 	</select>

@@ -153,9 +153,7 @@ public class AcademyController {
 	  
 	  String ab_image = UUID.randomUUID() + originalFileName; //랜덤 UUID+파일이름으로 저장될 파일 새 이름
 	  
-	  File targetFile = new File(ab_filePath + ab_image);
-	  
-	  System.out.println("targetFile: "+targetFile);
+
 	  System.out.println(ab_filePath);
 	  
 	  try {
@@ -172,7 +170,7 @@ public class AcademyController {
 			// object(파일) 올리기
 			s3Client.putObject(putObjectRequest, requestBody);
 	
-			
+			//썸머노트 이미지 전달 위한 presigned URL 생성
 			  Regions clientRegion = Regions.AP_NORTHEAST_2;
 			  
 			  AWSCredentials credentials = new BasicAWSCredentials(awsCredentials.accessKeyId(), awsCredentials.secretAccessKey());
@@ -183,10 +181,10 @@ public class AcademyController {
 			  .build();
 			  
 			  
-			  // Set the presigned URL to expire after one hour. 
+			  // Set the presigned URL to expire after 12 hours. 
 			  java.util.Date expiration = new java.util.Date(); 
 			  long expTimeMillis = Instant.now().toEpochMilli();
-			  expTimeMillis += 1000 * 60 * 60; 
+			  expTimeMillis += 1000 * 60 * 60 *12; 
 			  expiration.setTime(expTimeMillis);
 			  
 			  // Generate the presigned URL.
@@ -199,10 +197,7 @@ public class AcademyController {
 			  
 			  System.out.println(url);
 			 
-
-			
-			System.out.println();
-			//url에 s3 bucket 파일 저장된 경로 전달해야됨... s3라 인증된 presignedUrl으로 전달했는데도 403에러 뜸...왜그럴까?
+			//url에 s3 bucket 파일 저장된 경로 전달해야됨... s3라 인증된 presignedUrl으로 전달
 			jsonObject.put("url", url);
 			jsonObject.put("ab_image", ab_image);
 			jsonObject.put("responseCode", "success");

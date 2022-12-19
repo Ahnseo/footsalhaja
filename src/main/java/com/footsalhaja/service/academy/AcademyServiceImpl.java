@@ -83,11 +83,12 @@ public class AcademyServiceImpl implements AcademyService{
 			}
 		}
 		
-		
-		for (MultipartFile file : addFiles) {
-			//같은 이름의 파일을 추가 시 덮어씌우기 위해 File table에 해당 파일명 지우는 작업
-			mapper.deleteByBoardIdAndFileName(board.getAb_number(),file.getOriginalFilename());
-		}
+		//UUID+파일이름 으로 중복된 이름이어도 저장 가능해짐
+		/*
+		 * for (MultipartFile file : addFiles) { //같은 이름의 파일을 추가 시 덮어씌우기 위해 File table에
+		 * 해당 파일명 지우는 작업 mapper.deleteByBoardIdAndFileName(board.getAb_number(),file.
+		 * getOriginalFilename()); }
+		 */
 		
 		for (MultipartFile file : addFiles) {
 			if (file != null && file.getSize() > 0) {
@@ -110,8 +111,9 @@ public class AcademyServiceImpl implements AcademyService{
 					// S3에 파일 저장
 					// 키 생성
 					String key = "academy/" + board.getAb_number() + "/" + file.getOriginalFilename();
+					
 				// 파일 저장
-				// ab_number 이름의 새 폴더 만들기 (파일 첨부된 게시물 ab_number번호의 새폴더가 생성됨)
+				// ab_number 이름의 새 폴더 만들기 (파일 첨부된 게시물 ab_number번호의 새폴더가 생성되면서 파일 저장)
 					PutObjectRequest putObjectRequest = PutObjectRequest.builder()
 							.bucket(bucketName)
 							.key(key)
@@ -127,7 +129,7 @@ public class AcademyServiceImpl implements AcademyService{
 					//파일 경로
 					String ab_filePath = key;
 							
-							mapper.insertFile(board.getAb_number(), ab_fileName, ab_filePath, ab_fileType);
+					mapper.insertFile(board.getAb_number(), ab_fileName, ab_filePath, ab_fileType);
 				} catch (Exception e) {
 					e.printStackTrace();
 					throw new RuntimeException(e);
@@ -165,9 +167,9 @@ public class AcademyServiceImpl implements AcademyService{
 	}
 	
 	private void deleteFile(int ab_number, String fileName) {
-		String key = "academy" + ab_number + "/" + fileName;
+		String key = "academy/" + ab_number + "/" + fileName;
 		
-		System.out.println("deleteFile key"+key);
+		System.out.println("deleteFile key: "+key);
 		
 		DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
 				.bucket(bucketName)

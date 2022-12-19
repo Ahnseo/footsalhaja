@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.footsalhaja.domain.academy.BoardDto;
 import com.footsalhaja.domain.member.MemberDto;
 import com.footsalhaja.domain.member.MemberPageInfo;
 import com.footsalhaja.mapper.member.MemberMapper;
@@ -115,32 +116,22 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int deleteMemberInfoByUserId(String userId) {
 		//프로필 이미지 삭제
-	
-		//저장된 파일의 경로 지정
-		String path = "user_profile/" +userId;
-		File folder = new File(path);
+		String profileImg = memberMapper.selectMemberInfoByUserId(userId).getProfileImg();
 		
-		File[] listFiles = folder.listFiles();
-
-		if (listFiles != null) {
-				for (File file : listFiles) {
-					deleteFile(userId, file.getName());
-				}
-			}
+		if (profileImg != null) {
+			// s3 저장소의 프로필 지우기
+			deleteFile(userId, profileImg);
 		
-		for (File file: listFiles) {
-			file.delete();
 		}
-		folder.delete();
 		
+		//DB 프로필 지우기
 		memberMapper.deleteProfileImgByUserId(userId);
-		
-		//회원탈퇴 게시물 댓글 지우기
-		
 		//회원탈퇴 게시물 지우기
-		
+		memberMapper.deleteMemberDocumentsByUserId(userId);
+		//회원탈퇴 게시물 댓글 지우기
+		memberMapper.deleteMemberReplysByUserId(userId);
 		//회원탈퇴 좋아요 지우기
-		
+		memberMapper.deleteMemberLikesByUserId(userId);
 		//회원탈퇴 FK Authority ByUserId
 		memberMapper.deleteAuthorityByUserId(userId);
 		//회원탈퇴 member ByUserId

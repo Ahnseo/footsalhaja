@@ -268,11 +268,11 @@ li {
 				<tr scope="row">
 					<th>No</th>
 					<th>말머리</th>
-					<th>좋아요</th>
+					<th><i class="fa-regular fa-heart"></i></th>
 					<th>제목</th>
 					<th>닉네임</th>
 					<th>작성시간</th>
-					<th>조회수</th>
+					<th><i class="fa-regular fa-eye"></i></th>
 				</tr>
 			</thead>
 			<tbody>
