@@ -10,10 +10,10 @@ import org.apache.catalina.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.footsalhaja.domain.academy.BoardDto;
 
 import com.footsalhaja.domain.member.MemberDto;
 import com.footsalhaja.domain.member.MemberPageInfo;
@@ -31,14 +31,12 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Autowired
 	private MemberMapper memberMapper;
-	
 
 	@Autowired
 	private S3Client s3Client;
 	
 	@Value("${aws.s3.bucket}")
 	private String bucketName;
-	
 	
 
 	@Override
@@ -56,7 +54,7 @@ public class MemberServiceImpl implements MemberService {
 	public MemberDto getById(String userId){
 		return memberMapper.selectByUserId(userId);
 	}
-
+  
 	//회원가입(등록) 또는 회원정보 수정
 	@Override
 	public int insertMember(MemberDto member) {
@@ -105,12 +103,10 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public List<Object> selectMemberInfoByUserId(String userId) {
 		List<Object> list = new ArrayList<>();
-
 		
 		MemberDto memberInfo = memberMapper.selectMemberInfoByUserId(userId);
 		
 		Map<String, Integer> countActivity = new HashMap<>();
-		
 
 		int countAllAblist = memberMapper.countAllAblist(userId);
 		int countAllFblist = memberMapper.countAllFblist(userId);
@@ -140,38 +136,37 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int deleteMemberInfoByUserId(String userId) {
 		//프로필 이미지 삭제
-
-	
-		//저장된 파일의 경로 지정
-		String path = "user_profile/" +userId;
-
-		File folder = new File(path);
+		String profileImg = memberMapper.selectMemberInfoByUserId(userId).getProfileImg();
 		
-		File[] listFiles = folder.listFiles();
-
-		if (listFiles != null) {
-				for (File file : listFiles) {
-
-					deleteFile(userId, file.getName());
-
-				}
-			}
+		if (profileImg != null) {
+			// s3 저장소의 프로필 지우기
+			deleteFile(userId, profileImg);
 		
-		for (File file: listFiles) {
-			file.delete();
 		}
-		folder.delete();
 		
+		//DB 프로필 지우기
 		memberMapper.deleteProfileImgByUserId(userId);
-		
-
-		//회원탈퇴 게시물 댓글 지우기
-		
 		//회원탈퇴 게시물 지우기
-		
+		memberMapper.deleteMemberDocumentsByUserId(userId);
+		//회원탈퇴 게시물 댓글 지우기
+		memberMapper.deleteMemberReplysByUserId(userId);
 		//회원탈퇴 좋아요 지우기
-
+		memberMapper.deleteMemberLikesByUserId(userId);
 		
+		if (profileImg != null) {
+			// s3 저장소의 프로필 지우기
+			deleteFile(userId, profileImg);
+		
+		}
+		
+		//DB 프로필 지우기
+		memberMapper.deleteProfileImgByUserId(userId);
+		//회원탈퇴 게시물 지우기
+		memberMapper.deleteMemberDocumentsByUserId(userId);
+		//회원탈퇴 게시물 댓글 지우기
+		memberMapper.deleteMemberReplysByUserId(userId);
+		//회원탈퇴 좋아요 지우기
+		memberMapper.deleteMemberLikesByUserId(userId);
 		//회원탈퇴 FK Authority ByUserId
 		memberMapper.deleteAuthorityByUserId(userId);
 		//회원탈퇴 member ByUserId
@@ -224,7 +219,6 @@ public class MemberServiceImpl implements MemberService {
 			memberMapper.insertprofileImg(memberModifiedValues.getUserId(), file.getOriginalFilename());
 			// 파일 저장
 			uploadFile(memberModifiedValues.getUserId(),file);
-
 		}
 		
 		int cnt = memberMapper.updateMemberInfoByUserId(memberModifiedValues);

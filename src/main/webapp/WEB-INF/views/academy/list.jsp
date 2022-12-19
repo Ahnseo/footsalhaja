@@ -241,9 +241,7 @@ li {
 							${rank.ab_title }
 						</a>
 						<c:if test="${rank.replyCnt > 0 }">
-
 							&nbsp;&nbsp;<i class="fa-regular fa-comment"></i>${rank.replyCnt }
-
 						</c:if>
 					</td>
 					<td width="70"><i class="fa-regular fa-heart"></i> ${rank.countLike }</td>
@@ -270,26 +268,23 @@ li {
 				<tr scope="row">
 					<th>No</th>
 					<th>말머리</th>
-					<th>좋아요</th>
+					<th><i class="fa-regular fa-heart"></i></th>
 					<th>제목</th>
 					<th>닉네임</th>
 					<th>작성시간</th>
-					<th>조회수</th>
+					<th><i class="fa-regular fa-eye"></i></th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach items="${boardList}" var="board">
-
 					<c:url value="/academy/get" var="getLink">
 						<c:param name="ab_number" value="${board.ab_number}"></c:param>
 					</c:url>
 					<tr onclick="location.href='${getLink}'" class="trtr">
-
 						<td>${board.ab_number }</td>
 						<td>${board.ab_category }</td>
 						<td>${board.countLike }</td>
 						<td class="listTitle col-sm-6">
-
 							<a class= 'move' href="${getLink }">
 								${board.ab_title}
 							</a>
@@ -389,7 +384,7 @@ li {
 			</sec:authorize>
 		<!-- 로그인 안 했을때 -->
 			<sec:authorize access="not isAuthenticated()">
-				<button data-bs-toggle="modal" data-bs-target="#nonMemberModal" id="nonMemberInsertButton">글쓰기</button>
+				<button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#nonMemberModal" id="nonMemberInsertButton">글쓰기</button>
 			</sec:authorize>	
 		</div>
 	</div>

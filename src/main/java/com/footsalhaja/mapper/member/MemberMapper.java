@@ -19,7 +19,16 @@ public interface MemberMapper {
 	public MemberDto selectMemberInfoByUserId(String userId);
 	
 	public int updateMemberInfoByUserId(MemberDto memberModifiedValues);
-		
+	
+	//회원탈퇴 (게시물 지우기)
+	public void deleteMemberDocumentsByUserId(String userId);
+	
+	//회원탈퇴 (댓글 지우기)
+	public void deleteMemberReplysByUserId(String userId);
+	
+	//회원탈퇴 (좋아요 지우기)
+	public void deleteMemberLikesByUserId(String userId);
+	
 	//회원탈퇴 (member ByUserId)
 	public int deleteMemberInfoByUserId(String userId);
 	//회원탈퇴 (authority ByUserId) 
@@ -62,7 +71,6 @@ public interface MemberMapper {
 	//프로필 이미지 삭제
 	public int deleteProfileImgByUserId(String userId);
 
-
 	public int updateMemberAuth(String userId, List<String> newAuthorities);
 
 
@@ -74,7 +82,6 @@ public interface MemberMapper {
 	public MemberDto selectByEmail(String email);
 	
 	public MemberDto selectByNickName(String nickName);
-
 
 
 }

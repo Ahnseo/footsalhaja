@@ -79,7 +79,10 @@ li {
  }
 
 /* 글목록 */
+<<<<<<< HEAD
+=======
 
+>>>>>>> main
 #listBox .table. th{
 	font-size: 13px;
 	letter-spacing: -1px;
@@ -89,7 +92,10 @@ li {
 
 
 #listBox tbody{
+<<<<<<< HEAD
+=======
 
+>>>>>>> main
 	font-size: 16px;
 	letter-spacing: -1px;
 	text-align: center;
@@ -126,9 +132,13 @@ li {
 	<div id="listBox" >
 		<table class="table table-hover container">
 			<thead>
+<<<<<<< HEAD
+				<tr class = "trtr" scope="row">	
+=======
 
 				<tr class = "trtr" scope="row">	
 
+>>>>>>> main
 					<th>예약 날짜</th>
 					<th>예약 시간</th>
 					<th>제목</th>
@@ -141,6 +151,23 @@ li {
 			</thead>
 			<tbody>
 				<c:forEach items="${list.userMainList}" var="mainlist">
+<<<<<<< HEAD
+					<c:url value="/main/get" var="getLink">
+						<c:param name="bookId" value="${mainlist.bookId}"></c:param>
+					</c:url> 
+					<tr onclick="location.href='${getLink}'" class="trtr">	
+					 	<td>${mainlist.bookDate}</td>
+					 	<td>${mainlist.bookTime}</td>					 	
+					 	<td class="listTitle col-sm-6">
+							<a class='move' href="${getLink }">${mainlist.title} </a>
+						</td>
+					 	<td>${mainlist.status}</td>
+					 	<td>${mainlist.stadiumName}</td>
+					 	<td>${mainlist.matchType}</td>
+					 	<td>${mainlist.level}</td>
+					 	<td>${mainlist.teamGender}</td>
+
+=======
 
 					<c:url value="/main/get" var="getLink">
 						<c:param name="bookId" value="${mainlist.bookId}"></c:param>
@@ -158,6 +185,7 @@ li {
 					 	<td>${mainlist.level}</td>
 					 	<td>${mainlist.teamGender}</td>
 
+>>>>>>> main
 				 	</tr>
 				</c:forEach>
 			</tbody>

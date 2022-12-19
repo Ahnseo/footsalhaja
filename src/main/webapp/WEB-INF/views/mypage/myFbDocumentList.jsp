@@ -133,7 +133,10 @@ li {
 						 	<td>${fblist.fb_number}</td>
 						 	<td>${fblist.fb_category}</td>					 	
 						 	<td class="listTitle col-sm-6">
+<<<<<<< HEAD
+=======
 
+>>>>>>> main
 								<a class='move' href="${getLink }">${fblist.fb_title} </a>
 							</td>
 						 	<td>${fblist.ago}</td>

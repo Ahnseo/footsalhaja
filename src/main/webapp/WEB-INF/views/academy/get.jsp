@@ -204,23 +204,37 @@ ul {
 			<button type="button" class="btn btn-outline-success">게시글 목록</button>
 		</a>
 		
+		<!-- 작성자와 authentication.name이 같아야 삭제&수정버튼 보여주기 -->
+		<sec:authentication property="name" var="userIdValue" />
+		
+		<c:if test="${board.member_userId == userIdValue}" >
+			<!-- 삭제버튼 -->
+			<c:url value="/academy/remove" var="removeLink"></c:url>
+				<form id="removeForm" action="${removeLink }" method="post">
+					<input type="hidden" name="ab_number" value="${board.ab_number }"/>
+				</form>
+				<input class="btn btn-outline-success removeBtn" type="submit" value="삭제" data-bs-toggle="modal" data-bs-target="#removeModal"/>
+			<!-- 수정버튼 -->	
+				<c:url value="/academy/modify" var="modifyLink">
+					<c:param name="ab_number" value="${board.ab_number }"></c:param>
+				</c:url>
+				<a class="btn btn-outline-success modifyBtn" href="${modifyLink }">수정</a>
 
 		<!-- 작성자와 authentication.name이 같아야 삭제&수정버튼 보여주기 -->
 		<sec:authentication property="name" var="userIdValue" />
 		
-		<!-- 삭제버튼 -->
-		<c:url value="/academy/remove" var="removeLink"></c:url>
-			<form id="removeForm" action="${removeLink }" method="post">
-				<input type="hidden" name="ab_number" value="${board.ab_number }"/>
-			</form>
-			<input class="btn btn-outline-success removeBtn" type="submit" value="삭제" data-bs-toggle="modal" data-bs-target="#removeModal"/>
-		<!-- 수정버튼 -->	
-
 		<c:if test="${board.member_userId == userIdValue}" >
-			<c:url value="/academy/modify" var="modifyLink">
-				<c:param name="ab_number" value="${board.ab_number }"></c:param>
-			</c:url>
-			<a class="btn btn-outline-success modifyBtn" href="${modifyLink }">수정</a>
+			<!-- 삭제버튼 -->
+			<c:url value="/academy/remove" var="removeLink"></c:url>
+				<form id="removeForm" action="${removeLink }" method="post">
+					<input type="hidden" name="ab_number" value="${board.ab_number }"/>
+				</form>
+				<input class="btn btn-outline-success removeBtn" type="submit" value="삭제" data-bs-toggle="modal" data-bs-target="#removeModal"/>
+			<!-- 수정버튼 -->	
+				<c:url value="/academy/modify" var="modifyLink">
+					<c:param name="ab_number" value="${board.ab_number }"></c:param>
+				</c:url>
+				<a class="btn btn-outline-success modifyBtn" href="${modifyLink }">수정</a>
 		</c:if>
 	</div>
 	
@@ -310,9 +324,6 @@ ul {
     
 	</div>
 </div>
-
-	
-	
 	<!-- 게시글 삭제 모달 -->
 	<div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog">
@@ -332,9 +343,8 @@ ul {
 	  </div>
 	</div>
 	
-	
-	<%-- 댓글 삭제 확인 모달 --%>
-	<div class="modal fade" id="removeReplyConfirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<!-- 댓글 삭제 확인 모달 -->
+	<div class="modal fade" id="replyDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog">
 	    <div class="modal-content">
 	      <div class="modal-header">
@@ -345,27 +355,27 @@ ul {
 	        댓글을 삭제하시겠습니까?
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-	        <button type="button" data-bs-dismiss="modal" id="removeConfirmModalSubmitButton" class="btn btn-danger">삭제</button>
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+	        <button type="button" id="replyDeleteConfirmButton" class="btn btn-primary" data-bs-dismiss="modal">삭제</button>
 	      </div>
 	    </div>
 	  </div>
 	</div>
 	
-	<%-- 댓글 수정 모달 --%>
-	<div class="modal fade" id="modifyReplyFormModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<!-- 댓글 수정 모달 -->
+	<div class="modal fade" id="replyModifyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h1 class="modal-title fs-5">댓글 수정 양식</h1>
+	        <h1 class="modal-title fs-5" id="exampleModalLabel">댓글 수정 양식</h1>
 	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	      </div>
 	      <div class="modal-body">
-	        <input type="text" id="modifyReplyInput">
+	        <input type="text" id="modifyReplyInput"/>	
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-	        <button type="button" data-bs-dismiss="modal" id="modifyFormModalSubmitButton" class="btn btn-danger">수정</button>
+	        <button type="button" id="replyModifyConfirmButton" class="btn btn-primary" data-bs-dismiss="modal">수정</button>
 	      </div>
 	    </div>
 	  </div>
@@ -442,14 +452,13 @@ document.querySelector("#removeConfirmButton").addEventListener("click", functio
 				if (item.editable) {
 					// 수정 폼 모달에 댓글 내용 넣기
 					document.querySelector("#" + modifyReplyButtonId).addEventListener("click", function() {
-							document.querySelector("#modifyFormModalSubmitButton").setAttribute("data-reply-id", this.dataset.replyId);
+							document.querySelector("#replyModifyConfirmButton").setAttribute("data-reply-id", this.dataset.replyId);
 							readReplyAndSetModalForm(this.dataset.replyId);
 						}); 
 					
-					document.querySelector("#" + removeReplyButtonId)
-					.addEventListener("click", function() {
+					document.querySelector("#" + removeReplyButtonId).addEventListener("click", function() {
 						//모달 삭제버튼에 전달 할 삭제할 댓글의 삭제버튼의replyID를 setAttribute를 이용해 부여
-						document.querySelector("#removeConfirmModalSubmitButton").setAttribute("data-reply-id", this.dataset.replyId);
+						document.querySelector("#replyDeleteConfirmButton").setAttribute("data-reply-id", this.dataset.replyId);
 					});
 				}
 			} showReplyPage(replyCnt);
@@ -521,7 +530,7 @@ document.querySelector("#removeConfirmButton").addEventListener("click", functio
 	} 
 	
 	/* 댓글 수정 */
-	document.querySelector("#modifyFormModalSubmitButton").addEventListener("click", function() {
+	document.querySelector("#replyModifyConfirmButton").addEventListener("click", function() {
 	const ab_replyContent = document.querySelector("#modifyReplyInput").value;
 	const ab_replyNumber = this.dataset.replyId;
 	const data = {ab_replyNumber, ab_replyContent};
@@ -534,13 +543,11 @@ document.querySelector("#removeConfirmButton").addEventListener("click", functio
 		body : JSON.stringify(data)
 	})
 	.then(res => res.json())
-	.then(data => {
-		document.querySelector("#replyMessage").innerText = data.message;})
 	.then(() => listReply(page));
 }); 
 	
 	/* 댓글 삭제 */
-	document.querySelector("#removeConfirmModalSubmitButton").addEventListener("click", function() {
+	document.querySelector("#replyDeleteConfirmButton").addEventListener("click", function() {
 		//댓글 삭제 버튼은 여러개고 모달창의 삭제버튼은 하나이므로
 		//삭제할 댓글의 삭제버튼의replyID를 가져올 수 있어(아래 setAttribute로 부여)
 	 //모달 삭제버튼에 전달하고 해당 replyID의 댓글 삭제 진행
@@ -556,7 +563,6 @@ document.querySelector("#removeConfirmButton").addEventListener("click", functio
 		method: "delete"
 	})
 	.then(res => res.json())
-	.then(data => document.querySelector("#replyMessage").innerText = data.message)
 	.then(() => listReply(page));
 }
 	

@@ -124,6 +124,10 @@
 		<div class="categorySelectBox">
 			<p>카테고리</p>
 			<select class="categorySelect" name="ab_category">
+		        <option value="레슨">레슨</option>
+		        <option value="꿀팁">꿀팁</option>
+		        <option value="팀원모집">팀원모집</option>
+		        <option value="질문/답변">질문/답변</option>
 		        <option value="lesson">레슨</option>
 		        <option value="tip">꿀팁</option>
 		        <option value="recruitment">팀원모집</option>

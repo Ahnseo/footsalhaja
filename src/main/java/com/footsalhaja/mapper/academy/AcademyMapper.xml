@@ -107,7 +107,7 @@
 		b.ab_insertDatetime,
 		COUNT(DISTINCT r.ab_replyNumber) replyCnt,
 		COUNT(DISTINCT l.member_userId) countLike,
-		COUNT(DISTINCT f.academyBoard_ab_number) countFile,
+		COUNT(f.academyBoard_ab_number) countFile,
 		b.ab_viewCount,
 		m.nickName
 		
@@ -199,7 +199,7 @@
 		WHERE academyBoard_ab_number = #{ab_number}
 	</delete>
 	
-	<!-- 파일 수정에 따른 중복파일 삭제 -->
+	<!-- 파일 수정하면서 기존 파일 삭제 -->
 	<delete id="deleteByBoardIdAndFileName">
 		DELETE FROM academyBoardFileAttach
 		WHERE academyBoard_ab_number = #{ab_number} AND ab_fileName = #{originalFilename}

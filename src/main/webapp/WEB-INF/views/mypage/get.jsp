@@ -72,7 +72,10 @@ h2 {
 
 					<form action="${modifyLink}" method="get" id="contactForm" data-sb-form-api-token="API_TOKEN" enctype="multipart/form-data">
 							<%-- 프로필 이미지 출력 --%>
+<<<<<<< HEAD
+=======
 
+>>>>>>> main
 						<div class= "defaultImg">
 							<c:if test="${member.profileImg eq null}">
 								<img class= "defaultImg" src="${pageContext.request.contextPath}/기본프로필.png">
@@ -84,7 +87,10 @@ h2 {
 									</object>
 								</div>
 							</c:forEach>			
+<<<<<<< HEAD
+=======
 
+>>>>>>> main
 						</div>	
 							
 							<!-- ID -->
@@ -127,6 +133,8 @@ h2 {
 									data-sb-validations="required" readonly/> <label for="nickName">닉네임</label>
 							</div>
 
+<<<<<<< HEAD
+=======
 							<!-- 회원권한-->
 							<input type="hidden" name="auth" value="${member.auth}" readonly >
 							<div class="form-floating mb-3">
@@ -145,6 +153,7 @@ h2 {
 								<label for="permission">회원권한</label>
 							</div>
 
+>>>>>>> main
 							<!-- 이메일 -->
 							<div class="form-floating mb-3">
 								<input class="form-control" id="email" type="email" name="email"
@@ -152,6 +161,37 @@ h2 {
 								<label for="email">메일주소</label>
 							</div>
 
+<<<<<<< HEAD
+						<!-- 회원권한 -->
+						<input type="hidden" name="auth" value="${member.auth}" readonly>
+						<div class="form-floating mb-3">
+							<c:if test="${member.auth.get(0) eq 'user'}">
+								<input class="form-control" id="permission" type="text"
+									name="permission" value="일반회원" data-sb-validations="required"
+									readonly />
+							</c:if>
+							<c:if test="${member.auth.get(0) eq 'manager'}">
+								<input class="form-control" id="permission" type="text"
+									name="permission" value="매니저" data-sb-validations="required"
+									readonly />
+							</c:if>
+							<c:if test="${member.auth.get(0) eq 'admin'}">
+								<input class="form-control" id="permission" type="text"
+									name="permission" value="관리자" data-sb-validations="required"
+									readonly />
+							</c:if>
+							<label for="permission">회원권한</label>
+						</div>
+						<!-- 생년월일 -->
+						<div class="form-floating mb-3">
+							<c:if test="${member.birthMM < 10}">
+								<c:set var="zeroMM" value="0" />
+							</c:if>
+							<c:if test="${member.birthDD < 10}">
+								<c:set var="zeroDD" value="0" />
+							</c:if>
+
+=======
 
 						<!-- 생년월일 -->
 						<div class="form-floating mb-3">
@@ -162,6 +202,7 @@ h2 {
 								<c:set var="zeroDD" value="0" />
 							</c:if>
 
+>>>>>>> main
 							<input class="form-control" type="text" id="birthYYMMDD"
 								name="birthYY"
 								value="${member.birthYY}${zeroMM}${member.birthMM}${zeroDD}${member.birthDD}"
