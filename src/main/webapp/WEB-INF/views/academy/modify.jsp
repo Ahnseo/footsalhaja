@@ -124,10 +124,17 @@
 		<div class="categorySelectBox">
 			<p>카테고리</p>
 			<select class="categorySelect" name="ab_category">
+<<<<<<< HEAD
 		        <option value="레슨">레슨</option>
 		        <option value="꿀팁">꿀팁</option>
 		        <option value="팀원모집">팀원모집</option>
 		        <option value="질문/답변">질문/답변</option>
+=======
+		        <option value="lesson">레슨</option>
+		        <option value="tip">꿀팁</option>
+		        <option value="recruitment">팀원모집</option>
+		        <option value="qna">질문/답변</option>
+>>>>>>> main
 			</select>
 		</div>
 		<div class="row">
@@ -181,8 +188,11 @@
 	
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script>
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> main
 	// 수정확인 버튼 클릭하면 수정 form 전송
 	document.querySelector("#modifyConfirmButton").addEventListener("click", function() {
 		document.querySelector("#modifyForm").submit();

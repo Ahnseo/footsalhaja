@@ -15,7 +15,7 @@ public interface AdminMapper {
 
 	List<BookDto> selectBookedListLimit(int status);
 	
-	List<BookDto> selectBookedListAll(int status);
+	List<BookDto> selectBookedListAll(int offset, int records ,String type ,String keyword, int status);
 
 	int insertVisitCount();
 
@@ -26,6 +26,10 @@ public interface AdminMapper {
 	int selectTodayWaitingQnACount(String status);
 
 	List<adminColChartDto> chartListByDate();
+	
+	
+	// 전체 예약리스트 페이지네이션 !!!!
+	int selectAllBookedCount(String type, String keyword, int status);
 
 
 

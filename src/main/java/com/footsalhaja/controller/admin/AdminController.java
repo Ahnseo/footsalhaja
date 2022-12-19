@@ -67,20 +67,30 @@ public class AdminController {
     }
 	
 	@GetMapping("allBookList")
-	public void allBookList(Model model) {
-		List<BookDto> allBookedList = adminService.selectBookedListAll();
+	public void allBookList(@RequestParam(name="page", defaultValue="1") int page, 
+							@RequestParam(name="t") String type,
+							@RequestParam(name="q") String keyword,
+							QnAPageInfo qnaPageInfo,
+							Model model) {
+		List<BookDto> allBookedList = adminService.selectBookedListAll(page ,qnaPageInfo ,type ,keyword);
 		model.addAttribute("allBookedList", allBookedList);
+		
+		model.addAttribute("bookedPage", qnaPageInfo);
 		
 	}
 	
 	@GetMapping("allQnAList")
 	public void allQnAList(@RequestParam(name="page", defaultValue = "1") int page ,
-							QnAPageInfo qnaPageInfo,
-							Model model,
 							@RequestParam(name="q") String keyword,
-							@RequestParam(name="t") String type
+							@RequestParam(name="t") String type,
+							@RequestParam(name="c") String c,
+							@RequestParam(name="s") String s,
+							QnAPageInfo qnaPageInfo,
+							Model model
 							) {	
-		List<QnADto> allQnAList= adminService.selectAllQnAList(page, qnaPageInfo, keyword, type);
+		System.out.println("####page "+page);
+		List<QnADto> allQnAList= adminService.selectAllQnAList(page, qnaPageInfo, keyword, type, c, s);
+		//System.out.println(allQnAList);
 		model.addAttribute("allQnAList", allQnAList);
 		model.addAttribute("qnaPageInfo", qnaPageInfo);
 		
@@ -100,9 +110,4 @@ public class AdminController {
 	}
 	
 	
-	
-	@GetMapping("stadiumManagement")
-	public void stadiumManagement() {
-		
-	}
 }

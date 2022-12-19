@@ -67,6 +67,10 @@ h2 {
                     <div class="col-lg-8 col-xl-7">
                         <form action="/mypage/modify" method="post" id="contactForm" data-sb-form-api-token="API_TOKEN" enctype="multipart/form-data">
 						<%-- 프로필 이미지 출력 --%>
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
 						<div class= "defaultImg">
 							<c:if test="${member.profileImg eq null}">
 								<img class= "defaultImg" src="${pageContext.request.contextPath}/기본프로필.png">
@@ -78,6 +82,10 @@ h2 {
 									</object>
 								</div>
 							</c:forEach>			
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
 						</div>	
 					
 						<div class="form-floating mb-3"">
@@ -115,6 +123,10 @@ h2 {
                                 <input class="form-control" id="nickName" type="text" name = "nickName" value="${member.nickName}" data-sb-validations="required" />
                                 <label for="nickName">닉네임</label>
                             </div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
                             
                             <!-- 이메일 -->
                             <div class="form-floating mb-3">
@@ -123,6 +135,7 @@ h2 {
                                 <div class="invalid-feedback" data-sb-feedback="email:required">메일주소는 필수 입력 해야합니다.</div>
                                 <div class="invalid-feedback" data-sb-feedback="email:email">유효하지않은 메일 주소입니다.</div>
                             </div>
+
                             
 						<!-- 회원권한 -->
 						<input type="hidden" name="auth" value="${member.auth}" readonly>
@@ -158,6 +171,10 @@ h2 {
 								value="${member.birthYY}${zeroMM}${member.birthMM}${zeroDD}${member.birthDD}"
 								readonly /> <label for="birthYYMMDD">생년월일</label>
 						</div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
                             
                             <div class="form-floating mb-3">
 	                            <input class="form-control" type="text" name="activityArea" value="${member.activityArea}" readonly />

@@ -2,9 +2,14 @@ package com.footsalhaja.service.member;
 
 import java.util.List;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
 import org.springframework.web.multipart.MultipartFile;
 
 import com.footsalhaja.domain.academy.BoardDto;
+
 import com.footsalhaja.domain.member.MemberDto;
 import com.footsalhaja.domain.member.MemberPageInfo;
 
@@ -15,9 +20,17 @@ public interface MemberService {
 	List<MemberDto> selectMemberList(int page, MemberPageInfo memberPageInfo, String keyword, String type);
 
 	List<Object> selectMemberInfoByUserId(String userId);
+<<<<<<< HEAD
 
 	int deleteMemberInfoByUserId(String userId);
 
+=======
+
+
+	int deleteMemberInfoByUserId(String userId);
+
+
+>>>>>>> main
 	int updateMemberInfoByUserId(MemberDto memberModifiedValues, MultipartFile file);
 	
 	MemberDto getUserAbList(String userId, int page, MemberPageInfo pageInfo);
@@ -29,5 +42,14 @@ public interface MemberService {
 	List<MemberDto> getUserReplyList(String userId);
 	
 	List<MemberDto> getUserLikeList(String userId);
+
+	int updateMemberAuth(String userId, List<String> addAuthorities);
+
+	MemberDto getById(String userId);
+
+	MemberDto getByEmail(String email);
+
+	MemberDto getByNickName(String nickName);
+	
 
 }

@@ -4,6 +4,20 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
  <mapper namespace="com.footsalhaja.mapper.member.MemberMapper">
+	<!-- 중복검사 -->
+	<select id="selectByUserId" resultType="com.footsalhaja.domain.member.MemberDto">
+		SELECT * FROM member WHERE userId = #{userId}
+	</select>
+	
+	<select id="selectByEmail" resultType="com.footsalhaja.domain.member.MemberDto">
+		SELECT * FROM member WHERE email  = #{email}
+	</select>
+	
+	<select id="selectByNickName" resultType="com.footsalhaja.domain.member.MemberDto">
+		SELECT * FROM member WHERE nickName = #{nickName}
+	</select>
+	
+	
 	<!-- 회원정보 저장 -->
 	<insert id="insertMember">
 		INSERT INTO member 
@@ -12,6 +26,14 @@
 			(#{userId}, #{name}, #{password}, #{nickName}, #{email}, #{birthYY}, #{birthMM}, #{birthDD}, #{activityArea}, #{phone},  #{personalGender} )
 	</insert>
  	
+ 	<update id="updateMemberAuth">
+ 		<foreach item="newAuth" collection="newAuthorities">
+ 	
+ 		UPDATE member SET
+ 		auth = #{newAuth}
+ 		WHERE userId = #{userId}
+ 		</foreach>
+ 	</update>
  	
  	<update id="updateMemberInfoByUserId">
  		UPDATE member
@@ -19,7 +41,8 @@
 	 		password = #{password},
 	 		nickName = #{nickName},
 	 		email = #{email},
-	 		phone = #{phone}
+	 		phone = #{phone},
+	 		auth = #{auth}
 	 	WHERE
 	 		userId = #{userId}	 			 		
  	</update>
@@ -308,7 +331,11 @@
  	</resultMap>
  	
  	<select id="countFbReplyList" resultType="int">
+<<<<<<< HEAD
 		SELECT Count(fb_replyNumber)
+=======
+		SELECT Count(*)
+>>>>>>> main
 		FROM member m LEFT JOIN freeBoardReply fr ON m.userId = fr.member_userId
 		WHERE m.userId = #{userId}
 	</select>
@@ -338,7 +365,11 @@
  	</resultMap>
  	
  	 <select id="countAbReplyList" resultType="int">
+<<<<<<< HEAD
 		SELECT Count(ab_replyNumber)
+=======
+		SELECT Count(*)
+>>>>>>> main
 		FROM member m LEFT JOIN academyBoardReply ar ON m.userId = ar.member_userId
 		WHERE m.userId = #{userId}
 	</select>
@@ -368,7 +399,11 @@
  	</resultMap>
  	
  	 <select id="countMainReplyList" resultType="int">
+<<<<<<< HEAD
 		SELECT Count(replyId)
+=======
+		SELECT Count(*)
+>>>>>>> main
 		FROM member m LEFT JOIN bookReply br ON m.userId = br.member_userId
 		WHERE m.userId = #{userId}
 	</select>
@@ -396,7 +431,11 @@
  	</resultMap>
  	
  	 <select id="countUserAbLike" resultType="int">
+<<<<<<< HEAD
 		SELECT Count(academyBoard_ab_number)
+=======
+		SELECT Count(*)
+>>>>>>> main
 		FROM member m LEFT JOIN academyBoardLike al ON m.userId = al.member_userId
 		WHERE m.userId = #{userId}
 	</select>
@@ -424,7 +463,11 @@
  	</resultMap>
  	
  	<select id="countUserFbLike" resultType="int">
+<<<<<<< HEAD
 		SELECT Count(freeBoard_fb_number)
+=======
+		SELECT Count(*)
+>>>>>>> main
 		FROM member m LEFT JOIN freeBoardLike fl ON m.userId = fl.member_userId
 		WHERE m.userId = #{userId}
 	</select>
@@ -441,4 +484,14 @@
 		WHERE member_userId = #{userId}
 	</delete>
 
+<<<<<<< HEAD
+=======
+	
+	<!-- 중복 프로필 이름 덮어씌우기 -->
+ 	<delete id="deleteProfileImgByUserIdAndPrifileImg">
+	DELETE FROM profileImage
+	WHERE member_userId = #{userId} AND profileImage_file = #{originalFilename}
+	</delete>
+
+>>>>>>> main
  </mapper>
