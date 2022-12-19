@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -28,9 +30,26 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.amazonaws.HttpMethod;
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import com.footsalhaja.domain.free.BoardDto;
 import com.footsalhaja.domain.free.PageInfo;
 import com.footsalhaja.service.free.FreeService;
+
+import software.amazon.awssdk.auth.credentials.AwsCredentials;
+import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
+import software.amazon.awssdk.core.ResponseBytes;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.GetObjectRequest;
+import software.amazon.awssdk.services.s3.model.GetObjectResponse;
+import software.amazon.awssdk.services.s3.model.ObjectCannedACL;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 @Controller
 @RequestMapping("free")
@@ -38,6 +57,18 @@ public class FreeController {
 	
 	@Autowired
 	private FreeService service;
+	
+	@Autowired
+	private AwsCredentials awsCredentials;
+	
+	@Autowired
+	public AwsCredentialsProvider awsCredentialsProvider;
+	
+	@Autowired
+	private S3Client s3Client;
+	
+	@Value("${aws.s3.bucket}")
+	private String bucketName;
 	
 	
 	@GetMapping("insert")
@@ -137,33 +168,72 @@ public class FreeController {
 	
 	//썸머노트 이미지 업로드
 	  @PostMapping(value="/uploadSummernoteImageFile", produces = "application/json")
-	  @ResponseBody public HashMap<String, String> uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile) {
+	  @ResponseBody public HashMap<String, String> uploadSummernoteImageFile(BoardDto board, @RequestParam("file") MultipartFile multipartFile) {
 	  
 	  HashMap<String, String> jsonObject = new HashMap<>();
 	  
 	  
-	  String fb_filePath = "D:\\study\\project\\footsalhaja\\sn_img\\"; //저장될 외부 파일 경로 String
+	  String fb_filePath = "free/" + board.getFb_number(); //저장될 외부 파일 경로 String
 	  String originalFileName = multipartFile.getOriginalFilename(); //오리지날 파일명 String
 	  
 	  String fb_image = UUID.randomUUID() + originalFileName; //랜덤 UUID+파일이름으로 저장될 파일 새 이름
 	  
-	  File targetFile = new File(fb_filePath + fb_image);
 	  
-	  System.out.println(targetFile);
+	  System.out.println(fb_filePath);
 	  
 	  try {
-		  InputStream fileStream = multipartFile.getInputStream();
-		  FileUtils.copyInputStreamToFile(fileStream, targetFile); // 파일 저장
-		  jsonObject.put("url", "/summernoteImage/" + fb_image);
-		  jsonObject.put("fb_image", fb_image);
-		  jsonObject.put("responseCode", "success");
-	  
-	  } catch (IOException e) {
-		  System.out.println(targetFile);
-		  
-		  FileUtils.deleteQuietly(targetFile); //저장된 파일 삭제
-		  jsonObject.put("responseCode", "error"); e.printStackTrace();
-	  }
+			// putObjectRequest
+			PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+					.bucket(bucketName)
+					.key(fb_filePath)
+					.acl(ObjectCannedACL.PUBLIC_READ)
+					.build();
+			// requestBody
+			InputStream fileStream = multipartFile.getInputStream();
+			software.amazon.awssdk.core.sync.RequestBody requestBody = software.amazon.awssdk.core.sync.RequestBody.fromInputStream(fileStream, multipartFile.getSize());
+			
+			// object(파일) 올리기
+			s3Client.putObject(putObjectRequest, requestBody);
+	
+			//썸머노트 이미지 전달 위한 presigned URL 생성
+			  Regions clientRegion = Regions.AP_NORTHEAST_2;
+			  
+			  AWSCredentials credentials = new BasicAWSCredentials(awsCredentials.accessKeyId(), awsCredentials.secretAccessKey());
+			  
+			  AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
+			  .withRegion(clientRegion)
+			  .withCredentials(new AWSStaticCredentialsProvider(credentials))
+			  .build();
+			  
+			  
+			  // Set the presigned URL to expire after 12 hours. 
+			  java.util.Date expiration = new java.util.Date(); 
+			  long expTimeMillis = Instant.now().toEpochMilli();
+			  expTimeMillis += 1000 * 60 * 60 *12; 
+			  expiration.setTime(expTimeMillis);
+			  
+			  // Generate the presigned URL.
+			  System.out.println("Generating pre-signed URL."); 
+			  GeneratePresignedUrlRequest generatePresignedUrlRequest = new GeneratePresignedUrlRequest(bucketName,fb_filePath)
+					  .withMethod(HttpMethod.GET)
+			  .withExpiration(expiration);
+			  
+			  String url =s3Client.generatePresignedUrl(generatePresignedUrlRequest).toString();
+			  
+			  System.out.println(url);
+			 
+			//url에 s3 bucket 파일 저장된 경로 전달해야됨... s3라 인증된 presignedUrl으로 전달
+
+
+			jsonObject.put("url", url);
+			jsonObject.put("fb_image", fb_image);
+			jsonObject.put("responseCode", "success");
+			
+			
+		} catch (Exception e) {  
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
 	  
 	  return jsonObject;
 	  }
@@ -176,10 +246,26 @@ public class FreeController {
 								@PathVariable String filename, HttpServletResponse response) throws Exception {
 		
 		//다운받을 파일 경로 지정
-		File downloadFile =  new File("D:\\study\\project\\project"+fb_number+"\\"+filename);
-		
+		/*
+		 * File downloadFile = new File("academy/"+ab_number+"/"+filename);
+		 */
 		//파일을 byte 배열로 변환
-		byte fileByte[] = FileUtils.readFileToByteArray(downloadFile);
+		/* byte fileByte[] = FileUtils.readFileToByteArray(downloadFile); */
+		
+		
+		String originalFileName = filename.substring(36);
+		
+		//getObjectRequest(파일 다운로드 관련 기능)
+		GetObjectRequest getObjectRequest = GetObjectRequest.builder()
+				.bucket(bucketName)
+				.key("free/"+fb_number+"/"+originalFileName)
+				.build();
+		
+		ResponseBytes<GetObjectResponse> obj = s3Client.getObjectAsBytes(getObjectRequest);
+		
+		System.out.println("obj : " + obj);
+		
+		byte[] fileByte = obj.asByteArray();
 		
 		//"application/octet-stream" 은 자바에서 사용하는 파일 다운로드 응답 형식으로, 어플리케이션 파일이 리턴된다고 설정
 		response.setContentType("application/octet-stream");

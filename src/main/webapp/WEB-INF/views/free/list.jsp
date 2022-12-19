@@ -256,13 +256,13 @@ li {
 	<table class="table table-hover container">
 		<thead>
 			<tr scope="row">
-				<td>No</td>
-				<td>카테고리</td>
-				<td>제목</td>
-				<td>작성자</td>
-				<td>작성일시</td>
-				<td>좋아요</td>
-				<td>조회수</td>
+				<th>No</th>
+				<th>카테고리</th>
+				<th>제목</th>
+				<th>작성자</th>
+				<th>작성일시</th>
+				<th><i class="fa-regular fa-heart"></i></th>
+				<th><i class="fa-regular fa-eye"></i></th>
 			</tr>
 		</thead>
 		<tbody>

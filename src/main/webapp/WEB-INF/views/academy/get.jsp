@@ -9,27 +9,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-@font-face {
- font-family: 'NanumBarunGothic';
- font-style: normal;
- font-weight: 400;
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot');
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.ttf') format('truetype');
-}
-@font-face {
- font-family: 'NanumBarunGothic';
- font-style: normal;
- font-weight: 700;
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot');
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.ttf') format('truetype')
-}
-@font-face {
- font-family: 'NanumBarunGothic';
- font-style: normal;
- font-weight: 300;
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot');
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.ttf') format('truetype');
-}
+/* 글씨폰트 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&display=swap');
+
 * {
     padding: 0;
     margin: 0;
@@ -39,7 +21,7 @@ ul {
    list-style:none;
   }
 .container-sm { 
-	font-family: 'NanumBarunGothic';
+	font-family: 'Noto Sans KR', sans-serif;
 	letter-spacing: -1px;
 	font-size: 16px;
 }
@@ -219,22 +201,6 @@ ul {
 					<c:param name="ab_number" value="${board.ab_number }"></c:param>
 				</c:url>
 				<a class="btn btn-outline-success modifyBtn" href="${modifyLink }">수정</a>
-
-		<!-- 작성자와 authentication.name이 같아야 삭제&수정버튼 보여주기 -->
-		<sec:authentication property="name" var="userIdValue" />
-		
-		<c:if test="${board.member_userId == userIdValue}" >
-			<!-- 삭제버튼 -->
-			<c:url value="/academy/remove" var="removeLink"></c:url>
-				<form id="removeForm" action="${removeLink }" method="post">
-					<input type="hidden" name="ab_number" value="${board.ab_number }"/>
-				</form>
-				<input class="btn btn-outline-success removeBtn" type="submit" value="삭제" data-bs-toggle="modal" data-bs-target="#removeModal"/>
-			<!-- 수정버튼 -->	
-				<c:url value="/academy/modify" var="modifyLink">
-					<c:param name="ab_number" value="${board.ab_number }"></c:param>
-				</c:url>
-				<a class="btn btn-outline-success modifyBtn" href="${modifyLink }">수정</a>
 		</c:if>
 	</div>
 	
@@ -381,7 +347,7 @@ ul {
 	  </div>
 	</div>
 	
-
+<my:footer></my:footer>	
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script>
 

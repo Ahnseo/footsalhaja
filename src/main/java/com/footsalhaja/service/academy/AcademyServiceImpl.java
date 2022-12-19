@@ -151,8 +151,9 @@ public class AcademyServiceImpl implements AcademyService{
 		
 		if (fileNames != null) {
 			for (String fileName : fileNames) {
+				String originalfileName = fileName.substring(36);
 				// s3 저장소의 파일 지우기
-				deleteFile(ab_number, fileName);
+				deleteFile(ab_number, originalfileName);
 			}
 		}
 		

@@ -6,6 +6,7 @@
 
 
 footer {
+  margin-top: 100px;
   width: 100%;
   height: 90px;
   bottom: 0px;
