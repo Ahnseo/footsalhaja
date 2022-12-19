@@ -41,8 +41,8 @@
 	 		password = #{password},
 	 		nickName = #{nickName},
 	 		email = #{email},
-	 		phone = #{phone},
-	 		auth = #{auth}
+	 		phone = #{phone}
+<!-- 	 		auth = #{auth} -->
 	 	WHERE
 	 		userId = #{userId}	 			 		
  	</update>
@@ -457,6 +457,12 @@
 		INSERT INTO profileImage (member_userId, profileImage_file)
 		VALUES (#{userId}, #{profileImg})
 	</insert>
+	
+	<select id="getProfileImgByUserId" resultType ="String">
+		SELECT p.profileImage_file
+		FROM member m LEFT JOIN profileImage p ON m.userId = p.member_userId
+		WHERE member_userId = #{userId}
+	</select>
 	
 	<!-- 프로필 이미지 삭제 -->
 	<delete id="deleteProfileImgByUserId">
