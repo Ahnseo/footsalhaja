@@ -9,40 +9,16 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-@font-face {
- font-family: 'NanumBarunGothic';
- font-style: normal;
- font-weight: 400;
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot');
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.ttf') format('truetype');
-}
+/* 글씨폰트 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&display=swap');
 
-@font-face {
- font-family: 'NanumBarunGothic';
- font-style: normal;
- font-weight: 700;
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot');
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.ttf') format('truetype')
-}
-
-@font-face {
- font-family: 'NanumBarunGothic';
- font-style: normal;
- font-weight: 300;
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot');
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.ttf') format('truetype');
-}
-
-.nanumbarungothic * {
- font-family: 'NanumBarunGothic', sans-serif;
-}
 
 li {
    list-style:none;
   }
   
 .container-sm { 
-	font-family: 'NanumBarunGothic';
+	font-family: 'Noto Sans KR', sans-serif;
 	letter-spacing: -1px;
 }
 
@@ -56,7 +32,7 @@ li {
 #likeBestRankBox {
 	border-radius: 15px;
 	border: 1px solid #ddd;
-	margin: 0 0 30px 0;
+	margin-left: 30px;
  }
  
 #likeBestRankBox p {
@@ -64,7 +40,7 @@ li {
 	font-weight: bold;
 	letter-spacing: -1px;
 	
-	margin: 15px 30px;
+	margin: 15px 0  10px 30px;
 }
 
 #likeBestRankBox span {
@@ -77,11 +53,10 @@ li {
  	border: 0;
  }
  
- #bestTable tr td.title:hover{
-	text-decoration:underline;
-	/* cursor: pointer; */
+ #bestTable .title:hover{
+ 	text-decoration: underline;
  }
- 
+  
  #bestTable tr td a {
  	text-decoration: none;
  	color: #333;
@@ -117,7 +92,7 @@ li {
 }
 
 #categoryBox .cateBtn:hover {
-	color: green;
+	color: #1cb99e;
 	font-weight: bold;
 	text-decoration: underline;
 }
@@ -138,7 +113,14 @@ li {
 #listBox .table .listTitle {
 	text-align: left;
 }
+#listBox .table .trtr {
+	cursor: pointer;
+}
 
+#listBox .table .trtr:hover .listTitle {
+ 	font-weight: bold;
+ }
+ 
 #listBox .table tr td {
 	height: 60px;
 	vertical-align: middle;
@@ -149,6 +131,7 @@ li {
  	color: #333;
  	padding: 15px;
  }
+ 
 
 /* 검색 페이징 글작성버튼 */
 #bottomBox{
@@ -182,7 +165,7 @@ li {
    border: 1px solid #999;
    
    color: #666;
-   padding:2px 0 0 10px;
+   padding-left: 10px;
   }
   
 .searchBox .searchWrap {
@@ -194,13 +177,12 @@ li {
 
 .searchBox .searchWrap .search{
   border: 0;
-  margin: 0 10px 10px 0;
   outline: none;
-  
+  margin-top: 5px;
  }
  
 .searchBox .searchWrap .btn {
-	width : 50px;
+	padding: 0 5px 5px 0;
  }
   
 </style>
@@ -208,7 +190,11 @@ li {
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&display=swap" rel="stylesheet">
 <body>
+
+
+
 <my:navbar></my:navbar>
 
 
@@ -228,10 +214,10 @@ li {
 	<!-- 좋아요 베스트 -->
 	<div id="likeBestRankBox" >
 		<p><span>HOT</span> 자유게시판 이번주 인기 글 </p>
-		<table id="bestTable" class="table">
+		<table id="bestTable" class="table table-sm">
 			<c:forEach items="${likeRank }" var="rank" >
 			<tr>
-				<td class="first"  width="100">
+				<td class="first"  width="100" >
 					<p>${rank.fb_category }</p>
 				</td>
 				<td class="title">
@@ -242,7 +228,7 @@ li {
 						${rank.fb_title }
 					</a>
 					<c:if test="${rank.fb_replyCount > 0 }">
-						<i class="fa-regular fa-comment"></i>${rank.fb_replyCount }
+						&nbsp;&nbsp;<i class="fa-regular fa-comment"></i> ${rank.fb_replyCount }
 					</c:if>
 				</td>
 				<td width="70"><i class="fa-regular fa-heart"></i> ${rank.fb_likeCount }</td>
@@ -281,18 +267,23 @@ li {
 		</thead>
 		<tbody>
 			<c:forEach items="${boardList }" var="board">
-				<tr>
+				<c:url value="/free/get" var="getLink">
+					<c:param name="number" value="${board.fb_number }"></c:param>
+				</c:url>
+				<tr onclick="location.href='${getLink}'" class="trtr">
 					<td>${board.fb_number }</td>
 					<td>${board.fb_category }</td>
 					<td class="listTitle col-sm-6">
-						<c:url value="/free/get" var="getLink">
-							<c:param name="number" value="${board.fb_number }"></c:param>
-						</c:url>
 						<a href="${getLink}">
 							${board.fb_title }
 						</a>
+						<!-- 댓글 수 출력 -->
 						<c:if test="${board.fb_replyCount > 0 }">
-							<i class="fa-regular fa-comment"></i>${board.fb_replyCount }
+							<i class="fa-regular fa-comment"></i> ${board.fb_replyCount }
+						</c:if>
+						<!-- 파일 수 출력 -->
+						<c:if test="${board.countFile > 0 }">
+								<i class="fa-regular fa-file"></i> ${board.countFile }
 						</c:if>
 					</td>
 					<td>${board.nickName }</td>
@@ -411,7 +402,7 @@ li {
 		</sec:authorize>
 		<!-- 로그인 안 했을때 -->
 		<sec:authorize access="not isAuthenticated()">
-			<button data-bs-toggle="modal" data-bs-target="#nonMemberModal" id="nonMemberInsertButton">글쓰기</button>
+			<button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#nonMemberModal" id="nonMemberInsertButton">글쓰기</button>
 		</sec:authorize>	
 		</div>
 	</div>
@@ -440,8 +431,8 @@ li {
 	  </div>
 	</div>
 	
-	
-	
+
+<my:footer></my:footer>	
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script>
 $(document).ready(function(){

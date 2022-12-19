@@ -1,21 +1,62 @@
 package com.footsalhaja.service.member;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.catalina.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
 
 import com.footsalhaja.domain.member.MemberDto;
 import com.footsalhaja.domain.member.MemberPageInfo;
 import com.footsalhaja.mapper.member.MemberMapper;
 
+import software.amazon.awssdk.core.sync.RequestBody;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
+import software.amazon.awssdk.services.s3.model.ObjectCannedACL;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
+
 @Service
+@Transactional
 public class MemberServiceImpl implements MemberService {
 	
 	@Autowired
 	private MemberMapper memberMapper;
 	
+
+	@Autowired
+	private S3Client s3Client;
+	
+	@Value("${aws.s3.bucket}")
+	private String bucketName;
+	
+	
+
+	@Override
+	public MemberDto getByEmail(String email) {
+		return memberMapper.selectByEmail(email);
+	};
+	
+	@Override
+	public MemberDto  getByNickName(String nickName) {
+		return memberMapper.selectByNickName(nickName);
+	};
+	
+	
+	@Override
+	public MemberDto getById(String userId){
+		return memberMapper.selectByUserId(userId);
+	}
+
 	//회원가입(등록) 또는 회원정보 수정
 	@Override
 	public int insertMember(MemberDto member) {
@@ -62,14 +103,75 @@ public class MemberServiceImpl implements MemberService {
 	
 	//userId로 회원정보 가져오기 
 	@Override
-	public MemberDto selectMemberInfoByUserId(String userId) {
+	public List<Object> selectMemberInfoByUserId(String userId) {
+		List<Object> list = new ArrayList<>();
+
 		
-		return memberMapper.selectMemberInfoByUserId(userId);
+		MemberDto memberInfo = memberMapper.selectMemberInfoByUserId(userId);
+		
+		Map<String, Integer> countActivity = new HashMap<>();
+		
+
+		int countAllAblist = memberMapper.countAllAblist(userId);
+		int countAllFblist = memberMapper.countAllFblist(userId);
+		int countAllMainlist = memberMapper.countAllMainlist(userId);
+		int countAbReplyList = memberMapper.countAbReplyList(userId);
+		int countFbReplyList = memberMapper.countFbReplyList(userId);
+		int countMainReplyList = memberMapper.countMainReplyList(userId);
+		int countUserAbLike = memberMapper.countUserAbLike(userId);
+		int countUserFbLike = memberMapper.countUserFbLike(userId);
+		
+		countActivity.put("countAllAblist", countAllAblist);
+		countActivity.put("countAllFblist", countAllFblist);
+		countActivity.put("countAllMainlist", countAllMainlist);
+		countActivity.put("countAbReplyList", countAbReplyList);
+		countActivity.put("countFbReplyList", countFbReplyList);
+		countActivity.put("countMainReplyList", countMainReplyList);
+		countActivity.put("countUserAbLike", countUserAbLike);
+		countActivity.put("countUserFbLike", countUserFbLike);
+		
+		list.add(memberInfo);
+		list.add(countActivity);
+		
+		return list;
 	}
 	
 	// userId로 회원정보 삭제하기 (modify.jsp 와 delete에 사용할 것 )
 	@Override
 	public int deleteMemberInfoByUserId(String userId) {
+		//프로필 이미지 삭제
+
+	
+		//저장된 파일의 경로 지정
+		String path = "user_profile/" +userId;
+
+		File folder = new File(path);
+		
+		File[] listFiles = folder.listFiles();
+
+		if (listFiles != null) {
+				for (File file : listFiles) {
+
+					deleteFile(userId, file.getName());
+
+				}
+			}
+		
+		for (File file: listFiles) {
+			file.delete();
+		}
+		folder.delete();
+		
+		memberMapper.deleteProfileImgByUserId(userId);
+		
+
+		//회원탈퇴 게시물 댓글 지우기
+		
+		//회원탈퇴 게시물 지우기
+		
+		//회원탈퇴 좋아요 지우기
+
+		
 		//회원탈퇴 FK Authority ByUserId
 		memberMapper.deleteAuthorityByUserId(userId);
 		//회원탈퇴 member ByUserId
@@ -77,11 +179,81 @@ public class MemberServiceImpl implements MemberService {
 		return cnt;
 	}
 	
+	private void deleteFile(String userId, String fileName) {
+		String key = "user_profile/" + userId + "/" + fileName;
+		DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
+				.bucket(bucketName)
+				.key(key)
+				.build();
+		s3Client.deleteObject(deleteObjectRequest);
+	}
+	
+	private void uploadFile(String userId, MultipartFile file) {
+		try {
+			// S3에 파일 저장
+			// 키 생성
+			String key = "user_profile/" + userId + "/" + file.getOriginalFilename();
+			
+			// putObjectRequest
+			PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+					.bucket(bucketName)
+					.key(key)
+					.acl(ObjectCannedACL.PUBLIC_READ)
+					.build();
+			
+			// requestBody
+			RequestBody requestBody = RequestBody.fromInputStream(file.getInputStream(), file.getSize());
+			
+			// object(파일) 올리기
+			s3Client.putObject(putObjectRequest, requestBody);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	}
+	
 	@Override
-	public int updateMemberInfoByUserId(MemberDto memberModifiedValues) {
+	public int updateMemberInfoByUserId(MemberDto memberModifiedValues, MultipartFile file) {
+		
+		if (file != null && file.getSize() > 0) {
+			//기존 프로필 삭제
+			memberMapper.deleteProfileImgByUserId(memberModifiedValues.getUserId());
+			deleteFile(memberModifiedValues.getUserId(), file.getOriginalFilename());
+			
+			memberMapper.insertprofileImg(memberModifiedValues.getUserId(), file.getOriginalFilename());
+			// 파일 저장
+			uploadFile(memberModifiedValues.getUserId(),file);
+
+		}
+		
 		int cnt = memberMapper.updateMemberInfoByUserId(memberModifiedValues);
-		System.out.println(cnt);
-		System.out.println(memberModifiedValues);
+		//System.out.println(cnt);
+		System.out.println("serviceAuth : "+memberModifiedValues.getAuth());
+		return cnt;
+	}
+	
+	//회원권한 추가하기 
+	@Override
+	public int updateMemberAuth(String userId, List<String> addAuthorities) {
+		
+		MemberDto member = memberMapper.selectMemberInfoByUserId(userId);
+		List<String> oldAuthorities = member.getAuth();
+		//System.out.println("oldAuthorities :"+oldAuthorities);
+		
+		List<String> newAuthorities = new ArrayList<>();
+		
+		for(String oldAuth : oldAuthorities) {
+			for(String auth : addAuthorities) {
+				if(oldAuth != auth) {
+					newAuthorities.add(auth);
+				}
+			}
+		}
+		//System.out.println("newAuthorities :"+newAuthorities);
+		
+		int cnt = memberMapper.updateMemberAuth(userId, newAuthorities);
+		
 		return cnt;
 	}
 	

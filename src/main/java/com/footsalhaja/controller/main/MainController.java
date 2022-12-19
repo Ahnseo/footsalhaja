@@ -1,5 +1,9 @@
 package com.footsalhaja.controller.main;
 
+import java.text.DateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +21,8 @@ import com.footsalhaja.domain.main.MainDto;
 import com.footsalhaja.domain.member.MemberDto;
 import com.footsalhaja.service.main.MainServiceImpl;
 import com.footsalhaja.service.member.MemberServiceImpl;
+
+import software.amazon.awssdk.utils.StringUtils;
 
 @Controller
 @RequestMapping("main")
@@ -50,7 +56,7 @@ public class MainController {
 	@GetMapping("insert")
 	public void insert(@RequestParam(name="userId") String userId,
 			Model model) {
-		MemberDto member = memberService.selectMemberInfoByUserId(userId);
+		MemberDto member = (MemberDto) memberService.selectMemberInfoByUserId(userId).get(0);
 		model.addAttribute("member", member);
 		
 		
@@ -73,10 +79,23 @@ public class MainController {
 	
 	
 	  @GetMapping("list")
-	  public void list(Model model) {
+	  public void list(Model model, @RequestParam(name="datepickerSday", required = false)String datepickerSday,
+			  						@RequestParam(name="datepickerEday", required = false)String datepickerEday) {
+	  
+		  String formatDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYY-MM-dd"));
 		  
-		  List<BookDto> list = service.listBook();
+		  if(StringUtils.isEmpty(datepickerSday)) {
+			  datepickerSday = formatDate;
+		  }
+		  if(StringUtils.isEmpty(datepickerEday)) {
+			  datepickerEday = formatDate;
+		  }
+		  
+		  List<BookDto> list = service.listBook(datepickerSday, datepickerEday);
+		 
 		  model.addAttribute("bookList", list); 
+		  model.addAttribute("datepickerSday", datepickerSday); 
+		  model.addAttribute("datepickerEday", datepickerEday); 
 		  
 		  // main/list 들어오면,  Visit테이블 방문자수 +1 씩 증가  by asj
 		  service.insertVisitCount();
