@@ -1,5 +1,6 @@
 package com.footsalhaja.controller.academy;
 
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.URLEncoder;
@@ -12,8 +13,12 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -33,7 +38,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.footsalhaja.domain.academy.BoardDto;
 import com.footsalhaja.domain.academy.Criteria;
 import com.footsalhaja.domain.academy.PageDto;
+import com.footsalhaja.domain.member.MemberDto;
 import com.footsalhaja.service.academy.AcademyServiceImpl;
+import com.footsalhaja.service.member.MemberService;
 
 import software.amazon.awssdk.auth.credentials.AwsCredentials;
 import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
@@ -66,6 +73,9 @@ import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 @Controller
 @RequestMapping("academy")
 public class AcademyController {
+	
+	@Autowired
+	private MemberService memberService;
 	
 	@Autowired
 	private AcademyServiceImpl service;
@@ -110,6 +120,26 @@ public class AcademyController {
 		// 좋아요 순위
 		List<BoardDto> rank = service.likeRank(board); 
 		model.addAttribute("likeRank", rank);
+		
+	}
+	
+	@GetMapping(value ="{userId}/profileImg", produces = MediaType.IMAGE_JPEG_VALUE)
+	public ResponseEntity<byte[]> myGetAndModifyWithProFile(@PathVariable(name="userId") String userId) throws Exception {
+		
+		
+		//RequestParam 으로 member/get?userId= 아이디값 가져와서 db 요청 -> MemberDto 타입 member ->  addAttribute "member" 넣음 . 
+		//System.out.println(userId);
+		MemberDto memberInfoByUserId = (MemberDto) memberService.selectMemberInfoByUserId(userId).get(0);
+		
+		//프로필 이미지 보이기
+
+		InputStream imageStream = new FileInputStream("user_profile/" + userId + "/" + memberInfoByUserId.getProfileImg());
+		byte[] imageByteArray = IOUtils.toByteArray(imageStream);
+		imageStream.close();
+		
+
+		System.out.println("이미지 "+imageByteArray);
+		return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
 		
 	}
 	
@@ -225,7 +255,11 @@ public class AcademyController {
 		
 		model.addAttribute("board",board);
 	
-		
+		//RequestParam 으로 member/get?userId= 아이디값 가져와서 db 요청 -> MemberDto 타입 member ->  addAttribute "member" 넣음 . 
+		//System.out.println(userId);
+		MemberDto memberInfoByUserId =  (MemberDto) memberService.selectMemberInfoByUserId(member_userId).get(0);
+		System.out.println("멤버인포 :"+memberInfoByUserId);
+		model.addAttribute("member", memberInfoByUserId);
 	}
 	
 	//modify 게시글

@@ -165,6 +165,18 @@ ul {
 .fileBox a {
 	color: #666;
 }
+
+.post_top .imgBox {
+	vertical-align: middle;
+}
+
+.post_top .imgBox object {
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+}
+
+
 </style>
 </head>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
@@ -210,6 +222,18 @@ ul {
 			<p class="top_category">${board.ab_category }</p>
 			<p class="top_title">${board.ab_title }</p>
 			<ul>
+				<li class="imgBox"> 
+					<c:if test="${member.profileImg eq null}">
+						<img class= "defaultImg" src="${pageContext.request.contextPath}/기본프로필.png">
+					</c:if>
+					<c:forEach items="${member.profileImg }" var="name">
+						<div class= "containerProfile">	
+							<object data="${imgUrl }/user_profile/${member.userId }/${name}" type="image/png">
+								<img src="${pageContext.request.contextPath}/기본프로필.png">
+							</object>
+						</div>
+					</c:forEach>	
+				</li>
 				<li class="top_nickName">${board.nickName }</li>
 				<li class="top_insertDatetime">${board.ab_insertDatetime }</li>
 				<li class="top_likeCount">좋아요 ${board.countLike }</li>

@@ -86,7 +86,7 @@ h2 {
 							</c:if>
 							<c:forEach items="${member.profileImg }" var="name">
 								<div class= "containerProfile">	
-									<object data="${imgUrl }/${member.userId }/${name}" type="image/png">
+									<object data="${imgUrl }/user_profile/${member.userId }/${name}" type="image/png">
 										<img src="${pageContext.request.contextPath}/기본프로필.png">
 									</object>
 								</div>
