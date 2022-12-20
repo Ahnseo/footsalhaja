@@ -20,19 +20,6 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 <meta name="description" content="" />
 <meta name="author" content="" />
 <title>Insert title here</title>
-<!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="/footsalhaja/src/main/resources/assets/favicon.ico" />
-<!-- Font Awesome icons (free version)-->
-<script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
-<!-- Google fonts-->
-<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
-<link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
-	
-<!-- Core theme CSS (includes Bootstrap)-->
-<link href="/css/styles.css" type="text/css" rel="stylesheet" />
-	
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
 
 <!-- 구글 열차트 -->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -65,6 +52,14 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 
 </script>
 <style>
+	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&display=swap');
+	
+	
+	.container-sm { 
+		font-family: 'Noto Sans KR', sans-serif;
+		letter-spacing: -1px;
+		font-size: 16px;
+	}
 	div.mainBoard {
 		width: 100%;
 		height: :1150px;
@@ -104,6 +99,10 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 
 
 </style>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
+
 </head>
 <body>
 	<my:navbar active=""></my:navbar>
@@ -151,14 +150,22 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 			        </div>
 		        	<div class="left p-2">
 			        	<nav id="navbar-example1" class="navbar bg-light px-3 mb-2">
-				        	<c:url value="/main/list" var="bookLink"/>
-					        <a class="navbar-brand mr10px" href="${bookLink}">예약된 매치
+			        	<c:url value="/admin/allBookList" var="allBookListLink">
+			      			<c:param name="page" value="1"/>
+			      			<c:param name="t" value="all"/>
+			      			<c:param name="q" value=""/>
+			      			<c:param name="s" value="done"/>
+			      			<c:param name="l" value=""/>
+			      			<c:param name="d1" value=""/>
+			      			<c:param name="d2" value=""/>
+			      		</c:url>
+					        <a class="navbar-brand mr10px" href="${allBookListLink}">예약된 매치
 					        	<span class="badge bg-danger rounded-pill">${todaybookedCount}</span>
 					        </a>
 					        
 					        <ul class="nav nav-pills">
 					        	<li class="nav-item">
-					        		<a class="nav-link" href="${bookLink}"><i class="fa-solid fa-link"></i></a>
+					        		<a class="nav-link" href="${allBookListLink}"><i class="fa-solid fa-link"></i></a>
 					        	</li>
 					        </ul>
 				        </nav>
@@ -213,11 +220,13 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 			        </div>
 			        <div class="right p-2">
 				        <nav id="navbar-example2" class="navbar bg-light px-3 mb-2">
-				        	<c:url value="/admin/allQnAList" var="allQnAListLink">
-				        		<c:param name="page" value="1"/>
-				        		<c:param name="q" value=""/>
-				        		<c:param name="t" value="all"/>
-				        	</c:url>
+				        <c:url value="/admin/allQnAList" var="allQnAListLink">
+			      			<c:param name="page" value="1"/>
+			      			<c:param name="c" value=""/>
+			      			<c:param name="t" value="all"/>
+			      			<c:param name="q" value=""/>
+			      			<c:param name="s" value="yet"/>
+			      		</c:url>
 					        <a class="navbar-brand mr10px" href="${allQnAListLink}">대기중인 QnA
 					        	<span class="badge bg-danger rounded-pill mr10px">${todayWaitingQnACount}</span> 
 					        </a>
