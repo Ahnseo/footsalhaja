@@ -73,7 +73,7 @@ public interface MemberMapper {
 	
 	public int deleteProfileImgByUserId(String userId);
 
-	public int updateMemberAuth(String userId, List<String> newAuthorities);
+	public int updateMemberAuth(String userId, String newAuth);
 
 
 	public void deleteProfileImgByUserIdAndPrifileImg(String userId, String originalFilename);

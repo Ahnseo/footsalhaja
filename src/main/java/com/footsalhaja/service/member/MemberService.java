@@ -31,7 +31,7 @@ public interface MemberService {
 	
 	List<MemberDto> getUserLikeList(String userId);
 
-	int updateMemberAuth(String userId, List<String> addAuthorities);
+	int updateMemberAuth(String userId, String addAuth);
 
 	MemberDto getById(String userId);
 

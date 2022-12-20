@@ -27,12 +27,11 @@
 	</insert>
  	
  	<update id="updateMemberAuth">
- 		<foreach item="newAuth" collection="newAuthorities">
  	
  		UPDATE member SET
  		auth = #{newAuth}
  		WHERE userId = #{userId}
- 		</foreach>
+
  	</update>
  	
  	<update id="updateMemberInfoByUserId">
@@ -41,8 +40,8 @@
 	 		password = #{password},
 	 		nickName = #{nickName},
 	 		email = #{email},
-	 		phone = #{phone}
-<!-- 	 		auth = #{auth} -->
+	 		phone = #{phone},
+	 		auth = #{auth}
 	 	WHERE
 	 		userId = #{userId}	 			 		
  	</update>
@@ -101,9 +100,7 @@
  		<result column="activityArea" property="activityArea" />
  		<result column="phone" property="phone" />
  		<result column="personalGender" property="personalGender" />
- 		<collection ofType="string" property="auth">
- 			<result column="auth" property="auth"/>
- 		</collection>
+ 		<result column="auth" property="auth"/>
  	</resultMap>
  	
  	<!-- userId 로 하나의 회원정보 가져오기 -->
@@ -140,9 +137,7 @@
  		<result column="phone" property="phone" />
  		<result column="personalGender" property="personalGender" />
  		<result column="profileImg" property="profileImg" />
- 		<collection ofType="string" property="auth">
- 			<result column="auth" property="auth"/>
- 		</collection>
+ 		<result column="auth" property="auth"/>
  	</resultMap>
  	
  	<!-- 회원탈퇴 (게시물 지우기) -->

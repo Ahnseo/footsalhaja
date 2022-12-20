@@ -244,24 +244,10 @@ public class MemberServiceImpl implements MemberService {
 	
 	//회원권한 추가하기 
 	@Override
-	public int updateMemberAuth(String userId, List<String> addAuthorities) {
+	public int updateMemberAuth(String userId, String addAuth) {
+
 		
-		MemberDto member = memberMapper.selectMemberInfoByUserId(userId);
-		List<String> oldAuthorities = member.getAuth();
-		//System.out.println("oldAuthorities :"+oldAuthorities);
-		
-		List<String> newAuthorities = new ArrayList<>();
-		
-		for(String oldAuth : oldAuthorities) {
-			for(String auth : addAuthorities) {
-				if(oldAuth != auth) {
-					newAuthorities.add(auth);
-				}
-			}
-		}
-		//System.out.println("newAuthorities :"+newAuthorities);
-		
-		int cnt = memberMapper.updateMemberAuth(userId, newAuthorities);
+		int cnt = memberMapper.updateMemberAuth(userId, addAuth);
 		
 		return cnt;
 	}
