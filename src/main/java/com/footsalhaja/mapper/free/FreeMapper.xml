@@ -65,8 +65,10 @@
  		f.fb_viewCount,
  		m.nickName,
  		fi.fb_fileName,
+ 		m.profileImage,
  		(SELECT COUNT(*) FROM freeBoardLike WHERE freeBoard_fb_number = f.fb_number AND member_userId = #{member_userId}) liked,
- 		(SELECT COUNT(*) FROM freeBoardLike WHERE freeBoard_fb_number = f.fb_number) fb_likeCount
+ 		(SELECT COUNT(*) FROM freeBoardLike WHERE freeBoard_fb_number = f.fb_number) fb_likeCount,
+ 		(SELECT profileImage_file FROM profileImage WHERE member_userId = f.member_userId) profileImg
  	FROM
  		freeBoard f LEFT JOIN member m ON f.member_userId = m.userId
  					LEFT JOIN freeBoardFileAttach fi ON f.fb_number = fi.freeBoard_fb_number
@@ -84,10 +86,12 @@
 		<result column="nickName" property="nickName"/>
 		<result column="fb_likeCount" property="fb_likeCount"/>
 		<result column="liked" property="liked"/>
+		<result column="profileImg" property="profileImg" />
 		<collection property="fb_fileName" ofType="string">
 			<result property="fb_fileName" column="fb_fileName"/>
 		</collection>
 	</resultMap>
+	
  	
  	<!-- 글 수정 -->
  	<update id="update">

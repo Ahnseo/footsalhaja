@@ -13,14 +13,8 @@
 <meta name="author" content="" />
 <title>Insert title here</title>
 
-<!-- Core theme CSS (includes Bootstrap)-->
-<link href="/css/styles.css" type="text/css" rel="stylesheet" />
-<!-- Font awesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<!-- Bootswatch -- >
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
-<!--  Google font -->
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&display=swap" rel="stylesheet">
+
+
 
 <style>
 /* 글씨폰트 */
@@ -33,6 +27,11 @@
 		cursor: pointer;
 	}
 </style>
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="/css/styles.css" type="text/css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
 
 </head>
 <body>
@@ -42,8 +41,7 @@
 	<div class="container">
 		 <!-- Contact Section Heading-->
 		 <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">${member.userId}님의 회원정보</h2>
-		 <!-- 권한은 List로 추가, 삭제한다. [ user AND ( manager OR admin) ] 회원은 여러 권한을 갖을 수 있다 . 하지만, 권한참조테이블 따로만들기 싫어서 그냥 하련다 .. -->
-		
+
 		 <!-- Icon Divider-->
          <div class="divider-custom">
          
@@ -57,14 +55,20 @@
         		<sec:authorize access="hasAuthority('admin')">
 				 	<form action="/member/addAuth" method="post">	
 						<input type="hidden" name="userId" value="${member.userId}">
-						<select class="" name="auth" id="addAuth">
-							<option value="" disabled selected >회원권한선택</option>
-							<option value="user">일반회원</option>
-							<option value="manager">매니저</option>
-							<option value="black">black</option>
-							
-						</select>
-						<button type="submit"class="btn btn-warning">회원권한변경</button>		
+						<div class="d-flex mb-2">
+							<div class="col-8">
+							<select class="form-control " name="auth" id="addAuth">
+								<option value="" disabled selected >회원권한선택</option>
+								<option value="user">일반회원</option>
+								<option value="manager">매니저</option>
+								<option value="black">블랙리스트</option>
+							</select>
+							</div>
+							<div class="col-2"></div>
+							<div class="col-3">
+							<button type="submit" class="btn btn-warning ">회원권한변경</button>
+							</div>
+						</div>
 					</form>
 				</sec:authorize>
 				<form id="contactForm" data-sb-form-api-token="API_TOKEN">	
@@ -110,16 +114,16 @@
 				<!-- 회원권한-->
 				<input type="hidden" name="auth" value="${member.auth}" readonly >
 				<div class="form-floating mb-3">
-				<c:if test="${member.auth.get(0) eq 'user'}">
+				<c:if test="${member.auth eq 'user'}">
 					<input class="form-control" id="permission" type="text" name="permission" value="일반회원" data-sb-validations="required" readonly /> 
 				</c:if>
-				<c:if test="${member.auth.get(0) eq 'manager'}">
+				<c:if test="${member.auth eq 'manager'}">
 					<input class="form-control" id="permission" type="text" name="permission" value="매니저" data-sb-validations="required" readonly /> 
 				</c:if>
-				<c:if test="${member.auth.get(0) eq 'black'}">
+				<c:if test="${member.auth eq 'black'}">
 					<input style="color : red;" class="form-control" id="permission" type="text" name="permission" value="블랙리스트" data-sb-validations="required" readonly /> 
 				</c:if>	
-				<c:if test="${member.auth.get(0) eq 'admin'}">
+				<c:if test="${member.auth eq 'admin'}">
 					<input class="form-control" id="permission" type="text" name="permission" value="관리자" data-sb-validations="required" readonly /> 
 				</c:if>	
 					<label for="permission">회원권한</label>

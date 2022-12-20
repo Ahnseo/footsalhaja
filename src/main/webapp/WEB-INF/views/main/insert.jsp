@@ -80,7 +80,7 @@
 					<div class="title" style="text-align: center;">매치 작성</div>
 
 					<div class="form-floating mb-3">
-						<input type="Date" class="form-control" name="bookDate">
+						<input type="Date" class="form-control" name="bookDate" required="required">
 						<label for="floatingInput">예약일정</label>
 					</div>
 					

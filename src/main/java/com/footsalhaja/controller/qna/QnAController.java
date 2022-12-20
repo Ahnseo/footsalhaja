@@ -137,9 +137,13 @@ public class QnAController {
 	}
 	@DeleteMapping("deleteMyQnA")
 	@ResponseBody
-	public void deleteQnA(@RequestBody QnADto qna, HttpServletRequest request) {
+	public String deleteQnA(@RequestBody QnADto qna, HttpServletRequest request) {
 		int qnaId = qna.getQnaId();
-		qnaService.deleteQnA(qnaId);		
+		qnaService.deleteQnA(qnaId);
+		
+		return "/qna/myQnAList?userId="+qna.getUserId()+"&page=1&c=&t=all&q=";
+		
+		
 	}
 	
 	

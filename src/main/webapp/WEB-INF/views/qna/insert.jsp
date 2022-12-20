@@ -14,29 +14,13 @@
 <title>Insert title here</title>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&display=swap');
 
-@font-face {
- font-family: 'NanumBarunGothic';
- font-style: normal;
- font-weight: 400;
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot');
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.ttf') format('truetype');
-}
 
-@font-face {
- font-family: 'NanumBarunGothic';
- font-style: normal;
- font-weight: 700;
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot');
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.ttf') format('truetype')
-}
-
-@font-face {
- font-family: 'NanumBarunGothic';
- font-style: normal;
- font-weight: 300;
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot');
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.ttf') format('truetype');
+.container-sm { 
+	font-family: 'Noto Sans KR', sans-serif;
+	letter-spacing: -1px;
+	font-size: 16px;
 }
 
 * {
@@ -53,12 +37,6 @@
 ul {
    list-style:none;
   }
-
-.container-sm { 
-	font-family: 'NanumBarunGothic';
-	letter-spacing: -1px;
-	font-size: 16px;
-}
 
 .post_wrap {
 	border: 1px solid #ced4da;
@@ -211,7 +189,7 @@ ul {
 					<c:set value="true" var="emptyCategory" />
 				</c:if>
 				<div class = "d-flex flex-row-reverse">
-					<button class="btn btn-outline-success btn-m5" 
+					<button class="btn btn-success btn-m5" 
 						type="button" id="insertSubmitBtn"
 								${ emptyCategory ? 'data-bs-toggle="modal" data-bs-target="#exampleModal"' :''}	>
 					등록
