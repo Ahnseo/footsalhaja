@@ -257,6 +257,9 @@
 				     	<c:param name="q" value="${param.q}"/>
 				     	<c:param name="t" value="${param.t}"/>
 				     	<c:param name="s" value="${param.s}"/>
+				     	<c:param name="l" value="${param.l}"/>
+				     	<c:param name="d1" value="${param.d1}"/>
+				     	<c:param name="d2" value="${param.d2}"/>
 				      </c:url>	
 				      <a class="page-link" href="${firstPageLink}" aria-label="First">
 				      &laquo;
@@ -272,6 +275,9 @@
 				     	<c:param name="q" value="${param.q}"/>
 				     	<c:param name="t" value="${param.t}"/>
 				     	<c:param name="s" value="${param.s}"/>
+				     	<c:param name="l" value="${param.l}"/>
+				     	<c:param name="d1" value="${param.d1}"/>
+				     	<c:param name="d2" value="${param.d2}"/>
 				      </c:url>	
 				      <a class="page-link" href="${previousPageLink}" aria-label="Previous">
 				      &lt;
@@ -287,6 +293,9 @@
 					    	<c:param name="q" value="${param.q}"/>
 					     	<c:param name="t" value="${param.t}"/>
 					     	<c:param name="s" value="${param.s}"/>
+					     	<c:param name="l" value="${param.l}"/>
+					     	<c:param name="d1" value="${param.d1}"/>
+					     	<c:param name="d2" value="${param.d2}"/>
 				    	</c:url>
 				    	<a class="page-link " href="${pageLink}">
 				    		${pageNumber}
@@ -302,6 +311,9 @@
 				     	<c:param name="q" value="${param.q}"/>
 				     	<c:param name="t" value="${param.t}"/>
 				     	<c:param name="s" value="${param.s}"/>
+				     	<c:param name="l" value="${param.l}"/>
+				     	<c:param name="d1" value="${param.d1}"/>
+				     	<c:param name="d2" value="${param.d2}"/>
 				      </c:url>	
 				      <a class="page-link" href="${nextPageLink}" aria-label="Previous">
 				      &gt;
@@ -317,6 +329,9 @@
 				        <c:param name="q" value="${param.q}"/>
 				     	<c:param name="t" value="${param.t}"/>
 				     	<c:param name="s" value="${param.s}"/>
+				     	<c:param name="l" value="${param.l}"/>
+				     	<c:param name="d1" value="${param.d1}"/>
+				     	<c:param name="d2" value="${param.d2}"/>
 				      </c:url>	
 				      <a class="page-link" href="${lastPageLink}" aria-label="Last">
 				      &raquo;

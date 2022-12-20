@@ -3,6 +3,23 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Calendar" %>
+<%@ page import="java.lang.Deprecated" %>
+<%
+	//오늘 날짜 구하기
+	Date nowDate = new Date();
+	SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+	
+	//한달 후 날짜 구하기
+	Date addMonth = new Date();
+    
+    int getNowMM = nowDate.getMonth();
+    
+    addMonth.setMonth(getNowMM + 1);
+    
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -475,12 +492,20 @@
 	<div id="getId" class="">
 	  <div data-bs-spy="scroll" data-bs-target="#navbar-example2"  data-bs-smooth-scroll="true" class="scrollspy-example p-5 rounded-2 " tabindex="0">
 		<div class="row">
+			<!-- 현재 날짜 설정 사용할거면, 쓰세요 -->
+			<c:set value="<%=sf.format(nowDate)%>" var="nowDate"/>
+			<!-- ${nowDate}  -->
+			
+			<!-- 한달후 날짜 설정 사용할거면, 쓰세요 -->
+			<c:set value='<%=sf.format(addMonth)%>' var="addMonth" /> 
+			<!-- ${addMonth}  -->
+			
 			<form name="searchForm">
 			<div class="opt">
 				<label for="" style="margin-right: 5px;">달력 조회</label>
 				<div class="datepick_wrap"><input style="width: 120px;" type="text" class="datepicker" placeholder="날짜 선택" value="${datepickerSday}" id="datepickerSday" name="datepickerSday"></div>
 				<span class="waveStr">~</span>
-				<div class="datepick_wrap"><input style="width: 120px;" type="text" class="datepicker" placeholder="날짜 선택" value="${datepickerEday}"id="datepickerEday" name="datepickerEday"></div>
+				<div class="datepick_wrap"><input style="width: 120px;" type="text" class="datepicker" placeholder="날짜 선택" value="${datepickerEday} "id="datepickerEday" name="datepickerEday"></div>
 				<input class="btnSearch" type="button" id="btnSearch" value="조회">
 			</div>
 			</form>
