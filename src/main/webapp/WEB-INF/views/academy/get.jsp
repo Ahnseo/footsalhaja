@@ -176,6 +176,19 @@ ul {
 	border-radius: 50%;
 }
 
+/* 댓글페이지네이션 */
+#replyPageFooter {
+	text-align: center;
+}
+
+#replyPageFooter ul {
+	display: inline-block;
+}
+
+#replyPageFooter ul li {
+	display: inline-block;
+}
+
 
 </style>
 </head>
@@ -302,7 +315,7 @@ ul {
 			</div>
 		</div>
 		<!-- 댓글 리스트 -->
-		<div class="row">
+		<div id="pageBox" class="row">
 			<div class="col">
 				<div id="replyListContainer">
 					<!-- 댓글 나오는 부분 -->
