@@ -29,9 +29,11 @@
 		b.member_userId,
 		b.ab_insertDatetime,
 		m.nickName,
+		m.profileImage,
 		f.ab_fileName,
 		(SELECT COUNT(*) FROM academyBoardLike WHERE academyBoard_ab_number = b.ab_number AND member_userId = #{member_userId}) liked,
-		(SELECT COUNT(*) FROM academyBoardLike WHERE academyBoard_ab_number = b.ab_number) countLike
+		(SELECT COUNT(*) FROM academyBoardLike WHERE academyBoard_ab_number = b.ab_number) countLike,
+ 		(SELECT profileImage_file FROM profileImage WHERE member_userId = b.member_userId) profileImg
 
 	FROM academyBoard b LEFT JOIN academyBoardFileAttach f ON b.ab_number = f.academyBoard_ab_number
 						LEFT JOIN member m ON b.member_userId = m.userId
@@ -50,6 +52,7 @@
 		<result column="nickName" property="nickName"/>
 		<result column="countLike" property="countLike"/>
 		<result column="liked" property="liked"/>
+		<result column="profileImg" property="profileImg" />
 		<collection property="ab_fileName" ofType="string">
 			<result property="ab_fileName" column="ab_fileName"/>
 		</collection>

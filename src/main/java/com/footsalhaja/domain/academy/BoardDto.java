@@ -25,6 +25,7 @@ public class BoardDto {
 	private int countFile;
 	private String nickName;
 	private int ranking;
+	private String profileImg;
 	
 	public String getAgo() {
 		LocalDateTime now = LocalDateTime.now();
