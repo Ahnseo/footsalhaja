@@ -100,7 +100,7 @@
 
 #modi {
 	position: absolute; 
-	bottom:295px; 
+	bottom:370px; 
 	left: 60px;
 }
 </style>
