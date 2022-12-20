@@ -63,11 +63,6 @@ h2 {
                 <!-- Contact Section Heading-->
                 <h2>회원정보 수정</h2>
                 <!-- Icon Divider-->
-                <div class="divider-custom">
-                    <div class="divider-custom-line"></div>
-                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                    <div class="divider-custom-line"></div>
-                </div>
                 
                 <!-- Contact Section Form-->
                 <div class="row justify-content-center">

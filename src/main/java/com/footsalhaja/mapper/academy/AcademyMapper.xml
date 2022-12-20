@@ -28,6 +28,7 @@
 		b.ab_content,
 		b.member_userId,
 		b.ab_insertDatetime,
+		b.ab_viewCount,
 		m.nickName,
 		m.profileImage,
 		f.ab_fileName,
