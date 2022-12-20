@@ -174,7 +174,15 @@ ul {
 	display: inline-block;
 	margin-top: 60px;
 }
+.post_top .imgBox {
+	vertical-align: middle;
+}
 
+.post_top .imgBox object {
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+}
 
 
 </style>
