@@ -59,7 +59,7 @@
     </button>
   </div>
 
-  <div class="collapse navbar-collapse flex-column"  style="margin : 10px 50px"  id="navbar">
+  <div class="collapse navbar-collapse flex-column" id="navbar">
     <ul class="navbar-nav  w-100 px-3 justify-content-center bg1" >
       <li class="nav-item active">
         <a class="nav-link" href="${listLink }">
