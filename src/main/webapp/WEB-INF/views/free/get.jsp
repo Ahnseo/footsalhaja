@@ -194,6 +194,11 @@ ul {
 	height: 30px;
 	border-radius: 50%;
 }
+.post_top .imgBox img {
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+}
 
 
 
