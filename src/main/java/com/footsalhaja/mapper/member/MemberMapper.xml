@@ -27,12 +27,11 @@
 	</insert>
  	
  	<update id="updateMemberAuth">
- 		<foreach item="newAuth" collection="newAuthorities">
  	
  		UPDATE member SET
  		auth = #{newAuth}
  		WHERE userId = #{userId}
- 		</foreach>
+
  	</update>
  	
  	<update id="updateMemberInfoByUserId">
@@ -101,9 +100,7 @@
  		<result column="activityArea" property="activityArea" />
  		<result column="phone" property="phone" />
  		<result column="personalGender" property="personalGender" />
- 		<collection ofType="string" property="auth">
- 			<result column="auth" property="auth"/>
- 		</collection>
+ 		<result column="auth" property="auth"/>
  	</resultMap>
  	
  	<!-- userId 로 하나의 회원정보 가져오기 -->
@@ -140,9 +137,7 @@
  		<result column="phone" property="phone" />
  		<result column="personalGender" property="personalGender" />
  		<result column="profileImg" property="profileImg" />
- 		<collection ofType="string" property="auth">
- 			<result column="auth" property="auth"/>
- 		</collection>
+ 		<result column="auth" property="auth"/>
  	</resultMap>
  	
  	<!-- 회원탈퇴 (게시물 지우기) -->
@@ -457,6 +452,12 @@
 		INSERT INTO profileImage (member_userId, profileImage_file)
 		VALUES (#{userId}, #{profileImg})
 	</insert>
+	
+	<select id="getProfileImgByUserId" resultType ="String">
+		SELECT p.profileImage_file
+		FROM member m LEFT JOIN profileImage p ON m.userId = p.member_userId
+		WHERE member_userId = #{userId}
+	</select>
 	
 	<!-- 프로필 이미지 삭제 -->
 	<delete id="deleteProfileImgByUserId">

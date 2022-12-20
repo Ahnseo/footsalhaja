@@ -1,6 +1,7 @@
 package com.footsalhaja.controller.free;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
@@ -13,8 +14,12 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -40,7 +45,9 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import com.footsalhaja.domain.free.BoardDto;
 import com.footsalhaja.domain.free.PageInfo;
+import com.footsalhaja.domain.member.MemberDto;
 import com.footsalhaja.service.free.FreeService;
+import com.footsalhaja.service.member.MemberService;
 
 import software.amazon.awssdk.auth.credentials.AwsCredentials;
 import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
@@ -54,6 +61,9 @@ import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 @Controller
 @RequestMapping("free")
 public class FreeController {
+	
+	@Autowired
+	private MemberService memberService;
 	
 	@Autowired
 	private FreeService service;
@@ -70,6 +80,26 @@ public class FreeController {
 	@Value("${aws.s3.bucket}")
 	private String bucketName;
 	
+	
+	@GetMapping(value ="{userId}/profileImg", produces = MediaType.IMAGE_JPEG_VALUE)
+	public ResponseEntity<byte[]> myGetAndModifyWithProFile(@PathVariable(name="userId") String userId) throws Exception {
+		
+		
+		//RequestParam 으로 member/get?userId= 아이디값 가져와서 db 요청 -> MemberDto 타입 member ->  addAttribute "member" 넣음 . 
+		//System.out.println(userId);
+		MemberDto memberInfoByUserId = (MemberDto) memberService.selectMemberInfoByUserId(userId).get(0);
+		
+		//프로필 이미지 보이기
+
+		InputStream imageStream = new FileInputStream("user_profile/" + userId + "/" + memberInfoByUserId.getProfileImg());
+		byte[] imageByteArray = IOUtils.toByteArray(imageStream);
+		imageStream.close();
+		
+
+		System.out.println("이미지 "+imageByteArray);
+		return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
+		
+	}
 	
 	@GetMapping("insert")
 	public void insert() {
@@ -122,6 +152,12 @@ public class FreeController {
 		BoardDto board = service.get(fb_number, member_userId);
 		model.addAttribute("board", board);
 		
+		//RequestParam 으로 member/get?userId= 아이디값 가져와서 db 요청 -> MemberDto 타입 member ->  addAttribute "member" 넣음 . 
+		//System.out.println(userId);
+		MemberDto memberInfoByUserId =  (MemberDto) memberService.selectMemberInfoByUserId(member_userId).get(0);
+		System.out.println("멤버인포 :"+memberInfoByUserId);
+		model.addAttribute("member", memberInfoByUserId);
+		
 	}
 	
 	
@@ -133,7 +169,10 @@ public class FreeController {
 		
 		BoardDto board = service.get(fb_number);
 		model.addAttribute("board", board);
+		
 	}
+
+		
 	
 	@PostMapping("modify")
 	@PreAuthorize("@boardSecurity.checkWriter(authentication.name, #board.fb_number)")

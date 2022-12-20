@@ -120,14 +120,10 @@ public class MemberController {
 	@PostMapping("addAuth")
 	public String addAuth(String userId, MemberDto modifiedMemberInfo) {
 		System.out.println("userId????:"+userId);
-		List<String> addAuthorities = new ArrayList<>();
 		
-		List<String> authorities = modifiedMemberInfo.getAuth();
-		for(String auth : authorities ) {
-			addAuthorities.add(auth);
-		}
+		String auth = modifiedMemberInfo.getAuth();
 		
-		memberService.updateMemberAuth(userId, addAuthorities);
+		memberService.updateMemberAuth(userId, auth);
 		return "redirect:/member/get?userId="+userId;
 	}
 

@@ -176,6 +176,8 @@ public class MemberServiceImpl implements MemberService {
 	
 	private void deleteFile(String userId, String fileName) {
 		String key = "user_profile/" + userId + "/" + fileName;
+		
+		System.out.println(key);
 		DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
 				.bucket(bucketName)
 				.key(key)
@@ -210,43 +212,42 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Override
 	public int updateMemberInfoByUserId(MemberDto memberModifiedValues, MultipartFile file) {
+		String userId = memberModifiedValues.getUserId();
+		String oldProfile  = memberMapper.getProfileImgByUserId(userId);
+		
+		System.out.println(oldProfile);
 		
 		if (file != null && file.getSize() > 0) {
 			//기존 프로필 삭제
+			System.out.println("기존 프로필"+oldProfile);
+			deleteFile(memberModifiedValues.getUserId(), oldProfile);
 			memberMapper.deleteProfileImgByUserId(memberModifiedValues.getUserId());
-			deleteFile(memberModifiedValues.getUserId(), file.getOriginalFilename());
 			
 			memberMapper.insertprofileImg(memberModifiedValues.getUserId(), file.getOriginalFilename());
 			// 파일 저장
 			uploadFile(memberModifiedValues.getUserId(),file);
+			System.out.println("새프로필: "+file.getOriginalFilename());
 		}
 		
+		/*
+		 * int cnt = memberMapper.updateMemberInfoByUserId(memberModifiedValues); 
+		 * //System.out.println(cnt);
+		 * System.out.println("serviceAuth : "+memberModifiedValues.getAuth()); 
+		 * return cnt;
+		 */
+		
 		int cnt = memberMapper.updateMemberInfoByUserId(memberModifiedValues);
-		//System.out.println(cnt);
-		System.out.println("serviceAuth : "+memberModifiedValues.getAuth());
+		
 		return cnt;
+		
 	}
 	
 	//회원권한 추가하기 
 	@Override
-	public int updateMemberAuth(String userId, List<String> addAuthorities) {
+	public int updateMemberAuth(String userId, String addAuth) {
+
 		
-		MemberDto member = memberMapper.selectMemberInfoByUserId(userId);
-		List<String> oldAuthorities = member.getAuth();
-		//System.out.println("oldAuthorities :"+oldAuthorities);
-		
-		List<String> newAuthorities = new ArrayList<>();
-		
-		for(String oldAuth : oldAuthorities) {
-			for(String auth : addAuthorities) {
-				if(oldAuth != auth) {
-					newAuthorities.add(auth);
-				}
-			}
-		}
-		//System.out.println("newAuthorities :"+newAuthorities);
-		
-		int cnt = memberMapper.updateMemberAuth(userId, newAuthorities);
+		int cnt = memberMapper.updateMemberAuth(userId, addAuth);
 		
 		return cnt;
 	}

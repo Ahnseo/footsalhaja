@@ -86,7 +86,7 @@ h2 {
 							</c:if>
 							<c:forEach items="${member.profileImg }" var="name">
 								<div class= "containerProfile">	
-									<object data="${imgUrl }/${member.userId }/${name}" type="image/png">
+									<object data="${imgUrl }/user_profile/${member.userId }/${name}" type="image/png">
 										<img src="${pageContext.request.contextPath}/기본프로필.png">
 									</object>
 								</div>
@@ -146,17 +146,17 @@ h2 {
 						<!-- 회원권한 -->
 						<input type="hidden" name="auth" value="${member.auth}" readonly>
 						<div class="form-floating mb-3">
-							<c:if test="${member.auth.get(0) eq 'user'}">
+							<c:if test="${member.auth eq 'user'}">
 								<input class="form-control" id="permission" type="text"
 									name="permission" value="일반회원" data-sb-validations="required"
 									readonly />
 							</c:if>
-							<c:if test="${member.auth.get(0) eq 'manager'}">
+							<c:if test="${member.auth eq 'manager'}">
 								<input class="form-control" id="permission" type="text"
 									name="permission" value="매니저" data-sb-validations="required"
 									readonly />
 							</c:if>
-							<c:if test="${member.auth.get(0) eq 'admin'}">
+							<c:if test="${member.auth eq 'admin'}">
 								<input class="form-control" id="permission" type="text"
 									name="permission" value="관리자" data-sb-validations="required"
 									readonly />

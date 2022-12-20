@@ -69,9 +69,11 @@ public interface MemberMapper {
 	public int insertprofileImg(String userId, String profileImg);
 	
 	//프로필 이미지 삭제
+	public String getProfileImgByUserId(String userId);
+	
 	public int deleteProfileImgByUserId(String userId);
 
-	public int updateMemberAuth(String userId, List<String> newAuthorities);
+	public int updateMemberAuth(String userId, String newAuth);
 
 
 	public void deleteProfileImgByUserIdAndPrifileImg(String userId, String originalFilename);

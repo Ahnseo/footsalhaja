@@ -38,9 +38,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 			List < SimpleGrantedAuthority > authorityList = new ArrayList<>(); // -> 권한 정보 테이블 만들어서 넣기 
 			
 			if (member.getAuth() != null) {
-				for (String auth : member.getAuth()) {	
-					authorityList.add(new SimpleGrantedAuthority(auth));
-				}
+				authorityList.add(new SimpleGrantedAuthority(member.getAuth()));
+				
 			}
 			User user = new User(member.getUserId(), encodedPw, authorityList ); //import org.springframework.security.core.userdetails.User;
 															// 세번째 파라미터 : 권한 (authorization) = 유저/매니저/관리자 
