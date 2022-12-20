@@ -252,9 +252,10 @@ ul {
 					<c:if test="${member.profileImg eq null}">
 						<img class= "defaultImg" src="${pageContext.request.contextPath}/기본프로필.png">
 					</c:if>
-					<c:forEach items="${member.profileImg }" var="name">
+					<c:forEach items="${board.profileImg }" var="name">
 						<div class= "containerProfile">	
-							<object data="${imgUrl }/user_profile/${member.userId }/${name}" type="image/png">
+							<%-- <object data="${imgUrl }/user_profile/${member.userId }/${name}" type="image/png"> --%>
+							<object data="${imgUrl }/user_profile/${board.member_userId }/${name}" type="image/png">
 								<img src="${pageContext.request.contextPath}/기본프로필.png">
 							</object>
 						</div>
