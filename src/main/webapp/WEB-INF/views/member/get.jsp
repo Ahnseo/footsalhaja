@@ -53,7 +53,7 @@
          <div class="row justify-content-center">
         	<div class="col-lg-8 col-xl-7">
         		<sec:authorize access="hasAuthority('admin')">
-				 	<form action="/member/addAuth" method="post">	
+				 	<form action="${pageContext.request.contextPath}/member/addAuth" method="post">	
 						<input type="hidden" name="userId" value="${member.userId}">
 						<div class="d-flex mb-2">
 							<div class="col-8">
