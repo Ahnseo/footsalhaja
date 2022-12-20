@@ -213,6 +213,9 @@ ul {
 					 		<c:if test="${myQnAList.replyCount != 0}">
 					 			<span class="badge text-bg-light"><i class="fa-regular fa-message"></i> ${myQnAList.replyCount}</span>		
 					 		</c:if>
+					 		<c:if test="${myQnAList.fileCount != 0}">
+				 				<span class="badge text-bg-light"><i class="fa-regular fa-file"></i> ${myQnAList.fileCount}</span>		
+				 			</c:if>
 					 	</td>
 					 	
 					 	<td>${myQnAList.userId}</td>

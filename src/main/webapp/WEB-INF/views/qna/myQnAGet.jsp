@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>      
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> 
+<%@ page import="java.net.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>
@@ -179,8 +180,18 @@ ul {
 			<!-- 문의 본문  -->
 			<div class="top_content ">
 				<label for="" class="form-label">내용</label>
-				<p class="form-control" >${qna.content}</p>
+				<textarea id="" class="form-control mb-3 " name="content">${qna.content}</textarea>
+				
+				<%-- 이미지 출력 --%>
+				<div>
+					<c:forEach items="${qna.fileName }" var="name">
+						<div>
+							<img class="img-fluid img-thumbnail" src="${imgUrl }/qna/${qna.qnaId }/${URLEncoder.encode(name, 'utf-8')}" alt="">
+						</div>
+					</c:forEach>		
+				</div>
 			</div>
+			
 			
 			<!-- 문의내용 좋아요 버튼 -->
 			<div class="likeBox">
