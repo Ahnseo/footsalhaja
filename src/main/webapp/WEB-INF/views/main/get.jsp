@@ -72,6 +72,21 @@
 	font-size: 20px;
 	
 }
+.contentTitle{
+	text-align: center;
+}
+.title{
+	border: 2px solid #5F7161;
+	border-radius: 10px;
+	font-color: black;
+	margin: 10px 0 10px 45px;
+	width: 1020px;
+	height: 50px;
+	padding: 10px;
+	text-align: justify;
+	font-size: 20px;
+	
+}
 
 #reply {
 	position: relative;
@@ -85,7 +100,7 @@
 
 #modi {
 	position: absolute; 
-	bottom:295px; 
+	bottom:370px; 
 	left: 60px;
 }
 </style>
@@ -326,6 +341,11 @@
 					</div>								
 				</div>
 					
+					<div class="contentTitle">
+						<div class="title">
+							${main.title }
+						</div>									
+					</div>
 					<div class="contentBox">
 						<div class="content">
 							${main.content }

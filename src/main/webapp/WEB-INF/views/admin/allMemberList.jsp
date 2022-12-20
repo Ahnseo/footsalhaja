@@ -11,22 +11,16 @@
 <meta name="description" content="" />
 <meta name="author" content="" />
 <title>Insert title here</title>
-<!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="/footsalhaja/src/main/resources/assets/favicon.ico" />
-<!-- Font Awesome icons (free version)-->
-<script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
-<!-- Google fonts-->
-<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
-<link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
-	
-<!-- Core theme CSS (includes Bootstrap)-->
-<link href="/css/styles.css" type="text/css" rel="stylesheet" />
-	
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
-
 
 <style>
+	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&display=swap');
+	
+	
+	.container-sm { 
+		font-family: 'Noto Sans KR', sans-serif;
+		letter-spacing: -1px;
+		font-size: 16px;
+	}
 	.listHover:hover {
 		background-color: #D3D3D3;
 		cursor: pointer;
@@ -37,11 +31,15 @@
 
 
 </style>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
+
 </head>
 <body>
 <!--현재 member테이블 의 컬럼들 ( userId, name, password, nickName, email, birthYY, birthMM, birthDD, activityArea, phone, personalGender, permission ) -->
 <my:navbar active=""></my:navbar>
-<div class="container">
+<div class="container-sm">
 	<h3>전체 회원 목록 </h3>
 	
 	<!-- 검색기능   -->
@@ -122,15 +120,18 @@
 							 	<td>${member.activityArea}</td>
 							 	<td>${member.phone}</td>
 							 	<td>
-								 	<c:if test="${member.auth.get(0) eq 'user'}">
+								 	<c:if test="${member.auth eq 'user'}">
 								 		일반회원
 									</c:if>
-									<c:if test="${member.auth.get(0) eq 'manager'}">
+									<c:if test="${member.auth eq 'manager'}">
 										매니저
 									</c:if>
-									<c:if test="${member.auth.get(0) eq 'admin'}">
+									<c:if test="${member.auth eq 'admin'}">
 										관리자
-									</c:if>	 
+									</c:if>	
+									<c:if test="${member.auth eq 'black'}">
+										<span style="color:red;">블랙리스트</span>
+									</c:if>	
 							 	</td>
 						 	</tr>
 				 	</c:forEach>

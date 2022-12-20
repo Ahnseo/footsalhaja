@@ -166,6 +166,16 @@ ul {
 	color: #666;
 }
 
+
+/* 검색 페이징 글작성버튼 */
+
+.container-sm .paginationBox{
+	text-align: center;
+	position: relative;
+	display: inline-block;
+	margin-top: 60px;
+}
+
 .post_top .imgBox {
 	vertical-align: middle;
 }
@@ -175,6 +185,7 @@ ul {
 	height: 30px;
 	border-radius: 50%;
 }
+
 
 /* 댓글페이지네이션 */
 #replyPageFooter {
@@ -188,6 +199,7 @@ ul {
 #replyPageFooter ul li {
 	display: inline-block;
 }
+
 
 
 </style>
@@ -248,7 +260,7 @@ ul {
 					</c:forEach>	
 				</li>
 				<li class="top_nickName">${board.nickName }</li>
-				<li class="top_insertDatetime">${board.ab_insertDatetime }</li>
+				<li class="top_insertDatetime">${board.ago }</li>
 				<li class="top_likeCount">좋아요 ${board.countLike }</li>
 				<li class="top_insertDatetime">조회 ${board.ab_viewCount }</li>
 			</ul>
@@ -320,12 +332,12 @@ ul {
 				<div id="replyListContainer">
 					<!-- 댓글 나오는 부분 -->
 				</div>
-			<!-- 댓글 페이지 출력란 -->
-			<div class="paginationBox" id="replyPageFooter">
 			</div>
 		</div>
-    
-	</div>
+		<!-- 댓글 페이지 출력란 -->
+		<div class="paginationBox" id="replyPageFooter">
+		</div>
+		
 </div>
 	<!-- 게시글 삭제 모달 -->
 	<div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

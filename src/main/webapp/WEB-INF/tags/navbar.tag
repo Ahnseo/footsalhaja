@@ -120,6 +120,7 @@
       		</c:url>
         	<a class="nav-link ${active eq 'qnaMainBoard' ? 'active' : '' }" href="${qnaLink}">고객문의</a>
       	</li>
+
       	<c:if test="${loggedIn }">
       	<li class="nav-item dropdown">
         	<a class="nav-link dropdown-toggle nav-link ${active eq 'mypageLink' ? 'active' : '' }" href="${mypageLink}" role="button" data-bs-toggle="dropdown" aria-expanded="false">마이페이지</a>
@@ -145,6 +146,15 @@
 	        		<c:param name="userId" value="${userIdValue }"/>
 	        	 </c:url>
 				    <li><a class="dropdown-item" href="${myLikelist }">좋아요 한 글 목록</a></li>
+				    
+				 <c:url value="/qna/myQnAList" var="myQnAListLink">
+					<c:param name="userId" value="${userIdValue}"/>
+		   			<c:param name="page" value="1"/>
+		   			<c:param name="c" value=""/>
+		   			<c:param name="t" value="all"/>
+		   			<c:param name="q" value=""/>
+		   		 </c:url>
+		   		  <li><a class="dropdown-item" href="${myQnAListLink }">내 문의내역</a></li>
 			</ul>
       	</li>
       	</c:if>
