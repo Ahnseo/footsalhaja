@@ -107,7 +107,7 @@
 		b.ab_insertDatetime,
 		COUNT(DISTINCT r.ab_replyNumber) replyCnt,
 		COUNT(DISTINCT l.member_userId) countLike,
-		COUNT(f.academyBoard_ab_number) countFile,
+		COUNT(DISTINCT f.ab_fileName) countFile,
 		b.ab_viewCount,
 		m.nickName
 		
