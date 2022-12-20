@@ -232,7 +232,7 @@ ul {
 		<sec:authorize access="isAuthenticated()">
 		<div class="d-flex flex-row-reverse">	
 			
-			<form action="/qna/insert" method="get">
+			<form action="${pageContext.request.contextPath}/qna/insert" method="get">
 				<button id="insertBtn" class="btn btn-success btn-m5" type="submit" >문의하기</button>	
 			</form>	
 			</div>

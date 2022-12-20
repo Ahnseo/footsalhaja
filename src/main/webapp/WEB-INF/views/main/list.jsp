@@ -349,10 +349,17 @@
 </c:url>
 <c:url value="/member/login" var="loginLink"></c:url>
 
+<c:url value="/qna/myQnAList" var="myQnAListLink">
+<c:param name="userId" value="${userIdValue}"/>
+	<c:param name="page" value="1"/>
+	<c:param name="c" value=""/>
+	<c:param name="t" value="all"/>
+	<c:param name="q" value=""/>
+</c:url>
 
-	<my:navbar></my:navbar>
+<my:navbar active="mainLink"></my:navbar>
+
 <div id="wrapper">
-	
 	<!-- carousel slide -->
 	<div id="body" class="container">
         <div class="row">
@@ -417,8 +424,14 @@
 			</div>
 		</li>
 		<li>
+			<span class="fab-label">마이페이지</span>
+			<div onclick="location.href='${mypageLink}'" class="fab-icon-holder">
+				<i class="fa-solid fa-circle-user"></i>
+			</div>
+		</li>
+		<li>
 			<span class="fab-label">문의하기</span>
-			<div onclick="location.href" class="fab-icon-holder">
+			<div onclick="location.href='${myQnAListLink }'" class="fab-icon-holder">
 				<i class="fa-solid fa-headset"></i>
 			</div>
 		</li>
@@ -428,12 +441,7 @@
 				<i class="fa-solid fa-calendar-week"></i>
 			</div>
 		</li> -->
-		<li>
-			<span class="fab-label">마이페이지</span>
-			<div onclick="location.href='${mypageLink}'" class="fab-icon-holder">
-				<i class="fa-solid fa-circle-user"></i>
-			</div>
-		</li>
+		
 	</ul>
 </div>
 </c:if>

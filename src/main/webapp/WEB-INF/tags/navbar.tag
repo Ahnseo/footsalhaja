@@ -59,12 +59,12 @@
     </button>
   </div>
 
-  <div class="collapse navbar-collapse flex-column" id="navbar">
+  <div class="collapse navbar-collapse flex-column"  style="margin : 10px 50px"  id="navbar">
     <ul class="navbar-nav  w-100 px-3 justify-content-center bg1" >
-      <li class="nav-item active" >
+      <li class="nav-item active">
         <a class="nav-link" href="${listLink }">
         <img class="nav_img" alt="" src="${pageContext.request.contextPath}/logo.png">
-        	<p class="navTitle">풋살하자</p>
+        	<p class="navTitle" >풋살하자</p>
         <!-- <span class="sr-only">(current)</span> --></a>
       </li>
       
@@ -90,20 +90,19 @@
       </c:if>
     </ul>
 	
-	
-	
     <ul class="navbar-nav w-100 px-3 justify-content-end bg2" style="background: #5F7161;">
-
-
         
         <%-- security 를 사용하여, 로그인 된 userId를 c:param value="로그인된 ID값" 사용합니다. 현재 주소창에 접속방법 예시) mypage/list?userId=askc6361 --%>
         
         <c:url value="/mypage/list" var="mypageLink">
-        	<c:param name="userId" value="${userIdValue }"/>
-        	
+        	<c:param name="userId" value="${userIdValue }"/>     	
         </c:url>
         <c:url value="/free/list" var="freeLink"></c:url>
         <c:url value="/academy/list" var="academyLink"></c:url>
+        
+        <li class="nav-item active">
+        	<a class="nav-link ${active eq 'mainLink' ? 'active' : '' }" href="${listLink}">HOME</a>
+      	</li>
         <li class="nav-item active">
         	<a class="nav-link ${active eq 'freeLink' ? 'active' : '' }" href="${freeLink}">자유게시판</a>
       	</li>
