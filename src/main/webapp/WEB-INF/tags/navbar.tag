@@ -126,7 +126,7 @@
         	<a class="nav-link dropdown-toggle nav-link ${active eq 'mypageLink' ? 'active' : '' }" href="${mypageLink}" role="button" data-bs-toggle="dropdown" aria-expanded="false">마이페이지</a>
         	<ul class="dropdown-menu">		    
 					<li><a class="dropdown-item" href="${mypageLink }">회원정보</a></li>
-				 <c:url value="myAbDocumentList" var="myAblist">
+				 <c:url value="/mypage/myAbDocumentList" var="myAblist">
 	        		<c:param name="userId" value="${userIdValue }"/>
 	        	 </c:url>
 					<li><a class="dropdown-item" href="${myAblist }">아카데미 게시판 쓴 글 목록</a></li>

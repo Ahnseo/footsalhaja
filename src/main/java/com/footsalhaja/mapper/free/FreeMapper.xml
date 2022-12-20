@@ -85,6 +85,7 @@
 		<result column="fb_insertDatetime" property="fb_insertDatetime"/>
 		<result column="nickName" property="nickName"/>
 		<result column="fb_likeCount" property="fb_likeCount"/>
+		<result column="fb_viewCount" property="fb_viewCount"/>
 		<result column="liked" property="liked"/>
 		<result column="profileImg" property="profileImg" />
 		<collection property="fb_fileName" ofType="string">
