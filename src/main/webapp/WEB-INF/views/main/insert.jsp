@@ -1,8 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.net.*"%>
-<%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
@@ -148,10 +146,11 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
 </head>
 <body>
+	
 	<sec:authentication property="name" var="username"/>
+	
 	<my:navbar></my:navbar>
-
-
+	
 <div class="container-md" id="wrapper">
 	<div class="row">
 		<div class="col">
@@ -263,7 +262,10 @@
 						<div class="col">
 							<div class="row-g-2">
 								<input style="position:relative; right: 0;" class="b1" type="submit" value="등록"> 
-								<input class="b2" type="button" value="취소" onclick="location.href='/main/list'">
+								<c:url value="/main/list" var="listLink" />
+								<a href="${listLink }">
+									<input class="b2" type="button" value="취소">
+								</a>
 							</div>		
 						</div>
 					</div>
