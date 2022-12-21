@@ -39,7 +39,7 @@
 <sec:authentication property="name" var="userIdValue"/>
 <my:navbar active=""></my:navbar>
 <div class="container">
-	<h3>전체 문의내역</h3>	
+	<h3>전체 문의 목록</h3>	
 	
 	<!-- 검색기능 + 카테고리 + 답변상태  -->
 	<div class="form-group">     
@@ -66,7 +66,7 @@
 		      	</div>
 		      	<div class="col-2">
 		      	<select name="s" id="searchTypeSelect" class="form-select">
-		      		<option value="" ${param.s == '' ? 'selected' : '' }>모집상태</option>
+		      		<option value="" ${param.s == '' ? 'selected' : '' }>답변상태</option>
 					<option value="yet" ${param.s == 'yet' ? 'selected' : '' }>답변대기</option>
 					<option value="done" ${param.s == 'done' ? 'selected' : '' }>답변완료</option>
 				</select>

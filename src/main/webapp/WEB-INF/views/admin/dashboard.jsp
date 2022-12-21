@@ -227,7 +227,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 			      			<c:param name="q" value=""/>
 			      			<c:param name="s" value="yet"/>
 			      		</c:url>
-					        <a class="navbar-brand mr10px" href="${allQnAListLink}">대기중인 QnA
+					        <a class="navbar-brand mr10px" href="${allQnAListLink}">답변대기 QnA
 					        	<span class="badge bg-danger rounded-pill mr10px">${todayWaitingQnACount}</span> 
 					        </a>
 					        <ul class="nav nav-pills">

@@ -55,7 +55,7 @@
 <body>
 <my:navbar active=""></my:navbar>
 <div class="container">
-<h3>전체 예약내역</h3>
+<h3>전체 예약 목록</h3>
 
 	<!-- 검색기능 + 예약날짜 + 구장별 + 모집상태  -->
 	<div class="form-group">     
