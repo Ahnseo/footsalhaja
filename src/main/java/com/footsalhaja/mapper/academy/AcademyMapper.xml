@@ -32,6 +32,7 @@
 		m.nickName,
 		m.profileImage,
 		f.ab_fileName,
+		b.ab_viewCount,
 		(SELECT COUNT(*) FROM academyBoardLike WHERE academyBoard_ab_number = b.ab_number AND member_userId = #{member_userId}) liked,
 		(SELECT COUNT(*) FROM academyBoardLike WHERE academyBoard_ab_number = b.ab_number) countLike,
  		(SELECT profileImage_file FROM profileImage WHERE member_userId = b.member_userId) profileImg
@@ -52,6 +53,7 @@
 		<result column="ab_insertDatetime" property="ab_insertDatetime"/>
 		<result column="nickName" property="nickName"/>
 		<result column="countLike" property="countLike"/>
+		<result column="ab_viewCount" property="ab_viewCount"/>
 		<result column="liked" property="liked"/>
 		<result column="profileImg" property="profileImg" />
 		<collection property="ab_fileName" ofType="string">

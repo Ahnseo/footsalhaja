@@ -3,6 +3,7 @@ package com.footsalhaja.domain.qna;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 import lombok.Data;
 
@@ -20,6 +21,9 @@ public class QnADto {
 	private boolean liked;
 	private int likeCount;
 	private int replyCount;
+	private int fileCount;
+	
+	private List<String> fileName;
 	
 	private LocalDateTime insertDatetime;
 	public String getAgo() {

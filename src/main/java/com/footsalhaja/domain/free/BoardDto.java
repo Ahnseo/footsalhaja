@@ -27,6 +27,8 @@ public class BoardDto {
 	private List<String> fb_fileName;
 	private int countFile;
 	
+	private String profileImg;
+	
 	// 게시물 입력시간 변경
 	public String getAgo() {
 		LocalDateTime now = LocalDateTime.now(); // 현재시간

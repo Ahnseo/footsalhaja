@@ -54,7 +54,7 @@ public class AdminController {
 		
 		List<adminColChartDto> chartList = adminService.chartListByDate();
 		
-		System.out.println(chartList);
+		//System.out.println(chartList);
 		
 		model.addAttribute("chartList", chartList);
 		
@@ -77,7 +77,7 @@ public class AdminController {
 							QnAPageInfo qnaPageInfo,
 							Model model) {
 		
-		System.out.println("l ### => "+l);
+		//System.out.println("l ### => "+l);
 		List<BookDto> allBookedList = adminService.selectBookedListAll(page ,qnaPageInfo ,type ,keyword, s, l, d1, d2);
 		model.addAttribute("allBookedList", allBookedList);
 		
@@ -94,7 +94,7 @@ public class AdminController {
 							QnAPageInfo qnaPageInfo,
 							Model model
 							) {	
-		System.out.println("####page "+page);
+		//System.out.println("####page "+page);
 		List<QnADto> allQnAList= adminService.selectAllQnAList(page, qnaPageInfo, keyword, type, c, s);
 		//System.out.println(allQnAList);
 		model.addAttribute("allQnAList", allQnAList);

@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>      
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>  
+<%@ page import="java.net.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>
@@ -14,29 +14,13 @@
 <title>Insert title here</title>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&display=swap');
 
-@font-face {
- font-family: 'NanumBarunGothic';
- font-style: normal;
- font-weight: 400;
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot');
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.ttf') format('truetype');
-}
 
-@font-face {
- font-family: 'NanumBarunGothic';
- font-style: normal;
- font-weight: 700;
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot');
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.ttf') format('truetype')
-}
-
-@font-face {
- font-family: 'NanumBarunGothic';
- font-style: normal;
- font-weight: 300;
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot');
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.ttf') format('truetype');
+.container-sm { 
+	font-family: 'Noto Sans KR', sans-serif;
+	letter-spacing: -1px;
+	font-size: 16px;
 }
 
 * {
@@ -53,12 +37,6 @@
 ul {
    list-style:none;
   }
-
-.container-sm { 
-	font-family: 'NanumBarunGothic';
-	letter-spacing: -1px;
-	font-size: 16px;
-}
 
 .post_wrap {
 	border: 1px solid #ced4da;
@@ -177,7 +155,7 @@ ul {
 		<div id="freeTitle">
 			<h2>문의수정</h2>
 		</div>
-		<form action="" method="post">
+		<form action="" method="post" enctype="multipart/form-data" >
 		<input id="formControlInput2" class="form-control" type="hidden" name="category" value="${qna.category}" readonly>
 			<!-- 문의 번호, 제목, 카테고리, userId, 작성일시, 좋아요, 처리상태   -->
 			<div class="post_wrap">
@@ -206,12 +184,39 @@ ul {
 				<!-- 문의 본문  -->
 				<div class="top_content">
 					<label for="" class="form-label">내용</label>
-					<textarea id="" class="form-control" name="content">${qna.content}</textarea>
+					<textarea id="" class="form-control mb-3 " name="content">${qna.content}</textarea>
+					
+					<%-- 이미지 출력 --%>
+					<div>
+						<c:forEach items="${qna.fileName }" var="name" varStatus="status">
+							<div class="row">
+								<div class="col-2 d-flex justify-content-center align-items-center">
+								<%-- 삭제 여부 체크박스 --%>s
+									<div class="form-check form-switch text-danger">
+									  <input name="removeFiles" value="${name }" class="custom-check form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked${status.count }" >
+									  <label class="form-check-label" for="flexSwitchCheckChecked${status.count }"><i class="fa-regular fa-trash-can"></i></label>
+									</div>
+								</div>
+								<div class="col-10">
+									<div>
+										<img class="img-fluid img-thumbnail" src="${imgUrl }/qna/${qna.qnaId }/${URLEncoder.encode(name, 'utf-8')}" alt="">
+									</div>
+								</div>
+							</div>
+						</c:forEach>		
+					</div>				
+					
+					<div class="mb-3">
+						<label for="" class="form-label">파일 추가</label>
+						<input multiple type="file" accept="image/*" class="form-control" name="files">
+						<div class="form-text" id="addFileInputText"></div>
+					</div>
+					
 				</div>
 				<div class = "d-flex flex-row-reverse">
 					<!-- 삭제 / 수정 완료버튼  -->
-					<button class="btn btn-outline-danger btn-m5" type="button" id="deleteQnABtn" >삭제</button>
-					<button class="btn btn-outline-success btn-m5"  type="submit" id="" >수정완료</button>
+					<button class="btn btn-danger btn-m5" type="button" id="deleteQnABtn" >삭제</button>
+					<button class="btn btn-success btn-m5"  type="submit" id="" >수정완료</button>
 				</div>
 			</div>
 			
@@ -235,9 +240,8 @@ document.querySelector("#deleteQnABtn").addEventListener("click", function (){
 		headers : {"Content-Type" : "application/json"},
 		body : JSON.stringify(data)
 	})
-	.then( function() {
-		history.go(-2);
-	});
+	.then(res => res.text())
+	.then(redirectPath => location.href = ctx+redirectPath)
 });
 
 </script>
