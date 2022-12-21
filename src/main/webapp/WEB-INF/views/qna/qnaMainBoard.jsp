@@ -234,9 +234,9 @@
 										<th>번호</th>
 										<th>카테고리</th>
 										<th>제목</th>
-										<th>좋아요</th>
 										<th>작성자</th>
 										<th>작성일시</th>
+										<th><i class="fa-regular fa-thumbs-up"></i></th>
 										<th>문의상태</th>
 										<!-- <th>조회수</th> --> 
 									</tr>
@@ -253,15 +253,15 @@
 										 	<td>
 										 		<a href="${getLink}">${allQnA.title}</a>
 										 		<c:if test="${allQnA.replyCount != 0}">	
-										 			<span class="badge text-bg-light"><i class="fa-regular fa-message"></i> ${allQnA.replyCount}</span>
+										 			<span class=""><i class="fa-regular fa-comment"></i> ${allQnA.replyCount}</span>
 										 		</c:if>
-										 		<c:if test="${myQnAList.fileCount != 0}">
-									 				<span class="badge text-bg-light"><i class="fa-regular fa-file"></i> ${allQnA.fileCount}</span>		
+										 		<c:if test="${allQnA.fileCount != 0}">
+									 				<span class=""><i class="fa-regular fa-file"></i> ${allQnA.fileCount}</span>		
 									 			</c:if>
 										 	</td>
-										 	<td>${allQnA.likeCount}</td>
 										 	<td>${allQnA.userId}</td>
 										 	<td>${allQnA.ago }</td>
+										 	<td>${allQnA.likeCount}</td>
 										 	<td>
 										 	 	<c:if test="${allQnA.status == '답변완료'}">  
 										        	<span class="badge bg-success rounded-pill">${allQnA.status}</span>   								        	

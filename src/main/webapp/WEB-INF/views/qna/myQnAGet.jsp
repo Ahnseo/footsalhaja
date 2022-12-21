@@ -169,7 +169,7 @@ ul {
 					<li><i class="fa-solid fa-envelope"></i></li>
 					<li class="top_nickName"><i class="fa-solid fa-user"></i> ${qna.userId } </li>
 					<li class="top_nickName"><i class="fa-regular fa-clock"></i> ${qna.ago } </li>
-					<li class="top_nickName"><i class="fa-regular fa-heart"></i> ${qna.likeCount } </li>
+					<li class="top_nickName"><i class="fa-regular fa-thumbs-up"></i> ${qna.likeCount } </li>
 				</ul>
 				<div class="top_content">
 					<label for="" class="form-label">제목</label>
@@ -202,10 +202,10 @@ ul {
 					id="likeBtn" class="likeIcon"
 					>
 					
-						<i class="fa-regular fa-heart"></i>
+					<i class="fa-regular fa-thumbs-up"></i>
 					
 				</p>
-				<p class="likeCount1">좋아요</p>
+				<p class="likeCount1">도움이 되었어요!</p>
 				
 				<p id="likeCnt" class="likeCount2"> ${qna.likeCount }</p>
 			
@@ -225,13 +225,13 @@ ul {
 				
 				
 				<!-- 답변하기 버튼  답변이 없을때만 => 작성가능!  fetch -> post방 -> controller -->
-				<sec:authorize access="hasAuthority('admin')">
+				<sec:authorize access="hasAnyAuthority('admin', 'manager')">
 				<c:if test="${qnaAnswer == null}">	
 					<button class="btn btn-success btn-m5" type="button" data-bs-toggle="collapse" data-bs-target="#qnaReplyCollapseAnswer" aria-expanded="false" aria-controls="collapseExample">
 						답변하기
 					</button>	
 				</c:if>
-				</sec:authorize><!-- 답번하기 버튼 (관리자만 )-->	
+				</sec:authorize><!-- 답번하기 버튼 (관리자와 매니저 만 )-->	
 				
 			</div> 
 			
@@ -240,7 +240,7 @@ ul {
 	
 	<div class="container m-auto">	
 		<!-- 답변 작성하기 -->
-		<sec:authorize access="hasAuthority('admin')">
+		<sec:authorize access="hasAnyAuthority('admin', 'manager')">
 			<div class="collapse" id="qnaReplyCollapseAnswer">
 				<div class="card card-body">
 					<div class="mb-3">

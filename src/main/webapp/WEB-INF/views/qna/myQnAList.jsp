@@ -194,7 +194,7 @@ ul {
 					<th>카테고리</th>
 					<th>제목</th>
 					<th>작성자</th>
-					<th>좋아요</th>
+					<th><i class="fa-regular fa-thumbs-up"></i></th>
 					<th>문의상태</th>
 				</tr>
 			</thead>
@@ -211,10 +211,10 @@ ul {
 					 	<td>
 					 		<a href="${myQnAGetLink}">${myQnAList.title}</a>
 					 		<c:if test="${myQnAList.replyCount != 0}">
-					 			<span class="badge text-bg-light"><i class="fa-regular fa-message"></i> ${myQnAList.replyCount}</span>		
+					 			<span class=""><i class="fa-regular fa-comment"></i> ${myQnAList.replyCount}</span>		
 					 		</c:if>
 					 		<c:if test="${myQnAList.fileCount != 0}">
-				 				<span class="badge text-bg-light"><i class="fa-regular fa-file"></i> ${myQnAList.fileCount}</span>		
+				 				<span class=""><i class="fa-regular fa-file"></i> ${myQnAList.fileCount}</span>		
 				 			</c:if>
 					 	</td>
 					 	

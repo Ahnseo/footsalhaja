@@ -190,13 +190,17 @@ h2 {
                             <!-- an error submitting the form-->
                             <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">수정에 실패하였습니다.</div></div>
                             <!-- Submit Button-->
-                            <input class="btn btn-primary btn-xl" id="submitButton" type="submit" value="수정"/>
+                            <div class="d-flex flex-row-reverse mb-2">
+                            	<input class="btn btn-primary btn-xl" id="submitButton" type="submit" value="수정"/>
+                            </div>
                         </form>
 						<form action="${pageContext.request.contextPath}/mypage/delete" method="post">
-							<%-- 히든 input userId 사용해서 post 방식으로 controller 에게 값 넘기기 !  --%>
-							<input type="hidden" name="userId" value="${member.userId}"> 
-							<input class="btn btn-danger" id="submitButton" type="submit" value="탈퇴">
-							탈퇴하기 : Foreign Key 함께 삭제하는 코드를 작성해야하므로, 나중에 DB통합 할때 수정하겠습니다 .
+							<div class="d-flex flex-row-reverse">
+								<!-- 탈퇴하기 : Foreign Key 함께 삭제하는 코드를 작성해야하므로, 나중에 DB통합 할때 수정하겠습니다 . -->
+								<input class="btn btn-danger" id="submitButton" type="submit" value="탈퇴">
+								<%-- 히든 input userId 사용해서 post 방식으로 controller 에게 값 넘기기 !  --%>
+								<input type="hidden" name="userId" value="${member.userId}"> 
+							</div>
 						</form>
                     </div>
                 </div>

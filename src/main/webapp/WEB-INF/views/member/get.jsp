@@ -40,11 +40,11 @@
 <section class="page-section" id="contact">
 	<div class="container">
 		 <!-- Contact Section Heading-->
-		 <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">${member.userId}님의 회원정보</h2>
+		 <h2 class="page-section-heading text-center text-uppercase text-secondary mb-2">${member.userId}님의 회원정보</h2>
          
          <div class="row justify-content-center">
         	<div class="col-lg-8 col-xl-7">
-        		<sec:authorize access="hasAuthority('admin')">
+        		<sec:authorize access="hasAnyAuthority('admin', 'manager')">
 				 	<form action="${pageContext.request.contextPath}/member/addAuth" method="post">	
 						<input type="hidden" name="userId" value="${member.userId}">
 						<div class="d-flex mb-2">
@@ -52,13 +52,15 @@
 							<select class="form-control " name="auth" id="addAuth">
 								<option value="" disabled selected >회원권한선택</option>
 								<option value="user">일반회원</option>
+								<sec:authorize access="hasAuthority('admin')">
 								<option value="manager">매니저</option>
+								</sec:authorize>
 								<option value="black">블랙리스트</option>
 							</select>
 							</div>
-							<div class="col-2"></div>
+							<div class="col-1"></div>
 							<div class="col-3">
-							<button type="submit" class="btn btn-warning ">회원권한변경</button>
+							<button type="submit" class="btn btn-warning ">권한변경</button>
 							</div>
 						</div>
 					</form>

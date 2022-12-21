@@ -124,10 +124,10 @@
 								 		일반회원
 									</c:if>
 									<c:if test="${member.auth eq 'manager'}">
-										매니저
+										<span style="color:blue;">매니저</span>	
 									</c:if>
 									<c:if test="${member.auth eq 'admin'}">
-										관리자
+										<span style="color:green;">관리자</span>	
 									</c:if>	
 									<c:if test="${member.auth eq 'black'}">
 										<span style="color:red;">블랙리스트</span>

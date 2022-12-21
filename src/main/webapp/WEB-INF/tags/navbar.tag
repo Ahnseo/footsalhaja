@@ -162,7 +162,7 @@
       	</li>
       	</c:if>
       	
-      	<sec:authorize access="hasAuthority('admin')">
+      	<sec:authorize access="hasAnyAuthority('admin', 'manager')">
         <li class="nav-item dropdown">
 		    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 		    	관리자
