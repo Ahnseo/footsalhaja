@@ -249,7 +249,7 @@ ul {
 			<p class="top_title">${board.fb_title }</p>
 			<ul>
 				<li class="imgBox"> 
-					<c:if test="${member.profileImg eq null}">
+					<c:if test="${board.profileImg eq null}">
 						<img class= "defaultImg" src="${pageContext.request.contextPath}/기본프로필.png">
 					</c:if>
 					<c:forEach items="${board.profileImg }" var="name">
