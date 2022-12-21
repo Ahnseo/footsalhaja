@@ -120,7 +120,7 @@ li {
 				<thead>
 					<tr scope="row">	
 						<th>글번호</th>
-						<th>말머리</th>
+						<th>카테고리</th>
 						<th>제목</th>
 						<th>작성시간</th>
 						<th>조회수</th>

@@ -150,7 +150,7 @@ li {
 					        	<td>14:00~16:00</td>
 					        </c:when>
 					        <c:when test="${mainlist.bookTime == 18}">
-					        	<td>>18:00~20:00</td>
+					        	<td>18:00~20:00</td>
 					        </c:when>
 					        <c:when test="${mainlist.bookTime == 21}">
 					        	<td>21:00~23:00</td>
@@ -168,10 +168,10 @@ li {
 					        <c:when test="${mainlist.level == 1}">
 					        	<td>비기너</td>
 					        </c:when>
-					        <c:when test="${mainlist.level == 9}">
+					        <c:when test="${mainlist.level == 2}">
 					        	<td>아마추어</td>
 					        </c:when>
-					        <c:when test="${mainlist.level == 14}">
+					        <c:when test="${mainlist.level == 3}">
 					        	<td>챌린저</td>
 					        </c:when>
 					 	</c:choose>
