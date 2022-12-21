@@ -166,9 +166,6 @@ ul {
 	color: #666;
 }
 
-
-/* 검색 페이징 글작성버튼 */
-
 .container-sm .paginationBox{
 	text-align: center;
 	position: relative;
@@ -179,7 +176,6 @@ ul {
 .post_top .imgBox {
 	vertical-align: middle;
 }
-
 .post_top .imgBox object {
 	width: 30px;
 	height: 30px;
@@ -191,7 +187,6 @@ ul {
 	border-radius: 50%;
 }
 
-
 /* 댓글페이지네이션 */
 .replyPageFooterBox {
 	text-align: center;
@@ -199,11 +194,9 @@ ul {
 #replyPageFooter {
 	text-align: center;
 }
-
 #replyPageFooter ul {
 	display: inline-block;
 }
-
 #replyPageFooter ul li {
 	display: inline-block;
 }
@@ -256,12 +249,12 @@ ul {
 			<p class="top_title">${board.ab_title }</p>
 			<ul>
 				<li class="imgBox"> 
-					<c:if test="${member.profileImg eq null}">
+					<c:if test="${board.profileImg eq null}">
 						<img class= "defaultImg" src="${pageContext.request.contextPath}/기본프로필.png">
 					</c:if>
-					<c:forEach items="${member.profileImg }" var="name">
+					<c:forEach items="${board.profileImg }" var="name">
 						<div class= "containerProfile">	
-							<object data="${imgUrl }/user_profile/${member.userId }/${name}" type="image/png">
+							<object data="${imgUrl }/user_profile/${board.member_userId }/${name}" type="image/png">
 								<img src="${pageContext.request.contextPath}/기본프로필.png">
 							</object>
 						</div>
@@ -344,9 +337,10 @@ ul {
 		</div>
 		<!-- 댓글 페이지 출력란 -->
 		<div class="replyPageFooterBox">
-		<div class="paginationBox" id="replyPageFooter">
+			<div class="paginationBox" id="replyPageFooter">
+			</div>
 		</div>
-		</div>
+
 		
 </div>
 	<!-- 게시글 삭제 모달 -->
@@ -446,7 +440,7 @@ document.querySelector("#removeConfirmButton").addEventListener("click", functio
 			console.log(replyCnt);
 			
 			/* 댓글 페이지 번호 출력하는 show ReplyPage()  */
-			var pageNum = 1;
+			var pageNum = page;
 			const replyPageFooter = document.querySelector("#replyPageFooter");
 			replyPageFooter.innerHTML = "";
 			
@@ -486,7 +480,7 @@ document.querySelector("#removeConfirmButton").addEventListener("click", functio
 						document.querySelector("#replyDeleteConfirmButton").setAttribute("data-reply-id", this.dataset.replyId);
 					});
 				}
-			} showReplyPage(replyCnt);
+			} showReplyPage(replyCnt, page);
 			/* 댓글 페이징 버튼 이동 */
 			let pageButtons = document.querySelectorAll(".page-item span")
 			
@@ -504,7 +498,7 @@ document.querySelector("#removeConfirmButton").addEventListener("click", functio
 				})
 			}
 			
-			function showReplyPage(replyCnt) {
+			function showReplyPage(replyCnt, page) {
 				console.log("1");
 				var endNum = Math.ceil(pageNum / 10.0) * 10;
 				var startNum = endNum - 9;
@@ -526,7 +520,8 @@ document.querySelector("#removeConfirmButton").addEventListener("click", functio
 				}
 				
 				for(var i=startNum ; i<=endNum; i++){
-					var active = pageNum == i? "active":"";
+					console.log("pageNum: "+page);
+					var active = page == i? "active":"";
 					str+="<li class='page-item "+active+" '><span class='page-link' href='"+i+"'>"+i+"</span></li>";
 				}
 				

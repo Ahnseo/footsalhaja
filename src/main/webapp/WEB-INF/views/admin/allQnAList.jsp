@@ -114,6 +114,9 @@
 							 	<c:if test="${allQnAList.replyCount != 0}">
 						 			<span class="badge text-bg-light"><i class="fa-regular fa-message"></i> ${allQnAList.replyCount}</span>		
 						 		</c:if>
+						 		<c:if test="${allQnAList.fileCount != 0}">
+						 			<span class="badge text-bg-light"><i class="fa-regular fa-file"></i> ${allQnAList.fileCount}</span>		
+						 		</c:if>
 						 	</td>
 						 	
 						 	<td>${allQnAList.likeCount}</td>

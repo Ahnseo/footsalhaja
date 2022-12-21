@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.footsalhaja.domain.qna.FAQDto;
 import com.footsalhaja.domain.qna.QnADto;
@@ -48,7 +49,7 @@ public class QnAController {
 		// FAQ data 가져오기
 		List<FAQDto> FAQList = qnaService.selectFAQList();
 		// 답변완료된!! allQnAList 만!! 가져오기
-		System.out.println("@@@@ c :"+c);
+		//System.out.println("@@@@ c :"+c);
 		List<QnADto> allQnAListByDone = qnaService.selectQnAListByStatusDone(page, qnaPageInfo, type, keyword, c);
 		
 		
@@ -65,9 +66,9 @@ public class QnAController {
 	}
 
 	@PostMapping("insert")
-	public String insertQnA(QnADto qnaBoard, String userId) {
-
-		qnaService.insertQnABoard(qnaBoard); // null : ServiceImpl 에서만 model 사용중이기 때문
+	public String insertQnA(QnADto qnaBoard, String userId, MultipartFile[] files) {
+		
+		qnaService.insertQnABoard(qnaBoard, files); // null : ServiceImpl 에서만 model 사용중이기 때문
 
 		return "redirect:/qna/myQnAList?userId="+userId+"&page=1&t=all&q=&c=";
 	}
@@ -80,12 +81,6 @@ public class QnAController {
 							@RequestParam(name = "c") String c,
 							QnAPageInfo qnaPageInfo,
 							Model model, String userId) throws Exception {
-		System.out.println("page:"+page);
-		System.out.println("type:"+type);
-		System.out.println("keyword:"+keyword);
-		System.out.println("c:"+c);
-		
-		
 		// myQnAList 페이지네이션 추가
 		List<QnADto> myQnAList = new ArrayList<>();
 		myQnAList = qnaService.myQnAList(userId, page, qnaPageInfo, type, keyword, c );
@@ -103,8 +98,9 @@ public class QnAController {
 	@GetMapping("myQnAGet")
 	public void myQnAGet(String userId, int qnaId, Model model, QnAReplyDto qnaReply) {
 		QnADto qna = qnaService.selectMyQnAGetByQnAIdAndUserId(userId, qnaId);
-		model.addAttribute("qna", qna);
+
 		//System.out.println("qna 정보 : "+ qna);
+		model.addAttribute("qna", qna);
 		
 		QnAReplyDto qnaAnswer = qnaService.selectQnAReply(qnaReply);
 		//System.out.println("qnaAnswer :"+qnaAnswer);
@@ -112,33 +108,41 @@ public class QnAController {
 		model.addAttribute("qnaAnswer", qnaAnswer);
 		
 		int qnaReplyId = qna.getQnaReplyId();
-		//System.out.println(qnaReplyId);
+		
 		List<QnAReplyToAnswerDto> qnaReplyToAnswerList = qnaService.selectQnAReplyToAnswerList(qnaReplyId);
-		//System.out.println("qnaReplyToAnswerList : "+qnaReplyToAnswerList);
+		
 		
 		model.addAttribute("qnaReplyToAnswerList", qnaReplyToAnswerList);
 	}
 	
 	// myQnA게시물 . 저장한 정보 내용 또는 수정된 최신 내용 가저오기  
 	@GetMapping("myQnAModify")
-	public void myQnAModify(String userId, int qnaId, Model model) {
+	public void myQnAModify( String userId, int qnaId, Model model) {
+		
 		QnADto qna = qnaService.selectMyQnAGetByQnAIdAndUserId(userId, qnaId);
-		//System.out.println("수정! qna 정보 : "+ qna);
+		
 		model.addAttribute("qna", qna);
 	}
 	// myQnA게시물 수정하기 !
 	@PostMapping("myQnAModify")
-	public String updateQnAInfo(QnADto modifiedQnA) {
+	public String updateQnAInfo(@RequestParam(name="removeFiles", required = false) List<String> removeFiles, 
+								@RequestParam(name="files") MultipartFile[] addFiles,
+								QnADto modifiedQnA) {
+		//파일 삭제 기능 추가 
+		System.out.println("removeFiles :::"+removeFiles);
+		System.out.println("addFiles ###"+addFiles);
+		
 		//업데이트 하고,select 해서 model에 넣고 -> 페이지 이동 해서 보여주기 
-		//System.out.println("myQnAModify qna " + modifiedQnA);
-		qnaService.updateMyQnABoard(modifiedQnA);
-		System.out.println("con_userId="+modifiedQnA.getUserId());
+		qnaService.updateMyQnABoard(modifiedQnA, removeFiles, addFiles);
+		
 		return "redirect:/qna/myQnAGet?userId="+modifiedQnA.getUserId()+"&qnaId="+modifiedQnA.getQnaId();
 	}
+	
 	@DeleteMapping("deleteMyQnA")
 	@ResponseBody
 	public String deleteQnA(@RequestBody QnADto qna, HttpServletRequest request) {
 		int qnaId = qna.getQnaId();
+		//System.out.println(qnaId);
 		qnaService.deleteQnA(qnaId);
 		
 		return "/qna/myQnAList?userId="+qna.getUserId()+"&page=1&c=&t=all&q=";
@@ -153,8 +157,6 @@ public class QnAController {
 	public Map<String, Object>  updatelikeCount(@RequestBody Map<String, String> req, Authentication authentication, HttpServletRequest request) {
 		String qnaId = req.get("qnaId");
 		String loggedinId = authentication.getName();		
-		//System.out.println("qnaId : " + qnaId );
-		//System.out.println("loggedinId : " + loggedinId);
 		
 		//클릭하면 저장, 다시클릭하면 삭제되는 좋아요 DB
 		Map<String, Object> result = qnaService.updateLikeCount(qnaId, loggedinId);

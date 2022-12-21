@@ -151,7 +151,7 @@ ul {
 		<h2><span><i class="fa-solid fa-envelope"></i></span>문의 작성</h2>
 	</div>
 	<div class="container-sm">
-		<form id="form" action="" method="post">
+		<form id="form" action="" method="post"  enctype="multipart/form-data">
 			<div class="post_wrap">
 				<div class="post_top">
 					<div class="top_content">
@@ -180,8 +180,12 @@ ul {
 				
 				<!-- 문의 본문  -->
 				<div class="top_content">
+				
 					<label for="" class="form-label">내용</label>
 					<textarea id="content" class="form-control" name="content"></textarea>
+	
+					<label for="" class="form-label">파일</label>
+					<input multiple type="file" accept="image/*" class="form-control" name="files">
 				</div>
 				
 				<c:set value="false" var="emptyCategory" />

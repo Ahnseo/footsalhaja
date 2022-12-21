@@ -47,6 +47,7 @@ li {
   max-width: 250px;
   height: 250px;
   object-fit: cover;
+  border-radius: 50%;
 }
 
 defaultImg {

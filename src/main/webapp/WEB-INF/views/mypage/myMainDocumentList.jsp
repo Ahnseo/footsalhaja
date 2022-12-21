@@ -65,7 +65,7 @@ li {
 #listBox tbody{
 	font-size: 16px;
 	letter-spacing: -1px;
-	text-align: center;
+	vertical-align: middle;
 }
 
 #listBox .table .listTitle {
@@ -125,7 +125,6 @@ li {
 				<tr class = "trtr" scope="row">	
 					<th>예약 날짜</th>
 					<th>예약 시간</th>
-					<th>제목</th>
 					<th>모집상태</th>
 					<th>예약장소</th>
 					<th>매칭</th>
@@ -141,10 +140,6 @@ li {
 					<tr onclick="location.href='${getLink}'" class="trtr">	
 					 	<td>${mainlist.bookDate}</td>
 					 	<td>${mainlist.bookTime}</td>					 	
-					 	<td class="listTitle col-sm-6">
-
-							<a class='move' href="${getLink }">${mainlist.title} </a>
-						</td>
 					 	<td>${mainlist.status}</td>
 					 	<td>${mainlist.stadiumName}</td>
 					 	<td>${mainlist.matchType}</td>

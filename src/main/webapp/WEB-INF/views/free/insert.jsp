@@ -100,9 +100,11 @@
 		<div class="categorySelectBox">
 			<p>카테고리</p>
 			<select class="categorySelect" name="fb_category">
+
 				<option name="매칭후기">매칭후기</option>
 				<option name="구장후기">구장후기</option>
 				<option name="잡담">잡담</option>
+
 			</select>
 		</div>
 		<div class="row">

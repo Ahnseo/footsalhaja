@@ -252,11 +252,12 @@
 										 	<td>${allQnA.category}</td>	
 										 	<td>
 										 		<a href="${getLink}">${allQnA.title}</a>
-										 		<c:if test="${allQnA.replyCount != 0}">
-										 		
+										 		<c:if test="${allQnA.replyCount != 0}">	
 										 			<span class="badge text-bg-light"><i class="fa-regular fa-message"></i> ${allQnA.replyCount}</span>
-										 			
 										 		</c:if>
+										 		<c:if test="${myQnAList.fileCount != 0}">
+									 				<span class="badge text-bg-light"><i class="fa-regular fa-file"></i> ${allQnA.fileCount}</span>		
+									 			</c:if>
 										 	</td>
 										 	<td>${allQnA.likeCount}</td>
 										 	<td>${allQnA.userId}</td>
@@ -358,7 +359,7 @@
 							<sec:authorize access="isAuthenticated()">
 							<div class="d-flex flex-row-reverse">	
 								
-								<form action="/qna/insert" method="get">
+								<form action="${pageContext.request.contextPath}/qna/insert" method="get">
 									<button id="insertBtn" class="btn btn-success btn-m5" type="submit" >문의하기</button>	
 								</form>
 								

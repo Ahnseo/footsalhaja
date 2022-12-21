@@ -45,6 +45,7 @@ h2 {
   max-width: 250px;
   height: 250px;
   object-fit: cover;
+  border-radius: 50%;
 }
 
 .defaultImg {
@@ -65,10 +66,7 @@ h2 {
                 <!-- Contact Section Heading-->
                 <h2>${member.userId}님의 회원정보</h2>
                 <!-- Icon Divider-->
-                <div class="divider-custom">
-                    <div class="divider-custom-line"></div>
-                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                    <div class="divider-custom-line"></div>
+
                 </div>
                 
                 <!-- Contact Section Form-->
