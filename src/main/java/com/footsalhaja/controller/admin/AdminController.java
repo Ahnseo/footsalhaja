@@ -110,6 +110,7 @@ public class AdminController {
 					 Model model
 					 ) {
 		List <MemberDto> allMemberList = memberService.selectMemberList(page, memberPageInfo, keyword, type);
+		
 		model.addAttribute("allMemberList", allMemberList);
 		model.addAttribute("memberPageInfo", memberPageInfo);
 		

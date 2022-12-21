@@ -108,13 +108,19 @@
 							 	<td>${member.nickName}</td>
 							 	<td>${member.email}</td>
 							 	<td>
-							 	<c:if test="${member.birthMM < 10}">
+							 	<c:if test="${member.birthMM < 10 }">
 									<c:set var="zeroMM" value="0"/>
 								</c:if>
-								<c:if test="${member.birthDD < 10}">
+								<c:if test="${member.birthMM > 10 }">
+									<c:set var="zeroMM" value=""/>
+								</c:if>
+								<c:if test="${member.birthDD < 10 }">
 									<c:set var="zeroDD" value="0"/>
 								</c:if>
-	
+								<c:if test="${member.birthDD > 10 }">
+									<c:set var="zeroDD" value=""/>
+								</c:if>
+								
 							 		${member.birthYY}-${zeroMM}${member.birthMM}-${zeroDD}${member.birthDD}
 							 	</td>
 							 	<td>${member.activityArea}</td>
