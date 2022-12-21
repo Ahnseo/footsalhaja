@@ -51,6 +51,22 @@ h2 {
 	margin-bottom: 12px;
 }
 
+#submitButton1{
+	display : inline-block !important;
+	text-align : center !important;
+}
+
+#contactForm {
+	position: relative;
+}
+
+.deleteBtn {
+	display : inline-block !important;
+	position: absolute;
+	right: 520px;
+	bottom: 0;
+} 
+
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
 </head>
@@ -190,14 +206,15 @@ h2 {
                             <!-- an error submitting the form-->
                             <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">수정에 실패하였습니다.</div></div>
                             <!-- Submit Button-->
-                            <input class="btn btn-primary btn-xl" id="submitButton" type="submit" value="수정"/>
+                            <input class="btn btn-primary btn-xl" id="submitButton1" type="submit" value="수정"/>
                         </form>
+                        <div class = "deleteBtn">
 						<form action="/mypage/delete" method="post">
 							<%-- 히든 input userId 사용해서 post 방식으로 controller 에게 값 넘기기 !  --%>
 							<input type="hidden" name="userId" value="${member.userId}"> 
-							<input class="btn btn-danger" id="submitButton" type="submit" value="탈퇴">
-							탈퇴하기 : Foreign Key 함께 삭제하는 코드를 작성해야하므로, 나중에 DB통합 할때 수정하겠습니다 .
+							<input class="btn btn-danger" id="submitButton2" type="submit" value="탈퇴">
 						</form>
+                        </div>
                     </div>
                 </div>
             </div>
