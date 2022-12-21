@@ -119,33 +119,35 @@
       		</c:url>
         	<a class="nav-link ${active eq 'qnaMainBoard' ? 'active' : '' }" href="${qnaLink}">고객문의</a>
       	</li>
-
-      	<c:if test="${loggedIn }">
-      	<li class="nav-item dropdown">
+		<c:url value="/mypage/myAbDocumentList" var="myAblist">
+       		<c:param name="userId" value="${userIdValue }"/>
+       	 </c:url>
+       	 <c:url value="/mypage/myFbDocumentList" var="myFblist">
+       		<c:param name="userId" value="${userIdValue }"/>
+       	 </c:url>
+       	 <c:url value="/mypage/myMainDocumentList" var="myBooklist">
+       		<c:param name="userId" value="${userIdValue }"/>
+       	 </c:url>
+       	 <c:url value="/mypage/myReplyList" var="myReplylist">
+       		<c:param name="userId" value="${userIdValue }"/>
+       	 </c:url> 
+       	 <c:url value="/mypage/myLikeList" var="myLikelist">
+       		<c:param name="userId" value="${userIdValue }"/>
+       	 </c:url>
+      	 <c:if test="${loggedIn }">
+      	 <li class="nav-item dropdown">
         	<a class="nav-link dropdown-toggle nav-link ${active eq 'mypageLink' ? 'active' : '' }" href="${mypageLink}" role="button" data-bs-toggle="dropdown" aria-expanded="false">마이페이지</a>
         	<ul class="dropdown-menu">		    
 					<li><a class="dropdown-item" href="${mypageLink }">회원정보</a></li>
-				 <c:url value="/mypage/myAbDocumentList" var="myAblist">
-	        		<c:param name="userId" value="${userIdValue }"/>
-	        	 </c:url>
-
+				
 					<li><a class="dropdown-item" href="${myAblist }">아카데미 쓴 글 목록</a></li>
-				<c:url value="myFbDocumentList" var="myFblist">
-	        		<c:param name="userId" value="${userIdValue }"/>
-	        	 </c:url>
+				
 					<li><a class="dropdown-item" href="${myFblist }">자유게시판 쓴 글 목록</a></li>
-				<c:url value="myMainDocumentList" var="myBooklist">
-	        		<c:param name="userId" value="${userIdValue }"/>
-	        	 </c:url>
+				
 				    <li><a class="dropdown-item" href="${myBooklist }">예약 목록</a></li>
-				 <c:url value="myReplyList" var="myReplylist">
-
-	        		<c:param name="userId" value="${userIdValue }"/>
-	        	 </c:url> 
+				 
 				    <li><a class="dropdown-item" href="${myReplylist }">작성 댓글 목록</a></li>
-				 <c:url value="/mypage/myLikeList" var="myLikelist">
-	        		<c:param name="userId" value="${userIdValue }"/>
-	        	 </c:url>
+				 
 				    <li><a class="dropdown-item" href="${myLikelist }">좋아요 한 글 목록</a></li>
 				    
 				 <c:url value="/qna/myQnAList" var="myQnAListLink">
