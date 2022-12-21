@@ -139,11 +139,42 @@ li {
 					</c:url> 
 					<tr onclick="location.href='${getLink}'" class="trtr">	
 					 	<td>${mainlist.bookDate}</td>
-					 	<td>${mainlist.bookTime}</td>					 	
-					 	<td>${mainlist.status}</td>
+					 	<c:choose>
+					        <c:when test="${mainlist.bookTime == 6}">
+					        	<td>6:00~8:00</td>
+					        </c:when>
+					        <c:when test="${mainlist.bookTime == 9}">
+					        	<td>9:00~11:00</td>
+					        </c:when>
+					        <c:when test="${mainlist.bookTime == 14}">
+					        	<td>14:00~16:00</td>
+					        </c:when>
+					        <c:when test="${mainlist.bookTime == 18}">
+					        	<td>>18:00~20:00</td>
+					        </c:when>
+					        <c:when test="${mainlist.bookTime == 21}">
+					        	<td>21:00~23:00</td>
+					        </c:when>
+				        </c:choose>					 	
+					 	<c:if test="${mainlist.status == 0}">  
+							<td>모집완료</td>
+						</c:if>
+						<c:if test="${mainlist.status == 1}">  
+							<td>모집중</td>
+						</c:if>
 					 	<td>${mainlist.stadiumName}</td>
 					 	<td>${mainlist.matchType}</td>
-					 	<td>${mainlist.level}</td>
+					 	<c:choose>
+					        <c:when test="${mainlist.level == 1}">
+					        	<td>비기너</td>
+					        </c:when>
+					        <c:when test="${mainlist.level == 9}">
+					        	<td>아마추어</td>
+					        </c:when>
+					        <c:when test="${mainlist.level == 14}">
+					        	<td>챌린저</td>
+					        </c:when>
+					 	</c:choose>
 					 	<td>${mainlist.teamGender}</td>
 				 	</tr>
 				</c:forEach>
