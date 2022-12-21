@@ -14,29 +14,13 @@
 <title>Insert title here</title>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&display=swap');
 
-@font-face {
- font-family: 'NanumBarunGothic';
- font-style: normal;
- font-weight: 400;
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot');
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.ttf') format('truetype');
-}
 
-@font-face {
- font-family: 'NanumBarunGothic';
- font-style: normal;
- font-weight: 700;
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot');
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.ttf') format('truetype')
-}
-
-@font-face {
- font-family: 'NanumBarunGothic';
- font-style: normal;
- font-weight: 300;
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot');
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.ttf') format('truetype');
+.container-sm { 
+	font-family: 'Noto Sans KR', sans-serif;
+	letter-spacing: -1px;
+	font-size: 16px;
 }
 
 * {
@@ -53,12 +37,6 @@
 ul {
    list-style:none;
   }
-
-.container-sm { 
-	font-family: 'NanumBarunGothic';
-	letter-spacing: -1px;
-	font-size: 16px;
-}
 
 .post_wrap {
 	border: 1px solid #ced4da;
@@ -216,7 +194,7 @@ ul {
 					<th>카테고리</th>
 					<th>제목</th>
 					<th>작성자</th>
-					<th>좋아요</th>
+					<th><i class="fa-regular fa-thumbs-up"></i></th>
 					<th>문의상태</th>
 				</tr>
 			</thead>
@@ -233,8 +211,11 @@ ul {
 					 	<td>
 					 		<a href="${myQnAGetLink}">${myQnAList.title}</a>
 					 		<c:if test="${myQnAList.replyCount != 0}">
-					 			<span class="badge text-bg-light"><i class="fa-regular fa-message"></i> ${myQnAList.replyCount}</span>		
+					 			<span class=""><i class="fa-regular fa-comment"></i> ${myQnAList.replyCount}</span>		
 					 		</c:if>
+					 		<c:if test="${myQnAList.fileCount != 0}">
+				 				<span class=""><i class="fa-regular fa-file"></i> ${myQnAList.fileCount}</span>		
+				 			</c:if>
 					 	</td>
 					 	
 					 	<td>${myQnAList.userId}</td>
@@ -251,7 +232,14 @@ ul {
 			 	</c:forEach>
 			 </tbody>
 		</table>
+		<sec:authorize access="isAuthenticated()">
+		<div class="d-flex flex-row-reverse">	
 			
+			<form action="${pageContext.request.contextPath}/qna/insert" method="get">
+				<button id="insertBtn" class="btn btn-success btn-m5" type="submit" >문의하기</button>	
+			</form>	
+			</div>
+		</sec:authorize>
 		<nav>
 		  <ul class="pagination justify-content-center">
 		  	<!-- 맨앞 페이지 -->
@@ -339,7 +327,7 @@ ul {
 			
 	</div>
 
-
+	<my:footer></my:footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -61,10 +61,10 @@
 
   <div class="collapse navbar-collapse flex-column" id="navbar">
     <ul class="navbar-nav  w-100 px-3 justify-content-center bg1" >
-      <li class="nav-item active" >
+      <li class="nav-item active">
         <a class="nav-link" href="${listLink }">
         <img class="nav_img" alt="" src="${pageContext.request.contextPath}/logo.png">
-        	<p class="navTitle">풋살하자</p>
+        	<p class="navTitle" >풋살하자</p>
         <!-- <span class="sr-only">(current)</span> --></a>
       </li>
       
@@ -90,20 +90,19 @@
       </c:if>
     </ul>
 	
-	
-	
     <ul class="navbar-nav w-100 px-3 justify-content-end bg2" style="background: #5F7161;">
-
-
         
         <%-- security 를 사용하여, 로그인 된 userId를 c:param value="로그인된 ID값" 사용합니다. 현재 주소창에 접속방법 예시) mypage/list?userId=askc6361 --%>
         
         <c:url value="/mypage/list" var="mypageLink">
-        	<c:param name="userId" value="${userIdValue }"/>
-        	
+        	<c:param name="userId" value="${userIdValue }"/>     	
         </c:url>
         <c:url value="/free/list" var="freeLink"></c:url>
         <c:url value="/academy/list" var="academyLink"></c:url>
+        
+        <li class="nav-item active">
+        	<a class="nav-link ${active eq 'mainLink' ? 'active' : '' }" href="${listLink}">HOME</a>
+      	</li>
         <li class="nav-item active">
         	<a class="nav-link ${active eq 'freeLink' ? 'active' : '' }" href="${freeLink}">자유게시판</a>
       	</li>
@@ -120,31 +119,44 @@
       		</c:url>
         	<a class="nav-link ${active eq 'qnaMainBoard' ? 'active' : '' }" href="${qnaLink}">고객문의</a>
       	</li>
-      	<c:if test="${loggedIn }">
-      	<li class="nav-item dropdown">
+		<c:url value="/mypage/myAbDocumentList" var="myAblist">
+       		<c:param name="userId" value="${userIdValue }"/>
+       	 </c:url>
+       	 <c:url value="/mypage/myFbDocumentList" var="myFblist">
+       		<c:param name="userId" value="${userIdValue }"/>
+       	 </c:url>
+       	 <c:url value="/mypage/myMainDocumentList" var="myBooklist">
+       		<c:param name="userId" value="${userIdValue }"/>
+       	 </c:url>
+       	 <c:url value="/mypage/myReplyList" var="myReplylist">
+       		<c:param name="userId" value="${userIdValue }"/>
+       	 </c:url> 
+       	 <c:url value="/mypage/myLikeList" var="myLikelist">
+       		<c:param name="userId" value="${userIdValue }"/>
+       	 </c:url>
+      	 <c:if test="${loggedIn }">
+      	 <li class="nav-item dropdown">
         	<a class="nav-link dropdown-toggle nav-link ${active eq 'mypageLink' ? 'active' : '' }" href="${mypageLink}" role="button" data-bs-toggle="dropdown" aria-expanded="false">마이페이지</a>
         	<ul class="dropdown-menu">		    
 					<li><a class="dropdown-item" href="${mypageLink }">회원정보</a></li>
-				 <c:url value="myAbDocumentList" var="myAblist">
-	        		<c:param name="userId" value="${userIdValue }"/>
-	        	 </c:url>
+				
 					<li><a class="dropdown-item" href="${myAblist }">아카데미 쓴 글 목록</a></li>
-				<c:url value="myFbDocumentList" var="myFblist">
-	        		<c:param name="userId" value="${userIdValue }"/>
-	        	 </c:url>
+				
 					<li><a class="dropdown-item" href="${myFblist }">자유게시판 쓴 글 목록</a></li>
-				<c:url value="myMainDocumentList" var="myBooklist">
-	        		<c:param name="userId" value="${userIdValue }"/>
-	        	 </c:url>
+				
 				    <li><a class="dropdown-item" href="${myBooklist }">예약 목록</a></li>
-				 <c:url value="myReplyList" var="myReplylist">
-	        		<c:param name="userId" value="${userIdValue }"/>
-	        	 </c:url> 
 				    <li><a class="dropdown-item" href="${myReplylist }">작성 댓글 목록</a></li>
-				 <c:url value="myLikeList" var="myLikelist">
-	        		<c:param name="userId" value="${userIdValue }"/>
-	        	 </c:url>
+				 
 				    <li><a class="dropdown-item" href="${myLikelist }">좋아요 한 글 목록</a></li>
+				    
+				 <c:url value="/qna/myQnAList" var="myQnAListLink">
+					<c:param name="userId" value="${userIdValue}"/>
+		   			<c:param name="page" value="1"/>
+		   			<c:param name="c" value=""/>
+		   			<c:param name="t" value="all"/>
+		   			<c:param name="q" value=""/>
+		   		 </c:url>
+		   		  <li><a class="dropdown-item" href="${myQnAListLink }">내 문의내역</a></li>
 			</ul>
       	</li>
       	</c:if>
@@ -153,7 +165,7 @@
       	</li>
       	</c:if>
       	
-      	<sec:authorize access="hasAuthority('admin')">
+      	<sec:authorize access="hasAnyAuthority('admin', 'manager')">
         <li class="nav-item dropdown">
 		    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 		    	관리자
@@ -178,7 +190,7 @@
       			<c:param name="c" value=""/>
       			<c:param name="t" value="all"/>
       			<c:param name="q" value=""/>
-      			<c:param name="s" value="yet"/>
+      			<c:param name="s" value=""/>
       		</c:url>
 		    <ul class="dropdown-menu">
 			    <li><a class="dropdown-item" href="${dashboardLink }">대시보드</a></li>

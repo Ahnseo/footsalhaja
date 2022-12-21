@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>      
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> 
+<%@ page import="java.net.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>
@@ -12,31 +13,14 @@
 <title>Insert title here</title>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&display=swap');
 
-@font-face {
- font-family: 'NanumBarunGothic';
- font-style: normal;
- font-weight: 400;
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot');
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.ttf') format('truetype');
+
+.container-sm { 
+	font-family: 'Noto Sans KR', sans-serif;
+	letter-spacing: -1px;
+	font-size: 16px;
 }
-
-@font-face {
- font-family: 'NanumBarunGothic';
- font-style: normal;
- font-weight: 700;
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot');
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.ttf') format('truetype')
-}
-
-@font-face {
- font-family: 'NanumBarunGothic';
- font-style: normal;
- font-weight: 300;
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot');
- src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.ttf') format('truetype');
-}
-
 * {
     padding: 0;
     margin: 0;
@@ -51,12 +35,6 @@
 ul {
    list-style:none;
   }
-
-.container-sm { 
-	font-family: 'NanumBarunGothic';
-	letter-spacing: -1px;
-	font-size: 16px;
-}
 
 .post_wrap {
 	border: 1px solid #ced4da;
@@ -191,7 +169,7 @@ ul {
 					<li><i class="fa-solid fa-envelope"></i></li>
 					<li class="top_nickName"><i class="fa-solid fa-user"></i> ${qna.userId } </li>
 					<li class="top_nickName"><i class="fa-regular fa-clock"></i> ${qna.ago } </li>
-					<li class="top_nickName"><i class="fa-regular fa-heart"></i> ${qna.likeCount } </li>
+					<li class="top_nickName"><i class="fa-regular fa-thumbs-up"></i> ${qna.likeCount } </li>
 				</ul>
 				<div class="top_content">
 					<label for="" class="form-label">제목</label>
@@ -202,8 +180,18 @@ ul {
 			<!-- 문의 본문  -->
 			<div class="top_content ">
 				<label for="" class="form-label">내용</label>
-				<p class="form-control" >${qna.content}</p>
+				<textarea id="" class="form-control mb-3 " name="content">${qna.content}</textarea>
+				
+				<%-- 이미지 출력 --%>
+				<div>
+					<c:forEach items="${qna.fileName }" var="name">
+						<div>
+							<img class="img-fluid img-thumbnail" src="${imgUrl }/qna/${qna.qnaId }/${URLEncoder.encode(name, 'utf-8')}" alt="">
+						</div>
+					</c:forEach>		
+				</div>
 			</div>
+			
 			
 			<!-- 문의내용 좋아요 버튼 -->
 			<div class="likeBox">
@@ -214,10 +202,10 @@ ul {
 					id="likeBtn" class="likeIcon"
 					>
 					
-						<i class="fa-regular fa-heart"></i>
+					<i class="fa-regular fa-thumbs-up"></i>
 					
 				</p>
-				<p class="likeCount1">좋아요</p>
+				<p class="likeCount1">도움이 되었어요!</p>
 				
 				<p id="likeCnt" class="likeCount2"> ${qna.likeCount }</p>
 			
@@ -225,24 +213,25 @@ ul {
 			
 			
 			<div class="d-flex flex-row-reverse"> 
-				<sec:authorize access="hasAuthority('${userIdvalue}')"><!-- 문의 수정은 작성자 userId 만!! -->
-				<c:url value="/qna/myQnAModify" var="myQnAModifyLink">
-					<c:param name="userId" value="${qna.userId}"/>
-					<c:param name="qnaId" value="${qna.qnaId}"/>
-				</c:url>	
-				<button onclick="location.href='${myQnAModifyLink}'" class="btn btn-warning btn-m5" type="button">
-					수정
-				</button><!-- 수정 버튼 -->	
-				</sec:authorize>
+				<c:if test="${qna.userId == userIdValue}" ><!-- 문의 수정은 작성자 userId 만!! -->
+					<c:url value="/qna/myQnAModify" var="myQnAModifyLink">
+						<c:param name="userId" value="${qna.userId}"/>
+						<c:param name="qnaId" value="${qna.qnaId}"/>
+					</c:url>	
+					<button onclick="location.href='${myQnAModifyLink}'" class="btn btn-warning btn-m5" type="button">
+						수정
+					</button><!-- 수정 버튼 -->	
+				</c:if>
+				
 				
 				<!-- 답변하기 버튼  답변이 없을때만 => 작성가능!  fetch -> post방 -> controller -->
-				<sec:authorize access="hasAuthority('admin')">
+				<sec:authorize access="hasAnyAuthority('admin', 'manager')">
 				<c:if test="${qnaAnswer == null}">	
 					<button class="btn btn-success btn-m5" type="button" data-bs-toggle="collapse" data-bs-target="#qnaReplyCollapseAnswer" aria-expanded="false" aria-controls="collapseExample">
 						답변하기
 					</button>	
 				</c:if>
-				</sec:authorize><!-- 답번하기 버튼 (관리자만 )-->	
+				</sec:authorize><!-- 답번하기 버튼 (관리자와 매니저 만 )-->	
 				
 			</div> 
 			
@@ -251,7 +240,7 @@ ul {
 	
 	<div class="container m-auto">	
 		<!-- 답변 작성하기 -->
-		<sec:authorize access="hasAuthority('admin')">
+		<sec:authorize access="hasAnyAuthority('admin', 'manager')">
 			<div class="collapse" id="qnaReplyCollapseAnswer">
 				<div class="card card-body">
 					<div class="mb-3">
@@ -401,7 +390,9 @@ ul {
 	  </div>
 	</div>  
 </div>	
-	
+
+<my:footer></my:footer>	
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script>
 	const ctx = "${pageContext.request.contextPath}";

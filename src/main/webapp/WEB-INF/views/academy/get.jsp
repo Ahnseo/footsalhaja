@@ -166,12 +166,14 @@ ul {
 	color: #666;
 }
 /* 검색 페이징 글작성버튼 */
+
 .container-sm .paginationBox{
 	text-align: center;
 	position: relative;
 	display: inline-block;
 	margin-top: 60px;
 }
+
 .post_top .imgBox {
 	vertical-align: middle;
 }
@@ -185,6 +187,7 @@ ul {
 	height: 30px;
 	border-radius: 50%;
 }
+
 /* 댓글페이지네이션 */
 .replyPageFooterBox {
 	text-align: center;
@@ -198,6 +201,7 @@ ul {
 #replyPageFooter ul li {
 	display: inline-block;
 }
+
 
 
 </style>
@@ -325,7 +329,7 @@ ul {
 			</div>
 		</div>
 		<!-- 댓글 리스트 -->
-		<div class="row">
+		<div id="pageBox" class="row">
 			<div class="col">
 				<div id="replyListContainer">
 					<!-- 댓글 나오는 부분 -->
@@ -337,7 +341,7 @@ ul {
 			<div class="paginationBox" id="replyPageFooter">
 			</div>
 		</div>
-		
+
 		
 </div>
 	<!-- 게시글 삭제 모달 -->

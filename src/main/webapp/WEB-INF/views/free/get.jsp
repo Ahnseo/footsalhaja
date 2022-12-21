@@ -194,6 +194,11 @@ ul {
 	height: 30px;
 	border-radius: 50%;
 }
+.post_top .imgBox img {
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+}
 
 
 
@@ -244,12 +249,13 @@ ul {
 			<p class="top_title">${board.fb_title }</p>
 			<ul>
 				<li class="imgBox"> 
-					<c:if test="${member.profileImg eq null}">
+					<c:if test="${board.profileImg eq null}">
 						<img class= "defaultImg" src="${pageContext.request.contextPath}/기본프로필.png">
 					</c:if>
-					<c:forEach items="${member.profileImg }" var="name">
+					<c:forEach items="${board.profileImg }" var="name">
 						<div class= "containerProfile">	
-							<object data="${imgUrl }/user_profile/${member.userId }/${name}" type="image/png">
+							<%-- <object data="${imgUrl }/user_profile/${member.userId }/${name}" type="image/png"> --%>
+							<object data="${imgUrl }/user_profile/${board.member_userId }/${name}" type="image/png">
 								<img src="${pageContext.request.contextPath}/기본프로필.png">
 							</object>
 						</div>

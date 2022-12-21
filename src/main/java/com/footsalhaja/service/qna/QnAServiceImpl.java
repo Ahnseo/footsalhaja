@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.footsalhaja.domain.qna.FAQDto;
 import com.footsalhaja.domain.qna.QnADto;
@@ -15,6 +17,12 @@ import com.footsalhaja.domain.qna.QnAReplyDto;
 import com.footsalhaja.domain.qna.QnAReplyToAnswerDto;
 import com.footsalhaja.mapper.qna.QnAMapper;
 
+import software.amazon.awssdk.core.sync.RequestBody;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
+import software.amazon.awssdk.services.s3.model.ObjectCannedACL;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
+
 @Service
 @Transactional
 public class QnAServiceImpl implements QnAService {
@@ -22,14 +30,59 @@ public class QnAServiceImpl implements QnAService {
 	@Autowired
 	private QnAMapper qnaMapper;
 	
+	@Autowired
+	private S3Client s3Client;
+	
+	@Value("${aws.s3.bucket}")
+	private String bucketName;
+	
 	//Create QnABoard
 	@Override
-	public int insertQnABoard(QnADto qnaBoard) {
+	public int insertQnABoard(QnADto qnaBoard, MultipartFile[] files) {
 		//String nickName = memberMapper.selectNickNameByMember();
-		//model.addAttribute("memberNickName", nickName); 나중에 로그인 만들어지면 사용할것. 	
+		//model.addAttribute("memberNickName", nickName); 나중에 로그인 만들어지면 사용할것. 
+		
 		int cnt = qnaMapper.insertQnABoard(qnaBoard);
+		int qnaId = qnaBoard.getQnaId();
+		
+		
+		for (MultipartFile file : files) {
+			if (file != null && file.getSize() > 0) {
+				// db에 파일 정보 저장
+				qnaMapper.insertQnAFiles(qnaId, file.getOriginalFilename());
+				
+				uploadFile(qnaId, file);
+			}
+		}
+		
 		return cnt;
 	}
+	// ### S3 파일업로드 메소드 ###
+	private void uploadFile(int id, MultipartFile file) {
+		try {
+			// S3에 파일 저장
+			// 키 생성
+			String key = "qna/" + id + "/" + file.getOriginalFilename();
+			
+			// putObjectRequest
+			PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+					.bucket(bucketName)
+					.key(key)
+					.acl(ObjectCannedACL.PUBLIC_READ)
+					.build();
+			
+			// requestBody
+			RequestBody requestBody = RequestBody.fromInputStream(file.getInputStream(), file.getSize());
+			
+			// object(파일) 올리기
+			s3Client.putObject(putObjectRequest, requestBody);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	}
+	
 	// 답변완료된 모든 리스트 가져오기 mainQnABoard 
 	@Override
 	public List<QnADto> selectQnAListByStatusDone(int page, QnAPageInfo qnaPageInfo, String type, String keyword, String c) {
@@ -172,14 +225,50 @@ public class QnAServiceImpl implements QnAService {
 		
 		return qnaMapper.selectMyQnAGetByQnAIdAndUserId(userId, qnaId);
 	}
+	
 	//updateMyQnABoard
 	@Override
-	public int updateMyQnABoard(QnADto modifiedQnA) {
+	public int updateMyQnABoard(QnADto modifiedQnA, List<String> removeFiles, MultipartFile[] addFiles) {
+		
+		if (removeFiles != null) {
+			for (String fileName : removeFiles) {
+				// 1. File 테이블에서 record 지우기
+				qnaMapper.deleteQnAFileByQnAIdAndFileName(modifiedQnA.getQnaId(), fileName);
+				// 2. S3 저장소에 실제 파일(object) 지우기
+				deleteQnAFile(modifiedQnA.getQnaId(), fileName);
+			}
+		}
+		if (addFiles != null) {
+			for (MultipartFile file : addFiles) {
+				if (file != null && file.getSize() > 0) {
+					String fileName = file.getOriginalFilename();
+					// File 테이블에 해당파일명 지우기 (중복 파일은 지우기 )
+					qnaMapper.deleteQnAFileByQnAIdAndFileName(modifiedQnA.getQnaId(), fileName);
+					
+					// File 테이블에 파일명 추가
+					qnaMapper.insertQnAFiles(modifiedQnA.getQnaId(), fileName);
+					
+					// S3 저장소에 실제 파일(object) 추가
+					uploadFile(modifiedQnA.getQnaId(), file);
+				}
+				
+			}
+		}
+		
 		int cnt = qnaMapper.updateMyQnABoard(modifiedQnA);
 		System.out.println("업뎃? : "+ cnt);
+		
 		return cnt;
 	}
-	
+	// 파일 삭제 메소드 
+	private void deleteQnAFile(int id, String fileName) {
+		String key = "qna/" + id + "/" + fileName;
+		DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
+				.bucket(bucketName)
+				.key(key)
+				.build();
+		s3Client.deleteObject(deleteObjectRequest);
+	}
 	//######################################################################
 	//좋아요 기능 만들기 
 	@Override
@@ -214,14 +303,32 @@ public class QnAServiceImpl implements QnAService {
 	//######################################################################
 	@Override
 	public int deleteQnA(int qnaId) {
+		//파일 삭제 
+		QnADto qna = qnaMapper.selectQnAByQnaId(qnaId);
+		//System.out.println("####"+qna);
+		
+		List<String> fileNames = qna.getFileName();
+		
+		if (fileNames != null) {
+			for (String fileName : fileNames) {
+				// s3 저장소의 파일 지우기
+				deleteQnAFile(qnaId, fileName);
+				//db 에 파일 기록 지우기 
+				qnaMapper.deleteQnAFileByQnAIdAndFileName(qnaId, fileName);
+			}
+		}
+		
 		//문의글의 여러 좋아요 삭제 
 		qnaMapper.deleteLikesByqnaId(qnaId);
 		//여러댓글삭제  by 답변의 id  
 		qnaMapper.deleteAllQnAReplyById(qnaId);
 		//답변삭제 by 답변 id
 		qnaMapper.deleteAnswerBYqnaId(qnaId);
+		
+		
 		//문의 게시물 삭제
 		int cnt = qnaMapper.deleteQnA(qnaId);
+		
 		return cnt;
 	}
 	//######################################################################

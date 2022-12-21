@@ -50,13 +50,18 @@ footer div span {
 
 </style>
 <footer>
-
+	<c:url value="/qna/qnaMainBoard" var="qnaLink">
+		<c:param name="page" value="1"/>
+		<c:param name="c" value=""/>
+		<c:param name="q" value=""/>
+		<c:param name="t" value="all"/>
+	</c:url>
 
     <nav id="linkNav">
-        <a href='https://cocoder.tistory.com' target='_blank'>공지사항</a> |
-        <a href='https://github.com/cocoder16' target='_blank'>고객문의</a> |
-        <a href='https://github.com/cocoder16' target='_blank'>소개</a> |
-        <a href='https://github.com/cocoder16' target='_blank'>채용</a> 
+        <a href='' target='_blank'>공지사항</a> |
+        <a href='${qnaLink}' target='_blank'>고객문의</a> |
+        <a href='' target='_blank'>소개</a> |
+        <a href='' target='_blank'>채용</a> 
     </nav>
     
     <div class="spans">
