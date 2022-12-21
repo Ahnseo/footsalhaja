@@ -17,30 +17,14 @@
 
 	<style>
 
-	@font-face {
-	 font-family: 'NanumBarunGothic';
-	 font-style: normal;
-	 font-weight: 400;
-	 src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot');
-	 src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.ttf') format('truetype');
-	}
+	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&display=swap');
 
-	@font-face {
-	 font-family: 'NanumBarunGothic';
-	 font-style: normal;
-	 font-weight: 700;
-	 src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot');
-	 src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.ttf') format('truetype')
-	}
 
-	@font-face {
-	 font-family: 'NanumBarunGothic';
-	 font-style: normal;
-	 font-weight: 300;
-	 src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot');
-	 src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.ttf') format('truetype');
+	.container-sm { 
+		font-family: 'Noto Sans KR', sans-serif;
+		letter-spacing: -1px;
+		font-size: 16px;
 	}
-
 	* {
 	    padding: 0;
 	    margin: 0;
@@ -55,12 +39,6 @@
 	ul {
 	   list-style:none;
 	  }
-
-	.container-sm { 
-		font-family: 'NanumBarunGothic';
-		letter-spacing: -1px;
-		font-size: 16px;
-	}
 
 	.post_wrap {
 		border: 1px solid #ced4da;
@@ -256,9 +234,9 @@
 										<th>번호</th>
 										<th>카테고리</th>
 										<th>제목</th>
-										<th>좋아요</th>
 										<th>작성자</th>
 										<th>작성일시</th>
+										<th><i class="fa-regular fa-thumbs-up"></i></th>
 										<th>문의상태</th>
 										<!-- <th>조회수</th> --> 
 									</tr>
@@ -274,15 +252,16 @@
 										 	<td>${allQnA.category}</td>	
 										 	<td>
 										 		<a href="${getLink}">${allQnA.title}</a>
-										 		<c:if test="${allQnA.replyCount != 0}">
-										 		
-										 			<span class="badge text-bg-light"><i class="fa-regular fa-message"></i> ${allQnA.replyCount}</span>
-										 			
+										 		<c:if test="${allQnA.replyCount != 0}">	
+										 			<span class=""><i class="fa-regular fa-comment"></i> ${allQnA.replyCount}</span>
 										 		</c:if>
+										 		<c:if test="${allQnA.fileCount != 0}">
+									 				<span class=""><i class="fa-regular fa-file"></i> ${allQnA.fileCount}</span>		
+									 			</c:if>
 										 	</td>
-										 	<td>${allQnA.likeCount}</td>
 										 	<td>${allQnA.userId}</td>
 										 	<td>${allQnA.ago }</td>
+										 	<td>${allQnA.likeCount}</td>
 										 	<td>
 										 	 	<c:if test="${allQnA.status == '답변완료'}">  
 										        	<span class="badge bg-success rounded-pill">${allQnA.status}</span>   								        	
@@ -380,7 +359,7 @@
 							<sec:authorize access="isAuthenticated()">
 							<div class="d-flex flex-row-reverse">	
 								
-								<form action="/qna/insert" method="get">
+								<form action="${pageContext.request.contextPath}/qna/insert" method="get">
 									<button id="insertBtn" class="btn btn-success btn-m5" type="submit" >문의하기</button>	
 								</form>
 								
