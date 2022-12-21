@@ -32,7 +32,7 @@
 <body>
 <my:navbar active="login"></my:navbar>
 
-<div class="container-sm">
+<div class="container-sm " style="height: 750px">
 	<div class="row justify-content-center">
 		<div class="col-5">
 			<div id="freeTitle">
