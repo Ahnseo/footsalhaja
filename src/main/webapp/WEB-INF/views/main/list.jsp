@@ -225,13 +225,14 @@
 
 .writer {
 	text-align: center;
-	width: 50px;
+	width: 80px;
 	height: 25px;
 	padding-top: 10px;
 	padding-bottom: 10px;
 	font-family: 'Noto Sans KR', sans-serif;
 	font-size: 14px;
-	
+	margin-left: 30px;
+	margin-right: 30px;
 }
 
 .listGender::before {
