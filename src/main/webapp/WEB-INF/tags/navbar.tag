@@ -189,7 +189,7 @@
       			<c:param name="c" value=""/>
       			<c:param name="t" value="all"/>
       			<c:param name="q" value=""/>
-      			<c:param name="s" value="yet"/>
+      			<c:param name="s" value=""/>
       		</c:url>
 		    <ul class="dropdown-menu">
 			    <li><a class="dropdown-item" href="${dashboardLink }">대시보드</a></li>
