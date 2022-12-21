@@ -64,7 +64,7 @@
  	SELECT 
  		userId,
  		name,
- 		password,
+ 		'****' password,
  		nickName,
  		email,
  		birthYY,

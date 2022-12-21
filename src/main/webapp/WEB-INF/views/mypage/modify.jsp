@@ -83,7 +83,7 @@ h2 {
                 <!-- Contact Section Form-->
                 <div class="row justify-content-center">
                     <div class="col-lg-8 col-xl-7">
-                        <form action="/mypage/modify" method="post" id="contactForm" data-sb-form-api-token="API_TOKEN" enctype="multipart/form-data">
+                        <form action="${pageContext.request.contextPath}/mypage/modify" method="post" id="contactForm" data-sb-form-api-token="API_TOKEN" enctype="multipart/form-data">
 						<%-- 프로필 이미지 출력 --%>
 
 						<div class= "defaultImg">
@@ -213,6 +213,7 @@ h2 {
 							<%-- 히든 input userId 사용해서 post 방식으로 controller 에게 값 넘기기 !  --%>
 							<input type="hidden" name="userId" value="${member.userId}"> 
 							<input class="btn btn-danger" id="submitButton2" type="submit" value="탈퇴">
+
 						</form>
                         </div>
                     </div>

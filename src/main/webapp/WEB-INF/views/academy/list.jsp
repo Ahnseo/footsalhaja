@@ -279,7 +279,7 @@ li {
 	<!-- 검색창 -->
 	   	<div class="searchBox">
 			<c:url value="/academy/list" var="listLink"></c:url>
-			<form id='searchForm' action="/academy/list" method='get' class="d-flex" >
+			<form id='searchForm' action="${pageContext.request.contextPath}/academy/list" method='get' class="d-flex" >
 				<select class="searchSelect" name='type'>
 					<option value=""
 						<c:out value="${pageMaker.cri.type == null?'selected':''}"/>>--</option>
@@ -327,7 +327,7 @@ li {
 			</ul>
 		</div>
 
-		<form id="actionForm" action="/academy/list" method="get">
+		<form id="actionForm" action="${pageContext.request.contextPath}/academy/list" method="get">
 			<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
 			<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
 			<input type='hidden' name='type' value='<c:out value="${ pageMaker.cri.type }"/>'> 

@@ -59,7 +59,7 @@
 				</div>
 			</form>
 			
-			<form action="/member/insert" >
+			<form action="${pageContext.request.contextPath}/member/insert" >
 				<div class="d-flex" style="justify-content : center ">
 					<button type="submit" class="btn btn-primary m-1" >회원가입</button>
 				</div>

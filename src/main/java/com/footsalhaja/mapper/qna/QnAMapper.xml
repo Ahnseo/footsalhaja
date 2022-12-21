@@ -4,14 +4,20 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
  <mapper namespace="com.footsalhaja.mapper.qna.QnAMapper">
-
+	
 	<!-- Create QnABoard -->	 
-	 <insert id="insertQnABoard" >
+	 <insert id="insertQnABoard"  useGeneratedKeys="true" keyProperty="qnaId">
 		 INSERT INTO QnABoard 
 		 		(  category,   title,    content , member_userId )
 		 VALUES 
 		 		(#{category}, #{title}, #{content}, #{userId}  );
 	 </insert>
+	 
+	 <insert id="insertQnAFiles">
+	 	INSERT INTO QnAFiles (qnaId, fileName)
+	 	VALUES(#{qnaId}, #{fileName})
+	 </insert>
+	 
 	 <update id="updateMyQnABoard">
 	 	UPDATE QnABoard SET
 	 		title = #{title},
@@ -30,13 +36,15 @@
 	 		m.userId,
 	 		m.nickName,
 	 		COUNT(DISTINCT l.qnaLikeId) AS likeCount,
-	 		COUNT(DISTINCT r.qnaReplyToAnswerId) AS replyCount
-	 	 	 		
+	 		COUNT(DISTINCT r.qnaReplyToAnswerId) AS replyCount,
+	 		COUNT(DISTINCT f.fileName) AS fileCount
+	
 	 	FROM 
 	 	 	QnABoard q
 	 	LEFT JOIN member m ON q.member_userId = m.userId 	
 	 	LEFT JOIN QnABoardLike l ON q.qnaId = l.qnaId
 	 	LEFT JOIN QnAReplyToAnswer r ON q.qnaId = r.qnaId
+	 	LEFT JOIN QnAFiles f ON q.qnaId = f.qnaId
 	 	WHERE
 	 		m.userId = #{userId}
 	 	AND	
@@ -74,10 +82,12 @@
 	 		q.member_userId AS userId,
 	 		q.insertDatetime,
 	 		COUNT(distinct l.qnaLikeId) AS likeCount,
-	 		COUNT(DISTINCT r.qnaReplyToAnswerId) AS replyCount
+	 		COUNT(DISTINCT r.qnaReplyToAnswerId) AS replyCount,
+	 		COUNT(DISTINCT f.fileName) AS fileCount
 	 	FROM QnABoard q
 	 	LEFT JOIN QnABoardLike l ON q.qnaId = l.qnaId
 	 	LEFT JOIN QnAReplyToAnswer r ON q.qnaId = r.qnaId
+	 	LEFT JOIN QnAFiles f ON q.qnaId = f.qnaId
 	 	WHERE
 	 		q.status = #{status} 
 	 	AND	
@@ -152,7 +162,7 @@
 	 		q.qnaId DESC 
 	</select>
 
-	<select id="selectMyQnAGetByQnAIdAndUserId" resultType="com.footsalhaja.domain.qna.QnADto">
+	<select id="selectMyQnAGetByQnAIdAndUserId" resultMap="myGetMap">
 		SELECT 
 	 		q.qnaId,
 	 		q.category,
@@ -162,17 +172,67 @@
 	 		q.insertDatetime,
 	 		m.userId,
 	 		a.qnaReplyId,
-	 		COUNT(DISTINCT l.qnaLikeId) AS likeCount
+	 		COUNT(DISTINCT l.qnaLikeId) AS likeCount,
+			f.fileName
 	 	FROM 
 	 	 	QnABoard q
-	 	LEFT JOIN member m   ON q.member_userId = m.userId
-	 	LEFT JOIN QnAReply a ON q.qnaId = a.qnaId
-	 	LEFT JOIN QnABoardLike l ON q.qnaId = l.qnaId
+		 	LEFT JOIN member m   ON q.member_userId = m.userId
+		 	LEFT JOIN QnAReply a ON q.qnaId = a.qnaId
+		 	LEFT JOIN QnABoardLike l ON q.qnaId = l.qnaId
+		 	LEFT JOIN QnAFiles f ON q.qnaId = f.qnaId
 	 	WHERE 
 	 		m.userId = #{userId} AND q.qnaId = #{qnaId}
-	 	
 	</select>	
+	<resultMap type="com.footsalhaja.domain.qna.QnADto" id="myGetMap">
+		<id column="qnaId" property="qnaId"/>
+		<result column="category" property="category"/>
+		<result column="title" property="title"/>
+		<result column="content" property="content"/>
+		<result column="status" property="status"/>
+		<result column="insertDatetime" property="insertDatetime"/>
+		<result column="userId" property="userId"/>
+		<result column="qnaReplyId" property="qnaReplyId"/>
+		<result column="likeCount" property="likeCount"/>
+		<collection property="fileName" ofType="string">
+			<result column="fileName" property="fileName"/>
+		</collection>
+	</resultMap>	
 	
+		<select id="selectQnAByQnaId" resultMap="myGetMap2">
+		SELECT 
+	 		q.qnaId,
+	 		q.category,
+	 		q.title,
+	 		q.content,
+	 		q.status,
+	 		q.insertDatetime,
+	 		m.userId,
+	 		a.qnaReplyId,
+	 		COUNT(DISTINCT l.qnaLikeId) AS likeCount,
+			f.fileName
+	 	FROM 
+	 	 	QnABoard q
+		 	LEFT JOIN member m   ON q.member_userId = m.userId
+		 	LEFT JOIN QnAReply a ON q.qnaId = a.qnaId
+		 	LEFT JOIN QnABoardLike l ON q.qnaId = l.qnaId
+		 	LEFT JOIN QnAFiles f ON q.qnaId = f.qnaId
+	 	WHERE 
+	 		q.qnaId = #{qnaId}
+	</select>	
+	<resultMap type="com.footsalhaja.domain.qna.QnADto" id="myGetMap2">
+		<id column="qnaId" property="qnaId"/>
+		<result column="category" property="category"/>
+		<result column="title" property="title"/>
+		<result column="content" property="content"/>
+		<result column="status" property="status"/>
+		<result column="insertDatetime" property="insertDatetime"/>
+		<result column="userId" property="userId"/>
+		<result column="qnaReplyId" property="qnaReplyId"/>
+		<result column="likeCount" property="likeCount"/>
+		<collection property="fileName" ofType="string">
+			<result column="fileName" property="fileName"/>
+		</collection>
+	</resultMap>	
 	
 	<select id="selectFAQList" resultType="com.footsalhaja.domain.qna.FAQDto">
 		SELECT 
@@ -193,11 +253,13 @@
 	 		q.member_userId AS userId,
 	 		q.insertDatetime,
 	 		COUNT(DISTINCT l.qnaLikeId) AS likeCount,
-	 		COUNT(DISTINCT r.qnaReplyToAnswerId) AS replyCount
+	 		COUNT(DISTINCT r.qnaReplyToAnswerId) AS replyCount,
+	 		COUNT(DISTINCT f.fileName) AS fileCount
 	 	FROM 
 	 	 	QnABoard q
 	 	LEFT JOIN QnABoardLike l ON q.qnaId = l.qnaId 
 	 	LEFT JOIN QnAReplyToAnswer r ON q.qnaId = r.qnaId 
+	 	LEFT JOIN QnAFiles f ON q.qnaId = f.qnaId 
 	 	
 	 	WHERE
 	 	<if test="c != ''">
@@ -434,4 +496,12 @@
 		DELETE FROM QnABoardLike
 		WHERE qnaId = #{qnaId}
 	</delete>
+	<delete id="deleteQnAFileByQnAIdAndFileName">
+		DELETE FROM QnAFiles
+		WHERE qnaId = #{qnaId} AND fileName = #{fileName}
+	</delete>
+	
+
+	
+	
  </mapper>

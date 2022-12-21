@@ -79,6 +79,12 @@ public interface QnAMapper {
 	int deleteAnswerBYqnaId(int qnaId);
 	//문의 삭제 
 	int deleteQnA(int qnaId);
+	int insertQnAFiles(int qnaId, String fileName);
+	
+	//DB 안에 파일 기록 삭제
+	int deleteQnAFileByQnAIdAndFileName(int qnaId, String fileName);
+	
+	QnADto selectQnAByQnaId(int qnaId);
 	
 	
 	

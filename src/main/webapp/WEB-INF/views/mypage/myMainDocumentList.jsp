@@ -162,6 +162,7 @@ li {
 						<c:if test="${mainlist.status == 1}">  
 							<td>모집중</td>
 						</c:if>
+
 					 	<td>${mainlist.stadiumName}</td>
 					 	<td>${mainlist.matchType}</td>
 					 	<c:choose>
